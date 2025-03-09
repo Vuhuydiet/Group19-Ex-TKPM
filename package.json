@@ -11,7 +11,7 @@
     "start": "tsx ./backend/app.ts NODE_ENV=production",
     "server": "tsx watch --clear-screen=false ./backend/app.ts NODE_ENV=development",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "format": "prettier --write ."
