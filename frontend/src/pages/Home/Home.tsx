@@ -1,5 +1,5 @@
 
-import '../styles/home.css'
+import './home.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFaceSmile } from '@fortawesome/free-solid-svg-icons'
 

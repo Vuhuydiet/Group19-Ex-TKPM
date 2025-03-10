@@ -1,7 +1,7 @@
 
-import Header from './Header'
-import SubHeader from './SubHeader'
-import Content from './Content'
+import Header from './components/Header/Header'
+import SubHeader from './components/SubHeader/SubHeader'
+import Content from './components/Content/Content'
 import './styles/dashboard.css'
 import { useState } from 'react'
 

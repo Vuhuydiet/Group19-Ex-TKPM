@@ -1,13 +1,15 @@
-import './styles/sub_header.css';
+import './sub_header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faBell, faUser, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+type Theme = Record<string, string>;
+
 function SubHeader() {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    const lightTheme: Record<string, string> = {
+    const lightTheme: Theme = {
         "--border-radius": "10px",
         "--main-color": "#80002a",
         "--main-scroll-color": "#3b3b3b93",
@@ -17,7 +19,7 @@ function SubHeader() {
         "--text-in-background-color": "#fff",
     };
 
-    const darkTheme: Record<string, string> = {
+    const darkTheme: Theme = {
         "--border-radius": "10px",
         "--main-color": "#fff",
         "--main-scroll-color": "#88878793",
@@ -28,7 +30,7 @@ function SubHeader() {
     };
 
     useEffect(() => {
-        const theme: Record<string, string> = isDarkMode ? darkTheme : lightTheme;
+        const theme = isDarkMode ? darkTheme : lightTheme;
         Object.keys(theme).forEach((key) => {
             document.documentElement.style.setProperty(key, theme[key]);
         });

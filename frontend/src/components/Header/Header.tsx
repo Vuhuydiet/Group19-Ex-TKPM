@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faList, faRightFromBracket, faClock } from '@fortawesome/free-solid-svg-icons'
-import './styles/header.css'
+import './header.css'
 import { Link } from 'react-router-dom'
 // import { useNotification } from './components/NotificationContext'
 // import { useLoading } from './components/LoadingContext'
