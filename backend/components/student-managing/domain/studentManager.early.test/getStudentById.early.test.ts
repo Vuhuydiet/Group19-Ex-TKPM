@@ -12,9 +12,9 @@ describe('StudentManager.getStudentById() getStudentById method', () => {
   // Initialize the StudentManager and a set of students before each test
   beforeEach(() => {
     students = [
-      new Student('1', 'Alice', new Date(), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'),
-      new Student('2', 'Bob', new Date(), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'),
-      new Student('3', 'Charlie', new Date(), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học')
+      new Student('1', 'Alice', new Date('2004-2-2'), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'),
+      new Student('2', 'Bob',new Date('2023-2-2'), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'),
+      new Student('3', 'Charlie', new Date('2003-1-1'), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học')
     ];
     studentManager = new StudentManager();
     (studentManager as any)._students = students; // Directly setting private property for testing
@@ -25,7 +25,7 @@ describe('StudentManager.getStudentById() getStudentById method', () => {
     it('should return the correct student when a valid ID is provided', () => {
       // Test to ensure the method returns the correct student for a valid ID
       const student = studentManager.getStudentById('1');
-      expect(student).toEqual(new Student('1', 'Alice', new Date(), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'));
+      expect(student).toEqual(new Student('1', 'Alice', new Date('2004-2-2'), 'Nam', 'Khoa Luật', 1, 'Program', 'Address', 'Email', 'Phone', 'Đang học'));
     });
 
     it('should return undefined when an ID does not exist', () => {
