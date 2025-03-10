@@ -1,0 +1,24 @@
+#dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.dashboard__left {
+    width: 200px;
+}
+
+.dashboard__right {
+    flex: 1;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--background-color);
+}
+
+.dashboard__data {
+    padding: 20px;
+    /* height: calc(100% - 50px); */
+    /* background-color: red; */
+}
