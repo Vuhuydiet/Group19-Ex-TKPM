@@ -6,8 +6,6 @@ public_key.pem
 
 migration.sql
 
-*.test.*
-
 # vscode
 .vscode/
 
