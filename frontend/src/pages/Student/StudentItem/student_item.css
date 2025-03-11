@@ -1,0 +1,255 @@
+.item-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.studentitem {
+    padding: 20px;
+    background-color: var(--item-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.studentitem__header span {
+    color: var(--main-color);
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.studentitem__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.studentitem .studentitem__left {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--main-color);
+    padding: 20px;
+}
+
+.studentitem__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: var(--text-in-background-color);
+    margin-bottom: 20px;
+}
+
+.studentitem__avatar .icon {
+    font-size: 70px;
+}
+
+.studentitem__general {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.studentitem__general__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.studentitem__general__header input {
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color);
+    background-color: transparent;
+    color: var(--main-color);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.studentitem__field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    width: 100%;
+    color: var(--main-color);
+    font-weight: 700;
+}
+
+.studentitem__field input {
+    border: none;
+    outline: none;
+    text-align: center;
+    margin: 0 5px;
+    width: 70px;
+    color: var(--main-color);
+    font-size: 15px;
+    font-weight: 700;
+    background-color: transparent;
+}
+
+.studentitem .studentitem__right {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.studentitem .studentitem__right .studentitem__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.studentitem .studentitem__right .studentitem__header span {
+    color: var(--main-color);
+    width: 100%;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.studentitem .studentitem__right .studentitem__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.studentitem__right .studentitem__info .studentitem__info__item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.studentitem__info .studentitem__info__item span {
+    color: var(--main-color);
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.studentitem__right .studentitem__info .studentitem__info__item select,
+.studentitem__info .studentitem__info__item input {
+    width: 200px;
+    border: none;
+    outline: none;
+    text-align: center;
+    margin: 0 10px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+    width: 300px;
+    background-color: transparent;
+}
+
+.studentitem__info .studentitem__info__item input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.studentitem__right .studentitem__info .studentitem__info__item select option {
+    color: var(--text-color);
+    background-color: var(--item-color);
+}
+
+/* .studentitem__right .studentitem__info .studentitem__info__item select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+} */
+
+/* .studentitem__right .studentitem__info .studentitem__info__item select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    padding-left: 15px;
+} */
+
+.studentitem__right .studentitem__info .studentitem__info__item select:disabled,
+.studentitem__info .studentitem__info__item input:disabled {
+    border: none;
+}
+
+.studentitem__info .studentitem__info__item button {
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.studentitem__footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.studentitem__button {
+    display: flex;
+    align-items: center;
+}
+
+.studentitem__button button {
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-weight: 700;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.studentitem__add__image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.studentitem__add__image input {
+    display: none;
+}
+
+.studentitem__add__image label {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--main-color);
+    border-radius: var(--border-radius);
+    color: var(--main-color);
+    cursor: pointer;
+}

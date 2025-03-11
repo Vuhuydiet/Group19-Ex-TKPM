@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight, faCartShopping, faSearch, faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
-import { mockDataStudents, Student } from './StudentList.constant';
-// import ProductDetail from '../components/ProductDetail';
+
+import StudentItem from '../StudentItem/StudentItem';
+import { mockDataStatus, mockDataStudents, Student } from '../Student.constant';
 // import { useLoading } from '../components/LoadingContext';
 // import NothingDisplay from '../components/NothingDisplay';
-
 
 function student() {
     // const { setIsLoading } = useLoading();
@@ -126,7 +126,7 @@ function student() {
 
     return (
         <>
-            {/* {selectedStudent && <ProductDetail student={selectedStudent} setSelectedStudent={setSelectedStudent} students={students} setStudents={setStudents} setPage={setPage} />} */}
+            {selectedStudent && <StudentItem selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} students={students} setStudents={setStudents} />}
             <div className="board board--student">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
@@ -174,9 +174,9 @@ function student() {
                                 }}
                             >
                                 <option value="" disabled>Status</option>
-                                <option value="Studying">Studying</option>
-                                <option value="Graduated">Graduated</option>
-                                <option value="Dropped Out">Dropped Out</option>
+                                {mockDataStatus.map((status, index) => (
+                                    <option key={index} value={status}>{status}</option>
+                                ))}
                                 <option value="">None</option>
                             </select>
                         </div>
