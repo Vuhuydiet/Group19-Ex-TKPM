@@ -3,43 +3,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faBell, faUser, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { changeTheme } from './SubHeader.actions';
 
-type Theme = Record<string, string>;
+// type Theme = Record<string, string>;
 
 function SubHeader() {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    const lightTheme: Theme = {
-        "--border-radius": "10px",
-        "--main-color": "#80002a",
-        "--main-scroll-color": "#3b3b3b93",
-        "--background-color": "#fff",
-        "--item-color": "#f2f2f2",
-        "--text-color": "#000",
-        "--text-in-background-color": "#fff",
-    };
+    // const lightTheme: Theme = {
+    //     "--border-radius": "10px",
+    //     "--main-color": "#80002a",
+    //     "--main-scroll-color": "#3b3b3b93",
+    //     "--background-color": "#fff",
+    //     "--item-color": "#f2f2f2",
+    //     "--text-color": "#000",
+    //     "--text-in-background-color": "#fff",
+    // };
 
-    const darkTheme: Theme = {
-        "--border-radius": "10px",
-        "--main-color": "#fff",
-        "--main-scroll-color": "#88878793",
-        "--background-color": "#000",
-        "--item-color": "#202020",
-        "--text-color": "#fff",
-        "--text-in-background-color": "#000",
-    };
+    // const darkTheme: Theme = {
+    //     "--border-radius": "10px",
+    //     "--main-color": "#fff",
+    //     "--main-scroll-color": "#88878793",
+    //     "--background-color": "#000",
+    //     "--item-color": "#202020",
+    //     "--text-color": "#fff",
+    //     "--text-in-background-color": "#000",
+    // };
 
     useEffect(() => {
-        const theme = isDarkMode ? darkTheme : lightTheme;
-        Object.keys(theme).forEach((key) => {
-            document.documentElement.style.setProperty(key, theme[key]);
-        });
+        changeTheme(isDarkMode);
     }, [isDarkMode]);
 
     const toggleTheme = () => {
         setIsDarkMode(!isDarkMode);
     };
-
 
     return (
         <div className="subheader">
