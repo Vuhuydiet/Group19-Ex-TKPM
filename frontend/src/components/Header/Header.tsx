@@ -44,6 +44,14 @@ function Header() {
                             </div>
                         </Link>
                     </div>
+                    <div className="header__nav__items__content">
+                        <Link to='/student/import'>
+                            <div className="header__nav__item">
+                                <FontAwesomeIcon icon={faList} className='icon__item' />
+                                <span>Addition</span>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
 
