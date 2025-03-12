@@ -8,7 +8,6 @@ type LoadingContextType = {
 // type LoadingProviderProps = PropsWithChildren & { color: string };
 type LoadingProviderProps = PropsWithChildren;
 
-
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export const LoadingProvider = ({ children }: LoadingProviderProps) => {
