@@ -14,7 +14,7 @@ export interface Student {
   email: string;
   phone: string;
   status: string;
-}
+} 
 
 //Lấy danh sách tất cả sinh viên
 export const getStudents = async (): Promise<Student[]> => {
@@ -40,13 +40,15 @@ export const getStudentsByName = async (name: string): Promise<Student[]> => {
 };
 
 //Thêm sinh viên mới
-export const addStudent = async (student: Student): Promise<void> => {
-  await axios.post(API_BASE_URL, student);
+export const addStudent = async (student: Student) => {
+  const response = await axios.post("http://localhost:3000/api/students", student);
+  return response.data; 
 };
 
-//Cập nhật thông tin sinh viên
-export const updateStudent = async (id: string, updatedData: Partial<Student>): Promise<void> => {
-  await axios.patch(`${API_BASE_URL}/${id}`, updatedData);
+// Hàm cập nhật sinh viên với kiểu trả về là `Promise<Student>`
+export const updateStudent = async (id: string, updatedData: Partial<Student>): Promise<Student> => {
+  const response = await axios.patch<Student>(`http://localhost:3000/api/students/${id}`, updatedData);
+  return response.data; 
 };
 
 //Xóa sinh viên theo ID
