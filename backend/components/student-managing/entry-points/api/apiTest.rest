@@ -1,0 +1,132 @@
+### Get all students
+GET http://localhost:3000/students
+
+### Get student by ID
+GET http://localhost:3000/students/id/22120413
+
+### Get students by name
+GET http://localhost:3000/students/name?name=GROUP API TEST
+
+### Add new student
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "id": "22120413",
+  "name": "GROUP API TEST",
+  "dob": "2025-03-12",
+  "gender": "Nam",
+  "faculty": "Khoa Luật",
+  "accademicYear": 2023,
+  "program": "Dai Tra",
+  "address": "123 Đường ABC, Quận 1, TP.HCM",
+  "email": "group19apitest@example.com",
+  "phone": "0123456789",
+  "status": "Đang học"
+}
+
+### Add new student with invalid name
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "id": "22120413",
+  "name": "GROUP19 API TEST",
+  "dob": "2025-03-12",
+  "gender": "Nam",
+  "faculty": "Khoa Luật",
+  "accademicYear": 2023,
+  "program": "Dai Tra",
+  "address": "123 Đường ABC, Quận 1, TP.HCM",
+  "email": "group19apitest@example.com",
+  "phone": "0123456789",
+  "status": "Đang học"
+}
+
+### Add new student with invalid email
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "id": "22120413",
+  "name": "GROUP API TEST",
+  "dob": "2025-03-12",
+  "gender": "Nam",
+  "faculty": "Khoa Luật",
+  "accademicYear": 2023,
+  "program": "Dai Tra",
+  "address": "123 Đường ABC, Quận 1, TP.HCM",
+  "email": "group19apitestexample.com",
+  "phone": "0123456789",
+  "status": "Đang học"
+}
+
+### Add new student with invalid phone number
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "id": "22120413",
+  "name": "GROUP API TEST",
+  "dob": "2025-03-12",
+  "gender": "Nam",
+  "faculty": "Khoa Luật",
+  "accademicYear": 2023,
+  "program": "Dai Tra",
+  "address": "123 Đường ABC, Quận 1, TP.HCM",
+  "email": "group19apitest@example.com",
+  "phone": "012345679",
+  "status": "Đang học"
+}
+
+
+### Update student's phone number
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "phone": "0987654321"
+}
+
+### Update student's phone number with invalid phone number
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "phone": "098765431"
+}
+
+### Update student's name
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "name": "GROUP API TEST UPDATED"
+}
+
+### Update student's name with invalid name
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "name": "GROUP19 API TEST UPDATED"
+}
+
+### Update student's email
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "email": "group19apitestupdated@example.com"
+}
+
+### Update student's email with invalid email
+PATCH http://localhost:3000/students/22120413
+Content-Type: application/json
+
+{
+    "email": "group19apitestupdatedexample.com"
+}
+
+### Delete student
+DELETE http://localhost:3000/students/22120413

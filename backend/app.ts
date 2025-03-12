@@ -11,6 +11,7 @@ import notFoundHandler from './libraries/errorHandler/notFoundHandler';
 import errorHandler from './libraries/errorHandler/errorHandler';
 
 import router from './static-content'
+import studentRouter from './components/student-managing/entry-points/api/studentManagement.route';
 import path from 'path';
 
 // middlewares
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use(router);
+app.use('/students', studentRouter);
 
 // error handler
 app.use(notFoundHandler);
