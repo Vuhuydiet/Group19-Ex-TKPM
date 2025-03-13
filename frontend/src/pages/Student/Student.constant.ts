@@ -1,36 +1,58 @@
-export type Student = {
-    id: string;//
-    name: string;//
-    dob: string;//
-    gender: string;///
-    faculty: string;
-    academicYear: string;//
-    program: string;//
-    address: string;
-    email: string;
-    phone: string;
-    status: string;
-}
 
-export const mockDataStatus: string[] = [
-    "Studying",
-    "Graduated",
-    "Dropped Out"
-];
 
-export const mockDataFaculties: string[] = [
-    "Physics",
-    "Chemistry",
-    "Information Technology",
-    "Biology",
-    "Mathematics and Informatics"
-];
 
-export const mockDataPrograms: string[] = [
-    "High-Quality",
-    "Project-Based",
-    "Regular"
-];
+
+
+
+
+
+
+/// This whole file can be deleted
+/// ducnhat24
+
+
+
+
+
+
+
+
+
+
+
+// export type Student = {
+//     id: string;//
+//     name: string;//
+//     dob: string;//
+//     gender: string;///
+//     faculty: string;
+//     academicYear: number;//
+//     program: string;//
+//     address: string;
+//     email: string;
+//     phone: string;
+//     status: string;
+// }
+
+// export const mockDataStatus: string[] = [
+//     "Studying",
+//     "Graduated",
+//     "Dropped Out"
+// ];
+
+// export const mockDataFaculties: string[] = [
+//     "Physics",
+//     "Chemistry",
+//     "Information Technology",
+//     "Biology",
+//     "Mathematics and Informatics"
+// ];
+
+// export const mockDataPrograms: string[] = [
+//     "High-Quality",
+//     "Project-Based",
+//     "Regular"
+// ];
 
 // export const mockDataStudents: Student[] = [
 //     {

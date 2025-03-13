@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./student_import_form.css";
-import { mockDataFaculties, mockDataPrograms } from "../Student.constant";
+import { mockDataFaculties, mockDataPrograms } from '../../../services/mockData';
 import { addStudent, Student } from "../../../services/studentAPIServices";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faPencil } from '@fortawesome/free-solid-svg-icons'

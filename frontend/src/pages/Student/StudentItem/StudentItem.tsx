@@ -2,7 +2,7 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../Student.constant';
+import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../../../services/mockData';
 import { Student, updateStudent } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
 // import { useLoading } from "./LoadingContext";

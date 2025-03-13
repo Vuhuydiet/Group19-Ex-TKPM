@@ -1,25 +1,9 @@
 import axios from "axios";
-import { getStudents, getStudentById, addStudent, updateStudent, removeStudent, Student } from "../src/services/studentAPIServices";
-
+import { getStudents, getStudentById, addStudent, updateStudent, removeStudent } from "../src/services/studentAPIServices";
+import { mockStudentsList, mockStudent } from "../src/services/mockData";
 jest.mock("axios"); // Mock axios
 
 describe("API Service Tests", () => {
-  // Mock dữ liệu sinh viên
-  const mockStudent: Student = {
-        id: "22120413",
-        name: "GROUP API TEST",
-        dob: "2002-08-15",
-        gender: "Male",
-        faculty: "Computer Science",
-        academicYear: 3,
-        program: "Information Technology",
-        address: "Hanoi",
-        email: "testperson@gmail.com",
-        phone: "0123456789",
-        status: "Active",
-    };
-  const mockStudentsList = [mockStudent];
-
   // Test getStudents()
   it("should fetch list of students", async () => {
     (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockStudentsList });

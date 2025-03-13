@@ -1,11 +1,12 @@
 import axios from "axios";
+// import { Student } from "../pages/Student/Student.constant";
 
 const API_BASE_URL = "http://localhost:3000/api/students"; // Thay đổi URL nếu cần
 
 export interface Student {
   id: string;
   name: string;
-  dob: string; 
+  dob: string;
   gender: string;
   faculty: string;
   academicYear: number;
@@ -14,7 +15,7 @@ export interface Student {
   email: string;
   phone: string;
   status: string;
-} 
+}
 
 //Lấy danh sách tất cả sinh viên
 export const getStudents = async (): Promise<Student[]> => {
