@@ -6,7 +6,7 @@ import './styles/dashboard.css'
 import { useState } from 'react'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, _setIsAuthenticated] = useState(true);
 
 
   return (

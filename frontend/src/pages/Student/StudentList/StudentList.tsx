@@ -6,20 +6,19 @@ import { faArrowLeft, faArrowRight, faCartShopping, faSearch, faFilter, faSort }
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
-import { mockDataStatus, mockDataStudents, Student } from '../Student.constant';
+import { Student } from '../../../services/studentAPIServices';
+import { mockDataStatus } from '../Student.constant';
 // import { useLoading } from '../components/LoadingContext';
 // import NothingDisplay from '../components/NothingDisplay';
 
 function student() {
-    // const { setIsLoading } = useLoading();
-    const [students, setStudents] = useState(mockDataStudents);
+
+    const [students, setStudents] = useState<Student[]>([]);
     const [page, setPage] = useState(1);
     const [selectedStudent, setSelectedStudent] = useState<Student | undefined>(undefined);
     const [gender, setGender] = useState("");
     const [status, setStatus] = useState("");
     const [sortBy, setSortBy] = useState("");
-    // const [brands, setBrands] = useState([]);
-    // const [categories, setCategories] = useState([]);
     const [search, setSearch] = useState("");
     function calculateItemsPerPage() {
         const screenHeight = window.innerHeight;
@@ -30,45 +29,6 @@ function student() {
     }
 
     const [amountItem, setAmountItem] = useState(calculateItemsPerPage());
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const loadingRef = setTimeout(() => { setIsLoading(true); }, 500);
-    //         try {
-    //             const res = await fetch('http://localhost:5000/api/student');
-    //             const data = await res.json();
-    //             console.log(data);
-    //             if (data.status !== 'success') {
-    //                 console.log('Error fetching data');
-    //                 return;
-    //             }
-    //             setStudents(data.data);
-
-    //             const resBrand = await fetch('http://localhost:5000/api/brand');
-    //             const dataBrand = await resBrand.json();
-    //             if (dataBrand.status !== 'success') {
-    //                 console.log('Error fetching data');
-    //                 return;
-    //             }
-    //             setBrands(dataBrand.data);
-
-    //             const resCategory = await fetch('http://localhost:5000/api/category');
-    //             const dataCategory = await resCategory.json();
-    //             if (dataCategory.status !== 'success') {
-    //                 console.log('Error fetching data');
-    //                 return;
-    //             }
-    //             setCategories(dataCategory.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         } finally {
-    //             setIsLoading(false);
-    //             clearTimeout(loadingRef);
-    //         }
-    //     }
-
-    //     fetchData();
-    // }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -95,34 +55,6 @@ function student() {
         }
     }
 
-    // async function handleFilter() {
-    //     setIsLoading(true);
-    //     try {
-    //         const query = {
-    //             brands: theChosenBrand,
-    //             categories: theChosenCategory,
-    //             sortBy: sortBy === "creation-time" ? "productUpdatedDateTime" : sortBy === "price" ? "productPrice" : sortBy === "total-purchase" ? "productTotalPurchase" : "",
-    //             sortType: "asc",
-    //             keySearch: search
-    //         };
-
-    //         const res = await fetch(`http://localhost:5000/api/student/filter?brands=${query.brands}&categories=${query.categories}&sortBy=${query.sortBy}&sortType=${query.sortType}&keySearch=${query.keySearch}`);
-    //         const data = await res.json();
-    //         if (data.status !== 'success') {
-    //             console.log('Error fetching data');
-    //             return;
-    //         }
-    //         setStudents(data.data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     handleFilter();
-    // }, [theChosenBrand, theChosenCategory, sortBy]);
 
     return (
         <>
@@ -224,16 +156,16 @@ function student() {
 
                     <div className="board__table__data">
                         {students.length === 0 && <NothingDisplay />}
-                        {students.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student, index: number) => (
+                        {students.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student) => (
                             <button
                                 onClick={() => {
                                     setSelectedStudent(student)
                                 }}
-                                key={student.ID}
+                                key={student.id}
                                 className="board__table__row">
-                                <div className="board__table__attribute">{student.ID}</div>
+                                <div className="board__table__attribute">{student.id}</div>
                                 <div className="board__table__attribute">{student.name}</div>
-                                <div className="board__table__attribute">{student.dateOfBirth}</div>
+                                <div className="board__table__attribute">{student.dob}</div>
                                 <div className="board__table__attribute">{student.gender}</div>
                                 <div className="board__table__attribute">{student.program}</div>
                                 <div className="board__table__attribute">{student.academicYear}</div>

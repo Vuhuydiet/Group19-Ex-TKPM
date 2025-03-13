@@ -2,8 +2,9 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { mockDataFaculties, mockDataPrograms, mockDataStatus, Student } from '../Student.constant';
-// import { useNotification } from './NotificationContext';
+import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../Student.constant';
+import { Student, updateStudent } from '../../../services/studentAPIServices';
+import { useNotification } from '../../../contexts/NotificationProvider';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
 
@@ -17,9 +18,26 @@ type StudentItemProps = {
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
-    // const { notify } = useNotification();
+    const { notify } = useNotification();
     const [studentInfo, setStudentInfo] = useState(selectedStudent);
     const [isEdit, setIsEdit] = useState(false);
+
+    async function handleSave() {
+        if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.address === "" || studentInfo.phone === "") {
+            // notify("Please fill in all fields", "error");
+            notify({ type: "error", msg: "Please fill in all fields" });
+            return;
+        }
+
+        try {
+            const response = await updateStudent(studentInfo.id, studentInfo);
+            setStudents(students.map((student: Student) => student.id === response.id ? response : student));
+            setSelectedStudent(undefined);
+        } catch {
+            // notify("Update student failed", "error");
+            notify({ type: "error", msg: "Update student failed" });
+        }
+    }
 
     return (
         <>
@@ -47,15 +65,15 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
                                 <div className="studentitem__field">
                                     <input
-                                        value={studentInfo.ID}
+                                        value={studentInfo.id}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, ID: e.target.value })}
+                                        onChange={(e) => setStudentInfo({ ...studentInfo, id: e.target.value })}
                                         disabled={!isEdit} />
                                     -
                                     <input
                                         value={studentInfo.academicYear}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: e.target.value })}
+                                        onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: Number(e.target.value) })}
                                         disabled={!isEdit} />
                                 </div>
                             </div>
@@ -66,9 +84,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 <div className="studentitem__info__item">
                                     <span>DOB</span>
                                     <input
-                                        value={studentInfo.dateOfBirth}
+                                        value={studentInfo.dob}
                                         type="date"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, dateOfBirth: e.target.value })}
+                                        onChange={(e) => setStudentInfo({ ...studentInfo, dob: e.target.value })}
                                         disabled={!isEdit} />
                                 </div>
 
@@ -93,9 +111,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 <div className="studentitem__info__item">
                                     <span>Phone</span>
                                     <input
-                                        value={studentInfo.phoneNumber}
+                                        value={studentInfo.phone}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, phoneNumber: e.target.value })}
+                                        onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
                                         disabled={!isEdit} />
                                 </div>
 
@@ -142,9 +160,12 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
                     <div className="studentitem__footer">
                         <div className="studentitem__button">
-                            <button onClick={() => setSelectedStudent(undefined)}>Cancel</button>
-                            <button >Delete</button>
-                            <button
+                            <button onClick={() => setSelectedStudent(undefined)}>Back</button>
+                            <button>Delete</button>
+                            <button onClick={() => setIsEdit(!isEdit)}>
+                                {isEdit ? "Cancel" : "Edit"}
+                            </button>
+                            <button onClick={handleSave}
                             >Save</button>
                         </div>
                     </div>
