@@ -6,8 +6,6 @@ public_key.pem
 
 migration.sql
 
-*.test.*
-
 # vscode
 .vscode/
 
@@ -142,3 +140,5 @@ out
 .pnp.*
 
 .early.coverage
+
+basic_api_contract
