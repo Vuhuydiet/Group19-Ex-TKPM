@@ -41,6 +41,7 @@ Dự án này là một web app được phát triển bằng React nhằm quả
     │   └── styles
     └── test
 ```
+
 ## Hướng dẫn cài đặt & chạy chương trình
 ### Yêu cầu hệ thống
 Node.js (>= 16)
@@ -48,5 +49,12 @@ npm
 
 ### Cài đặt
 Chạy lệnh:```npm i``` ở cả thư mục gốc (root) và thư mục frontend
-### Chạy chương trình
-Chạy lệnh:```npm run dev```để vào chế độ dev mode, mở browser và nhập 'http://localhost:5473'
+
+### Build chương trình
+Chạy lệnh:```npm run build```
+
+### Chạy chương trình (development mode)
+Chạy lệnh:```npm run dev``` để vào dev mode, mở browser địa chỉ: 'http://localhost:5173'
+
+### Chạy chương trình (deployment mode)
+Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa chỉ: 'http://localhost:3000'
