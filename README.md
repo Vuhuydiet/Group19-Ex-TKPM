@@ -49,4 +49,4 @@ npm
 ### Cài đặt
 Chạy lệnh:```npm i``` ở cả thư mục gốc (root) và thư mục frontend
 ### Chạy chương trình
-Chạy lệnh:```npm run dev```để vào chế độ dev mode 
+Chạy lệnh:```npm run dev```để vào chế độ dev mode, mở browser và nhập 'http://localhost:5473'
