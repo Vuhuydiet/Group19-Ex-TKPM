@@ -10,7 +10,7 @@ describe("API Service Tests", () => {
 
     const students = await getStudents();
     expect(students).toEqual(mockStudentsList);
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/api/students");
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/students");
   });
 
   // Test getStudentById()
@@ -19,7 +19,7 @@ describe("API Service Tests", () => {
 
     const student = await getStudentById("22120413");
     expect(student).toEqual(mockStudent);
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/api/students/id/22120413");
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/students/id/22120413");
   });
 
   // Test addStudent()
@@ -28,7 +28,7 @@ describe("API Service Tests", () => {
 
     const newStudent = await addStudent(mockStudent);
     expect(newStudent).toEqual(mockStudent);
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/api/students", mockStudent);
+    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/students", mockStudent);
   });
 
   // Test updateStudent()
@@ -40,7 +40,7 @@ describe("API Service Tests", () => {
 
     const result = await updateStudent("22120413", updatedData);
     expect(result).toEqual(updatedStudent);
-    expect(axios.patch).toHaveBeenCalledWith("http://localhost:3000/api/students/22120413", updatedData);
+    expect(axios.patch).toHaveBeenCalledWith("http://localhost:3000/students/22120413", updatedData);
   });
 
   // Test removeStudent()
@@ -48,7 +48,7 @@ describe("API Service Tests", () => {
     (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValue({});
 
     await removeStudent("22120413");
-    expect(axios.delete).toHaveBeenCalledWith("http://localhost:3000/api/students/22120413");
+    expect(axios.delete).toHaveBeenCalledWith("http://localhost:3000/students/22120413");
   });
 
   // Test lỗi khi API thất bại

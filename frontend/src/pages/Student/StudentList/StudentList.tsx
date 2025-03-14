@@ -6,7 +6,7 @@ import { faArrowLeft, faArrowRight, faCartShopping, faSearch, faFilter, faSort }
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
-import { Student } from '../../../services/studentAPIServices';
+import { Student, getStudents } from '../../../services/studentAPIServices';
 import { mockDataStatus } from '../../../services/mockData';
 // import { useLoading } from '../components/LoadingContext';
 // import NothingDisplay from '../components/NothingDisplay';
@@ -19,9 +19,15 @@ import { mockStudentsList } from "../../../services/mockData"; // Đảm bảo i
 function student() {
 
     const [students, setStudents] = useState<Student[]>([]);
+    //get all students
     useEffect(() => {
-        setStudents(mockStudentsList);
+        getStudents().then((students) => {
+            setStudents(students);
+        });
     }, []);
+    // useEffect(() => {
+    //     setStudents(mockStudentsList);
+    // }, []);
     const [page, setPage] = useState(1);
     const [selectedStudent, setSelectedStudent] = useState<Student | undefined>(undefined);
     const [gender, setGender] = useState("");
