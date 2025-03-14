@@ -34,6 +34,21 @@ function StudentImportForm() {
             return;
         }
 
+        const email = student.email;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            notify({ type: "error", msg: "Invalid email format" });
+            return;
+        }
+
+        const phone = student.phone;
+        const phoneRegex = /^(0\d{9})$/;
+        if (!phoneRegex.test(phone)) {
+            notify({ type: "error", msg: "Invalid phone number format" });
+            return;
+        }
+
+
         try {
             const response = await addStudent(student);
             setStudent({
@@ -171,7 +186,10 @@ function StudentImportForm() {
                         <input
                             value={student.email}
                             type="text"
-                            onChange={(e) => setStudent({ ...student, email: e.target.value })}
+                            onChange={(e) => {
+                                setStudent({ ...student, email: e.target.value });
+                            }
+                            }
                             placeholder="Enter student's email" />
                     </div>
 
@@ -180,7 +198,10 @@ function StudentImportForm() {
                         <input
                             value={student.phone}
                             type="text"
-                            onChange={(e) => setStudent({ ...student, phone: e.target.value })}
+                            onChange={(e) => {
+                                setStudent({ ...student, phone: e.target.value });
+                            }
+                            }
                             placeholder="Enter student's phone number" />
                     </div>
 

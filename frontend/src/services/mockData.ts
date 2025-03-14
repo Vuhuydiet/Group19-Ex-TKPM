@@ -1,18 +1,18 @@
 import { Student } from "./studentAPIServices";
 
 export const mockStudent: Student = {
-        id: "S001",
-        name: "Nguyen Van A",
-        dob: "2002-05-15",
-        gender: "Male",
-        faculty: "Information Technology",
-        academicYear: 2020,
-        program: "High-Quality",
-        address: "123 Le Loi Street, District 1, Ho Chi Minh City",
-        email: "nguyenvana@example.com",
-        phone: "0123456789",
-        status: "Studying"
-    };
+    id: "S001",
+    name: "Nguyen Van A",
+    dob: "2002-05-15",
+    gender: "Male",
+    faculty: "Information Technology",
+    academicYear: 2020,
+    program: "High-Quality",
+    address: "123 Le Loi Street, District 1, Ho Chi Minh City",
+    email: "nguyenvana@example.com",
+    phone: "0123456789",
+    status: "Studying"
+};
 
 export const mockStudentsList: Student[] = [
     {
@@ -115,11 +115,10 @@ export const mockDataStatus: string[] = [
 ];
 
 export const mockDataFaculties: string[] = [
-    "Physics",
-    "Chemistry",
-    "Information Technology",
-    "Biology",
-    "Mathematics and Informatics"
+    "Law",
+    "Business English",
+    "Japanese",
+    "French",
 ];
 
 export const mockDataPrograms: string[] = [
