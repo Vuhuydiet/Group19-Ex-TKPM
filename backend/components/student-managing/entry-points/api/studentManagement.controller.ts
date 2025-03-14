@@ -2,7 +2,7 @@ import {StudentManager} from "../../domain/studentManager";
 import {Student} from "../../domain/student";
 import { StudentManagementMapper } from "./studentManagement.mapper";
 import { Request} from "express";
-import g_StudentManger from "../../storage/studentManager"
+import g_StudentManger from "../../storage/studentManager";
 
 export class StudentManagerController {
 
