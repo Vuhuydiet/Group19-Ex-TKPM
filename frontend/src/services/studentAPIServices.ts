@@ -33,6 +33,7 @@ export const getStudents = async (): Promise<Student[]> => {
     faculty: student._faculty,
     program: student._program,
     address: student._address,
+    academicYear: student._academicYear,
     email: student._email,
     phone: student._phone,
     status: student._status
@@ -59,13 +60,13 @@ export const getStudentsByName = async (name: string): Promise<Student[]> => {
 //Thêm sinh viên mới
 export const addStudent = async (student: Student) => {
   const response = await axios.post("http://localhost:3000/students", student);
-  return response.data; 
+  return response.data;
 };
 
 // Hàm cập nhật sinh viên với kiểu trả về là `Promise<Student>`
 export const updateStudent = async (id: string, updatedData: Partial<Student>): Promise<Student> => {
   const response = await axios.patch<Student>(`http://localhost:3000/students/${id}`, updatedData);
-  return response.data; 
+  return response.data;
 };
 
 //Xóa sinh viên theo ID

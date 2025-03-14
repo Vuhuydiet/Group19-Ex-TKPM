@@ -9,17 +9,18 @@ import StudentItem from '../StudentItem/StudentItem';
 import { Student, getStudents } from '../../../services/studentAPIServices';
 import { mockDataStatus } from '../../../services/mockData';
 // import { useLoading } from '../components/LoadingContext';
-// import NothingDisplay from '../components/NothingDisplay';
-
-// import { mockStudentsList } from "../../../services/mockData"; // Đảm bảo import đúng đường dẫn
-
-
 
 
 function student() {
 
     const [students, setStudents] = useState<Student[]>([]);
+    const [cloneStudents, setCloneStudents] = useState<Student[]>([]);
     //get all students
+
+    useEffect(() => {
+        setCloneStudents(students);
+    }, [students]);
+
     useEffect(() => {
         getStudents().then((students) => {
             setStudents(students);
@@ -44,6 +45,23 @@ function student() {
 
     const [amountItem, setAmountItem] = useState(calculateItemsPerPage());
 
+    function handleSearch(keySearch: string) {
+        if (keySearch.trim() === "") {
+            setPage(1);
+            setCloneStudents(students);
+            return;
+        }
+
+        const regex = new RegExp(keySearch, "i");
+
+        const filteredStudents = students.filter(student =>
+            regex.test(student.id) || regex.test(student.name)
+        );
+
+        setCloneStudents(filteredStudents);
+        setPage(1);
+    }
+
     useEffect(() => {
         const handleResize = () => {
             setAmountItem(calculateItemsPerPage());
@@ -58,7 +76,7 @@ function student() {
     }, []);
 
     function increasePage() {
-        if (page < Math.ceil(students.length / amountItem)) {
+        if (page < Math.ceil(cloneStudents.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -68,7 +86,6 @@ function student() {
             setPage(page - 1);
         }
     }
-
 
     return (
         <>
@@ -133,7 +150,7 @@ function student() {
                             onChange={(e) => { setSearch(e.target.value) }}
                             type="text"
                             placeholder="Search..." />
-                        <button>
+                        <button onClick={() => handleSearch(search)}>
                             <FontAwesomeIcon icon={faSearch} className='icon__search' />
                         </button>
                     </div>
@@ -169,8 +186,8 @@ function student() {
                     </div>
 
                     <div className="board__table__data">
-                        {students.length === 0 && <NothingDisplay />}
-                        {students.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student) => (
+                        {cloneStudents.length === 0 && <NothingDisplay />}
+                        {cloneStudents.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student) => (
                             <button
                                 onClick={() => {
                                     setSelectedStudent(student)
@@ -223,5 +240,5 @@ function student() {
     );
 }
 
-export default student; 
+export default student;
 

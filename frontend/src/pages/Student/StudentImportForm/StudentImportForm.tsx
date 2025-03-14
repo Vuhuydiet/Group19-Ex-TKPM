@@ -24,7 +24,7 @@ function StudentImportForm() {
         address: "",
         email: "",
         phone: "",
-        status: "",
+        status: "Đang học",
     });
 
     async function handleAddStudent() {

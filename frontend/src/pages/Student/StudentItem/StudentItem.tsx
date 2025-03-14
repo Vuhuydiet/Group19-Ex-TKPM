@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
 import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../../../services/mockData';
-import { Student, updateStudent, removeStudent} from '../../../services/studentAPIServices';
+import { Student, updateStudent, removeStudent } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
@@ -34,6 +34,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             const { id, ...studentData } = studentInfo;
             // const response = await updateStudent(studentInfo.id, studentInfo);
             const response = await updateStudent(studentInfo.id, studentData);
+            notify({ type: "success", msg: "Student updated successfully" });
             setStudents(students.map((student: Student) => student.id === response.id ? response : student));
             setSelectedStudent(undefined);
         } catch {
@@ -51,7 +52,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             // Cập nhật danh sách sinh viên sau khi xóa
             setStudents(students.filter((student: Student) => student.id !== studentInfo.id));
             setSelectedStudent(undefined);
-            
+
             notify({ type: "success", msg: "Student deleted successfully" });
         } catch {
             notify({ type: "error", msg: "Delete student failed" });
@@ -89,7 +90,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         type="text"
                                         onChange={(e) => setStudentInfo({ ...studentInfo, id: e.target.value })}
                                         disabled={!isEdit} />
-                                    -
+
                                     <input
                                         value={studentInfo.academicYear}
                                         type="text"
