@@ -1,11 +1,11 @@
 import {StudentManagerController} from "./studentManagement.controller";
 import express, { Request, Response } from "express";
-import { checkStudentNamePattern, checkEmailPattern, checkPhoneNumberPattern } from "./studentManagement.middleware";
+import {checkEmailPattern, checkPhoneNumberPattern } from "./studentManagement.middleware";
 const router = express.Router();
 
 const controller = new StudentManagerController();
 
-router.post('/', checkStudentNamePattern, checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
+router.post('/', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
     controller.addStudent(req);
     res.json({ message: 'Student added successfully' });
 });
@@ -33,7 +33,7 @@ router.get('/name', (req: Request, res: Response) => {
     res.json(students);
 });
 
-router.patch('/:id', checkStudentNamePattern, checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
+router.patch('/:id', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
     controller.updateStudent(req.params.id, req);
     res.json({ message: 'Student updated successfully' });
 });

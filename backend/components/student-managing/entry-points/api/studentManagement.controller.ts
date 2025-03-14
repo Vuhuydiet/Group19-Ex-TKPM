@@ -2,6 +2,7 @@ import {StudentManager} from "../../domain/studentManager";
 import {Student} from "../../domain/student";
 import { StudentManagementMapper } from "./studentManagement.mapper";
 import { Request} from "express";
+import g_StudentManger from "../../storage/studentManager";
 
 export class StudentManagerController {
 
@@ -9,7 +10,7 @@ export class StudentManagerController {
     private studentManagementMapper: StudentManagementMapper;
     
     constructor() {
-        this.studentManager = new StudentManager();
+        this.studentManager = g_StudentManger;
         this.studentManagementMapper = new StudentManagementMapper();
     }
     
