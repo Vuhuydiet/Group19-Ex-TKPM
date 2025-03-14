@@ -1,38 +1,52 @@
-# How to build
-- run 'npm i' in both root dir and frontend/
-- run 'npm run dev' to run in dev mode
+# Project Name: Ex01_CQ
+Dự án này là một web app được phát triển bằng React nhằm quản lý danh sách sinh viên. Ứng dụng cho phép người dùng xem, chỉnh sửa, thêm mới và xóa thông tin sinh viên một cách dễ dàng.
 
+## Cấu trúc source code
+```
+.
+├── backend
+│   ├── components
+│   │   ├── responses
+│   │   └── student-managing
+│   │       ├── domain
+│   │       │   └── studentManager.early.test
+│   │       ├── entry-points
+│   │       │   └── api
+│   │       │       └── test
+│   │       └── storage
+│   ├── core
+│   │   └── socket
+│   ├── libraries
+│   │   ├── errorHandler
+│   │   ├── utils
+│   │   └── validator
+│   └── static-content
+└── frontend
+    ├── src
+    │   ├── components
+    │   │   ├── Content
+    │   │   ├── Header
+    │   │   ├── Loading
+    │   │   ├── NothingDisplay
+    │   │   ├── Notification
+    │   │   └── SubHeader
+    │   ├── contexts
+    │   ├── pages
+    │   │   ├── Home
+    │   │   └── Student
+    │   │       ├── StudentImportForm
+    │   │       ├── StudentItem
+    │   │       └── StudentList
+    │   ├── services
+    │   └── styles
+    └── test
+```
+## Hướng dẫn cài đặt & chạy chương trình
+### Yêu cầu hệ thống
+Node.js (>= 16)
+npm
 
-
-# Yêu cầu: Viết một chương trình quản lý danh sách sinh viên với các chức năng sau:
-
-1. **Thêm sinh viên mới**: Nhập thông tin của một sinh viên và lưu vào danh sách.
-2. **Xóa sinh viên**: Xóa thông tin sinh viên dựa trên Mã số sinh viên (MSSV).
-3. **Cập nhật thông tin sinh viên**: Cập nhật thông tin của sinh viên dựa trên MSSV.
-4. **Tìm kiếm sinh viên**: Tìm kiếm sinh viên theo họ tên hoặc MSSV.
-
-Thông tin cần quản lý bao gồm:
-
-- Mã số sinh viên
-- Họ tên
-- Ngày tháng năm sinh
-- Giới tính
-- Khoa 
-- Khóa 
-- Chương trình 
-- Địa chỉ
-- Email
-- Số điện thoại liên hệ
-- Tình trạng sinh viên
-
-Yêu cầu kỹ thuật:
-- Chương trình có thể được viết bằng bất kỳ ngôn ngữ lập trình nào.
-- Ứng dụng có thể là một ứng dụng console, desktop hoặc web.
-- Cần thực hiện kiểm tra tính hợp lệ đối với định dạng email, số điện thoại, tên khoa, tình trạng sinh viên.
-
-** Danh sách các khoa: Khoa Luật, Khoa Tiếng Anh thương mại, Khoa Tiếng Nhật, Khoa Tiếng Pháp
-** Các tình trạng sinh viên: Đang học, Đã tốt nghiệp, Đã thôi học, Tạm dừng học 
-
-## Lưu ý: Chương trình cần đảm bảo tính đúng đắn và dễ kiểm thử.
-
-
+### Cài đặt
+Chạy lệnh:```npm i``` ở cả thư mục gốc (root) và thư mục frontend
+### Chạy chương trình
+Chạy lệnh:```npm run dev```để vào chế độ dev mode 
