@@ -70,6 +70,8 @@
 }
 
 .nofi .nofi__close {
+    color: #000000;
+
     transition: all ease 0.3s;
 }
 
@@ -87,6 +89,7 @@
 .nofi .nofi__content .nofi__content__msg {
     font-size: 0.9em;
     font-weight: 300;
+    color: #000000;
 }
 
 .nofi+.nofi {
@@ -107,6 +110,10 @@
     background-color: var(--success-color)
 }
 
+.nofi--success .nofi__content__title {
+    color: var(--success-color);
+}
+
 /*----------------SUCCESS----------------*/
 
 /*----------------ERROR----------------*/
@@ -118,6 +125,10 @@
     background-color: var(--error-color);
 }
 
+.nofi--error .nofi__content__title {
+    color: var(--error-color);
+}
+
 /*----------------ERROR----------------*/
 
 /*----------------WARNING----------------*/
@@ -127,6 +138,10 @@
 
 .nofi--warning .nofi__icon {
     background-color: var(--warning-color);
+}
+
+.nofi--warning .nofi__content__title {
+    color: var(--warning-color);
 }
 
 /*----------------WARNING----------------*/

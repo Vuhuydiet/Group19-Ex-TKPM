@@ -1,30 +1,77 @@
 import { useState } from "react";
 import "./student_import_form.css";
-import { mockDataFaculties, mockDataPrograms, Student } from "../Student.constant";
+import { mockDataFaculties, mockDataPrograms } from '../../../services/mockData';
+import { addStudent, Student } from "../../../services/studentAPIServices";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faPencil } from '@fortawesome/free-solid-svg-icons'
 // import { useLoading } from '../components/LoadingContext';
-// import { useNotification } from "../components/NotificationContext";
+import { useNotification } from "../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
 
 function StudentImportForm() {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
-    // const { notify } = useNotification();
+    const { notify } = useNotification();
 
     const [student, setStudent] = useState<Student>({
-        ID: "",
+        id: "",
         name: "",
-        dateOfBirth: "",
+        dob: "",
         gender: "",
         program: "",
-        academicYear: "",
+        academicYear: new Date().getFullYear(),
         faculty: "",
         address: "",
         email: "",
-        phoneNumber: "",
-        status: "",
+        phone: "",
+        status: "Đang học",
     });
+
+    async function handleAddStudent() {
+        if (student.id === "" || student.name === "" || student.dob === "" || student.email === "" || student.address === "" || student.phone === "") {
+            // notify("Please fill in all fields", "error");
+            notify({ type: "error", msg: "Please fill in all fields" });
+            return;
+        }
+
+        const email = student.email;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            notify({ type: "error", msg: "Invalid email format" });
+            return;
+        }
+
+        const phone = student.phone;
+        const phoneRegex = /^(0\d{9})$/;
+        if (!phoneRegex.test(phone)) {
+            notify({ type: "error", msg: "Invalid phone number format" });
+            return;
+        }
+
+
+        try {
+            const response = await addStudent(student);
+            setStudent({
+                id: "",
+                name: "",
+                dob: "",
+                gender: "",
+                program: "",
+                academicYear: new Date().getFullYear(),
+                faculty: "",
+                address: "",
+                email: "",
+                phone: "",
+                status: "",
+            });
+
+            console.log(response);
+            notify({ type: "success", msg: "Add student successfully" });
+
+        } catch {
+            notify({ type: "error", msg: "Add student failed" });
+        }
+    }
 
     return (
         <>
@@ -47,8 +94,8 @@ function StudentImportForm() {
                     <div className="productimport__form__item">
                         <span>ID</span>
                         <input
-                            value={student.ID}
-                            onChange={(e) => setStudent({ ...student, ID: e.target.value })}
+                            value={student.id}
+                            onChange={(e) => setStudent({ ...student, id: e.target.value })}
                             type="text"
                             placeholder="Enter student's ID" />
                     </div>
@@ -67,8 +114,8 @@ function StudentImportForm() {
                     <div className="productimport__form__item">
                         <span>Date of birth</span>
                         <input
-                            value={student.dateOfBirth}
-                            onChange={(e) => setStudent({ ...student, dateOfBirth: e.target.value })}
+                            value={student.dob}
+                            onChange={(e) => setStudent({ ...student, dob: e.target.value })}
                             type="date"
                             placeholder="Enter student's date of birth" />
                     </div>
@@ -82,8 +129,8 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's gender
                             </option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
 
                         </select>
 
@@ -139,16 +186,22 @@ function StudentImportForm() {
                         <input
                             value={student.email}
                             type="text"
-                            onChange={(e) => setStudent({ ...student, email: e.target.value })}
+                            onChange={(e) => {
+                                setStudent({ ...student, email: e.target.value });
+                            }
+                            }
                             placeholder="Enter student's email" />
                     </div>
 
                     <div className="productimport__form__item">
                         <span>Phone</span>
                         <input
-                            value={student.phoneNumber}
+                            value={student.phone}
                             type="text"
-                            onChange={(e) => setStudent({ ...student, phoneNumber: e.target.value })}
+                            onChange={(e) => {
+                                setStudent({ ...student, phone: e.target.value });
+                            }
+                            }
                             placeholder="Enter student's phone number" />
                     </div>
 
@@ -157,7 +210,7 @@ function StudentImportForm() {
                 <div className="productimport__form__footer">
                     <div className="productimport__form__button">
                         <button>Reset</button>
-                        <button>Import</button>
+                        <button onClick={handleAddStudent}>Add</button>
                     </div>
                 </div>
             </div>
