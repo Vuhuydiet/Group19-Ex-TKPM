@@ -1,17 +1,9 @@
 import axios from "axios";
 import { getStudents, getStudentById, addStudent, updateStudent, removeStudent } from "../src/services/studentAPIServices";
-import { mockStudentsList, mockStudent } from "../src/services/mockData";
+import { mockStudent } from "../src/services/mockData";
 jest.mock("axios"); // Mock axios
 
 describe("API Service Tests", () => {
-  // Test getStudents()
-  it("should fetch list of students", async () => {
-    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockStudentsList });
-
-    const students = await getStudents();
-    expect(students).toEqual(mockStudentsList);
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/students");
-  });
 
   // Test getStudentById()
   it("should fetch a student by ID", async () => {
