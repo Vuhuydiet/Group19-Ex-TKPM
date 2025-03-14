@@ -1,11 +1,12 @@
 import {StudentManagerController} from "./studentManagement.controller";
 import express, { Request, Response } from "express";
-import {checkEmailPattern, checkPhoneNumberPattern } from "./studentManagement.middleware";
+import { checkEmailPattern, checkPhoneNumberPattern } from "./studentManagement.middleware";
 const router = express.Router();
 
 const controller = new StudentManagerController();
 
 router.post('/', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
+
     controller.addStudent(req);
     res.json({ message: 'Student added successfully' });
 });
