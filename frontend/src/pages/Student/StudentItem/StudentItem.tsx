@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
 import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../../../services/mockData';
-import { Student, updateStudent } from '../../../services/studentAPIServices';
+import { Student, updateStudent, removeStudent} from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
@@ -30,7 +30,10 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
         }
 
         try {
-            const response = await updateStudent(studentInfo.id, studentInfo);
+            // Bỏ thuộc tính id trước khi gửi request (do bên BE không có setter cho ID -> không thể update ID) //ducnhat24
+            const { id, ...studentData } = studentInfo;
+            // const response = await updateStudent(studentInfo.id, studentInfo);
+            const response = await updateStudent(studentInfo.id, studentData);
             setStudents(students.map((student: Student) => student.id === response.id ? response : student));
             setSelectedStudent(undefined);
         } catch {
@@ -38,6 +41,23 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             notify({ type: "error", msg: "Update student failed" });
         }
     }
+
+    async function handleDelete() {
+        if (!window.confirm("Are you sure you want to delete this student?")) return;
+
+        try {
+            await removeStudent(studentInfo.id); // Gọi API xóa sinh viên
+
+            // Cập nhật danh sách sinh viên sau khi xóa
+            setStudents(students.filter((student: Student) => student.id !== studentInfo.id));
+            setSelectedStudent(undefined);
+            
+            notify({ type: "success", msg: "Student deleted successfully" });
+        } catch {
+            notify({ type: "error", msg: "Delete student failed" });
+        }
+    }
+
 
     return (
         <>
@@ -161,7 +181,8 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                     <div className="studentitem__footer">
                         <div className="studentitem__button">
                             <button onClick={() => setSelectedStudent(undefined)}>Back</button>
-                            <button>Delete</button>
+                            {/* <button>Delete</button> */}
+                            <button onClick={handleDelete}>Delete</button>
                             <button onClick={() => setIsEdit(!isEdit)}>
                                 {isEdit ? "Cancel" : "Edit"}
                             </button>
