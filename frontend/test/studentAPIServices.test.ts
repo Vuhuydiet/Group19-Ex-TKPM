@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getStudents, getStudentById, addStudent, updateStudent, removeStudent } from "../src/services/studentAPIServices";
-import { mockStudentsList, mockStudent } from "../src/services/mockData";
+import { mockStudent } from "../src/services/mockData";
 jest.mock("axios"); // Mock axios
 
 describe("API Service Tests", () => {
