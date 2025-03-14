@@ -94,6 +94,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin: 5px 0;
     width: 100%;
     color: var(--main-color);
@@ -105,7 +106,6 @@
     outline: none;
     text-align: center;
     margin: 0 5px;
-    width: 70px;
     color: var(--main-color);
     font-size: 15px;
     font-weight: 700;

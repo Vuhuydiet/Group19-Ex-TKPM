@@ -5,7 +5,14 @@ const router = express.Router();
 
 const controller = new StudentManagerController();
 
+<<<<<<< HEAD
 router.post('/', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
+=======
+
+router.post('/', checkStudentNamePattern, checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
+// router.post('/', (req: Request, res: Response) => {
+
+>>>>>>> 1e5ded879cd926a6631f5b988425d6ec007adef6
     controller.addStudent(req);
     res.json({ message: 'Student added successfully' });
 });
