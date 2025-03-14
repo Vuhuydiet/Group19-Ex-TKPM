@@ -5,7 +5,7 @@ export class Student {
   private _dob: Date;
   private _gender: 'Nam' | 'Nữ';
   private _faculty: 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp';
-  private _accademicYear: number;
+  private _academicYear: number;
   private _program: string;
   private _address: string;
   private _email: string;
@@ -19,7 +19,7 @@ export class Student {
     dob: Date,
     gender: 'Nam' | 'Nữ',
     faculty: 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp',
-    accademicYear: number,
+    academicYear: number,
     program: string,
     address: string,
     email: string,
@@ -31,7 +31,7 @@ export class Student {
     this._dob = dob;
     this._gender = gender;
     this._faculty = faculty;
-    this._accademicYear = accademicYear;
+    this._academicYear = academicYear;
     this._program = program;
     this._address = address;
     this._email = email;
@@ -60,7 +60,7 @@ export class Student {
   }
 
   get accademicYear(): number {
-    return this._accademicYear;
+    return this._academicYear;
   }
 
   get program(): string {
@@ -100,7 +100,7 @@ export class Student {
   }
 
   set accademicYear(accademicYear: number) {
-    this._accademicYear = accademicYear;
+    this._academicYear = accademicYear;
   }
 
   set program(program: string) {
