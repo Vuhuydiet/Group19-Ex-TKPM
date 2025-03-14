@@ -129,8 +129,8 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's gender
                             </option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
 
                         </select>
 

@@ -109,16 +109,17 @@ export const mockStudentsList: Student[] = [
 ];
 
 export const mockDataStatus: string[] = [
-    "Studying",
-    "Graduated",
-    "Dropped Out"
+    "Đang học",
+    "Đã tốt nghiệp",
+    "Đã thôi học",
+    "Tạm dừng học"
 ];
 
 export const mockDataFaculties: string[] = [
-    "Law",
-    "Business English",
-    "Japanese",
-    "French",
+    "Khoa Luật",
+    "Khoa Tiếng Anh thương mại",
+    "Khoa Tiếng Nhật",
+    "Khoa Tiếng Pháp",
 ];
 
 export const mockDataPrograms: string[] = [
