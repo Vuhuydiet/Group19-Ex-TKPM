@@ -6,7 +6,6 @@ Dự án này là một web app được phát triển bằng React nhằm quả
 .
 ├── backend
 │   ├── components
-│   │   ├── responses
 │   │   └── student-managing
 │   │       ├── domain
 │   │       │   └── studentManager.early.test
@@ -15,6 +14,7 @@ Dự án này là một web app được phát triển bằng React nhằm quả
 │   │       │       └── test
 │   │       └── storage
 │   ├── core
+│   │   ├── responses
 │   │   └── socket
 │   ├── libraries
 │   │   ├── errorHandler
