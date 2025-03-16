@@ -1,43 +1,76 @@
-import {StudentManager} from "../../domain/management/StudentManager";
 import {Student} from "../../domain/management/Student";
 import { StudentManagementMapper } from "./studentManagement.mapper";
-import { Request} from "express";
-import g_StudentManger from "../../storage/studentManager";
+import { Request, Response} from "express";
+import StudentManagementService from "../../domain/services/studentManagement.service";
+import StudentQuery from "../../domain/services/studentManagement.service";
+import { CreatedResponse, OKResponse } from "../../../../core/responses/SuccessResponse"
 
 export class StudentManagerController {
 
-    private studentManager: StudentManager;
     private studentManagementMapper: StudentManagementMapper;
     
     constructor() {
-        this.studentManager = g_StudentManger;
         this.studentManagementMapper = new StudentManagementMapper();
     }
     
-    addStudent(req: Request): void {
+    addStudent(req: Request, res: Response): void {
         const student = this.studentManagementMapper.toStudent(req);
-        this.studentManager.add(student);
+        StudentManagementService.addStudent(student);
+        new CreatedResponse({
+            message: 'Student added successfully',
+            metadata: student
+        }).send(res);
     }
     
-    removeStudent(id: string): void {
-        this.studentManager.remove(id);
+    removeStudent(req: Request, res: Response): void {
+        const studentId = req.params.id;
+        StudentManagementService.removeStudent(studentId);
+        new OKResponse({
+            message: 'Student removed successfully'
+        }).send(res);
     }
     
-    getStudents(): Student[] {
-        return this.studentManager.students;
+    getStudents(req: Request, res: Response): void {
+        const query: StudentQuery = req.body;
+        const students = StudentManagementService.getStudents(query);
+        new OKResponse({
+            metadata: students
+        }).send(res);
     }
     
-    getStudentById(id: string): Student | undefined {
-        return this.studentManager.getStudentById(id);
-    }
-    
-    getStudentsByName(name: string): Student[] {
-        return this.studentManager.getStudentsByName(name);
-    }
-    
-    updateStudent(id: string, req: Request): void {
-        const studentInfo: Partial<Student> = req.body;
-        this.studentManager.update(id, studentInfo);
-    }
+    getStudentById(req: Request, res: Response): void {
+        const studentId = req.params.id;
+        const student = StudentManagementService.getStudentById(studentId);
 
+        new OKResponse({
+            message: "Student found",
+            metadata: student
+        }).send(res);
+    }
+    
+    getStudentsByName(req: Request, res: Response): void {
+        const studentName = req.query.name as string;
+        const students = StudentManagementService.getStudents({name: studentName});
+        
+        new OKResponse({
+            message: "Students found",
+            metadata: students
+        }).send(res);
+    }
+    
+    updateStudent(req: Request, res: Response): void {
+        const studentInfo: Partial<Student> = req.body;
+        const studentId = req.params.id;
+        StudentManagementService.updateStudent(studentId, studentInfo);
+        
+        const student = StudentManagementService.getStudentById(studentId);
+        new OKResponse({
+            message: 'Student updated successfully',
+            metadata: student
+        }).send(res);
+    }
 }
+
+const g_StudentMangerController = new StudentManagerController();
+
+export default g_StudentMangerController;

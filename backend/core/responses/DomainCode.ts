@@ -1,0 +1,10 @@
+export enum DomainCode {
+    SUCCESS = "999",
+    UNKNOWN_ERROR = "000",
+    FORBIDDEN = "001",
+    UNAUTHORIZED = "002",
+    INVALID_INPUT_FIELD = "003",
+    STUDENT_NOT_FOUND = "004",
+    STUDENT_ALREADY_EXISTS = "005",
+    FACULTY_NOT_FOUND = "006",
+}

@@ -1,42 +1,30 @@
-import {StudentManagerController} from "./studentManagement.controller";
+import g_StudentMangerController from "./studentManagement.controller";
 import express, { Request, Response } from "express";
 import { checkEmailPattern, checkPhoneNumberPattern } from "./studentManagement.middleware";
 const router = express.Router();
 
-const controller = new StudentManagerController();
-
 router.post('/', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
-
-    controller.addStudent(req);
-    res.json({ message: 'Student added successfully' });
+    g_StudentMangerController.addStudent(req, res);
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
-    controller.removeStudent(req.params.id);
-    res.json({ message: 'Student removed successfully' });
+    g_StudentMangerController.removeStudent(req, res);
 });
 
-router.get('/', (_, res: Response) => {
-    res.json(controller.getStudents());
+router.get('/', (req: Request, res: Response) => {
+    g_StudentMangerController.getStudents(req, res);
 });
 
 router.get('/id/:id', (req: Request, res: Response) => {
-    const student = controller.getStudentById(req.params.id);
-    if (!student) {
-        res.status(404).json({ message: 'Student not found' });
-        return;
-    }
-    res.json(student);
+    g_StudentMangerController.getStudentById(req, res);
 });
 
 router.get('/name', (req: Request, res: Response) => {
-    const students = controller.getStudentsByName(req.query.name as string);
-    res.json(students);
+    g_StudentMangerController.getStudentsByName(req, res);
 });
 
 router.patch('/:id', checkEmailPattern, checkPhoneNumberPattern, (req: Request, res: Response) => {
-    controller.updateStudent(req.params.id, req);
-    res.json({ message: 'Student updated successfully' });
+    g_StudentMangerController.updateStudent(req, res);
 });
 
 

@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from "express";
+import { DomainError } from "../../../../core/responses/ErrorResponse";
+import { DomainCode } from "../../../../core/responses/DomainCode";
 
 const NAME_PATTERN = /^[A-Za-z\s]+$/;
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -10,8 +12,7 @@ export const checkStudentNamePattern = (req: Request, res: Response, next: NextF
     }
     
     if (!NAME_PATTERN.test(req.body.name)) {
-        res.status(400).json({ message: 'Invalid student name' });
-        return;
+        throw new DomainError(DomainCode.INVALID_INPUT_FIELD, 'Invalid student name');
     }
     next();
 };
@@ -22,8 +23,7 @@ export const checkEmailPattern = (req: Request, res: Response, next: NextFunctio
     }
 
     if (!EMAIL_PATTERN.test(req.body.email)) {
-        res.status(400).json({ message: 'Invalid email' });
-        return;
+        throw new DomainError(DomainCode.INVALID_INPUT_FIELD, 'Invalid email address');
     }
     next();
 }   
@@ -34,8 +34,7 @@ export const checkPhoneNumberPattern = (req: Request, res: Response, next: NextF
     }
 
     if (!req.body.phone || req.body.phone.length !== PHONE_NUMBER_LENGTH) {
-        res.status(400).json({ message: 'Phone number should have 10 digits' });
-        return;
+        throw new DomainError(DomainCode.INVALID_INPUT_FIELD, 'Invalid phone number');
     }
     next();
 };

@@ -1,3 +1,5 @@
+import { DomainCode } from "./DomainCode";
+
 const enum ErrorStatusCode {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
@@ -16,21 +18,25 @@ const ErrorMessage = {
 
 type ErrorObject = {
   statusCode: ErrorStatusCode;
+  domainCode?: DomainCode;
   message: string;
   error?: any;
 };
 
 class RequestError extends Error {
   statusCode: ErrorStatusCode;
+  domainCode: DomainCode;
   error: any;
 
   constructor({
     statusCode = ErrorStatusCode.INTERNAL_SERVER_ERROR,
+    domainCode = DomainCode.UNKNOWN_ERROR,
     message = ErrorMessage.INTERNAL_SERVER_ERROR,
     error
   }: ErrorObject) {
     super(message);
     this.statusCode = statusCode;
+    this.domainCode = domainCode;
     this.error = error;
   }
 }
@@ -49,19 +55,25 @@ class BadRequestError extends RequestError {
 
 class UnauthorizedError extends RequestError {
   constructor(message: string = ErrorMessage.UNAUTHORIZED, error?: any) {
-    super({ statusCode: ErrorStatusCode.UNAUTHORIZED, message, error });
+    super({ statusCode: ErrorStatusCode.UNAUTHORIZED, domainCode: DomainCode.UNAUTHORIZED, message, error });
   }
 }
 
 class ForbiddenError extends RequestError {
   constructor(message: string = ErrorMessage.FORBIDDEN, error?: any) {
-    super({ statusCode: ErrorStatusCode.FORBIDDEN, message, error });
+    super({ statusCode: ErrorStatusCode.FORBIDDEN, domainCode: DomainCode.FORBIDDEN, message, error });
   }
 }
 
 class InternalServerError extends RequestError {
   constructor(message: string = ErrorMessage.INTERNAL_SERVER_ERROR, error?: any) {
     super({ statusCode: ErrorStatusCode.INTERNAL_SERVER_ERROR, message, error });
+  }
+}
+
+class DomainError extends RequestError {
+  constructor(domainCode: DomainCode, message: string, error?: any) {
+    super({ statusCode: ErrorStatusCode.INTERNAL_SERVER_ERROR, domainCode, message, error });
   }
 }
 
@@ -72,4 +84,5 @@ export {
   UnauthorizedError,
   ForbiddenError,
   InternalServerError,
+  DomainError,
 };
