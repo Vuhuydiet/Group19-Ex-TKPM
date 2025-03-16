@@ -1,5 +1,5 @@
-import {StudentManager} from "../../domain/studentManager";
-import {Student} from "../../domain/student";
+import {StudentManager} from "../../domain/management/StudentManager";
+import {Student} from "../../domain/management/Student";
 import { StudentManagementMapper } from "./studentManagement.mapper";
 import { Request} from "express";
 import g_StudentManger from "../../storage/studentManager";

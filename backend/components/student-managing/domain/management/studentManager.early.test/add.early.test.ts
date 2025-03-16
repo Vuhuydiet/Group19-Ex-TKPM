@@ -1,5 +1,5 @@
 
-import { StudentManager } from '../studentManager';
+import { StudentManager } from '../StudentManager';
 
 
 // Import necessary modules
