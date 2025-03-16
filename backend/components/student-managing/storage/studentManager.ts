@@ -1,4 +1,4 @@
-import { StudentManager } from "../domain/studentManager";
+import { StudentManager } from "../domain/management/StudentManager";
 
 const g_StudentManger = new StudentManager();
 

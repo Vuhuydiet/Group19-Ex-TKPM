@@ -1,30 +1,36 @@
 
+export type Gender = 'Nam' | 'Nữ';
+
+export type Faculty = 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp';
+
+export type StudyStatus = 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học';
+
 export class Student {
   private _id: string;
   private _name: string;
   private _dob: Date;
-  private _gender: 'Nam' | 'Nữ';
-  private _faculty: 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp';
+  private _gender: Gender;
+  private _faculty: Faculty;
   private _academicYear: number;
   private _program: string;
   private _address: string;
   private _email: string;
   private _phone: string;
-  private _status: 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học';
+  private _status: StudyStatus;
   
 
   constructor(
     id: string,
     name: string,
     dob: Date,
-    gender: 'Nam' | 'Nữ',
-    faculty: 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp',
+    gender: Gender,
+    faculty: Faculty,
     academicYear: number,
     program: string,
     address: string,
     email: string,
     phone: string,
-    status: 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học'
+    status: StudyStatus
   ) {
     this._id = id;
     this._name = name;
@@ -51,15 +57,15 @@ export class Student {
     return this._dob;
   }
 
-  get gender(): 'Nam' | 'Nữ' {
+  get gender(): Gender {
     return this._gender;
   }
 
-  get faculty(): 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp' {
+  get faculty(): Faculty {
     return this._faculty;
   }
 
-  get accademicYear(): number {
+  get academicYear(): number {
     return this._academicYear;
   }
 
@@ -79,7 +85,7 @@ export class Student {
     return this._phone;
   }
 
-  get status(): 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học' {
+  get status(): StudyStatus {
     return this._status;
   }
 
@@ -91,15 +97,15 @@ export class Student {
     this._dob = dob;
   }
 
-  set gender(gender: 'Nam' | 'Nữ') {
+  set gender(gender: Gender) {
     this._gender = gender;
   }
 
-  set faculty(faculty: 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp') {
+  set faculty(faculty: Faculty) {
     this._faculty = faculty;
   }
 
-  set accademicYear(accademicYear: number) {
+  set academicYear(accademicYear: number) {
     this._academicYear = accademicYear;
   }
 
@@ -119,7 +125,7 @@ export class Student {
     this._phone = phone;
   }
 
-  set status(status: 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học') {
+  set status(status: StudyStatus) {
     this._status = status;
   }
 

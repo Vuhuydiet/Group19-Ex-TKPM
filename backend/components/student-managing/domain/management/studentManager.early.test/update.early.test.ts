@@ -1,5 +1,5 @@
 
-import { StudentManager } from '../studentManager';
+import { StudentManager } from '../StudentManager';
 
 
 // Import necessary modules
@@ -84,7 +84,7 @@ describe('StudentManager.update() update method', () => {
 
     it('should not throw an error if the students list is empty', () => {
       // Arrange
-      studentManager._students = [];
+      studentManager.students = [];
 
       // Act & Assert
       expect(() => studentManager.update('default-id', { name: 'new-name' } as any)).not.toThrow();

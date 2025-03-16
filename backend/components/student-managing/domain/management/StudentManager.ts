@@ -1,7 +1,7 @@
-import { Student } from "./student";
+import { Student } from "./Student";
 
 export class StudentManager {
-  public _students: Student[] = [];
+  private _students: Student[] = [];
 
 
   add(student: Student): void {
@@ -12,16 +12,16 @@ export class StudentManager {
     this._students = this._students.filter(student => student.id !== id);
   }
 
+  set students(students: Student[]) {
+    this._students = students;
+  }
+
   get students() {
     return this._students;
   }
 
-  getStudentById(id: string): Student | undefined {
-    return this._students.find(student => student.id === id);
-  }
-
-  getStudentsByName(name: string): Student[] {
-    return this._students.filter(student => student.name === name);
+  getStudents(compare: (student: Student) => boolean) {
+    return this._students.filter(compare);
   }
 
   update(id: string, studentInfo: Partial<Student>): void {
