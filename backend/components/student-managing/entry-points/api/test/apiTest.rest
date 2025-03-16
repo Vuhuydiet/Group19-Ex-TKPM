@@ -25,24 +25,6 @@ Content-Type: application/json
   "status": "Đang học"
 }
 
-### Add new student with invalid name
-POST http://localhost:3000/students
-Content-Type: application/json
-
-{
-  "id": "22120413",
-  "name": "GROUP19 API TEST",
-  "dob": "2025-03-12",
-  "gender": "Nam",
-  "faculty": "Khoa Luật",
-  "accademicYear": 2023,
-  "program": "Dai Tra",
-  "address": "123 Đường ABC, Quận 1, TP.HCM",
-  "email": "group19apitest@example.com",
-  "phone": "0123456789",
-  "status": "Đang học"
-}
-
 ### Add new student with invalid email
 POST http://localhost:3000/students
 Content-Type: application/json

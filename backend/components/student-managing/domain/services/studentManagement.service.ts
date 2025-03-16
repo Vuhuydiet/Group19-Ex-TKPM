@@ -2,7 +2,7 @@ import g_StudentManger from "../../storage/studentManager";
 import { Faculty, Student } from "../management/Student";
 
 
-type StudentQuery = {
+export type StudentQuery = {
   name?: string,
   faculty?: Faculty,
 }

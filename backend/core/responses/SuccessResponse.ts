@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { DomainCode } from './DomainCode';
 
 const SuccessStatusCode = {
   OK: 200,
@@ -16,27 +17,32 @@ const SuccessMessage = {
 
 type SuccessObject = {
   statusCode: number;
+  domainCode?: DomainCode;
   message: string;
   metadata?: any;
 };
 
 class SuccessResponse {
   statusCode: number;
+  domainCode: DomainCode;
   message: string;
   metadata?: any;
 
   constructor({
     statusCode = SuccessStatusCode.OK,
+    domainCode = DomainCode.SUCCESS,
     message = SuccessMessage.OK,
     metadata,
   }: SuccessObject) {
     this.statusCode = statusCode;
+    this.domainCode = domainCode;
     this.message = message;
     this.metadata = metadata;
   }
 
   send(res: Response) {
     res.status(this.statusCode).json({
+      domainCode: this.domainCode,
       message: this.message,
       metadata: this.metadata,
     });
