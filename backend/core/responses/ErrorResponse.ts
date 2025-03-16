@@ -42,14 +42,14 @@ class RequestError extends Error {
 }
 
 class NotFoundError extends RequestError {
-  constructor(message: string = ErrorMessage.NOT_FOUND, error?: any) {
-    super({ statusCode: ErrorStatusCode.NOT_FOUND, message, error });
+  constructor(domainCode: DomainCode = DomainCode.UNKNOWN_ERROR, message: string = ErrorMessage.NOT_FOUND, error?: any) {
+    super({domainCode: domainCode, statusCode: ErrorStatusCode.NOT_FOUND, message, error });
   }
 }
 
 class BadRequestError extends RequestError {
-  constructor(message: string = ErrorMessage.BAD_REQUEST, error?: any) {
-    super({ statusCode: ErrorStatusCode.BAD_REQUEST, message, error });
+  constructor(domainCode: DomainCode = DomainCode.UNKNOWN_ERROR, message: string = ErrorMessage.BAD_REQUEST, error?: any) {
+    super({domainCode: domainCode, statusCode: ErrorStatusCode.BAD_REQUEST, message, error });
   }
 }
 
@@ -71,12 +71,6 @@ class InternalServerError extends RequestError {
   }
 }
 
-class DomainError extends RequestError {
-  constructor(domainCode: DomainCode, message: string, error?: any) {
-    super({ statusCode: ErrorStatusCode.INTERNAL_SERVER_ERROR, domainCode, message, error });
-  }
-}
-
 export {
   RequestError,
   NotFoundError,
@@ -84,5 +78,4 @@ export {
   UnauthorizedError,
   ForbiddenError,
   InternalServerError,
-  DomainError,
 };
