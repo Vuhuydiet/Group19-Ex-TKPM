@@ -1,3 +1,5 @@
+import { DomainCode } from "../../../../core/responses/DomainCode";
+import { BadRequestError } from "../../../../core/responses/ErrorResponse";
 import g_StudentManger from "../../storage/studentManager";
 import { Faculty, Student } from "../management/Student";
 
@@ -9,6 +11,8 @@ export type StudentQuery = {
 
 export default class StudentManagementService {
   public static addStudent(student: Student) {
+    if (g_StudentManger.students.find(std => std.id === student.id))
+      throw new BadRequestError(DomainCode.STUDENT_ALREADY_EXISTS, 'Student already exists');
     g_StudentManger.add(student);
   }
 
@@ -24,7 +28,11 @@ export default class StudentManagementService {
 
   public static getStudents(query: StudentQuery) {
     return g_StudentManger.getStudents((student) => {
-      return ((query.name || false) && student.name.includes(query.name)) || ((query.faculty || false) && student.faculty === query.faculty);
+      if (query.name && student.name.includes(query.name))
+        return true;
+      if (query.faculty && student.faculty === query.faculty)
+        return true;
+      return false;
     });
   }
 
