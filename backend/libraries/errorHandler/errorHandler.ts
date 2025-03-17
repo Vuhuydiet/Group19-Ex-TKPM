@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { RequestError } from '../../core/responses/ErrorResponse.js';
 import { DomainCode } from '../../core/responses/DomainCode.js';
-import logger from '../../core/logger/index.js';
 
 const errorHandler = (
   err: Error,
@@ -9,7 +8,7 @@ const errorHandler = (
   res: Response,
   _next: NextFunction,
 ) => {
-  logger.error(`ERROR HANDLER:\n ${err}`);
+  console.error(`ERROR HANDLER:\n ${err}`);
 
   if (!(err instanceof RequestError)) {
     res.status(500).json({ domainCode: DomainCode.UNKNOWN_ERROR, message: 'Internal Server Error' });

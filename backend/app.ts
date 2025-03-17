@@ -4,9 +4,6 @@ import cors from 'cors';
 import morgan from 'morgan';
 import compression from 'compression';
 import 'express-async-errors';
-import path from 'path';
-import dotenv from 'dotenv';
-dotenv.config();
 
 
 // import middlewares and routes
@@ -15,7 +12,7 @@ import errorHandler from './libraries/errorHandler/errorHandler';
 
 import router from './static-content'
 import studentRouter from './components/student-managing/entry-points/api/studentManagement.route';
-import logger from './core/logger';
+import path from 'path';
 
 // middlewares
 app.use(cors());
@@ -38,7 +35,6 @@ app.use(errorHandler);
 // start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`);
-  logger.info(`Environment: ${process.env.NODE_ENV}`);
-  logger.info(`Open: http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`Open: http://localhost:${PORT}`);
 });
