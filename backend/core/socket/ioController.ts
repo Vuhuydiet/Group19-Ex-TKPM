@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import logger from "../logger";
 
 class IOController {
 	constructor() {
@@ -40,7 +41,7 @@ class IOController {
 					}
 					catch (error: any) {
 						socket.emit(type, error.message);
-						console.error(error);
+						logger.error(`${error}`);
 						break;
 					}
 				}
