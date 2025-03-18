@@ -7,12 +7,14 @@ import { addStudent, Student } from "../../../services/studentAPIServices";
 // import { useLoading } from '../components/LoadingContext';
 import { useNotification } from "../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
+import StudentAddress from "../StudentAddress/StudentAddress";
 
 function StudentImportForm() {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
 
+    const [isHideAddress, setIsHideAddress] = useState(true);
     const [student, setStudent] = useState<Student>({
         id: "",
         name: "",
@@ -75,6 +77,7 @@ function StudentImportForm() {
 
     return (
         <>
+            {!isHideAddress && <StudentAddress title="Student Address" description="Enter student's address" setAddress={(address: string) => setStudent({ ...student, address: address })} setIsHide={setIsHideAddress} />}
             <div className="productimport">
                 <div className="productimport__header">
                     <div className="productimport__left">
@@ -174,11 +177,9 @@ function StudentImportForm() {
 
                     <div className="productimport__form__item">
                         <span>Address</span>
-                        <input
-                            value={student.address}
-                            type="text"
-                            onChange={(e) => setStudent({ ...student, address: e.target.value })}
-                            placeholder="Enter student's address" />
+                        <button onClick={
+                            () => setIsHideAddress(false)
+                        }>Enter student's address</button>
                     </div>
 
                     <div className="productimport__form__item">

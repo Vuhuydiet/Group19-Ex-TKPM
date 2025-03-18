@@ -1,0 +1,128 @@
+.address-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.address {
+    width: 70%;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    background-color: var(--item-color);
+    animation: zoomIn 0.3s ease;
+}
+
+.address__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.address__header .header__left h1 {
+    font-weight: 700;
+    color: var(--main-color)
+}
+
+.address__header .header__left p {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.address__header .header__right button {
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.3s;
+}
+
+.address__body {
+    width: 100%;
+}
+
+.address__line {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+
+.address__field {
+    width: calc((100% / 2) - 20px);
+    margin: 5px 10px;
+}
+
+
+.address__field .address__field__header {
+    margin-bottom: 10px;
+}
+
+.address__field .address__field__header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.address__field select {
+    width: 100%;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    outline: none;
+    padding: 5px 5px;
+    border-radius: var(--border-radius);
+}
+
+.address__line input {
+    width: 100%;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    outline: none;
+    padding: 5px 5px;
+    border-radius: var(--border-radius);
+}
+
+.address__footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.address__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.address__button button {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.3s;
+}

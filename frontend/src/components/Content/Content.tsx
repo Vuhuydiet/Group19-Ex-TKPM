@@ -10,6 +10,7 @@ function Content() {
                 <Route path='/' element={<Home />} />
                 <Route path='/student' element={<StudentList />} />
                 <Route path='/student/import' element={<StudentImportForm />} />
+
             </Routes>
         </>
     )
