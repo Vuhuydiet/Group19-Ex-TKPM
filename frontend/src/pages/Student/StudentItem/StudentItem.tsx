@@ -23,7 +23,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
     const [isEdit, setIsEdit] = useState(false);
 
     async function handleSave() {
-        if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.address === "" || studentInfo.phone === "") {
+        if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.phone === "") {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
@@ -121,12 +121,8 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Address</span>
-                                    <input
-                                        value={studentInfo.address}
-                                        type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, address: e.target.value })}
-                                        disabled={!isEdit} />
+                                    <span>Pernament</span>
+                                    <button>{studentInfo.pernamentAddress.street}, {studentInfo.pernamentAddress.ward}, {studentInfo.pernamentAddress.district}, {studentInfo.pernamentAddress.city}</button>
                                 </div>
 
                                 <div className="studentitem__info__item">

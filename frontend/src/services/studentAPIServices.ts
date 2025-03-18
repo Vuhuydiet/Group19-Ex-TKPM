@@ -24,8 +24,11 @@ export interface Student {
     street: string;
   };
   nationality: string;
-  image: string;
   email: string;
+  identityDocument: {
+    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
+    data: object;
+  };
   phone: string;
   status: string;
 }

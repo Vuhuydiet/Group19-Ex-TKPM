@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { mockDataFaculties, mockDataPrograms } from '../../../services/mockData';
-import { addStudent, Student } from "../../../services/studentAPIServices";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faPencil } from '@fortawesome/free-solid-svg-icons'
-// import { useLoading } from '../components/LoadingContext';
-import { useNotification } from "../../../contexts/NotificationProvider";
+import { mockDataFaculties, mockDataPrograms } from '../../../../services/mockData';
+import { addStudent, Student } from "../../../../services/studentAPIServices";
+import { useNotification } from "../../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
 import StudentAddress from "../StudentAddress/StudentAddress";
+import "../../../../styles/form.css";
+import StudentIdentity from "../StudentIdentity/StudentIdentity";
+
+interface identityDocument {
+    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
+    data: any;
+}
 
 function StudentImportForm() {
     // const { setIsLoading } = useLoading();
@@ -16,6 +20,7 @@ function StudentImportForm() {
 
     const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
+    const [isHideIdentity, setIsHideIdentity] = useState(true);
     const [student, setStudent] = useState<Student>({
         id: "",
         name: "",
@@ -37,7 +42,10 @@ function StudentImportForm() {
             street: ""
         },
         nationality: "",
-        image: "",
+        identityDocument: {
+            type: "",
+            data: {}
+        },
         email: "",
         phone: "",
         status: "Đang học",
@@ -56,7 +64,8 @@ function StudentImportForm() {
             || student.pernamentAddress.district === ""
             || student.pernamentAddress.ward === ""
             || student.pernamentAddress.street === ""
-            || student.image === "") {
+            || student.identityDocument.type === ""
+        ) {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
@@ -100,7 +109,10 @@ function StudentImportForm() {
                     street: ""
                 },
                 nationality: "",
-                image: "",
+                identityDocument: {
+                    type: "",
+                    data: {}
+                },
                 email: "",
                 phone: "",
                 status: "Đang học",
@@ -134,9 +146,10 @@ function StudentImportForm() {
         <>
             {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, pernamentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
             {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
-            <div className="productimport">
-                <div className="productimport__header">
-                    <div className="productimport__left">
+            {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
+            <div className="form">
+                <div className="form__header">
+                    <div className="header__left">
                         <h1>Student Addition</h1>
                         <p>Import a new student information</p>
                     </div>
@@ -149,8 +162,8 @@ function StudentImportForm() {
                     </div> */}
                 </div>
 
-                <div className="productimport__form">
-                    <div className="productimport__form__item">
+                <div className="form__body">
+                    <div className="form__field">
                         <span>ID</span>
                         <input
                             value={student.id}
@@ -160,7 +173,7 @@ function StudentImportForm() {
                     </div>
 
                     {/* Input Price */}
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Name</span>
                         <input
                             value={student.name}
@@ -170,7 +183,7 @@ function StudentImportForm() {
                             placeholder="Enter student's name   " />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Date of birth</span>
                         <input
                             value={student.dob}
@@ -179,7 +192,7 @@ function StudentImportForm() {
                             placeholder="Enter student's date of birth" />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Gender</span>
                         <select
                             value={student.gender}
@@ -195,7 +208,7 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Faculty</span>
                         <select
                             value={student.faculty}
@@ -213,7 +226,7 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Program</span>
                         <select
                             value={student.program}
@@ -231,14 +244,14 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Permanent Address</span>
                         <button onClick={
                             () => setIsHidePernamentAddress(false)
                         }>Enter student's permanent address</button>
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Email</span>
                         <input
                             value={student.email}
@@ -250,7 +263,7 @@ function StudentImportForm() {
                             placeholder="Enter student's email" />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Phone</span>
                         <input
                             value={student.phone}
@@ -262,14 +275,14 @@ function StudentImportForm() {
                             placeholder="Enter student's phone number" />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Temporary Address</span>
                         <button onClick={
                             () => setIsHideTemporaryAddress(false)
                         }>Enter student's temporary address</button>
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Nationality</span>
                         <select
                             value={student.nationality}
@@ -284,14 +297,16 @@ function StudentImportForm() {
                         </select>
                     </div>
 
-                    <div className="productimport__form__item">
-                        <span>Image</span>
-                        <button>Import student's image</button>
+                    <div className="form__field">
+                        <span>Identity</span>
+                        <button onClick={
+                            () => setIsHideIdentity(false)
+                        }>Choose student's identity</button>
                     </div>
                 </div>
 
-                <div className="productimport__form__footer">
-                    <div className="productimport__form__button">
+                <div className="form__footer">
+                    <div className="form__button">
                         <button>Reset</button>
                         <button onClick={handleAddStudent}>Add</button>
                     </div>

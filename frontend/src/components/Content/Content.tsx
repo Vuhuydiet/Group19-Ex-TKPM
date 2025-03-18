@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from '../../pages/Home/Home';
 import StudentList from '../../pages/Student/StudentList/StudentList';
-import StudentImportForm from '../../pages/Student/StudentImportForm/StudentImportForm';
+import StudentImportForm from '../../pages/Student/Form/StudentImportForm/StudentImportForm';
 
 function Content() {
     return (
@@ -10,7 +10,6 @@ function Content() {
                 <Route path='/' element={<Home />} />
                 <Route path='/student' element={<StudentList />} />
                 <Route path='/student/import' element={<StudentImportForm />} />
-
             </Routes>
         </>
     )
