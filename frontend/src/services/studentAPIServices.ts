@@ -11,7 +11,20 @@ export interface Student {
   faculty: string;
   academicYear: number;
   program: string;
-  address: string;
+  pernamentAddress: {
+    city: string;
+    district: string;
+    ward: string;
+    street: string;
+  };
+  temporaryAddress: {
+    city: string;
+    district: string;
+    ward: string;
+    street: string;
+  };
+  nationality: string;
+  image: string;
   email: string;
   phone: string;
   status: string;

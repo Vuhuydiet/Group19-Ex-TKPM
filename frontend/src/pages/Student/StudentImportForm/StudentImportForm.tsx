@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./student_import_form.css";
 import { mockDataFaculties, mockDataPrograms } from '../../../services/mockData';
 import { addStudent, Student } from "../../../services/studentAPIServices";
@@ -14,7 +14,8 @@ function StudentImportForm() {
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
 
-    const [isHideAddress, setIsHideAddress] = useState(true);
+    const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
+    const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
     const [student, setStudent] = useState<Student>({
         id: "",
         name: "",
@@ -23,14 +24,39 @@ function StudentImportForm() {
         program: "",
         academicYear: new Date().getFullYear(),
         faculty: "",
-        address: "",
+        pernamentAddress: {
+            city: "",
+            district: "",
+            ward: "",
+            street: ""
+        },
+        temporaryAddress: {
+            city: "",
+            district: "",
+            ward: "",
+            street: ""
+        },
+        nationality: "",
+        image: "",
         email: "",
         phone: "",
         status: "Đang học",
     });
 
     async function handleAddStudent() {
-        if (student.id === "" || student.name === "" || student.dob === "" || student.email === "" || student.address === "" || student.phone === "") {
+        if (student.id === ""
+            || student.name === ""
+            || student.dob === ""
+            || student.email === ""
+            || student.phone === ""
+            || student.gender === ""
+            || student.faculty === ""
+            || student.program === ""
+            || student.pernamentAddress.city === ""
+            || student.pernamentAddress.district === ""
+            || student.pernamentAddress.ward === ""
+            || student.pernamentAddress.street === ""
+            || student.image === "") {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
@@ -61,10 +87,23 @@ function StudentImportForm() {
                 program: "",
                 academicYear: new Date().getFullYear(),
                 faculty: "",
-                address: "",
+                pernamentAddress: {
+                    city: "",
+                    district: "",
+                    ward: "",
+                    street: ""
+                },
+                temporaryAddress: {
+                    city: "",
+                    district: "",
+                    ward: "",
+                    street: ""
+                },
+                nationality: "",
+                image: "",
                 email: "",
                 phone: "",
-                status: "",
+                status: "Đang học",
             });
 
             console.log(response);
@@ -75,9 +114,26 @@ function StudentImportForm() {
         }
     }
 
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://restcountries.com/v3.1/all");
+                const data = await response.json();
+                setCountries(data.map((country: any) => country.name.common));
+            } catch (error) {
+                console.error("Fetch data error", error);
+            }
+        }
+
+        fetchData();
+    }, []);
+
     return (
         <>
-            {!isHideAddress && <StudentAddress title="Student Address" description="Enter student's address" setAddress={(address: string) => setStudent({ ...student, address: address })} setIsHide={setIsHideAddress} />}
+            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, pernamentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
             <div className="productimport">
                 <div className="productimport__header">
                     <div className="productimport__left">
@@ -176,10 +232,10 @@ function StudentImportForm() {
                     </div>
 
                     <div className="productimport__form__item">
-                        <span>Address</span>
+                        <span>Permanent Address</span>
                         <button onClick={
-                            () => setIsHideAddress(false)
-                        }>Enter student's address</button>
+                            () => setIsHidePernamentAddress(false)
+                        }>Enter student's permanent address</button>
                     </div>
 
                     <div className="productimport__form__item">
@@ -206,6 +262,32 @@ function StudentImportForm() {
                             placeholder="Enter student's phone number" />
                     </div>
 
+                    <div className="productimport__form__item">
+                        <span>Temporary Address</span>
+                        <button onClick={
+                            () => setIsHideTemporaryAddress(false)
+                        }>Enter student's temporary address</button>
+                    </div>
+
+                    <div className="productimport__form__item">
+                        <span>Nationality</span>
+                        <select
+                            value={student.nationality}
+                            onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
+                        >
+                            <option value="" disabled> Choose student's nationlity </option>
+                            {countries.map((country, index) => (
+                                <option key={index} value={country}>
+                                    {country}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="productimport__form__item">
+                        <span>Image</span>
+                        <button>Import student's image</button>
+                    </div>
                 </div>
 
                 <div className="productimport__form__footer">
