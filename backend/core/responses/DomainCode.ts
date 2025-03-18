@@ -7,4 +7,5 @@ export enum DomainCode {
     STUDENT_NOT_FOUND = "004",
     STUDENT_ALREADY_EXISTS = "005",
     FACULTY_NOT_FOUND = "006",
+    IMPORT_EXPORT_TYPE_NOT_FOUND = "007",
 }
