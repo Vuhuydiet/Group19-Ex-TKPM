@@ -6,22 +6,45 @@ jest.mock("axios"); // Mock axios
 describe("API Service Tests", () => {
 
   // Test getStudentById()
-  it("should fetch a student by ID", async () => {
-    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockStudent });
+  // it("should fetch a student by ID", async () => {
+  //   (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockStudent });
+
+  //   const student = await getStudentById("22120413");
+  //   expect(student).toEqual(mockStudent);
+  //   expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/students/id/22120413");
+  // });
+
+  it("should fetch a student by ID and return metadata", async () => {
+    const mockResponse = { metadata: mockStudent };
+
+    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockResponse });
 
     const student = await getStudentById("22120413");
     expect(student).toEqual(mockStudent);
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/students/id/22120413");
   });
 
-  // Test addStudent()
-  it("should add a new student", async () => {
-    (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ data: mockStudent });
 
-    const newStudent = await addStudent(mockStudent);
-    expect(newStudent).toEqual(mockStudent);
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/students", mockStudent);
+  // // Test addStudent()
+  // it("should add a new student", async () => {
+  //   (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ data: mockStudent });
+
+  //   const newStudent = await addStudent(mockStudent);
+  //   expect(newStudent).toEqual(mockStudent);
+  //   expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/students", mockStudent);
+  // });
+
+  // Test addStudent()
+  it("should add a new student and return metadata", async () => {
+      const mockResponse = { metadata: mockStudent };
+
+      (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ data: mockResponse });
+
+      const newStudent = await addStudent(mockStudent);
+      expect(newStudent).toEqual(mockStudent);
+      expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/students", mockStudent);
   });
+
 
   // Test updateStudent()
   it("should update a student", async () => {
