@@ -43,7 +43,11 @@ function student() {
         return 7;
     }
 
-    const [amountItem, setAmountItem] = useState(calculateItemsPerPage());
+    const [amountItem, setAmountItem] = useState(0);
+
+    useEffect(() => {
+        setAmountItem(calculateItemsPerPage());
+    }, []);
 
     function handleSearch(keySearch: string) {
         if (keySearch.trim() === "") {
@@ -213,7 +217,18 @@ function student() {
                         <div className="board__table__selected">
                             <span>{students.length} students</span>
                             <button>
-                                <FontAwesomeIcon icon={faCartShopping} className='icon__deleted' />
+                                Export XML
+                            </button>
+                            <button>
+                                Export CSV
+                            </button>
+
+                            <button>
+                                Import XML
+                            </button>
+
+                            <button>
+                                Import CSV
                             </button>
                         </div>
 

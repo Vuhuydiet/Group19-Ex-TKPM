@@ -1,0 +1,21 @@
+.form--address {
+    width: 80% !important;
+}
+
+.form--address .form__header .header__right button {
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+}
+
+.form--address .form__body .form__field {
+    width: calc(100%/2 - 10px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
