@@ -4,19 +4,19 @@ import { XMLStrategy } from '../../import-export/impl/xml.strategy';
 import g_StudentManger from "../../../storage/studentManager";
 
 export class XMLImportExportService implements ImportExportService {
-    private jsonStrategy: ImportExportStrategy;
+    private xmlStrategy: ImportExportStrategy;
 
     constructor() {
-        this.jsonStrategy = new XMLStrategy();
+        this.xmlStrategy = new XMLStrategy();
     }
 
     importData(data: string): any {
-        return this.jsonStrategy.importData(data);
+        return this.xmlStrategy.importData(data);
     }
 
     exportAllStudentsData(): string {
         const students = g_StudentManger.students;
-        return this.jsonStrategy.exportData(students);
+        return this.xmlStrategy.exportData(students);
     }
 
     exportStudentDataById(id: string): string {
@@ -28,7 +28,7 @@ export class XMLImportExportService implements ImportExportService {
             return "";
         }
 
-        return this.jsonStrategy.exportData(student[0]);
+        return this.xmlStrategy.exportData(student[0]);
     }
 }
 

@@ -1,9 +1,9 @@
-import {Student} from "../../domain/management/Student";
+import {Student} from "../../../domain/management/Student";
 import { StudentManagementMapper } from "./studentManagement.mapper";
 import { Request, Response} from "express";
-import StudentManagementService from "../../domain/services/studentManagement.service";
-import StudentQuery from "../../domain/services/studentManagement.service";
-import { CreatedResponse, OKResponse } from "../../../../core/responses/SuccessResponse"
+import StudentManagementService from "../../../domain/services/studentManagement.service";
+import StudentQuery from "../../../domain/services/studentManagement.service";
+import { CreatedResponse, OKResponse } from "../../../../../core/responses/SuccessResponse"
 
 export class StudentManagerController {
 

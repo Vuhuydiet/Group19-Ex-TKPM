@@ -129,4 +129,20 @@ export class Student {
     this._status = status;
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      dob: this.dob,
+      gender: this.gender,
+      faculty: this.faculty,
+      academicYear: this.academicYear,
+      program: this.program,
+      address: this.address,
+      email: this.email,
+      phone: this.phone,
+      status: this.status
+    };
+  }
+  
 }
