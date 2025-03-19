@@ -89,3 +89,5 @@ export const updateStudent = async (id: string, updatedData: Partial<Student>): 
 export const removeStudent = async (id: string): Promise<void> => {
   await axios.delete(`${API_BASE_URL}/${id}`);
 };  
+
+

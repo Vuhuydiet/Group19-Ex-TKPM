@@ -8,6 +8,7 @@ import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 import StudentItem from '../StudentItem/StudentItem';
 import { Student, getStudents } from '../../../services/studentAPIServices';
 import { mockDataStatus } from '../../../services/mockData';
+import { exportStudentsJSON, importStudentsJSON, exportStudentsXML, importStudentsXML} from "../../../services/fileAPIServices";
 // import { useLoading } from '../components/LoadingContext';
 
 
@@ -90,6 +91,59 @@ function student() {
             setPage(page - 1);
         }
     }
+
+        // Handle Export JSON
+    const handleExportJSON = async () => {
+        const jsonBlob = await exportStudentsJSON();
+        const url = window.URL.createObjectURL(new Blob([jsonBlob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "students.json");
+        document.body.appendChild(link);
+        link.click();
+    };
+
+    // Handle Import JSON (Giả sử có file input)
+    const handleImportJSON = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+        if (e.target?.result) {
+            const jsonData = JSON.parse(e.target.result as string);
+            await importStudentsJSON(jsonData);
+            alert("Import JSON thành công!");
+        }
+        };
+        reader.readAsText(file);
+    };
+
+    // Handle Export XML
+    const handleExportXML = async () => {
+        const xmlBlob = await exportStudentsXML();
+        const url = window.URL.createObjectURL(new Blob([xmlBlob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "students.xml");
+        document.body.appendChild(link);
+        link.click();
+    };
+
+    // Handle Import XML
+    const handleImportXML = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+        if (e.target?.result) {
+            await importStudentsXML(e.target.result as string);
+            alert("Import XML thành công!");
+        }
+        };
+        reader.readAsText(file);
+    };
 
     return (
         <>
@@ -216,20 +270,30 @@ function student() {
                     <div className="board__table__footer">
                         <div className="board__table__selected">
                             <span>{students.length} students</span>
-                            <button>
+                            <button onClick={handleExportXML}>
                                 Export XML
                             </button>
-                            <button>
-                                Export CSV
+                            <button onClick={handleExportJSON}>
+                                Export JSON
                             </button>
 
-                            <button>
+                            {/* <button>
                                 Import XML
                             </button>
 
                             <button>
-                                Import CSV
-                            </button>
+                                Import JSON
+                            </button> */}
+
+                            <label className="custom-file-upload">
+                            Import XML
+                            <input type="file" accept=".xml" onChange={handleImportXML} />
+                            </label>
+
+                            <label className="custom-file-upload">
+                            Import JSON
+                            <input type="file" accept=".json" onChange={handleImportJSON} />
+                            </label>
                         </div>
 
                         <div className="board__table__paging">
