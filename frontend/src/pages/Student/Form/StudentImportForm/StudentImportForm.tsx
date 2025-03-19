@@ -29,7 +29,7 @@ function StudentImportForm() {
         program: "",
         academicYear: new Date().getFullYear(),
         faculty: "",
-        pernamentAddress: {
+        permanentAddress: {
             city: "",
             district: "",
             ward: "",
@@ -60,10 +60,10 @@ function StudentImportForm() {
             || student.gender === ""
             || student.faculty === ""
             || student.program === ""
-            || student.pernamentAddress.city === ""
-            || student.pernamentAddress.district === ""
-            || student.pernamentAddress.ward === ""
-            || student.pernamentAddress.street === ""
+            || student.permanentAddress.city === ""
+            || student.permanentAddress.district === ""
+            || student.permanentAddress.ward === ""
+            || student.permanentAddress.street === ""
             || student.identityDocument.type === ""
         ) {
             // notify("Please fill in all fields", "error");
@@ -96,7 +96,7 @@ function StudentImportForm() {
                 program: "",
                 academicYear: new Date().getFullYear(),
                 faculty: "",
-                pernamentAddress: {
+                permanentAddress: {
                     city: "",
                     district: "",
                     ward: "",
@@ -144,7 +144,7 @@ function StudentImportForm() {
 
     return (
         <>
-            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, pernamentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
+            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
             {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
             {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
             <div className="form">

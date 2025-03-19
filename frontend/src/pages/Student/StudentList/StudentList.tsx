@@ -2,12 +2,12 @@ import './student_list.css';
 import '../../../styles/board.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight, faCartShopping, faSearch, faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faSearch, faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
 import { Student, getStudents } from '../../../services/studentAPIServices';
-import { mockDataStatus, mockStudentsList } from '../../../services/mockData';
+import { mockDataStatus } from '../../../services/mockData';
 import { exportStudentsJSON, importStudentsJSON, exportStudentsXML, importStudentsXML} from "../../../services/fileAPIServices";
 // import { useLoading } from '../components/LoadingContext';
 
