@@ -4,26 +4,36 @@ import SubHeader from './components/SubHeader/SubHeader'
 import Content from './components/Content/Content'
 import './styles/dashboard.css'
 import { useEffect, useState } from 'react'
-import { mockStudentsList } from './services/mockData'
-import { addStudent } from './services/studentAPIServices'
+import { mockDataFaculties, mockDataPrograms, mockDataStatus } from './services/mockData'
+// import { addStudent, Student } from './services/studentAPIServices'
+import { useCategory } from './contexts/CategoryProvider'
 
 function App() {
   const [isAuthenticated, _setIsAuthenticated] = useState(true);
+  const { setCategory } = useCategory();
 
   useEffect(() => {
-    const studentList = mockStudentsList;
-    const fetchData = async () => {
+    setCategory({
+      status: mockDataStatus,
+      programs: mockDataPrograms,
+      faculty: mockDataFaculties
+    });
+  }, []);
 
-      try {
-        studentList.forEach(async (student) => {
-          await addStudent(student);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  useEffect(() => {
+    // const studentList = mockStudentsList;
+    // const fetchData = async () => {
 
-    fetchData();
+    //   try {
+    //     studentList.forEach(async (student: Student) => {
+    //       await addStudent(student);
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    // fetchData();
   }
     , []);
 

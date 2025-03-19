@@ -17,6 +17,16 @@
     background-color: var(--background-color);
 }
 
+.dashboard__right::-webkit-scrollbar {
+    width: 5px;
+}
+
+.dashboard__right::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: var(--text-color);
+    border-radius: 5px;
+}
+
 .dashboard__data {
     padding: 20px;
     /* height: calc(100% - 50px); */

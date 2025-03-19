@@ -43,7 +43,11 @@ function student() {
         return 7;
     }
 
-    const [amountItem, setAmountItem] = useState(calculateItemsPerPage());
+    const [amountItem, setAmountItem] = useState(0);
+
+    useEffect(() => {
+        setAmountItem(calculateItemsPerPage());
+    }, []);
 
     function handleSearch(keySearch: string) {
         if (keySearch.trim() === "") {
