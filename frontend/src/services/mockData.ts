@@ -8,7 +8,7 @@ export const mockStudent: Student = {
     faculty: "Khoa Luật",
     academicYear: 2020,
     program: "Chất lượng cao",
-    pernamentAddress: {
+    permanentAddress: {
         city: "TP.HCM",
         district: "Quận 1",
         ward: "Bến Nghé",
@@ -39,7 +39,7 @@ export const mockStudentsList: Student[] = [
     faculty: "Khoa Luật",
     academicYear: 2020,
     program: "Chất lượng cao",
-    pernamentAddress: {
+    permanentAddress: {
       city: "TP.HCM",
       district: "Quận 1",
       ward: "Bến Nghé",
@@ -68,7 +68,7 @@ export const mockStudentsList: Student[] = [
     faculty: "Khoa Tiếng Anh thương mại",
     academicYear: 2019,
     program: "Đề án",
-    pernamentAddress: {
+    permanentAddress: {
       city: "TP.HCM",
       district: "Quận 5",
       ward: "Phường 5",
@@ -97,7 +97,7 @@ export const mockStudentsList: Student[] = [
     faculty: "Khoa Tiếng Nhật",
     academicYear: 2021,
     program: "Chính quy",
-    pernamentAddress: {
+    permanentAddress: {
       city: "TP.HCM",
       district: "Bình Thạnh",
       ward: "Phường 1",
@@ -126,7 +126,7 @@ export const mockStudentsList: Student[] = [
     faculty: "Khoa Tiếng Pháp",
     academicYear: 2018,
     program: "Chất lượng cao",
-    pernamentAddress: {
+    permanentAddress: {
       city: "TP.HCM",
       district: "Thủ Đức",
       ward: "Linh Trung",

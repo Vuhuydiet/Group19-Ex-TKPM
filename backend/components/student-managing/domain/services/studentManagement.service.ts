@@ -32,6 +32,8 @@ export default class StudentManagementService {
         return true;
       if (query.faculty && student.faculty === query.faculty)
         return true;
+      if (!query.name && !query.faculty) 
+        return true;
       return false;
     });
   }

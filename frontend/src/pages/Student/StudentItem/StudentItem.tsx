@@ -122,7 +122,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
                                 <div className="studentitem__info__item">
                                     <span>Pernament</span>
-                                    <button>{studentInfo.pernamentAddress.street}, {studentInfo.pernamentAddress.ward}, {studentInfo.pernamentAddress.district}, {studentInfo.pernamentAddress.city}</button>
+                                    <button>{studentInfo.permanentAddress.street}, {studentInfo.permanentAddress.ward}, {studentInfo.permanentAddress.district}, {studentInfo.permanentAddress.city}</button>
                                 </div>
 
                                 <div className="studentitem__info__item">

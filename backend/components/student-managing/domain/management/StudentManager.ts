@@ -32,4 +32,18 @@ export class StudentManager {
     });
   }
 
+  // update(id: string, studentInfo: Partial<Student>): void {
+  // this._students.forEach(student => {
+  //   if (student.id === id) {
+  //     if (studentInfo.permanentAddress) {
+  //       student.permanentAddress = studentInfo.permanentAddress;
+  //     }
+  //     if (studentInfo.temporaryAddress) {
+  //       student.temporaryAddress = studentInfo.temporaryAddress;
+  //     }
+  //     Object.assign(student, studentInfo);
+  //   }
+  // });
+  // }
+
 }
