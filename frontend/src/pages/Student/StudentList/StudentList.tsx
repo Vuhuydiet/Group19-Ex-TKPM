@@ -217,7 +217,18 @@ function student() {
                         <div className="board__table__selected">
                             <span>{students.length} students</span>
                             <button>
-                                <FontAwesomeIcon icon={faCartShopping} className='icon__deleted' />
+                                Export XML
+                            </button>
+                            <button>
+                                Export CSV
+                            </button>
+
+                            <button>
+                                Import XML
+                            </button>
+
+                            <button>
+                                Import CSV
                             </button>
                         </div>
 
