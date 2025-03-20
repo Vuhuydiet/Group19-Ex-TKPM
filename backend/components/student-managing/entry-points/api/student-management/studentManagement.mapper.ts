@@ -1,4 +1,4 @@
-import { Student } from "../../domain/management/Student";
+import { Student } from "../../../domain/management/Student";
 import { Request} from "express";
 
 export class StudentManagementMapper {

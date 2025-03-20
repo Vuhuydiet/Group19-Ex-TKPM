@@ -23,17 +23,18 @@ export default class StudentManagementService {
   public static getStudentById(id: string) {
     return g_StudentManger.getStudents((student) => {
       return student.id == id;
-    });
+    })[0];
   }
 
   public static getStudents(query: StudentQuery) {
-    return g_StudentManger.getStudents((student) => {
-      if (query.name && student.name.includes(query.name))
-        return true;
-      if (query.faculty && student.faculty === query.faculty)
-        return true;
-      return false;
+    const students = g_StudentManger.getStudents((student) => {
+      if (query.name && !student.name.includes(query.name))
+        return false;
+      if (query.faculty && student.faculty !== query.faculty)
+        return false;
+      return true;
     });
+    return students;
   }
 
   public static updateStudent(id: string, info: Partial<Student>) {
