@@ -1,4 +1,4 @@
 export interface ImportExportStrategy {
-    importData(data: string): any;
-    exportData(data: any): string;
+    parseData(data: string): any;
+    stringifyData(data: any): string;
 }
