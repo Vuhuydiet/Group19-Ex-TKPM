@@ -12,6 +12,3 @@ export class JSONStrategy implements ImportExportStrategy {
         return JSON.stringify(data, null, 2);
     }
 }
-
-const jsonStrategy = new JSONStrategy();
-export default jsonStrategy;

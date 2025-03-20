@@ -55,6 +55,3 @@ export class XMLStrategy implements ImportExportStrategy {
         return this.xmlBuilder.build(wrappedData);
     }
 }
-
-const xmlStrategy = new XMLStrategy();
-export default xmlStrategy;
