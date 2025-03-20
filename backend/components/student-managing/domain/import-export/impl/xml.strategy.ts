@@ -1,4 +1,4 @@
-import { ImportExportStrategy } from '../importExport.strategy';
+import { ImportExportStrategy } from '../format.strategy';
 import { Faculty, Gender, Student, StudyStatus } from '../../management/Student';
 import { XMLBuilder, XMLParser  } from 'fast-xml-parser';
 

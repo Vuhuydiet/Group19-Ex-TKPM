@@ -1,7 +1,7 @@
-import { ImportExportType } from "../import-export/impl/importExport.strategy.factory";
+import { StudentQuery } from "./studentManagement.service";
 
 export interface ImportExportService {
-    importData(data: string, type: ImportExportType): any;
-    exportAllStudentsData(type: ImportExportType): string;
-    exportStudentDataById(id: string, type: ImportExportType): string;
+    importStudentsData(data: string, type: string): any;
+    exportStudentsData(type: string, studentQuery: StudentQuery): string;
+    exportStudentDataById(id: string, type: string): string;
 }

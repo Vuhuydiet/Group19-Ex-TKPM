@@ -1,32 +1,40 @@
 import { ImportExportService } from '../importExport.service';
-import g_StudentManger from "../../../storage/studentManager";
-import ImportExportStrategyFactory, { ImportExportType } from '../../import-export/impl/importExport.strategy.factory';
+import ImportExportStrategyFactory from '../../import-export/impl/format.strategy.factory';
+import StudentManagementService, { StudentQuery } from '../studentManagement.service';
+import { Student } from '../../management/Student';
 
 export class ImportExportServiceImpl implements ImportExportService {
 
-    importData(data: string, type: ImportExportType): any {
-        const students = ImportExportStrategyFactory.getStrategy(type).parseData(data);
-        for (const student of students) {
-            g_StudentManger.add(student);
+    importStudentsData(data: string, format: string): any {
+        const students = ImportExportStrategyFactory.getStrategy(format).parseData(data);
+        for (const studentData of students) {
+            const student = new Student(
+                studentData.id,
+                studentData.name,
+                studentData.dob,
+                studentData.gender,
+                studentData.faculty,
+                studentData.academicYear,
+                studentData.program,
+                studentData.address,
+                studentData.email,
+                studentData.phone,
+                studentData.status
+            );
+            StudentManagementService.addStudent(student);
         }
         return students;
     }
 
-    exportAllStudentsData(type: ImportExportType): string {
-        const students = g_StudentManger.students;
-        return ImportExportStrategyFactory.getStrategy(type).stringifyData(students);
+    exportStudentsData(format: string, studentQuery: StudentQuery): string {
+        const students = StudentManagementService.getStudents(studentQuery);
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(students);
     }
 
-    exportStudentDataById(id: string, type: ImportExportType): string {
-        const student = g_StudentManger.getStudents((student) => {
-            return student.id == id;
-        });
+    exportStudentDataById(id: string, format: string): string {
+        const student = StudentManagementService.getStudentById(id)?.toJSON() || {};
 
-        if (student.length == 0) {
-            return "";
-        }
-
-        return ImportExportStrategyFactory.getStrategy(type).stringifyData(student[0]);
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(student);
     }
 }
 
