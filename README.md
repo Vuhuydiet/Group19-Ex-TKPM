@@ -97,17 +97,17 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     
    3. **Trang thêm học sinh mới**
 
-    ![Màn hình biểu mẫu thêm học sinh mới](./instruction-image/page/student-form.png)
+   ![Màn hình biểu mẫu thêm học sinh mới](./instruction-image/page/student-form.png)
 
    4. **Trang quản lý các danh mục liên quan **
     - Quản lý Khoa
       - Khi muốn thêm Khoa mới
         
-        ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
+       ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
 
       - Khi muốn chỉnh sửa Khoa đã chọn
         
-        ![Màn hình khi muốn chỉnh sửa khoa đã chọn](./instruction-image/page/faculty-edition.png)
+       ![Màn hình khi muốn chỉnh sửa khoa đã chọn](./instruction-image/page/faculty-edition.png)
 
     - Quản lý chương trình đào tạo
       - Khi muốn thêm Chương trình đào tạo mới
@@ -116,30 +116,30 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 
       - Khi muốn chỉnh sửa Chương trình đào tạo đã chọn
         
-        ![Màn hình khi muốn chỉnh sửa chương trình đào tạo đã chọn](./instruction-image/page/program-edition.png)
+       ![Màn hình khi muốn chỉnh sửa chương trình đào tạo đã chọn](./instruction-image/page/program-edition.png)
 
     - Quản lý tình trạng học sinh
       - Khi muốn thêm Tình trạng học sinh mới
         
-        ![Màn hình khi muốn thêm tình trạng học sinh mới](./instruction-image/page/status-addition.png)
+       ![Màn hình khi muốn thêm tình trạng học sinh mới](./instruction-image/page/status-addition.png)
 
       - Khi muốn chỉnh sửa Tình trạng học sinh đã chọn
         
-        ![Màn hình khi muốn chỉnh sửa tình trạng học sinh đã chọn](./instruction-image/page/status-edition.png)
+       ![Màn hình khi muốn chỉnh sửa tình trạng học sinh đã chọn](./instruction-image/page/status-edition.png)
 
 #### Các overlay
    1. **Overlay hiển thị thông tin chi tiết một sinh viên cụ thể (Bấm chọn vào học sinh cụ thể trong danh sách học sinh)**
     
-    ![Overlay hiển thị thông tin chi tiết một sinh viên cụ thể](./instruction-image/overlay/student-info.png)
+   ![Overlay hiển thị thông tin chi tiết một sinh viên cụ thể](./instruction-image/overlay/student-info.png)
 
    2. **Overlay nhập thông tin địa chỉ**
     - Địa chỉ thường trú
     
-    ![Overlay nhập thông tin địa chỉ thường trú](./instruction-image/overlay/pernament-address.png)
+   ![Overlay nhập thông tin địa chỉ thường trú](./instruction-image/overlay/pernament-address.png)
 
     - Địa chỉ tạm trú
     
-    ![Overlay nhập thông tin địa chỉ tạm trú](./instruction-image/overlay/temporary-address.png)
+   ![Overlay nhập thông tin địa chỉ tạm trú](./instruction-image/overlay/temporary-address.png)
 
    3. **Overlay nhập thông tin định danh học sinh**
     - Chứng minh nhân dân (CMND)
@@ -148,11 +148,11 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 
     - Căn cước công dân (CCCD)
     
-    ![Overlay nhập thông tin CCCD của học sinh](./instruction-image/overlay/new-identity.png)
+   ![Overlay nhập thông tin CCCD của học sinh](./instruction-image/overlay/new-identity.png)
 
     - Hộ chiếu (Passport)
     
-    ![Overlay nhập thông tin hộ chiếu của học sinh](./instruction-image/overlay/passport.png)
+   ![Overlay nhập thông tin hộ chiếu của học sinh](./instruction-image/overlay/passport.png)
 
 ### Hướng dẫn sử dụng các tính năng
 #### Thêm học sinh với các thông tin chi tiết
@@ -161,7 +161,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     - B2: Chọn lần lượt từ tỉnh/thành phố -> quận/huyện -> phường/xã, sau đó nhập thông tin về tên đường, số nhà, ... tại Overlay thông tin địa chỉ
     - B3: Bấm nút Save để lưu lại thông tin vừa nhập
     
-    ![Nhập thông tin địa chỉ thường trú](./instruction-image/instruction/address-input.png)
+   ![Nhập thông tin địa chỉ thường trú](./instruction-image/instruction/address-input.png)
 
     2. **Thêm thông tin định danh học sinh**
     - B1: Chọn mục Thông tin định danh bằng cách click vào phần Identity tại biểu mẫu thêm học sinh để mở Overlay thông tin định danh
@@ -169,14 +169,14 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     - B3: Nhập các thông tin cần thiết để thực hiện cung cấp thông tin định danh
     - B4: Bấm nút Save để lưu lại thông tin vừa nhập
     
-    ![Nhập thông tin định danh bằng CCCD](./instruction-image/instruction/Identity-input.png)
+   ![Nhập thông tin định danh bằng CCCD](./instruction-image/instruction/Identity-input.png)
 
     3. **Thêm thông tin của học sinh**
     - B1: Nhập/Chọn các thông tin cần thiết
     - B2: Thực hiện thêm thông tin địa chỉ và thông tin định danh như trên
     - B3: Bấm nút Add để thực hiện thêm thông tin học sinh mới
     
-    ![Biểu mẫu thêm học sinh (Demo)](./instruction-image/instruction/student-form-input.png)
+   ![Biểu mẫu thêm học sinh (Demo)](./instruction-image/instruction/student-form-input.png)
 
 #### Thay đổi thông tin học sinh
    - B1: Chọn học sinh cần chỉnh sửa thông tin tại trang hiển thị danh sách học sinh
@@ -184,7 +184,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    - B3: Chỉnh sửa các thông tin cần thiết
    - B4: Bấm nút Save để thực hiện lưu thông tin đã thay đổi
     
-    ![Thay đổi thông tin học sinh (Các trường input có gạch chân và trường địa chỉ màu đỏ tức là đang trong trạng thái chỉnh sửa)](./instruction-image/instruction/student-edit.png)
+   ![Thay đổi thông tin học sinh (Các trường input có gạch chân và trường địa chỉ màu đỏ tức là đang trong trạng thái chỉnh sửa)](./instruction-image/instruction/student-edit.png)
 
 #### Quản lý các danh mục (Khoa, chương trình đào tạo, tình trạng học sinh)
    1. **Thêm danh mục**
@@ -192,14 +192,14 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    - B2: Nhập tên cần thêm (VD thêm Khoa CNTT trong danh mục quản lý Khoa)
    - B3: Bấm nút Add để thực hiện thêm khoa mới
     
-    ![Thêm một khoa mới](./instruction-image/instruction/faculty-add.png)
+   ![Thêm một khoa mới](./instruction-image/instruction/faculty-add.png)
 
    2. **Chỉnh sửa danh mục**
    - B1: Chọn phần tử trong danh mục cụ thể (VD chọn danh mục Khoa và phần tử là Khoa CNTT)
    - B2: Nhập tên sau khi thay đổi (VD nhập Khoa Công nghệ thông tin)
    - B3: Bấm nút Save để thực hiện lưu thay đổi
     
-    ![Chỉnh sửa khoa đã chọn](./instruction-image/instruction/faculty-edit.png)
+   ![Chỉnh sửa khoa đã chọn](./instruction-image/instruction/faculty-edit.png)
 
 #### Tìm kiếm thông tin sinh viên theo tên + khoa
    - B1: Chọn khoa cần tìm kiếm trên thanh bộ lọc (mục Faculty) -> Lọc ra các học sinh thuôc khoa đã chọn
