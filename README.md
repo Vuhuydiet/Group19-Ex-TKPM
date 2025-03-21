@@ -112,7 +112,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     - Quản lý chương trình đào tạo
       - Khi muốn thêm Chương trình đào tạo mới
         
-        ![Màn hình khi muốn thêm chương trình đào tạo mới](./instruction-image/page/program-addition.png)
+       ![Màn hình khi muốn thêm chương trình đào tạo mới](./instruction-image/page/program-addition.png)
 
       - Khi muốn chỉnh sửa Chương trình đào tạo đã chọn
         
