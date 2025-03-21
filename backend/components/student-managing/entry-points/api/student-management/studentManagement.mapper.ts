@@ -23,7 +23,7 @@ import { Request} from "express";
 
 export class StudentManagementMapper {
     public toStudent(request: Request): Student {
-        const { id, name, dob, gender, faculty, academicYear, program, pernamentAddress, temporaryAddress, email, phone, status, identityDocument } = request.body;
+        const { id, name, dob, gender, faculty, academicYear, program, permanentAddress, temporaryAddress, email, phone, status, identityDocument } = request.body;
 
         const student = new Student(
             id,
@@ -34,10 +34,10 @@ export class StudentManagementMapper {
             academicYear,
             program,
             {
-                city: pernamentAddress.city,
-                district: pernamentAddress.district,
-                ward: pernamentAddress.ward,
-                street: pernamentAddress.street,
+                city: permanentAddress.city,
+                district: permanentAddress.district,
+                ward: permanentAddress.ward,
+                street: permanentAddress.street,
             },
             {
                 city: temporaryAddress.city,
