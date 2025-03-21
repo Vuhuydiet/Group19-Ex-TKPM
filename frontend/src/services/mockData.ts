@@ -1,112 +1,184 @@
 import { Student } from "./studentAPIServices";
 
 export const mockStudent: Student = {
-    id: "S001",
-    name: "Nguyen Van A",
+    id: "SV001",
+    name: "Nguyễn Văn A",
     dob: "2002-05-15",
-    gender: "Male",
-    faculty: "Information Technology",
+    gender: "Nam",
+    faculty: "Khoa Luật",
     academicYear: 2020,
-    program: "High-Quality",
-    address: "123 Le Loi Street, District 1, Ho Chi Minh City",
+    program: "Chất lượng cao",
+    permanentAddress: {
+        city: "TP.HCM",
+        district: "Quận 1",
+        ward: "Bến Nghé",
+        street: "123 Lê Lợi"
+    },
+    temporaryAddress: {
+        city: "TP.HCM",
+        district: "Quận 1",
+        ward: "Bến Thành",
+        street: "456 Nguyễn Huệ"
+    },
+    nationality: "Việt Nam",
     email: "nguyenvana@example.com",
+    identityDocument: {
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
+    },
     phone: "0123456789",
-    status: "Studying"
+    status: "Đang học"
 };
 
 export const mockStudentsList: Student[] = [
-    {
-        id: "SV001",
-        name: "Nguyễn Văn A",
-        dob: "2002-05-15",
-        gender: "Nam",
-        faculty: "Khoa Luật",
-        academicYear: 2020,
-        program: "Chất lượng cao",
-        address: "123 Lê Lợi, Quận 1, TP.HCM",
-        email: "nguyenvana@example.com",
-        phone: "0123456789",
-        status: "Đang học"
+  {
+    id: "SV001",
+    name: "Nguyễn Văn A",
+    dob: "2002-05-15",
+    gender: "Nam",
+    faculty: "Khoa Luật",
+    academicYear: 2020,
+    program: "Chất lượng cao",
+    permanentAddress: {
+      city: "TP.HCM",
+      district: "Quận 1",
+      ward: "Bến Nghé",
+      street: "123 Lê Lợi"
+    },
+    temporaryAddress: {
+      city: "TP.HCM",
+      district: "Quận 1",
+      ward: "Bến Thành",
+      street: "456 Nguyễn Huệ"
+    },
+    nationality: "Việt Nam",
+    email: "nguyenvana@example.com",
+    identityDocument: {
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
+    },
+    phone: "0123456789",
+    status: "Đang học"
+  },
+  {
+    id: "SV002",
+    name: "Trần Thị B",
+    dob: "2001-09-22",
+    gender: "Nữ",
+    faculty: "Khoa Tiếng Anh thương mại",
+    academicYear: 2019,
+    program: "Đề án",
+    permanentAddress: {
+      city: "TP.HCM",
+      district: "Quận 5",
+      ward: "Phường 5",
+      street: "456 Nguyễn Trãi"
+    },
+    temporaryAddress: {
+      city: "TP.HCM",
+      district: "Quận 5",
+      ward: "Phường 7",
+      street: "789 Trần Hưng Đạo"
+    },
+    nationality: "Việt Nam",
+    email: "tranthib@example.com",
+    identityDocument: {
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
+    },
+    phone: "0987654321",
+    status: "Đang học"
     },
     {
-        id: "SV002",
-        name: "Trần Thị B",
-        dob: "2001-09-22",
-        gender: "Nữ",
-        faculty: "Khoa Tiếng Anh thương mại",
-        academicYear: 2019,
-        program: "Đề án",
-        address: "456 Nguyễn Trãi, Quận 5, TP.HCM",
-        email: "tranthib@example.com",
-        phone: "0987654321",
-        status: "Đang học"
+    id: "SV003",
+    name: "Lê Văn C",
+    dob: "2003-03-10",
+    gender: "Nam",
+    faculty: "Khoa Tiếng Nhật",
+    academicYear: 2021,
+    program: "Chính quy",
+    permanentAddress: {
+      city: "TP.HCM",
+      district: "Bình Thạnh",
+      ward: "Phường 1",
+      street: "789 Điện Biên Phủ"
     },
-    {
-        id: "SV003",
-        name: "Lê Văn C",
-        dob: "2003-03-10",
-        gender: "Nam",
-        faculty: "Khoa Tiếng Nhật",
-        academicYear: 2021,
-        program: "Chính quy",
-        address: "789 Điện Biên Phủ, Bình Thạnh, TP.HCM",
-        email: "levanc@example.com",
-        phone: "0369852147",
-        status: "Đang học"
+    temporaryAddress: {
+      city: "TP.HCM",
+      district: "Bình Thạnh",
+      ward: "Phường 2",
+      street: "159 Nguyễn Xí"
     },
-    {
-        id: "SV004",
-        name: "Phạm Minh D",
-        dob: "2000-12-05",
-        gender: "Nam",
-        faculty: "Khoa Tiếng Pháp",
-        academicYear: 2018,
-        program: "Chất lượng cao",
-        address: "159 Võ Văn Ngân, TP. Thủ Đức, TP.HCM",
-        email: "phamminhd@example.com",
-        phone: "0945123789",
-        status: "Đã tốt nghiệp"
+    nationality: "Việt Nam",
+    email: "levanc@example.com",
+    identityDocument: {
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
-    {
-        id: "SV005",
-        name: "Hoàng Thị E",
-        dob: "2002-07-18",
-        gender: "Nữ",
-        faculty: "Khoa Tiếng Anh thương mại",
-        academicYear: 2020,
-        program: "Đề án",
-        address: "753 Hoàng Văn Thụ, Tân Bình, TP.HCM",
-        email: "hoangthie@example.com",
-        phone: "0978465123",
-        status: "Đang học"
+    phone: "0369852147",
+    status: "Đang học"
+  },
+  {
+    id: "SV004",
+    name: "Phạm Minh D",
+    dob: "2000-12-05",
+    gender: "Nam",
+    faculty: "Khoa Tiếng Pháp",
+    academicYear: 2018,
+    program: "Chất lượng cao",
+    permanentAddress: {
+      city: "TP.HCM",
+      district: "Thủ Đức",
+      ward: "Linh Trung",
+      street: "159 Võ Văn Ngân"
     },
-    {
-        id: "SV006",
-        name: "Vũ Minh F",
-        dob: "1999-11-30",
-        gender: "Nam",
-        faculty: "Khoa Tiếng Nhật",
-        academicYear: 2017,
-        program: "Chính quy",
-        address: "234 Pasteur, Quận 3, TP.HCM",
-        email: "vuminhf@example.com",
-        phone: "0935124785",
-        status: "Đã tốt nghiệp"
+    temporaryAddress: {
+      city: "TP.HCM",
+      district: "Thủ Đức",
+      ward: "Linh Chiểu",
+      street: "200 Kha Vạn Cân"
     },
-    {
-        id: "SV007",
-        name: "Đoàn Thị G",
-        dob: "2001-06-25",
-        gender: "Nữ",
-        faculty: "Khoa Tiếng Pháp",
-        academicYear: 2019,
-        program: "Chất lượng cao",
-        address: "678 Trần Hưng Đạo, Quận 1, TP.HCM",
-        email: "doanthig@example.com",
-        phone: "0903124879",
-        status: "Đang học"
+    nationality: "Việt Nam",
+    email: "phamminhd@example.com",
+    identityDocument: {
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
+    phone: "0945123789",
+    status: "Đã tốt nghiệp"
+  }
 ];
+
 
 export const mockDataStatus: string[] = [
     "Đang học",

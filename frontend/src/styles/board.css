@@ -204,9 +204,13 @@
 
 .board__table__footer .board__table__selected button {
     margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-weight: 700;
     background-color: transparent;
     border: none;
-    color: var(--text-in-background-color);
+    background-color: var(--text-in-background-color);
+    color: var(--main-color);
     cursor: pointer;
 }
 

@@ -1,0 +1,49 @@
+.management {
+    width: 100%;
+    color: var(--text-color);
+}
+
+.management .management__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.management__nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--main-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.management__nav input[type="radio"] {
+    display: none;
+}
+
+.management__nav label {
+    height: 30px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: var(--main-color);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+}
+
+.management__nav .label-item {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    background-color: var(--main-color);
+    transition: 0.3s;
+}

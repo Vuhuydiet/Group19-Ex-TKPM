@@ -2,12 +2,14 @@ import './student_list.css';
 import '../../../styles/board.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight, faCartShopping, faSearch, faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faSearch, faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
 import { Student, getStudents } from '../../../services/studentAPIServices';
 import { mockDataStatus } from '../../../services/mockData';
+import { exportStudentsJSON, importStudentsJSON, exportStudentsXML, importStudentsXML } from "../../../services/fileAPIServices";
+import { useCategory } from '../../../contexts/CategoryProvider';
 // import { useLoading } from '../components/LoadingContext';
 
 
@@ -15,6 +17,7 @@ function student() {
 
     const [students, setStudents] = useState<Student[]>([]);
     const [cloneStudents, setCloneStudents] = useState<Student[]>([]);
+    const { category } = useCategory();
     //get all students
 
     useEffect(() => {
@@ -32,7 +35,7 @@ function student() {
     const [page, setPage] = useState(1);
     const [selectedStudent, setSelectedStudent] = useState<Student | undefined>(undefined);
     const [gender, setGender] = useState("");
-    const [status, setStatus] = useState("");
+    const [faculty, setFaculty] = useState("");
     const [sortBy, setSortBy] = useState("");
     const [search, setSearch] = useState("");
     function calculateItemsPerPage() {
@@ -43,7 +46,11 @@ function student() {
         return 7;
     }
 
-    const [amountItem, setAmountItem] = useState(calculateItemsPerPage());
+    const [amountItem, setAmountItem] = useState(0);
+
+    useEffect(() => {
+        setAmountItem(calculateItemsPerPage());
+    }, []);
 
     function handleSearch(keySearch: string) {
         if (keySearch.trim() === "") {
@@ -61,6 +68,27 @@ function student() {
         setCloneStudents(filteredStudents);
         setPage(1);
     }
+
+    function handleFilter() {
+        const filteredStudents = students.filter(student => {
+            student.faculty === faculty
+        });
+
+        let newStudentList = filteredStudents;
+        if (search.trim() !== "") {
+            const regex = new RegExp(search, "i");
+            newStudentList = filteredStudents.filter(student =>
+                regex.test(student.id) || regex.test(student.name)
+            );
+        }
+
+        setCloneStudents(newStudentList);
+        setPage(1);
+    }
+
+    useEffect(() => {
+        handleFilter();
+    }, [faculty]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -86,6 +114,59 @@ function student() {
             setPage(page - 1);
         }
     }
+
+    // Handle Export JSON
+    const handleExportJSON = async () => {
+        const jsonBlob = await exportStudentsJSON();
+        const url = window.URL.createObjectURL(new Blob([jsonBlob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "students.json");
+        document.body.appendChild(link);
+        link.click();
+    };
+
+    // Handle Import JSON (Giả sử có file input)
+    const handleImportJSON = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            if (e.target?.result) {
+                const jsonData = JSON.parse(e.target.result as string);
+                await importStudentsJSON(jsonData);
+                alert("Import JSON thành công!");
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    // Handle Export XML
+    const handleExportXML = async () => {
+        const xmlBlob = await exportStudentsXML();
+        const url = window.URL.createObjectURL(new Blob([xmlBlob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "students.xml");
+        document.body.appendChild(link);
+        link.click();
+    };
+
+    // Handle Import XML
+    const handleImportXML = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            if (e.target?.result) {
+                await importStudentsXML(e.target.result as string);
+                alert("Import XML thành công!");
+            }
+        };
+        reader.readAsText(file);
+    };
 
     return (
         <>
@@ -131,14 +212,14 @@ function student() {
                                 <FontAwesomeIcon icon={faFilter} className='icon__check' />
                             </div>
                             <select
-                                value={status}
+                                value={faculty}
                                 onChange={(e) => {
-                                    setStatus(e.target.value);
+                                    setFaculty(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Status</option>
-                                {mockDataStatus.map((status, index) => (
-                                    <option key={index} value={status}>{status}</option>
+                                <option value="" disabled>Faculty</option>
+                                {category.faculty.map((item, index) => (
+                                    <option key={index} value={item}>{item}</option>
                                 ))}
                                 <option value="">None</option>
                             </select>
@@ -202,7 +283,7 @@ function student() {
                                 <div className="board__table__attribute">{student.academicYear}</div>
                                 <div className="board__table__attribute">
                                     <div
-                                        style={{ backgroundColor: student.status === "Graduated" ? "green" : (student.status === "Studying" ? "yellow" : "red") }}
+                                        style={{ backgroundColor: student.faculty === "Graduated" ? "green" : (student.faculty === "Studying" ? "yellow" : "red") }}
                                         className="board__table__status"></div>
                                 </div>
                             </button>
@@ -212,9 +293,30 @@ function student() {
                     <div className="board__table__footer">
                         <div className="board__table__selected">
                             <span>{students.length} students</span>
-                            <button>
-                                <FontAwesomeIcon icon={faCartShopping} className='icon__deleted' />
+                            <button onClick={handleExportXML}>
+                                Export XML
                             </button>
+                            <button onClick={handleExportJSON}>
+                                Export JSON
+                            </button>
+
+                            {/* <button>
+                                Import XML
+                            </button>
+
+                            <button>
+                                Import JSON
+                            </button> */}
+
+                            <label className="custom-file-upload">
+                                Import XML
+                                <input type="file" accept=".xml" onChange={handleImportXML} />
+                            </label>
+
+                            <label className="custom-file-upload">
+                                Import JSON
+                                <input type="file" accept=".json" onChange={handleImportJSON} />
+                            </label>
                         </div>
 
                         <div className="board__table__paging">

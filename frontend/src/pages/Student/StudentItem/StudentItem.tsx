@@ -2,9 +2,12 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../../../services/mockData';
 import { Student, updateStudent, removeStudent } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
+import { useCategory } from '../../../contexts/CategoryProvider';
+import StudentAddress from '../Form/StudentAddress/StudentAddress';
+import StudentIdentity from '../Form/StudentIdentity/StudentIdentity';
+// import { set } from 'lodash';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
 
@@ -15,15 +18,26 @@ type StudentItemProps = {
     setStudents: any;
 }
 
+interface identityDocument {
+    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
+    data: any;
+}
+
+
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
+    const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
+    const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
+    const [isHideIdentity, setIsHideIdentity] = useState(true);
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
+    const { category } = useCategory();
+
     const { notify } = useNotification();
-    const [studentInfo, setStudentInfo] = useState(selectedStudent);
+    const [studentInfo, setStudentInfo] = useState<Student>(selectedStudent);
     const [isEdit, setIsEdit] = useState(false);
 
     async function handleSave() {
-        if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.address === "" || studentInfo.phone === "") {
+        if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.phone === "") {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
@@ -62,7 +76,10 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
     return (
         <>
-            <div className="item-wrapper">
+            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudentInfo({ ...studentInfo, permanentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudentInfo({ ...studentInfo, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
+            {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudentInfo({ ...studentInfo, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
+            <div className="virtual-background">
                 <div className="studentitem">
                     <div className="studentitem__header">
                         <span>Student Information</span>
@@ -97,6 +114,15 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: Number(e.target.value) })}
                                         disabled={!isEdit} />
                                 </div>
+
+                                <button
+                                    onClick={() => {
+                                        if (!isEdit) {
+                                            return;
+                                        }
+                                        setIsHideIdentity(false);
+                                    }}
+                                >{studentInfo.identityDocument.type + " - " + studentInfo.identityDocument.data?.ID}</button>
                             </div>
                         </div>
 
@@ -121,12 +147,43 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Address</span>
-                                    <input
-                                        value={studentInfo.address}
-                                        type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, address: e.target.value })}
-                                        disabled={!isEdit} />
+                                    <span>Pernament</span>
+                                    <button
+                                        style={{
+                                            backgroundColor: isEdit ? "var(--main-color)" : "transparent",
+                                            color: isEdit ? "var(--text-in-background-color)" : "var(--text-color)"
+                                        }}
+
+                                        onClick={
+                                            () => {
+                                                if (!isEdit) {
+                                                    return;
+                                                }
+                                                setIsHidePernamentAddress(false);
+                                            }
+                                        }
+                                    >{studentInfo.permanentAddress.street}, {studentInfo.permanentAddress.ward}, {studentInfo.permanentAddress.district}, {studentInfo.permanentAddress.city}</button>
+                                </div>
+
+                                <div className="studentitem__info__item">
+                                    <span>Temporary</span>
+                                    <button
+                                        style={{
+                                            backgroundColor: isEdit ? "var(--main-color)" : "transparent",
+                                            color: isEdit ? "var(--text-in-background-color)" : "var(--text-color)"
+                                        }}
+                                        onClick={
+                                            () => {
+                                                if (!isEdit) {
+                                                    return;
+                                                }
+                                                setIsHideTemporaryAddress(false);
+                                            }
+                                        }
+                                    >{studentInfo.temporaryAddress.city !== "" ? (studentInfo.temporaryAddress.street +
+                                        ', ' + studentInfo.temporaryAddress.ward +
+                                        ',' + studentInfo.temporaryAddress.district +
+                                        ',' + studentInfo.temporaryAddress.city) : "None"}</button>
                                 </div>
 
                                 <div className="studentitem__info__item">
@@ -144,7 +201,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.faculty}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, faculty: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataFaculties.map((faculty, index) => (
+                                        {category.faculty.map((faculty, index) => (
                                             <option key={index} value={faculty}>{faculty}</option>
                                         ))}
                                     </select>
@@ -156,7 +213,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.program}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, program: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataPrograms.map((program, index) => (
+                                        {category.programs.map((program, index) => (
 
                                             <option key={index} value={program}>{program}</option>
                                         ))}
@@ -169,7 +226,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.status}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, status: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataStatus.map((status, index) => (
+                                        {category.status.map((status, index) => (
                                             <option key={index} value={status}>{status}</option>
                                         ))}
                                     </select>

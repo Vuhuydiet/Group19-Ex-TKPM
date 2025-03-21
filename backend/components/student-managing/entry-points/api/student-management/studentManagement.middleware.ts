@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { BadRequestError } from "../../../../core/responses/ErrorResponse";
-import { DomainCode } from "../../../../core/responses/DomainCode";
+import { BadRequestError } from "../../../../../core/responses/ErrorResponse";
+import { DomainCode } from "../../../../../core/responses/DomainCode";
 
 const NAME_PATTERN = /^[A-Za-z\s]+$/;
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

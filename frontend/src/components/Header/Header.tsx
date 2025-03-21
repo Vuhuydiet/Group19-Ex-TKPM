@@ -53,6 +53,20 @@ function Header() {
                         </Link>
                     </div>
                 </div>
+
+                <div className="header__nav__items">
+                    <div className="header__nav__items__title">
+                        Category
+                    </div>
+                    <div className="header__nav__items__content">
+                        <Link to='/category'>
+                            <div className="header__nav__item">
+                                <FontAwesomeIcon icon={faList} className='icon__item' />
+                                <span>Management</span>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
             </div>
 
             <div className="header__footer">

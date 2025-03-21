@@ -1,9 +1,17 @@
+import IdentityDocument from "./IdentityDocument";
 
 export type Gender = 'Nam' | 'Nữ';
 
-export type Faculty = 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp';
+export type Faculty = 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp' | '';
 
 export type StudyStatus = 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học';
+
+export type Address = {
+  city: string;
+  district: string;
+  ward: string;
+  street: string;
+};
 
 export class Student {
   private _id: string;
@@ -13,11 +21,13 @@ export class Student {
   private _faculty: Faculty;
   private _academicYear: number;
   private _program: string;
-  private _address: string;
+  private _permanentAddress: Address;
+  private _temporaryAddress?: Address;
   private _email: string;
   private _phone: string;
   private _status: StudyStatus;
-  
+  private _identityDocument?: IdentityDocument;
+  private _nationality: string;
 
   constructor(
     id: string,
@@ -27,10 +37,13 @@ export class Student {
     faculty: Faculty,
     academicYear: number,
     program: string,
-    address: string,
+    permanentAddress: Address,
+    temporaryAddress: Address | undefined,
     email: string,
     phone: string,
-    status: StudyStatus
+    status: StudyStatus,
+    identityDocument: IdentityDocument,
+    nationality: string
   ) {
     this._id = id;
     this._name = name;
@@ -39,10 +52,13 @@ export class Student {
     this._faculty = faculty;
     this._academicYear = academicYear;
     this._program = program;
-    this._address = address;
+    this._permanentAddress = permanentAddress;
+    this._temporaryAddress = temporaryAddress;
     this._email = email;
     this._phone = phone;
     this._status = status;
+    this._identityDocument = identityDocument;
+    this._nationality = nationality;
   }
 
   get id(): string {
@@ -73,8 +89,12 @@ export class Student {
     return this._program;
   }
 
-  get address(): string {
-    return this._address;
+  get permanentAddress(): Address {
+    return this._permanentAddress;
+  }
+
+  get temporaryAddress(): Address | undefined {
+    return this._temporaryAddress;
   }
 
   get email(): string {
@@ -87,6 +107,14 @@ export class Student {
 
   get status(): StudyStatus {
     return this._status;
+  }
+
+  get identityDocument(): IdentityDocument | undefined {
+    return this._identityDocument;
+  }
+
+  get nationality(): string {
+    return this._nationality;
   }
 
   set name(name: string) {
@@ -113,8 +141,12 @@ export class Student {
     this._program = program;
   }
 
-  set address(address: string) {
-    this._address = address;
+  set permanentAddress(permanentAddress: Address) {
+    this._permanentAddress = permanentAddress;
+  }
+
+  set temporaryAddress(temporaryAddress: Address) {
+    this._temporaryAddress = temporaryAddress;
   }
 
   set email(email: string) {
@@ -129,4 +161,31 @@ export class Student {
     this._status = status;
   }
 
+  set identityDocument(identityDocument: IdentityDocument) {
+    this._identityDocument = identityDocument;
+  }
+  
+  set nationality(nationality: string) {
+    this._nationality = nationality;
+  }
+
+  toJSON() { // need modify
+    return {
+      id: this.id,
+      name: this.name,
+      dob: this.dob,
+      gender: this.gender,
+      faculty: this.faculty,
+      academicYear: this.academicYear,
+      program: this.program,
+      permanentAddress: this.permanentAddress,
+      temporaryAddress: this.temporaryAddress,
+      email: this.email,
+      phone: this.phone,
+      status: this.status,
+      identityDocument: this.identityDocument,
+      nationality: this._nationality
+    };
+  }
+  
 }

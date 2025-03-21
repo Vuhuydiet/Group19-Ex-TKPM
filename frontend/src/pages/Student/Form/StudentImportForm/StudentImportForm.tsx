@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { mockDataFaculties, mockDataPrograms } from '../../../services/mockData';
-import { addStudent, Student } from "../../../services/studentAPIServices";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faPencil } from '@fortawesome/free-solid-svg-icons'
-// import { useLoading } from '../components/LoadingContext';
-import { useNotification } from "../../../contexts/NotificationProvider";
+import { addStudent, Student } from "../../../../services/studentAPIServices";
+import { useNotification } from "../../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
+import StudentAddress from "../StudentAddress/StudentAddress";
+import "../../../../styles/form.css";
+import StudentIdentity from "../StudentIdentity/StudentIdentity";
+import { useCategory } from "../../../../contexts/CategoryProvider";
+
+interface identityDocument {
+    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
+    data: any;
+}
 
 function StudentImportForm() {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
+    const { category } = useCategory();
 
+    const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
+    const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
+    const [isHideIdentity, setIsHideIdentity] = useState(true);
     const [student, setStudent] = useState<Student>({
         id: "",
         name: "",
@@ -21,14 +30,44 @@ function StudentImportForm() {
         program: "",
         academicYear: new Date().getFullYear(),
         faculty: "",
-        address: "",
+        permanentAddress: {
+            city: "",
+            district: "",
+            ward: "",
+            street: ""
+        },
+        temporaryAddress: {
+            city: "",
+            district: "",
+            ward: "",
+            street: ""
+        },
+        nationality: "",
+        identityDocument: {
+            type: "",
+            data: null
+        },
         email: "",
         phone: "",
         status: "Đang học",
     });
 
     async function handleAddStudent() {
-        if (student.id === "" || student.name === "" || student.dob === "" || student.email === "" || student.address === "" || student.phone === "") {
+        console.log(student);
+        if (student.id === ""
+            || student.name === ""
+            || student.dob === ""
+            || student.email === ""
+            || student.phone === ""
+            || student.gender === ""
+            || student.faculty === ""
+            || student.program === ""
+            || student.permanentAddress.city === ""
+            || student.permanentAddress.district === ""
+            || student.permanentAddress.ward === ""
+            || student.permanentAddress.street === ""
+            || student.identityDocument.type === ""
+        ) {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
@@ -59,10 +98,26 @@ function StudentImportForm() {
                 program: "",
                 academicYear: new Date().getFullYear(),
                 faculty: "",
-                address: "",
+                permanentAddress: {
+                    city: "",
+                    district: "",
+                    ward: "",
+                    street: ""
+                },
+                temporaryAddress: {
+                    city: "",
+                    district: "",
+                    ward: "",
+                    street: ""
+                },
+                nationality: "",
+                identityDocument: {
+                    type: "",
+                    data: null
+                },
                 email: "",
                 phone: "",
-                status: "",
+                status: "Đang học",
             });
 
             console.log(response);
@@ -73,11 +128,30 @@ function StudentImportForm() {
         }
     }
 
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://restcountries.com/v3.1/all");
+                const data = await response.json();
+                setCountries(data.map((country: any) => country.name.common));
+            } catch (error) {
+                console.error("Fetch data error", error);
+            }
+        }
+
+        fetchData();
+    }, []);
+
     return (
         <>
-            <div className="productimport">
-                <div className="productimport__header">
-                    <div className="productimport__left">
+            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
+            {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
+            <div className="form">
+                <div className="form__header">
+                    <div className="header__left">
                         <h1>Student Addition</h1>
                         <p>Import a new student information</p>
                     </div>
@@ -90,8 +164,8 @@ function StudentImportForm() {
                     </div> */}
                 </div>
 
-                <div className="productimport__form">
-                    <div className="productimport__form__item">
+                <div className="form__body">
+                    <div className="form__field">
                         <span>ID</span>
                         <input
                             value={student.id}
@@ -101,7 +175,7 @@ function StudentImportForm() {
                     </div>
 
                     {/* Input Price */}
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Name</span>
                         <input
                             value={student.name}
@@ -111,7 +185,7 @@ function StudentImportForm() {
                             placeholder="Enter student's name   " />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Date of birth</span>
                         <input
                             value={student.dob}
@@ -120,7 +194,7 @@ function StudentImportForm() {
                             placeholder="Enter student's date of birth" />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Gender</span>
                         <select
                             value={student.gender}
@@ -136,7 +210,7 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Faculty</span>
                         <select
                             value={student.faculty}
@@ -145,7 +219,7 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's faculty
                             </option>
-                            {mockDataFaculties.map((faculty, index) => (
+                            {category.faculty.map((faculty, index) => (
                                 <option key={index} value={faculty}>
                                     {faculty}
                                 </option>
@@ -154,7 +228,7 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Program</span>
                         <select
                             value={student.program}
@@ -163,7 +237,7 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's program
                             </option>
-                            {mockDataPrograms.map((program, index) => (
+                            {category.programs.map((program, index) => (
                                 <option key={index} value={program}>
                                     {program}
                                 </option>
@@ -172,16 +246,16 @@ function StudentImportForm() {
 
                     </div>
 
-                    <div className="productimport__form__item">
-                        <span>Address</span>
-                        <input
-                            value={student.address}
-                            type="text"
-                            onChange={(e) => setStudent({ ...student, address: e.target.value })}
-                            placeholder="Enter student's address" />
+                    <div className="form__field">
+                        <span>Permanent Address</span>
+                        <button onClick={
+                            () => setIsHidePernamentAddress(false)
+                        }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
+                            student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
+                            }</button>
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Email</span>
                         <input
                             value={student.email}
@@ -193,7 +267,7 @@ function StudentImportForm() {
                             placeholder="Enter student's email" />
                     </div>
 
-                    <div className="productimport__form__item">
+                    <div className="form__field">
                         <span>Phone</span>
                         <input
                             value={student.phone}
@@ -205,10 +279,40 @@ function StudentImportForm() {
                             placeholder="Enter student's phone number" />
                     </div>
 
+                    <div className="form__field">
+                        <span>Temporary Address</span>
+                        <button onClick={
+                            () => setIsHideTemporaryAddress(false)
+                        }>Enter student's temporary address</button>
+                    </div>
+
+                    <div className="form__field">
+                        <span>Nationality</span>
+                        <select
+                            value={student.nationality}
+                            onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
+                        >
+                            <option value="" disabled> Choose student's nationlity </option>
+                            {countries.map((country, index) => (
+                                <option key={index} value={country}>
+                                    {country}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="form__field">
+                        <span>Identity</span>
+                        <button onClick={
+                            () => setIsHideIdentity(false)
+                        }>{student.identityDocument.type === "" ? "Choose student's identity" :
+                            student.identityDocument.type + " - " + (student.identityDocument.data?.ID ? student.identityDocument.data.ID : "")
+                            }</button>
+                    </div>
                 </div>
 
-                <div className="productimport__form__footer">
-                    <div className="productimport__form__button">
+                <div className="form__footer">
+                    <div className="form__button">
                         <button>Reset</button>
                         <button onClick={handleAddStudent}>Add</button>
                     </div>
