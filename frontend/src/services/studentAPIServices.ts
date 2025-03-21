@@ -27,7 +27,25 @@ export interface Student {
   email: string;//
   identityDocument: {
     type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
-    data: object;
+    data: {
+      ID: string;
+      issuedDate: string;
+      issuedPlace: string;
+      expiredDate: string;
+    } | {
+      ID: string;
+      issuedDate: string;
+      issuedPlace: string;
+      expiredDate: string;
+      chipIntergrated: boolean;
+    } | {
+      ID: string;
+      issuedDate: string;
+      issuedPlace: string;
+      expiredDate: string;
+      issuedCountry: string;
+      notes: string;
+    } | null;
   };
   phone: string;//
   status: string;//
@@ -92,6 +110,6 @@ export const updateStudent = async (id: string, updatedData: Partial<Student>): 
 //Xóa sinh viên theo ID
 export const removeStudent = async (id: string): Promise<void> => {
   await axios.delete(`${API_BASE_URL}/${id}`);
-};  
+};
 
 

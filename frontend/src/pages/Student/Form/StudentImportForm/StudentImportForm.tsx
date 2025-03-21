@@ -7,6 +7,7 @@ import { useNotification } from "../../../../contexts/NotificationProvider";
 import StudentAddress from "../StudentAddress/StudentAddress";
 import "../../../../styles/form.css";
 import StudentIdentity from "../StudentIdentity/StudentIdentity";
+import { useCategory } from "../../../../contexts/CategoryProvider";
 
 interface identityDocument {
     type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
@@ -17,6 +18,7 @@ function StudentImportForm() {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
+    const { category } = useCategory();
 
     const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
@@ -44,7 +46,7 @@ function StudentImportForm() {
         nationality: "",
         identityDocument: {
             type: "",
-            data: {}
+            data: null
         },
         email: "",
         phone: "",
@@ -52,6 +54,7 @@ function StudentImportForm() {
     });
 
     async function handleAddStudent() {
+        console.log(student);
         if (student.id === ""
             || student.name === ""
             || student.dob === ""
@@ -111,7 +114,7 @@ function StudentImportForm() {
                 nationality: "",
                 identityDocument: {
                     type: "",
-                    data: {}
+                    data: null
                 },
                 email: "",
                 phone: "",
@@ -217,7 +220,7 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's faculty
                             </option>
-                            {mockDataFaculties.map((faculty, index) => (
+                            {category.faculty.map((faculty, index) => (
                                 <option key={index} value={faculty}>
                                     {faculty}
                                 </option>
@@ -235,7 +238,7 @@ function StudentImportForm() {
                             <option value="" disabled>
                                 Choose student's program
                             </option>
-                            {mockDataPrograms.map((program, index) => (
+                            {category.programs.map((program, index) => (
                                 <option key={index} value={program}>
                                     {program}
                                 </option>
@@ -248,7 +251,9 @@ function StudentImportForm() {
                         <span>Permanent Address</span>
                         <button onClick={
                             () => setIsHidePernamentAddress(false)
-                        }>Enter student's permanent address</button>
+                        }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
+                            student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
+                            }</button>
                     </div>
 
                     <div className="form__field">
@@ -301,7 +306,9 @@ function StudentImportForm() {
                         <span>Identity</span>
                         <button onClick={
                             () => setIsHideIdentity(false)
-                        }>Choose student's identity</button>
+                        }>{student.identityDocument.type === "" ? "Choose student's identity" :
+                            student.identityDocument.type + " - " + (student.identityDocument.data?.ID ? student.identityDocument.data.ID : "")
+                            }</button>
                     </div>
                 </div>
 

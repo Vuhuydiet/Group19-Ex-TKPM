@@ -66,7 +66,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
         }
     };
 
-    const mapType = (type: "old" | "new" | "passport") => {
+    function mapType(type: "old" | "new" | "passport") {
         if (type === "old") {
             return "Old Identity Card";
         }
@@ -77,8 +77,9 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
     }
 
     function handleSave() {
+        const type = mapType(identityType);
         setStudentIdentity({
-            type: () => mapType(identityType),
+            type: type,
             data: identity
         });
         setIsHide(true);

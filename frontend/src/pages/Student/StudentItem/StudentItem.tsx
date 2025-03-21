@@ -2,9 +2,9 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { mockDataFaculties, mockDataPrograms, mockDataStatus } from '../../../services/mockData';
 import { Student, updateStudent, removeStudent } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
+import { useCategory } from '../../../contexts/CategoryProvider';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
 
@@ -18,6 +18,8 @@ type StudentItemProps = {
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
+    const { category } = useCategory();
+
     const { notify } = useNotification();
     const [studentInfo, setStudentInfo] = useState(selectedStudent);
     const [isEdit, setIsEdit] = useState(false);
@@ -140,7 +142,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.faculty}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, faculty: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataFaculties.map((faculty, index) => (
+                                        {category.faculty.map((faculty, index) => (
                                             <option key={index} value={faculty}>{faculty}</option>
                                         ))}
                                     </select>
@@ -152,7 +154,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.program}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, program: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataPrograms.map((program, index) => (
+                                        {category.programs.map((program, index) => (
 
                                             <option key={index} value={program}>{program}</option>
                                         ))}
@@ -165,7 +167,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         value={studentInfo.status}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, status: e.target.value })}
                                         disabled={!isEdit} >
-                                        {mockDataStatus.map((status, index) => (
+                                        {category.status.map((status, index) => (
                                             <option key={index} value={status}>{status}</option>
                                         ))}
                                     </select>
