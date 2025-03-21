@@ -87,6 +87,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    ![Màn hình trang chủ](./instruction-image/page/homepage.png)
 
    2. **Trang hiển thị danh sách học sinh**
+    
     - Khi không có học sinh nào trong danh sách
   
    ![Màn hình hiển thị thông tin sinh viên (Khi chưa có học sinh nào)](./instruction-image/page/student-display-noinfo.png)
@@ -100,7 +101,9 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    ![Màn hình biểu mẫu thêm học sinh mới](./instruction-image/page/student-form.png)
 
    4. **Trang quản lý các danh mục liên quan**
+
     - Quản lý Khoa
+  
        - Khi muốn thêm Khoa mới
         
        ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
@@ -110,6 +113,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
        ![Màn hình khi muốn chỉnh sửa khoa đã chọn](./instruction-image/page/faculty-edition.png)
 
     - Quản lý chương trình đào tạo
+  
        - Khi muốn thêm Chương trình đào tạo mới
         
        ![Màn hình khi muốn thêm chương trình đào tạo mới](./instruction-image/page/program-addition.png)
@@ -133,6 +137,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    ![Overlay hiển thị thông tin chi tiết một sinh viên cụ thể](./instruction-image/overlay/student-info.png)
 
    2. **Overlay nhập thông tin địa chỉ**
+
     - Địa chỉ thường trú
     
    ![Overlay nhập thông tin địa chỉ thường trú](./instruction-image/overlay/pernament-address.png)
@@ -142,6 +147,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    ![Overlay nhập thông tin địa chỉ tạm trú](./instruction-image/overlay/temporary-address.png)
 
    3. **Overlay nhập thông tin định danh học sinh**
+
     - Chứng minh nhân dân (CMND)
     
     ![Overlay nhập thông tin CMND của học sinh](./instruction-image/overlay/old-identity.png)
@@ -157,13 +163,15 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 ### Hướng dẫn sử dụng các tính năng
 #### Thêm học sinh với các thông tin chi tiết
    1. **Thêm thông tin địa chỉ**
+
     - B1: Chọn mục Địa chỉ thường trú (Địa chỉ tạm trú) bằng cách click vào phần Permanent Address (Temporary Address) tại biểu mẫu thêm học sinh để mở Overlay thông tin địa chỉ
     - B2: Chọn lần lượt từ tỉnh/thành phố -> quận/huyện -> phường/xã, sau đó nhập thông tin về tên đường, số nhà, ... tại Overlay thông tin địa chỉ
     - B3: Bấm nút Save để lưu lại thông tin vừa nhập
     
    ![Nhập thông tin địa chỉ thường trú](./instruction-image/instruction/address-input.png)
 
-    2. **Thêm thông tin định danh học sinh**
+    1. **Thêm thông tin định danh học sinh**
+   
     - B1: Chọn mục Thông tin định danh bằng cách click vào phần Identity tại biểu mẫu thêm học sinh để mở Overlay thông tin định danh
     - B2: Chọn loại định danh muốn sử dụng gồm: CMND (Old Identity), CCCD (New Identity) hoặc Hộ chiếu (Passport) để thực hiện nhập thông tin
     - B3: Nhập các thông tin cần thiết để thực hiện cung cấp thông tin định danh
@@ -171,7 +179,8 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     
    ![Nhập thông tin định danh bằng CCCD](./instruction-image/instruction/Identity-input.png)
 
-    3. **Thêm thông tin của học sinh**
+    1. **Thêm thông tin của học sinh**
+
     - B1: Nhập/Chọn các thông tin cần thiết
     - B2: Thực hiện thêm thông tin địa chỉ và thông tin định danh như trên
     - B3: Bấm nút Add để thực hiện thêm thông tin học sinh mới
@@ -188,13 +197,15 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 
 #### Quản lý các danh mục (Khoa, chương trình đào tạo, tình trạng học sinh)
    1. **Thêm danh mục**
+
    - B1: Chọn danh mục cần thêm trên thanh điều hướng gồm Khoa (Faculty), Chương trình đào tạo (Program), Tình trạng học sinh (Status)
    - B2: Nhập tên cần thêm (VD thêm Khoa CNTT trong danh mục quản lý Khoa)
    - B3: Bấm nút Add để thực hiện thêm khoa mới
     
    ![Thêm một khoa mới](./instruction-image/instruction/faculty-add.png)
 
-   2. **Chỉnh sửa danh mục**
+   1. **Chỉnh sửa danh mục**
+
    - B1: Chọn phần tử trong danh mục cụ thể (VD chọn danh mục Khoa và phần tử là Khoa CNTT)
    - B2: Nhập tên sau khi thay đổi (VD nhập Khoa Công nghệ thông tin)
    - B3: Bấm nút Save để thực hiện lưu thay đổi
