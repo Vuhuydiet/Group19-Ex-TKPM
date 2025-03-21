@@ -99,8 +99,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 
    ![Màn hình biểu mẫu thêm học sinh mới](./instruction-image/page/student-form.png)
 
-   4. **Trang quản lý các danh mục liên quan **
-    - Quản lý Khoa
+   4. **Trang quản lý các danh mục liên quan - Quản lý Khoa**
       - Khi muốn thêm Khoa mới
         
        ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
