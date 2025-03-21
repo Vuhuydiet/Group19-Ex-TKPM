@@ -27,12 +27,15 @@ export default class StudentManagementService {
   }
 
   public static getStudents(query: StudentQuery) {
-    const students = g_StudentManger.getStudents((student) => {
-      if (query.name && !student.name.includes(query.name))
-        return false;
-      if (query.faculty && student.faculty !== query.faculty)
-        return false;
-      return true;
+    return g_StudentManger.getStudents((student) => {
+      if (query.name && student.name.includes(query.name))
+        return true;
+      if (query.faculty && student.faculty === query.faculty)
+        return true;
+      if (!query.name && !query.faculty) 
+        return true;
+      return false;
+
     });
     return students;
   }
