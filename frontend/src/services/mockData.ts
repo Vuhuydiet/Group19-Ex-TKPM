@@ -23,8 +23,14 @@ export const mockStudent: Student = {
     nationality: "Việt Nam",
     email: "nguyenvana@example.com",
     identityDocument: {
-        type: "NewIdentityCard",
-        data: {}
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
     phone: "0123456789",
     status: "Đang học"
@@ -55,7 +61,13 @@ export const mockStudentsList: Student[] = [
     email: "nguyenvana@example.com",
     identityDocument: {
       type: "NewIdentityCard",
-      data: {}
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
     phone: "0123456789",
     status: "Đang học"
@@ -83,8 +95,14 @@ export const mockStudentsList: Student[] = [
     nationality: "Việt Nam",
     email: "tranthib@example.com",
     identityDocument: {
-      type: "OldIdentityCard",
-      data: {}
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
     phone: "0987654321",
     status: "Đang học"
@@ -112,8 +130,14 @@ export const mockStudentsList: Student[] = [
     nationality: "Việt Nam",
     email: "levanc@example.com",
     identityDocument: {
-      type: "Passport",
-      data: {}
+      type: "NewIdentityCard",
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
     phone: "0369852147",
     status: "Đang học"
@@ -142,7 +166,13 @@ export const mockStudentsList: Student[] = [
     email: "phamminhd@example.com",
     identityDocument: {
       type: "NewIdentityCard",
-      data: {}
+      data: {
+        "ID": "079403029299",
+        "issuedDate": "2021-12-21",
+        "issuedPlace": "Ho Chi Minh",
+        "expiredDate": "2029-12-01",
+        "chipIntergrated": true
+      }
     },
     phone: "0945123789",
     status: "Đã tốt nghiệp"

@@ -128,7 +128,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 type="text"
                                 value={identity.ID}
                                 onChange={(e) => setIdentity({ ...identity, ID: e.target.value })}
-                                placeholder="Enter indentity ID"
+                                placeholder="Enter identity ID"
                             />
                         </div>
 
@@ -138,7 +138,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 type="date"
                                 value={identity.issuedDate}
                                 onChange={(e) => setIdentity({ ...identity, issuedDate: e.target.value })}
-                                placeholder="Enter indentity issued date"
+                                placeholder="Enter identity issued date"
                             />
                         </div>
 
@@ -148,7 +148,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 type="text"
                                 value={identity.issuedPlace}
                                 onChange={(e) => setIdentity({ ...identity, issuedPlace: e.target.value })}
-                                placeholder="Enter indentity issued place"
+                                placeholder="Enter identity issued place"
                             />
                         </div>
 
@@ -158,7 +158,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 type="date"
                                 value={identity.expiredDate}
                                 onChange={(e) => setIdentity({ ...identity, expiredDate: e.target.value })}
-                                placeholder="Enter indentity expired date"
+                                placeholder="Enter identity expired date"
                             />
                         </div>
 
@@ -184,7 +184,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 type="text"
                                 value={(identity as Passport).issuedCountry}
                                 onChange={(e) => setIdentity({ ...identity, issuedCountry: e.target.value })}
-                                placeholder="Enter indentity issued country"
+                                placeholder="Enter identity issued country"
                             />
                         </div>)}
 
@@ -193,7 +193,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                             <textarea
                                 value={(identity as Passport).notes}
                                 onChange={(e) => setIdentity({ ...identity, notes: e.target.value })}
-                                placeholder="Enter indentity notes"
+                                placeholder="Enter identity notes"
                             />
                         </div>)}
 
