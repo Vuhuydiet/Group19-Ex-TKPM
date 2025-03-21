@@ -3,7 +3,7 @@ POST http://localhost:3000/utils/json
 Content-Type: application/json
 
 {
-    "students": "[{\"id\": \"1\", \"name\": \"Tuong Nguyen\", \"email\": \"tuong.nguyen@example.com\"}, {\"id\": \"2\", \"name\": \"Vu Nguyen\", \"email\": \"vu.nguyen@example.com\"}]"
+    "students": "[{\"id\": \"22120413\", \"name\": \"Tuong Nguyen\", \"email\": \"tuong.nguyen@example.com\"}, {\"id\": \"2\", \"name\": \"Vu Nguyen\", \"email\": \"vu.nguyen@example.com\"}]"
 }
 
 
@@ -15,7 +15,7 @@ POST http://localhost:3000/utils/xml
 Content-Type: application/json
 
 {
-    "students": "<students><student><id>1</id><name>Tuong Nguyen</name><email>tuong.nguyen@example.com</email></student><student><id>2</id><name>Vu Nguyen</name><email>vu.nguyen@example.com</email></student></students>"
+    "students": "<students><student><id>22120413</id><name>Tuong Nguyen</name><email>tuong.nguyen@example.com</email></student><student><id>2</id><name>Vu Nguyen</name><email>vu.nguyen@example.com</email></student></students>"
 }
 
 ### Export Students in XML Test

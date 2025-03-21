@@ -1,12 +1,25 @@
-import { ImportExportStrategy } from '../importExport.strategy';
-import g_StudentManger from "../../../storage/studentManager";
+import { ImportExportStrategy } from '../format.strategy';
 import { Faculty, Gender, Student, StudyStatus } from '../../management/Student';
 import { XMLBuilder, XMLParser  } from 'fast-xml-parser';
 
 export class XMLStrategy implements ImportExportStrategy {
-    importData(data: string): any {
-        const parser = new XMLParser({ ignoreAttributes: false });
-        const jsonObj = parser.parse(data);
+
+    private xmlParser: XMLParser;
+
+    private xmlBuilder: XMLBuilder; 
+
+    constructor() {
+        this.xmlParser = new XMLParser({ ignoreAttributes: false });
+
+        this.xmlBuilder = new XMLBuilder({
+            format: true,
+            ignoreAttributes: false
+        });
+    }
+
+    parseData(data: string): any {
+        
+        const jsonObj = this.xmlParser.parse(data);
         
         const students: Student[] = [];
     
@@ -30,20 +43,15 @@ export class XMLStrategy implements ImportExportStrategy {
                     studentObj.status as StudyStatus || null
                 );
                 students.push(student);
-                g_StudentManger.add(student);
             }
         }
     
         return students;
     }
 
-    exportData(data: object[]): string {
-        const builder = new XMLBuilder({
-            format: true,
-            ignoreAttributes: false
-        });
-    
+    stringifyData(data: object[]): string {
         const wrappedData = { students: { student: data } };
-        return builder.build(wrappedData);
+
+        return this.xmlBuilder.build(wrappedData);
     }
 }

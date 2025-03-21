@@ -1,21 +1,22 @@
 import { OKResponse } from "../../../../../core/responses/SuccessResponse";
-import ImportExportServiceFactory, { ImportExportType } from "../../../domain/services/impl/importExport.service.factory";
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
+import importExportService from "../../../domain/services/impl/importExport.service.impl";
 
 export class ImportExportController {
-    
+
     importStudents(req: Request, res: Response): void {
-        const type = req.params.type.toUpperCase() as ImportExportType;
+        const type = req.params.type;
         const importedData = req.body.students;
-        ImportExportServiceFactory.getService(type).importData(importedData);
+        importExportService.importStudentsData(importedData, type);
         new OKResponse({
-                message: 'Students imported successfully'
-            }).send(res);    
+            message: 'Students imported successfully'
+        }).send(res);
     }
-    
+
     exportStudents(req: Request, res: Response): void {
-        const type = req.params.type.toUpperCase() as ImportExportType;
-        const exportedData = ImportExportServiceFactory.getService(type).exportAllStudentsData();
+        const type = req.params.type;
+        const query = req.query;
+        const exportedData = importExportService.exportStudentsData(type, query);
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Content-Disposition', 'attachment; filename=students.json');
         res.send(exportedData);

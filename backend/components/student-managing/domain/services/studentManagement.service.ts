@@ -23,7 +23,7 @@ export default class StudentManagementService {
   public static getStudentById(id: string) {
     return g_StudentManger.getStudents((student) => {
       return student.id == id;
-    });
+    })[0];
   }
 
   public static getStudents(query: StudentQuery) {
@@ -35,7 +35,9 @@ export default class StudentManagementService {
       if (!query.name && !query.faculty) 
         return true;
       return false;
+
     });
+    return students;
   }
 
   public static updateStudent(id: string, info: Partial<Student>) {

@@ -1,5 +1,7 @@
+import { StudentQuery } from "./studentManagement.service";
+
 export interface ImportExportService {
-    importData(data: string): any;
-    exportAllStudentsData(): string;
-    exportStudentDataById(id: string): string;
+    importStudentsData(data: string, type: string): any;
+    exportStudentsData(type: string, studentQuery: StudentQuery): string;
+    exportStudentDataById(id: string, type: string): string;
 }
