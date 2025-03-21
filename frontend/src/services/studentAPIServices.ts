@@ -95,6 +95,11 @@ export const getStudentsByName = async (name: string): Promise<Student[]> => {
   return response.data.metadata;
 };
 
+export const getStudentsByFacultyAndName = async (faculty: string, name: string): Promise<Student[]> => {
+  const response = await axios.get(`${API_BASE_URL}?faculty=${faculty}&name=${name}`);
+  return response.data.metadata;
+};
+
 //Thêm sinh viên mới
 export const addStudent = async (student: Student) => {
   const response = await axios.post("http://localhost:3000/students", student);
