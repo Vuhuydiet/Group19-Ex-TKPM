@@ -103,34 +103,22 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
    4. **Trang quản lý các danh mục liên quan**
 
     - Quản lý Khoa
-  
-      - Khi muốn thêm Khoa mới
-        
-        ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
 
-      - Khi muốn thêm Khoa mới
-        
-        ![Màn hình khi muốn chỉnh sửa khoa đã chọn](./instruction-image/page/faculty-edition.png)
+   ![Màn hình khi muốn thêm Khoa mới](./instruction-image/page/faculty-addition.png)
+
+   ![Màn hình khi muốn chỉnh sửa khoa đã chọn](./instruction-image/page/faculty-edition.png)
 
     - Quản lý chương trình đào tạo
-  
-      - Khi muốn thêm Chương trình đào tạo mới
-        
-        ![Màn hình khi muốn thêm chương trình đào tạo mới](./instruction-image/page/program-addition.png)
 
-      - Khi muốn chỉnh sửa Chương trình đào tạo đã chọn
+   ![Màn hình khi muốn thêm chương trình đào tạo mới](./instruction-image/page/program-addition.png)
         
-        ![Màn hình khi muốn chỉnh sửa chương trình đào tạo đã chọn](./instruction-image/page/program-edition.png)
+   ![Màn hình khi muốn chỉnh sửa chương trình đào tạo đã chọn](./instruction-image/page/program-edition.png)
 
     - Quản lý tình trạng học sinh
-      
-      - Khi muốn thêm Tình trạng học sinh mới
-        
-        ![Màn hình khi muốn thêm tình trạng học sinh mới](./instruction-image/page/status-addition.png)
 
-      - Khi muốn chỉnh sửa Tình trạng học sinh đã chọn
-        
-        ![Màn hình khi muốn chỉnh sửa tình trạng học sinh đã chọn](./instruction-image/page/status-edition.png)
+   ![Màn hình khi muốn thêm tình trạng học sinh mới](./instruction-image/page/status-addition.png)
+
+   ![Màn hình khi muốn chỉnh sửa tình trạng học sinh đã chọn](./instruction-image/page/status-edition.png)
 
 #### Các overlay
    1. **Overlay hiển thị thông tin chi tiết một sinh viên cụ thể (Bấm chọn vào học sinh cụ thể trong danh sách học sinh)**
