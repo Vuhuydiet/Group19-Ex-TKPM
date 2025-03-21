@@ -187,17 +187,17 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 #### Quản lý các danh mục (Khoa, chương trình đào tạo, tình trạng học sinh)
    1. **Thêm danh mục**
 
-    - B1: Chọn danh mục cần thêm trên thanh điều hướng gồm Khoa (Faculty), Chương trình đào tạo (Program), Tình trạng học sinh (Status)
-    - B2: Nhập tên cần thêm (VD thêm Khoa CNTT trong danh mục quản lý Khoa)
-    - B3: Bấm nút Add để thực hiện thêm khoa mới
+   - B1: Chọn danh mục cần thêm trên thanh điều hướng gồm Khoa (Faculty), Chương trình đào tạo (Program), Tình trạng học sinh (Status)
+   - B2: Nhập tên cần thêm (VD thêm Khoa CNTT trong danh mục quản lý Khoa)
+   - B3: Bấm nút Add để thực hiện thêm khoa mới
     
    ![Thêm một khoa mới](./instruction-image/instruction/faculty-add.png)
 
    2. **Chỉnh sửa danh mục**
 
-    - B1: Chọn phần tử trong danh mục cụ thể (VD chọn danh mục Khoa và phần tử là Khoa CNTT)
-    - B2: Nhập tên sau khi thay đổi (VD nhập Khoa Công nghệ thông tin)
-    - B3: Bấm nút Save để thực hiện lưu thay đổi
+   - B1: Chọn phần tử trong danh mục cụ thể (VD chọn danh mục Khoa và phần tử là Khoa CNTT)
+   - B2: Nhập tên sau khi thay đổi (VD nhập Khoa Công nghệ thông tin)
+   - B3: Bấm nút Save để thực hiện lưu thay đổi
     
    ![Chỉnh sửa khoa đã chọn](./instruction-image/instruction/faculty-edit.png)
 
