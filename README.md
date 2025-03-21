@@ -8,14 +8,24 @@ Dự án này là một web app được phát triển bằng React nhằm quả
 │   ├── components
 │   │   └── student-managing
 │   │       ├── domain
-│   │       │   └── studentManager.early.test
+│   │       │   ├── import-export
+│   │       │   │   └── impl
+│   │       │   ├── management
+│   │       │   │   └── StudentManager.early.test
+│   │       │   └── services
+│   │       │       └── impl
 │   │       ├── entry-points
 │   │       │   └── api
-│   │       │       └── test
+│   │       │       ├── import-export
+│   │       │       │   └── test
+│   │       │       └── student-management
+│   │       │           └── test
 │   │       └── storage
 │   ├── core
+│   │   ├── logger
 │   │   ├── responses
-│   │   └── socket
+│   │   ├── socket
+│   │   └── stream
 │   ├── libraries
 │   │   ├── errorHandler
 │   │   ├── utils
@@ -32,9 +42,18 @@ Dự án này là một web app được phát triển bằng React nhằm quả
     │   │   └── SubHeader
     │   ├── contexts
     │   ├── pages
+    │   │   ├── Category
+    │   │   │   ├── Faculty
+    │   │   │   ├── Management
+    │   │   │   ├── Programs
+    │   │   │   ├── Status
+    │   │   │   └── styles
     │   │   ├── Home
     │   │   └── Student
-    │   │       ├── StudentImportForm
+    │   │       ├── Form
+    │   │       │   ├── StudentAddress
+    │   │       │   ├── StudentIdentity
+    │   │       │   └── StudentImportForm
     │   │       ├── StudentItem
     │   │       └── StudentList
     │   ├── services
@@ -58,3 +77,7 @@ Chạy lệnh:```npm run dev``` để vào dev mode, mở browser địa chỉ: 
 
 ### Chạy chương trình (deployment mode)
 Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa chỉ: 'http://localhost:3000'
+
+
+## Hướng dẫn sử dụng **Version 2.0**
+

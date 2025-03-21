@@ -37,7 +37,6 @@ export default class StudentManagementService {
       return false;
 
     });
-    return students;
   }
 
   public static updateStudent(id: string, info: Partial<Student>) {
