@@ -84,7 +84,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
 #### Các trang
    1. **Trang chủ**
    
-    ![Màn hình trang chủ](./instruction-image/page/homepage.png)
+   ![Màn hình trang chủ](./instruction-image/page/homepage.png)
 
    2. **Trang hiển thị danh sách học sinh**
     - Khi không có học sinh nào trong danh sách
@@ -92,14 +92,14 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     ![Màn hình hiển thị thông tin sinh viên (Khi chưa có học sinh nào)](./instruction-image/page/student-display-noinfo.png)
 
     - Khi có học sinh trong danh sách
-  
+
     ![Màn hình hiển thị danh sách học sinh (Khi có học sinh)](./instruction-image/page/student-display.png)
     
    3. **Trang thêm học sinh mới**
 
     ![Màn hình biểu mẫu thêm học sinh mới](./instruction-image/page/student-form.png)
 
-   4. Trang quản lý các danh mục liên quan 
+   4. **Trang quản lý các danh mục liên quan **
     - Quản lý Khoa
       - Khi muốn thêm Khoa mới
         
