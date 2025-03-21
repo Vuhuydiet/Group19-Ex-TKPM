@@ -92,7 +92,7 @@ Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa ch
     ![Màn hình hiển thị thông tin sinh viên (Khi chưa có học sinh nào)](./instruction-image/page/student-display-noinfo.png)
 
     - Khi có học sinh trong danh sách
-
+  
     ![Màn hình hiển thị danh sách học sinh (Khi có học sinh)](./instruction-image/page/student-display.png)
     
    3. **Trang thêm học sinh mới**
