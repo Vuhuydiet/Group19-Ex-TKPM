@@ -28,23 +28,23 @@ export interface Student {
   identityDocument: {
     type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
     data: {
-      ID: string;
+      id: string;
       issuedDate: string;
       issuedPlace: string;
       expiredDate: string;
     } | {
-      ID: string;
+      id: string;
       issuedDate: string;
       issuedPlace: string;
       expiredDate: string;
-      chipIntergrated: boolean;
+      hasChip: boolean;
     } | {
-      ID: string;
+      passportNumber: string;
       issuedDate: string;
       issuedPlace: string;
       expiredDate: string;
       issuedCountry: string;
-      notes: string;
+      note: string;
     } | null;
   };
   phone: string;//
