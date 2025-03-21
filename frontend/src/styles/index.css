@@ -60,7 +60,9 @@ a {
   padding: 20px;
 }
 
-
+.virtual-background-frontside {
+  z-index: 110;
+}
 
 @keyframes fadeIn {
   from {

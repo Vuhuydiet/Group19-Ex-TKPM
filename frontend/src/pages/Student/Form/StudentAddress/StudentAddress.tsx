@@ -15,11 +15,18 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
     const [villages, setVillages] = useState<any[]>([]);
 
     const [selectedDetail, setSelectedDetail] = useState<string>("");
-    const [selectedCity, setSelectedCity] = useState<AddressField>({} as AddressField);
-    const [selectedDistrict, setSelectedDistrict] = useState<AddressField>({} as AddressField);
-    const [selectedVillage, setSelectedVillage] = useState<AddressField>({} as AddressField);
-
-    console.log(selectedCity);
+    const [selectedCity, setSelectedCity] = useState<AddressField>({
+        code: "",
+        name: ""
+    });
+    const [selectedDistrict, setSelectedDistrict] = useState<AddressField>({
+        code: "",
+        name: ""
+    });
+    const [selectedVillage, setSelectedVillage] = useState<AddressField>({
+        code: "",
+        name: ""
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -102,7 +109,7 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
 
     return (
         <>
-            <div className="virtual-background">
+            <div className="virtual-background virtual-background-frontside">
                 <div className="form form--address">
                     <div className="form__header">
                         <div className="header__left">

@@ -91,7 +91,7 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
 
     return (
         <>
-            <div className="virtual-background">
+            <div className="virtual-background virtual-background-frontside">
 
                 <div className="form form--identity">
                     <div className="form__header">

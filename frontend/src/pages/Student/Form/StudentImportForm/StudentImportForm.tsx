@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { mockDataFaculties, mockDataPrograms } from '../../../../services/mockData';
 import { addStudent, Student } from "../../../../services/studentAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";

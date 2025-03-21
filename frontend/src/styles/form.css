@@ -5,6 +5,7 @@
     border-radius: var(--border-radius);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
     color: var(--text-color);
+    animation: zoomIn 0.3s;
 }
 
 .form__header {
