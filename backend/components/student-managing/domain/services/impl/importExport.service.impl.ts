@@ -16,10 +16,13 @@ export class ImportExportServiceImpl implements ImportExportService {
                 studentData.faculty,
                 studentData.academicYear,
                 studentData.program,
-                studentData.address,
+                studentData.permanentAddress,
+                studentData.temporaryAddress,
                 studentData.email,
                 studentData.phone,
-                studentData.status
+                studentData.status,
+                studentData.identityDocument,
+                studentData.nationality
             );
             StudentManagementService.addStudent(student);
         }
