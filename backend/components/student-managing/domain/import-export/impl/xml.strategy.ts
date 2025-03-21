@@ -37,10 +37,13 @@ export class XMLStrategy implements ImportExportStrategy {
                     studentObj.faculty as Faculty || "",
                     parseInt(studentObj.academicYear || "0", 10),
                     studentObj.program || "",
-                    studentObj.address || "",
+                    studentObj.permanentAddress || {},
+                    studentObj.temporaryAddress || undefined,
                     studentObj.email || "",
                     studentObj.phone || "",
-                    studentObj.status as StudyStatus || null
+                    studentObj.status as StudyStatus || null,
+                    studentObj.identityDocument || {},
+                    studentObj.nationality
                 );
                 students.push(student);
             }
