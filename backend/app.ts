@@ -15,7 +15,7 @@ import errorHandler from './libraries/errorHandler/errorHandler';
 
 import router from './static-content'
 import studentRouter from './components/student-managing/entry-points/api/student-management/studentManagement.route';
-import importExportRouter from './components/student-managing/entry-points/api/import-export/importExport.router';
+import importExportRouter from './components/student-managing/entry-points/api/import-export/importExportStudent.router';
 import logger from './core/logger';
 
 // middlewares
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use(router);
 app.use('/students', studentRouter);
-app.use('/utils', importExportRouter);
+app.use('/utils/students', importExportRouter);
 
 // error handler
 app.use(notFoundHandler);

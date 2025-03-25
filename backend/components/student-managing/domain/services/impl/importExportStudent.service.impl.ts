@@ -2,6 +2,7 @@ import { ImportExportService } from '../importExport.service';
 import ImportExportStrategyFactory from '../../import-export/impl/format.strategy.factory';
 import StudentManagementService, { StudentQuery } from '../studentManagement.service';
 import { Student } from '../../management/Student';
+import { ParserType } from '../../import-export/impl/xml.strategy';
 
 export class ImportExportServiceImpl implements ImportExportService {
 
@@ -31,13 +32,13 @@ export class ImportExportServiceImpl implements ImportExportService {
 
     exportStudentsData(format: string, studentQuery: StudentQuery): string {
         const students = StudentManagementService.getStudents(studentQuery);
-        return ImportExportStrategyFactory.getStrategy(format).stringifyData(students);
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(students, ParserType.STUDENT);
     }
 
     exportStudentDataById(id: string, format: string): string {
         const student = StudentManagementService.getStudentById(id)?.toJSON() || {};
 
-        return ImportExportStrategyFactory.getStrategy(format).stringifyData(student);
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(student, ParserType.STUDENT);
     }
 }
 

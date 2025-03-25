@@ -1,13 +1,15 @@
 import { ImportExportStrategy } from '../format.strategy';
-import { Student } from '../../management/Student';
 
 export class JSONStrategy implements ImportExportStrategy {
-    parseData(data: string): Student[] {
-        const students : Student[] = JSON.parse(data);
-        return students;
+    parseData(data: string): any {
+        const parsedData = JSON.parse(data);
+        return parsedData;
     }
 
-    stringifyData(data: any): string {
+    stringifyData(data: any, _: string): string {
         return JSON.stringify(data);
     }
 }
+
+const jsonStrategy = new JSONStrategy();
+export default jsonStrategy;

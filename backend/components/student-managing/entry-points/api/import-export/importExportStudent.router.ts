@@ -1,4 +1,4 @@
-import g_ImportExportController from "./importExport.controller";
+import g_ImportExportController from "./importExportStudent.controller";
 import express, { Request, Response } from "express";
 const router = express.Router();
 

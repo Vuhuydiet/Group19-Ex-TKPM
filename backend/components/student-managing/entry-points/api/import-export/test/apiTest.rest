@@ -1,5 +1,5 @@
 ### Import Students in JSON Test
-POST http://localhost:3000/utils/json
+POST http://localhost:3000/utils/students/json
 Content-Type: application/json
 
 {
@@ -8,10 +8,10 @@ Content-Type: application/json
 
 
 ### Export Students in JSON Test
-GET http://localhost:3000/utils/json
+GET http://localhost:3000/utils/students/json
 
 ### Import Students in XML Test
-POST http://localhost:3000/utils/xml
+POST http://localhost:3000/utils/students/xml
 Content-Type: application/json
 
 {
@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ### Export Students in XML Test
-GET http://localhost:3000/utils/xml
+GET http://localhost:3000/utils/students/xml
