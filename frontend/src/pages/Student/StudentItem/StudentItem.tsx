@@ -114,7 +114,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: Number(e.target.value) })}
                                         disabled={!isEdit} />
                                 </div>
-
+{/* 
                                 <button
                                     onClick={() => {
                                         if (!isEdit) {
@@ -122,7 +122,26 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         }
                                         setIsHideIdentity(false);
                                     }}
-                                >{studentInfo.identityDocument.type + " - " + studentInfo.identityDocument.data?.ID}</button>
+                                >{studentInfo.identityDocument.type + " - " + studentInfo.identityDocument.data?.ID}</button> */}
+                                <button
+                                    onClick={() => {
+                                        if (!isEdit) {
+                                            return;
+                                        }
+                                        setIsHideIdentity(false);
+                                    }}
+                                >
+                                    {studentInfo.identityDocument.type === "" 
+                                        ? "Choose student's identity" 
+                                        : `${studentInfo.identityDocument.type} - ${
+                                            studentInfo.identityDocument.data 
+                                            ? ('id' in studentInfo.identityDocument.data 
+                                                ? studentInfo.identityDocument.data.id 
+                                                : studentInfo.identityDocument.data.passportNumber)
+                                            : ""
+                                        }`}
+                                </button>
+
                             </div>
                         </div>
 

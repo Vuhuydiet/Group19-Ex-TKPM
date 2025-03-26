@@ -5,7 +5,7 @@ import "./student_identity.css";
 import "../../../../styles/form.css";
 
 interface Identity {
-    ID: string;
+    id: string;
     issuedDate: string;
     issuedPlace: string;
     expiredDate: string;
@@ -14,7 +14,7 @@ interface Identity {
 interface OldIdentityCard extends Identity { }
 
 interface NewIdentityCard extends Identity {
-    chipIntergrated: boolean;
+    hasChip: boolean;
 }
 
 interface Passport extends Identity {
@@ -29,7 +29,7 @@ interface IdentityProps {
 
 function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
     const [identity, setIdentity] = useState<OldIdentityCard | NewIdentityCard | Passport>({
-        ID: "",
+        id: "",
         issuedDate: "",
         issuedPlace: "",
         expiredDate: ""
@@ -41,22 +41,22 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
         setIdentityType(type);
         if (type === "old") {
             setIdentity({
-                ID: "",
+                id: "",
                 issuedDate: "",
                 issuedPlace: "",
                 expiredDate: ""
             });
         } else if (type === "new") {
             setIdentity({
-                ID: "",
+                id: "",
                 issuedDate: "",
                 issuedPlace: "",
                 expiredDate: "",
-                chipIntergrated: false
+                hasChip: false
             } as NewIdentityCard);
         } else {
             setIdentity({
-                ID: "",
+                id: "",
                 issuedDate: "",
                 issuedPlace: "",
                 expiredDate: "",
@@ -126,8 +126,8 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                             <span>ID</span>
                             <input
                                 type="text"
-                                value={identity.ID}
-                                onChange={(e) => setIdentity({ ...identity, ID: e.target.value })}
+                                value={identity.id}
+                                onChange={(e) => setIdentity({ ...identity, id: e.target.value })}
                                 placeholder="Enter identity ID"
                             />
                         </div>
@@ -162,18 +162,18 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                             />
                         </div>
 
-                        {identityType === "new" && "chipIntergrated" in identity && (<div className="form__field">
+                        {identityType === "new" && "hasChip" in identity && (<div className="form__field">
                             <span>Chip Intergrated</span>
                             <input
-                                id="chipIntergrated"
+                                id="hasChip"
                                 type="checkbox"
-                                checked={identity.chipIntergrated}
-                                onChange={(e) => setIdentity({ ...identity, chipIntergrated: e.target.checked })}
+                                checked={identity.hasChip}
+                                onChange={(e) => setIdentity({ ...identity, hasChip: e.target.checked })}
                             />
 
-                            <label htmlFor="chipIntergrated">
+                            <label htmlFor="hasChip">
                                 <div className="labeline">
-                                    <FontAwesomeIcon icon={identity.chipIntergrated ? faCheck : faX} />
+                                    <FontAwesomeIcon icon={identity.hasChip ? faCheck : faX} />
                                 </div>
                             </label>
                         </div>)}
