@@ -1,6 +1,6 @@
 import { OKResponse } from "../../../../../core/responses/SuccessResponse";
 import { Request, Response } from 'express';
-import importExportService from "../../../domain/services/impl/importExport.service.impl";
+import importExportService from "../../../domain/services/impl/importExportStudent.service.impl";
 
 export class ImportExportController {
 

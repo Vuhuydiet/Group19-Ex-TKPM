@@ -1,8 +1,8 @@
 import { DomainCode } from "../../../../../core/responses/DomainCode";
 import { NotFoundError } from "../../../../../core/responses/ErrorResponse";
 import { ImportExportStrategy } from "../format.strategy";
-import {JSONStrategy} from "./json.strategy";
-import {XMLStrategy} from "./xml.strategy";
+import jsonStrategy from "./json.strategy";
+import xmlStrategy from "./xml.strategy";
 
 
 class FormatStrategyFactory {
@@ -33,8 +33,8 @@ class FormatStrategyFactory {
 }
 
 const formatStrategyFactory = new FormatStrategyFactory();
-formatStrategyFactory.register('json', new JSONStrategy());
-formatStrategyFactory.register('xml', new XMLStrategy());
+formatStrategyFactory.register('json', jsonStrategy);
+formatStrategyFactory.register('xml', xmlStrategy);
 
 
 export default formatStrategyFactory;
