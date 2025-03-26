@@ -301,14 +301,29 @@ function StudentImportForm() {
                         </select>
                     </div>
 
-                    <div className="form__field">
+                    {/* <div className="form__field">
                         <span>Identity</span>
                         <button onClick={
                             () => setIsHideIdentity(false)
                         }>{student.identityDocument.type === "" ? "Choose student's identity" :
-                            student.identityDocument.type + " - " + (student.identityDocument.data?.ID ? student.identityDocument.data.ID : "")
+                            student.identityDocument.type + " - " + (student.identityDocument.data.ID ? student.identityDocument.data.ID : "")
                             }</button>
+                    </div> */}
+                    <div className="form__field">
+                        <span>Identity</span>
+                        <button onClick={() => setIsHideIdentity(false)}>
+                            {student.identityDocument.type === "" ? "Choose student's identity" :
+                                `${student.identityDocument.type} - ${
+                                    student.identityDocument.data 
+                                    ? ('id' in student.identityDocument.data 
+                                        ? student.identityDocument.data.id 
+                                        : student.identityDocument.data.passportNumber)
+                                    : ""
+                                }`
+                            }
+                        </button>
                     </div>
+
                 </div>
 
                 <div className="form__footer">
