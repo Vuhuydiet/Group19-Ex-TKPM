@@ -19,7 +19,7 @@ function StudentImportForm() {
     const { notify } = useNotification();
     const { category } = useCategory();
 
-    const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
+    const [isHidePermanentAddress, setIsHidePermanentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
     const [isHideIdentity, setIsHideIdentity] = useState(true);
     const [student, setStudent] = useState<Student>({
@@ -146,7 +146,7 @@ function StudentImportForm() {
 
     return (
         <>
-            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
+            {!isHidePermanentAddress && <StudentAddress title="Permanent Address" description="Enter student's permanent address" setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePermanentAddress} />}
             {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
             {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
             <div className="form">
@@ -249,7 +249,7 @@ function StudentImportForm() {
                     <div className="form__field">
                         <span>Permanent Address</span>
                         <button onClick={
-                            () => setIsHidePernamentAddress(false)
+                            () => setIsHidePermanentAddress(false)
                         }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
                             student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
                             }</button>
