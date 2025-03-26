@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { BadRequestError } from "../../../../../core/responses/ErrorResponse";
 import { DomainCode } from "../../../../../core/responses/DomainCode";
+import StudentManagementService from "../../../domain/services/studentManagement.service";
 
 const NAME_PATTERN = /^[A-Za-z\s]+$/;
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -17,7 +18,7 @@ export const checkStudentNamePattern = (req: Request, _res: Response, next: Next
     next();
 };
 
-export const checkEmailPattern = (req: Request, _res: Response, next: NextFunction): void => {
+export const checkEmailPattern = async (req: Request, _res: Response, next: NextFunction) => {
     if (req.method === 'PATCH' && !req.body.email) {
         next();
     }
@@ -25,6 +26,13 @@ export const checkEmailPattern = (req: Request, _res: Response, next: NextFuncti
     if (!EMAIL_PATTERN.test(req.body.email)) {
         throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid email address');
     }
+
+    const domain = req.body.email.split('@')[1];
+    const allowedDomains = await StudentManagementService.getAllowedEmailDomains();
+    if (!allowedDomains.includes(domain)) {
+        throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid email domain');
+    }
+
     next();
 }   
 

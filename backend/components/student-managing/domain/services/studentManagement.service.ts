@@ -1,5 +1,6 @@
 import { DomainCode } from "../../../../core/responses/DomainCode";
 import { BadRequestError } from "../../../../core/responses/ErrorResponse";
+import prisma from "../../../../models";
 import g_StudentManger from "../../storage/studentManager";
 import { Faculty, Student } from "../management/Student";
 
@@ -10,6 +11,11 @@ export type StudentQuery = {
 }
 
 export default class StudentManagementService {
+
+  public static async getAllowedEmailDomains() {
+    return await prisma.allowedEmailDomain.findMany();
+  }
+
   public static addStudent(student: Student) {
     if (g_StudentManger.students.find(std => std.id === student.id))
       throw new BadRequestError(DomainCode.STUDENT_ALREADY_EXISTS, 'Student already exists');
