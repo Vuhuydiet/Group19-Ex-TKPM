@@ -71,6 +71,6 @@ export class StudentManagerController {
     }
 }
 
-const g_StudentMangerController = new StudentManagerController();
+const g_StudentManagerController = new StudentManagerController();
 
-export default g_StudentMangerController;
+export default g_StudentManagerController;

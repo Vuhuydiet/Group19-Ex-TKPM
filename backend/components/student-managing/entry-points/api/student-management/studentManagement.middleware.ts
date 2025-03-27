@@ -29,9 +29,9 @@ export const checkEmailPattern = async (req: Request, _res: Response, next: Next
         throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid email address');
     }
 
-    const domain = req.body.email.split('@')[1];
+    const emailDomain: string = req.body.email.split('@')[1];
     const allowedDomains = await StudentManagementService.getAllowedEmailDomains();
-    if (!allowedDomains.includes(domain)) {
+    if (allowedDomains.filter(domain => domain.domain === emailDomain).length === 0) {
         throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid email domain');
     }
 
@@ -55,7 +55,7 @@ export const checkPhoneNumberPattern = (req: Request, _res: Response, next: Next
         return [];
     })();
 
-    if (phone || phone.length !== PHONE_NUMBER_LENGTH) {
+    if (phone && phone.length !== PHONE_NUMBER_LENGTH) {
         throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid phone number');
     }
 
