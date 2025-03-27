@@ -52,8 +52,29 @@ function StudentImportForm() {
         status: "Đang học",
     });
 
+    function isValidEmail(email: string, allowedDomain: string = "student.university.edu.vn"): boolean {
+        const escapedDomain = allowedDomain.replace(/\./g, '\\.');
+
+        const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${escapedDomain}$`);
+
+        return emailRegex.test(email);
+    }
+
+    function isValidPhone(phone: string, country: string = "VN"): boolean {
+        let phoneRegex;
+        switch (country) {
+            case "VN":
+                phoneRegex = /^(\+84|0)(3[2-9]|5[6-9]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$/;
+                break;
+            default:
+                return false;
+        }
+        return phoneRegex.test(phone);
+    }
+
+
+
     async function handleAddStudent() {
-        console.log(student);
         if (student.id === ""
             || student.name === ""
             || student.dob === ""
@@ -74,15 +95,13 @@ function StudentImportForm() {
         }
 
         const email = student.email;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        if (!isValidEmail(email)) {
             notify({ type: "error", msg: "Invalid email format" });
             return;
         }
 
         const phone = student.phone;
-        const phoneRegex = /^(0\d{9})$/;
-        if (!phoneRegex.test(phone)) {
+        if (!isValidPhone(phone)) {
             notify({ type: "error", msg: "Invalid phone number format" });
             return;
         }
@@ -313,10 +332,9 @@ function StudentImportForm() {
                         <span>Identity</span>
                         <button onClick={() => setIsHideIdentity(false)}>
                             {student.identityDocument.type === "" ? "Choose student's identity" :
-                                `${student.identityDocument.type} - ${
-                                    student.identityDocument.data 
-                                    ? ('id' in student.identityDocument.data 
-                                        ? student.identityDocument.data.id 
+                                `${student.identityDocument.type} - ${student.identityDocument.data
+                                    ? ('id' in student.identityDocument.data
+                                        ? student.identityDocument.data.id
                                         : student.identityDocument.data.passportNumber)
                                     : ""
                                 }`
