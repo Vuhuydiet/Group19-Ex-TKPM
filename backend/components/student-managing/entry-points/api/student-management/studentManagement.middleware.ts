@@ -46,7 +46,7 @@ export const checkPhoneNumberPattern = (req: Request, _res: Response, next: Next
     const [nationality, phone] = (() => {
         if (req.method === 'PATCH') {
             const id = req.params.id;
-            const nationality = StudentManagementService.getStudentById(id);
+            const nationality = StudentManagementService.getStudentById(id)?.nationality;
             return [nationality, req.body.phone];
         }
         if (req.method === 'POST') {
@@ -73,7 +73,7 @@ export const checkStatusTransition = (req: Request, _res: Response, next: NextFu
     const { id } = req.params;
     const { status } = req.body;
 
-    const currentStatus = StudentManagementService.getStudentById(id).status;
+    const currentStatus = StudentManagementService.getStudentById(id)?.status;
 
     if (!allowedStatus[currentStatus]?.includes(status)) {
         throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, `Invalid transition from '${currentStatus}' to ${status}`);
