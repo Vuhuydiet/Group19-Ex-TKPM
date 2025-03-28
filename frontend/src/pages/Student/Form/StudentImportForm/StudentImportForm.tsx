@@ -13,6 +13,11 @@ interface identityDocument {
     data: any;
 }
 
+type Country = {
+    name: string;
+    code: string;
+}
+
 function StudentImportForm() {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
@@ -52,6 +57,28 @@ function StudentImportForm() {
         status: "Đang học",
     });
 
+    // function isValidEmail(email: string, allowedDomain: string = "student.university.edu.vn"): boolean {
+    //     const escapedDomain = allowedDomain.replace(/\./g, '\\.');
+
+    //     const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${escapedDomain}$`);
+
+    //     return emailRegex.test(email);
+    // }
+
+    // function isValidPhone(phone: string, country: string = "VN"): boolean {
+    //     let phoneRegex;
+    //     switch (country) {
+    //         case "VN":
+    //             phoneRegex = /^(\+84|0)(3[2-9]|5[6-9]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$/;
+    //             break;
+    //         default:
+    //             return false;
+    //     }
+    //     return phoneRegex.test(phone);
+    // }
+
+
+
     async function handleAddStudent() {
         console.log(student);
         if (student.id === ""
@@ -73,19 +100,17 @@ function StudentImportForm() {
             return;
         }
 
-        const email = student.email;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            notify({ type: "error", msg: "Invalid email format" });
-            return;
-        }
+        // const email = student.email;
+        // if (!isValidEmail(email)) {
+        //     notify({ type: "error", msg: "Invalid email format" });
+        //     return;
+        // }
 
-        const phone = student.phone;
-        const phoneRegex = /^(0\d{9})$/;
-        if (!phoneRegex.test(phone)) {
-            notify({ type: "error", msg: "Invalid phone number format" });
-            return;
-        }
+        // const phone = student.phone;
+        // if (!isValidPhone(phone)) {
+        //     notify({ type: "error", msg: "Invalid phone number format" });
+        //     return;
+        // }
 
 
         try {
@@ -128,18 +153,27 @@ function StudentImportForm() {
         }
     }
 
-    const [countries, setCountries] = useState([]);
+    const [countries, setCountries] = useState<Country[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch("https://restcountries.com/v3.1/all");
                 const data = await response.json();
-                setCountries(data.map((country: any) => country.name.common));
+
+                setCountries(
+                    data
+                        .map((country: any) => ({
+                            name: country.name.common,
+                            code: country.cca2
+                        }))
+                        .sort((a: Country, b: Country) => a.name.localeCompare(b.name)) // Sắp xếp theo tên
+                );
+
             } catch (error) {
                 console.error("Fetch data error", error);
             }
-        }
+        };
 
         fetchData();
     }, []);
@@ -294,8 +328,8 @@ function StudentImportForm() {
                         >
                             <option value="" disabled> Choose student's nationlity </option>
                             {countries.map((country, index) => (
-                                <option key={index} value={country}>
-                                    {country}
+                                <option key={index} value={country.code}>
+                                    {country.name}
                                 </option>
                             ))}
                         </select>
@@ -313,10 +347,9 @@ function StudentImportForm() {
                         <span>Identity</span>
                         <button onClick={() => setIsHideIdentity(false)}>
                             {student.identityDocument.type === "" ? "Choose student's identity" :
-                                `${student.identityDocument.type} - ${
-                                    student.identityDocument.data 
-                                    ? ('id' in student.identityDocument.data 
-                                        ? student.identityDocument.data.id 
+                                `${student.identityDocument.type} - ${student.identityDocument.data
+                                    ? ('id' in student.identityDocument.data
+                                        ? student.identityDocument.data.id
                                         : student.identityDocument.data.passportNumber)
                                     : ""
                                 }`
