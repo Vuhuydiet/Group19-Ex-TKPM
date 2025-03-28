@@ -2,13 +2,15 @@ import { DomainCode } from "../../../../core/responses/DomainCode";
 import { BadRequestError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
 import g_StudentManger from "../../storage/studentManager";
-import { Faculty, Student } from "../management/Student";
-
+import { Student } from "../management/Student";
 
 export type StudentQuery = {
   name?: string,
-  faculty?: Faculty,
+  faculty?: String,
 }
+
+
+export type StudentData = any;
 
 export default class StudentManagementService {
 
@@ -16,10 +18,44 @@ export default class StudentManagementService {
     return await prisma.allowedEmailDomain.findMany();
   }
 
-  public static addStudent(student: Student) {
-    if (g_StudentManger.students.find(std => std.id === student.id))
+  public static async addStudent(studentData: StudentData) {
+    if (g_StudentManger.students.find(std => std.id === studentData.id))
       throw new BadRequestError(DomainCode.STUDENT_ALREADY_EXISTS, 'Student already exists');
+
+    const faculty = await prisma.faculty.findUnique({
+      where: { id: studentData.faculty }
+    });
+
+    if (!faculty)
+      throw new BadRequestError(DomainCode.FACULTY_NOT_FOUND, 'Faculty not found');
+
+    const status = await prisma.studyStatus.findUnique({
+      where: { id: studentData.status }
+    });
+
+    if (!status)
+      throw new BadRequestError(DomainCode.STUDY_STATUS_NOT_FOUND, 'Study status not found');
+
+    const student = new Student(
+      studentData.id,
+      studentData.name,
+      studentData.dob,
+      studentData.gender,
+      faculty,
+      studentData.academicYear,
+      studentData.program,
+      studentData.permanentAddress,
+      studentData.temporaryAddress,
+      studentData.email,
+      studentData.phone,
+      status,
+      studentData.identityDocument,
+      studentData.nationality
+    );
+
     g_StudentManger.add(student);
+
+    return student;
   }
 
   public static removeStudent(id: string) {
@@ -36,7 +72,7 @@ export default class StudentManagementService {
     return g_StudentManger.getStudents((student) => {
       if (query.name && student.name.includes(query.name))
         return true;
-      if (query.faculty && student.faculty === query.faculty)
+      if (query.faculty && student.faculty.id === query.faculty)
         return true;
       if (!query.name && !query.faculty) 
         return true;

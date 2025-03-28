@@ -75,6 +75,7 @@ Chạy lệnh:```npm i``` ở cả thư mục gốc (root) và thư mục fronte
 Tạo database và thêm biến môi trường như trong file .env.sample  
 Chạy lệnh:```npm run prisma:generate```  
 Chạy lệnh:```npm run prisma:migrate:dev```  
+Chạy lệnh:```npm run seed```
 
 ### Build chương trình
 Chạy lệnh:```npm run build```

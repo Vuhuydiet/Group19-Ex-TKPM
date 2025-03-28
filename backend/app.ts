@@ -12,11 +12,10 @@ dotenv.config();
 // import middlewares and routes
 import notFoundHandler from './libraries/errorHandler/notFoundHandler';
 import errorHandler from './libraries/errorHandler/errorHandler';
-
-import router from './static-content'
-import studentRouter from './components/student-managing/entry-points/api/student-management/studentManagement.route';
-import importExportRouter from './components/student-managing/entry-points/api/import-export/importExportStudent.router';
 import logger from './core/logger';
+
+import staticContentRouter from './static-content';
+import apiRouter from './routes';
 
 // middlewares
 app.use(cors());
@@ -29,9 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use(router);
-app.use('/students', studentRouter);
-app.use('/utils/students', importExportRouter);
+app.use(staticContentRouter);
+app.use(apiRouter);
 
 // error handler
 app.use(notFoundHandler);

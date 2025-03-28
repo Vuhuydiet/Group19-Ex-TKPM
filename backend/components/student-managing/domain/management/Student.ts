@@ -1,10 +1,8 @@
+import { Faculty, StudyStatus } from "@prisma/client";
 import IdentityDocument from "./IdentityDocument";
 
+
 export type Gender = 'Nam' | 'Nữ';
-
-export type Faculty = 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp' | '';
-
-export type StudyStatus = 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học';
 
 export type Address = {
   city: string;

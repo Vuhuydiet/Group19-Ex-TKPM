@@ -1,0 +1,18 @@
+model StudyStatus {
+  id                          String                        @id
+  name                        String
+  description                 String?
+  createdAt                   DateTime                      @default(now())
+  ValidStudyStatusTransition1 ValidStudyStatusTransition[] @relation("Relation1")
+  ValidStudyStatusTransition2 ValidStudyStatusTransition[] @relation("Relation2")
+}
+
+model ValidStudyStatusTransition {
+  from String
+  to String
+
+  status1 StudyStatus @relation("Relation1", fields: [from], references: [id])
+  status2 StudyStatus @relation("Relation2", fields: [to], references: [id])
+
+  @@id([from, to])
+}
