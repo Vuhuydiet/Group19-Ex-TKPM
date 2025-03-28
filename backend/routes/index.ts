@@ -6,12 +6,12 @@ import studentRouter from '../components/student-managing/entry-points/api/stude
 import importExportRouter from '../components/student-managing/entry-points/api/import-export/importExportStudent.router';
 import facultyRouter from '../components/student-managing/entry-points/api/faculty/faculty.route';
 import studyStatusRouter from '../components/student-managing/entry-points/api/studyStatus/studyStatus.route';
-
+import studyStatusTransitionRouter from '../components/student-managing/entry-points/api/studyStatus/transition.route';
 
 router.use('/students', studentRouter);
 router.use('/utils/students', importExportRouter);
 router.use('/faculties', facultyRouter);
 router.use('/study-status', studyStatusRouter);
-router.use('/study-status-transition', studyStatusRouter);
+router.use('/study-status-transition', studyStatusTransitionRouter);
 
 export default router;
