@@ -1,0 +1,6 @@
+model Faculty {
+  id          String      @id
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+}

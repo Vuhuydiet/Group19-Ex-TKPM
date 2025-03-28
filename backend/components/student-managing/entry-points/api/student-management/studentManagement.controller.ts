@@ -13,9 +13,10 @@ export class StudentManagerController {
         this.studentManagementMapper = new StudentManagementMapper();
     }
     
-    addStudent(req: Request, res: Response): void {
-        const student = this.studentManagementMapper.toStudent(req);
-        StudentManagementService.addStudent(student);
+    async addStudent(req: Request, res: Response): Promise<void> {
+        const studentData = this.studentManagementMapper.toStudent(req);
+
+        const student = await StudentManagementService.addStudent(studentData);
         new CreatedResponse({
             message: 'Student added successfully',
             metadata: student
