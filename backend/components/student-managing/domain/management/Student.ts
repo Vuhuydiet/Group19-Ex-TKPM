@@ -1,10 +1,8 @@
+import { Faculty, StudyStatus } from "@prisma/client";
 import IdentityDocument from "./IdentityDocument";
 
+
 export type Gender = 'Nam' | 'Nữ';
-
-export type Faculty = 'Khoa Luật' | 'Khoa Tiếng Anh thương mại' | 'Khoa Tiếng Nhật' | 'Khoa Tiếng Pháp' | '';
-
-export type StudyStatus = 'Đang học' | 'Đã tốt nghiệp' | 'Đã thôi học' | 'Tạm dừng học';
 
 export type Address = {
   city: string;
@@ -169,23 +167,23 @@ export class Student {
     this._nationality = nationality;
   }
 
-  toJSON() { // need modify
+  toJSON() {
     return {
-      id: this.id,
-      name: this.name,
-      dob: this.dob,
-      gender: this.gender,
-      faculty: this.faculty,
-      academicYear: this.academicYear,
-      program: this.program,
-      permanentAddress: this.permanentAddress,
-      temporaryAddress: this.temporaryAddress,
-      email: this.email,
-      phone: this.phone,
-      status: this.status,
-      identityDocument: this.identityDocument,
+      id: this._id,
+      name: this._name,
+      dob: this._dob,
+      gender: this._gender,
+      faculty: this._faculty,
+      academicYear: this._academicYear,
+      program: this._program,
+      permanentAddress: this._permanentAddress,
+      temporaryAddress: this._temporaryAddress,
+      email: this._email,
+      phone: this._phone,
+      status: this._status,
+      identityDocument: this._identityDocument,
       nationality: this._nationality
     };
-  }
+  }  
   
 }

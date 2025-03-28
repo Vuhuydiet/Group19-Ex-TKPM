@@ -1,31 +1,10 @@
-import { Student } from "../../../domain/management/Student";
 import { Request} from "express";
 
-// export class StudentManagementMapper {
-//     public toStudent(request: Request): Student {
-//         const { id, name, dob, gender, faculty, accademicYear, program, address, email, phone, status } = request.body;
-//         const student = new Student(
-//             id,
-//             name,
-//             dob,
-//             gender,
-//             faculty,
-//             accademicYear,
-//             program,
-//             address,
-//             email,
-//             phone,
-//             status
-//         );
-//         return student;
-//     }
-// }
-
 export class StudentManagementMapper {
-    public toStudent(request: Request): Student {
+    public toStudent(request: Request) {
         const { id, name, dob, gender, faculty, academicYear, program, permanentAddress, temporaryAddress, email, phone, status, identityDocument, nationality } = request.body;
 
-        const student = new Student(
+        const student = {
             id,
             name,
             dob,
@@ -33,13 +12,13 @@ export class StudentManagementMapper {
             faculty,
             academicYear,
             program,
-            {
+            permanentAddress: {
                 city: permanentAddress.city,
                 district: permanentAddress.district,
                 ward: permanentAddress.ward,
                 street: permanentAddress.street,
             },
-            {
+            temporaryAddress: {
                 city: temporaryAddress.city,
                 district: temporaryAddress.district,
                 ward: temporaryAddress.ward,
@@ -50,7 +29,7 @@ export class StudentManagementMapper {
             status,
             identityDocument,
             nationality
-        );
+        };
 
         return student;
     }

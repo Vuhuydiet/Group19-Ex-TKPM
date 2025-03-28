@@ -1,12 +1,18 @@
 import { ImportExportStrategy } from '../format.strategy';
-import { Faculty, Gender, Student, StudyStatus } from '../../management/Student';
 import { XMLBuilder, XMLParser  } from 'fast-xml-parser';
+import studentXMLParser from './parser/StudentXML.parser';
+
+export enum ParserType {
+    STUDENT = 'student'
+}
 
 export class XMLStrategy implements ImportExportStrategy {
 
     private xmlParser: XMLParser;
 
     private xmlBuilder: XMLBuilder; 
+
+    private parserMap: Map<string, any>;
 
     constructor() {
         this.xmlParser = new XMLParser({ ignoreAttributes: false });
@@ -15,46 +21,42 @@ export class XMLStrategy implements ImportExportStrategy {
             format: true,
             ignoreAttributes: false
         });
+
+        this.parserMap = new Map<string, any>();
+    }
+
+    registerParser(parser: any, type: string) {
+        if (this.parserMap.has(type)) {
+            throw new Error(`Parser for type ${type} already exists`);
+        }
+        this.parserMap.set(type, parser);
     }
 
     parseData(data: string): any {
-        
         const jsonObj = this.xmlParser.parse(data);
-        
-        const students: Student[] = [];
-    
-        if (jsonObj.students?.student) {
-            const studentList = Array.isArray(jsonObj.students.student)
-                ? jsonObj.students.student
-                : [jsonObj.students.student];
-    
-            for (const studentObj of studentList) {
-                const student: Student = new Student(
-                    studentObj.id || "",
-                    studentObj.name || "",
-                    new Date(studentObj.dob || ""),
-                    studentObj.gender as Gender || "",
-                    studentObj.faculty as Faculty || "",
-                    parseInt(studentObj.academicYear || "0", 10),
-                    studentObj.program || "",
-                    studentObj.permanentAddress || {},
-                    studentObj.temporaryAddress || undefined,
-                    studentObj.email || "",
-                    studentObj.phone || "",
-                    studentObj.status as StudyStatus || null,
-                    studentObj.identityDocument || {},
-                    studentObj.nationality
-                );
-                students.push(student);
-            }
-        }
-    
-        return students;
+        const type = this.getType(jsonObj);
+        const parser = this.getParser(type);
+        return parser.parse(jsonObj);        
     }
 
-    stringifyData(data: object[]): string {
-        const wrappedData = { students: { student: data } };
-
+    stringifyData(data: any, type: string): string {
+        const wrappedData = this.getParser(type).wrap(data);
         return this.xmlBuilder.build(wrappedData);
     }
+
+    private getType(data: any): string {
+        return data.students.student ? ParserType.STUDENT : '';
+    }
+    
+    private getParser(type: string) {
+        const parser = this.parserMap.get(type);
+        if (!parser) {
+            throw new Error(`Parser for type ${type} not found`);
+        }
+        return parser;
+    }
 }
+
+const xmlStrategy = new XMLStrategy();
+xmlStrategy.registerParser(studentXMLParser, ParserType.STUDENT);
+export default xmlStrategy;

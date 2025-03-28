@@ -9,32 +9,32 @@ export const mockStudent: Student = {
     academicYear: 2020,
     program: "Chất lượng cao",
     permanentAddress: {
-        city: "TP.HCM",
-        district: "Quận 1",
-        ward: "Bến Nghé",
-        street: "123 Lê Lợi"
+      city: "TP.HCM",
+      district: "Quận 1",
+      ward: "Bến Nghé",
+      street: "123 Lê Lợi"
     },
     temporaryAddress: {
-        city: "TP.HCM",
-        district: "Quận 1",
-        ward: "Bến Thành",
-        street: "456 Nguyễn Huệ"
+      city: "TP.HCM",
+      district: "Quận 1",
+      ward: "Bến Thành",
+      street: "456 Nguyễn Huệ"
     },
     nationality: "Việt Nam",
     email: "nguyenvana@example.com",
     identityDocument: {
       type: "NewIdentityCard",
       data: {
-        "ID": "079403029299",
-        "issuedDate": "2021-12-21",
-        "issuedPlace": "Ho Chi Minh",
-        "expiredDate": "2029-12-01",
-        "chipIntergrated": true
+        id: "079403029299",
+        issuedDate: "2021-12-21",
+        issuedPlace: "Ho Chi Minh",
+        expiredDate: "2029-12-01",
+        hasChip: true
       }
     },
     phone: "0123456789",
     status: "Đang học"
-};
+  }
 
 export const mockStudentsList: Student[] = [
   {
@@ -62,11 +62,11 @@ export const mockStudentsList: Student[] = [
     identityDocument: {
       type: "NewIdentityCard",
       data: {
-        "ID": "079403029299",
-        "issuedDate": "2021-12-21",
-        "issuedPlace": "Ho Chi Minh",
-        "expiredDate": "2029-12-01",
-        "chipIntergrated": true
+        id: "079403029299",
+        issuedDate: "2021-12-21",
+        issuedPlace: "Ho Chi Minh",
+        expiredDate: "2029-12-01",
+        hasChip: true
       }
     },
     phone: "0123456789",
@@ -97,17 +97,17 @@ export const mockStudentsList: Student[] = [
     identityDocument: {
       type: "NewIdentityCard",
       data: {
-        "ID": "079403029299",
-        "issuedDate": "2021-12-21",
-        "issuedPlace": "Ho Chi Minh",
-        "expiredDate": "2029-12-01",
-        "chipIntergrated": true
+        id: "079403029300",
+        issuedDate: "2021-11-15",
+        issuedPlace: "Ho Chi Minh",
+        expiredDate: "2029-11-15",
+        hasChip: true
       }
     },
     phone: "0987654321",
     status: "Đang học"
-    },
-    {
+  },
+  {
     id: "SV003",
     name: "Lê Văn C",
     dob: "2003-03-10",
@@ -130,13 +130,12 @@ export const mockStudentsList: Student[] = [
     nationality: "Việt Nam",
     email: "levanc@example.com",
     identityDocument: {
-      type: "NewIdentityCard",
+      type: "OldIdentityCard",
       data: {
-        "ID": "079403029299",
-        "issuedDate": "2021-12-21",
-        "issuedPlace": "Ho Chi Minh",
-        "expiredDate": "2029-12-01",
-        "chipIntergrated": true
+        id: "079403029301",
+        issuedDate: "2015-07-20",
+        issuedPlace: "Ho Chi Minh",
+        expiredDate: "2025-07-20"
       }
     },
     phone: "0369852147",
@@ -165,13 +164,14 @@ export const mockStudentsList: Student[] = [
     nationality: "Việt Nam",
     email: "phamminhd@example.com",
     identityDocument: {
-      type: "NewIdentityCard",
+      type: "Passport",
       data: {
-        "ID": "079403029299",
-        "issuedDate": "2021-12-21",
-        "issuedPlace": "Ho Chi Minh",
-        "expiredDate": "2029-12-01",
-        "chipIntergrated": true
+        passportNumber: "C1234567",
+        issuedDate: "2018-04-10",
+        issuedPlace: "Ho Chi Minh",
+        expiredDate: "2028-04-10",
+        issuedCountry: "Vietnam",
+        note: "Hộ chiếu phổ thông"
       }
     },
     phone: "0945123789",
