@@ -1,5 +1,7 @@
 import { Module } from "./moduleAPIServices";
 import { Student } from "./studentAPIServices";
+import { Faculty } from "./facultyAPIServices";
+
 
 export const mockStudent: Student = {
   id: "SV001",
@@ -196,10 +198,44 @@ export const mockDataFaculties: string[] = [
 ];
 
 export const mockDataPrograms: string[] = [
-  "Chất lượng cao",
-  "Đề án",
-  "Chính quy"
+    "Chất lượng cao",
+    "Đề án",
+    "Chính quy"
 ];
+
+export const mockFaculties: Faculty[] = [
+  {
+    id: "L",
+    name: "Khoa Luật",
+    description: "Khoa Luật chuyên đào tạo các chuyên ngành về luật pháp và chính trị.",
+    createdAt: "2023-01-01T00:00:00Z",
+  },
+  {
+    id: "TA",
+    name: "Khoa Tiếng Anh thương mại",
+    description: "Khoa Tiếng Anh thương mại chuyên đào tạo các chuyên ngành về tiếng Anh và thương mại.",
+    createdAt: "2023-01-01T00:00:00Z",
+  },
+  {
+    id: "TN",
+    name: "Khoa Tiếng Nhật",
+    description: "Khoa Tiếng Nhật chuyên đào tạo các chuyên ngành về tiếng Nhật và văn hóa Nhật Bản.",
+    createdAt: "2023-01-01T00:00:00Z",
+  },
+  {
+    id: "TP",
+    name: "Khoa Tiếng Pháp",
+    description: "Khoa Tiếng Pháp chuyên đào tạo các chuyên ngành về tiếng Pháp và văn hóa Pháp.",
+    createdAt: "2023-01-01T00:00:00Z",
+  }
+];
+
+export const mockValidStudyStatusTransition: { from: string; to: string }[] = [
+  { from: "DH", to: "TD" },
+  { from: "DH", to: "TH" },
+  { from: "DH", to: "TN" },
+  { from: "TD", to: "DH" }
+
 
 export const mockDataModules: Module[] = [
   {

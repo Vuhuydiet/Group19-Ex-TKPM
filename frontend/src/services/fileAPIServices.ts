@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Student } from "./studentAPIServices"; // Import interface
 
-const API_BASE_URL = "http://localhost:3000/utils";
+const API_BASE_URL = "http://localhost:3000/utils/students";
 
 // Export students as JSON
 export const exportStudentsJSON = async () => {
