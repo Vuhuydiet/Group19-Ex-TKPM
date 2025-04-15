@@ -228,3 +228,10 @@ export const mockFaculties: Faculty[] = [
     createdAt: "2023-01-01T00:00:00Z",
   }
 ];
+
+export const mockValidStudyStatusTransition: { from: string; to: string }[] = [
+  { from: "DH", to: "TD" },
+  { from: "DH", to: "TH" },
+  { from: "DH", to: "TN" },
+  { from: "TD", to: "DH" }
+];
