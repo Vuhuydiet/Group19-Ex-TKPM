@@ -235,6 +235,7 @@ export const mockValidStudyStatusTransition: { from: string; to: string }[] = [
   { from: "DH", to: "TH" },
   { from: "DH", to: "TN" },
   { from: "TD", to: "DH" }
+]
 
 
 export const mockDataModules: Module[] = [

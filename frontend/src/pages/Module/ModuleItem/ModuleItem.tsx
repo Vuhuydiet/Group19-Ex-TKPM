@@ -82,7 +82,7 @@ const ModuleItem = ({ selectedModule, setSelectedModule }: ModuleItemProps) => {
                                     value={module?.faculty}
                                 >
                                     {category.faculty.map((fac) => (
-                                        <option value={fac} key={fac}>{fac}</option>
+                                        <option value={fac.id} key={fac.id}>{fac.name}</option>
                                     ))}
                                 </select>
                             </div>

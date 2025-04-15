@@ -254,8 +254,8 @@ function StudentImportForm() {
                                 Choose student's faculty
                             </option>
                             {category.faculty.map((faculty, index) => (
-                                <option key={index} value={faculty}>
-                                    {faculty}
+                                <option key={index} value={faculty.id}>
+                                    {faculty.name}
                                 </option>
                             ))}
                         </select>

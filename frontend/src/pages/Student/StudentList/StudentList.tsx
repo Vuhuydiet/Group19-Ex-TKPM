@@ -218,7 +218,7 @@ function student() {
                             >
                                 <option value="" disabled>Faculty</option>
                                 {category.faculty.map((item, index) => (
-                                    <option key={index} value={item}>{item}</option>
+                                    <option key={index} value={item.id}>{item.name}</option>
                                 ))}
                                 <option value="">None</option>
                             </select>

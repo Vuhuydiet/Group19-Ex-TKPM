@@ -221,7 +221,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         onChange={(e) => setStudentInfo({ ...studentInfo, faculty: e.target.value })}
                                         disabled={!isEdit} >
                                         {category.faculty.map((faculty, index) => (
-                                            <option key={index} value={faculty}>{faculty}</option>
+                                            <option key={index} value={faculty.id}>{faculty.name}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -246,7 +246,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         onChange={(e) => setStudentInfo({ ...studentInfo, status: e.target.value })}
                                         disabled={!isEdit} >
                                         {category.status.map((status, index) => (
-                                            <option key={index} value={status}>{status}</option>
+                                            <option key={index} value={status.id}>{status.name}</option>
                                         ))}
                                     </select>
                                 </div>

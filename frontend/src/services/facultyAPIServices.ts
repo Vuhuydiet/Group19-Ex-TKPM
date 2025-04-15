@@ -11,7 +11,7 @@ export interface Faculty {
 
 export const getFaculties = async (): Promise<any[]> => {
     const response = await axios.get(API_BASE_URL);
-    return response.data.metadata;
+    return response.data.metadata.faculties;
 }
 
 export const getFacultyById = async (id: string): Promise<any | null> => {

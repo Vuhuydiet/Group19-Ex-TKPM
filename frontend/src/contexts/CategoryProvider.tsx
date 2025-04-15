@@ -1,10 +1,13 @@
 import { createContext, useState, useContext, PropsWithChildren } from 'react';
-import { mockDataStatus, mockDataPrograms, mockDataFaculties } from '../services/mockData';
+import { mockDataPrograms} from '../services/mockData';
+import { getStudyStatuses, StudyStatus } from '../services/studentStatusAPIServices';
+import { Faculty, getFaculties } from '../services/facultyAPIServices';
+import { useEffect } from 'react'; // cần import
 
 interface CategoryType {
-    status: string[];
+    status: StudyStatus[];
     programs: string[];
-    faculty: string[];
+    faculty: Faculty[];
 }
 
 type CategoryContextType = {
@@ -18,13 +21,39 @@ type CategoryProviderProps = PropsWithChildren;
 const CatogoryContext = createContext<CategoryContextType | undefined>(undefined);
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
+
     const [category, setCategory] = useState<CategoryType>(
         {
-            status: mockDataStatus,
+            status: [] as StudyStatus[],
             programs: mockDataPrograms,
-            faculty: mockDataFaculties,
+            faculty: [] as Faculty[],
         }
     );
+
+    // fetchData().then((data) => {
+    //     console.log(data);
+    //     setCategory({
+    //         status: data.status,
+    //         programs: mockDataPrograms,
+    //         faculty: data.faculty,
+    //     })
+    // });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const status = await getStudyStatuses();
+            const faculty = await getFaculties();
+            console.log(status, faculty);
+            setCategory({
+                status,
+                programs: mockDataPrograms,
+                faculty,
+            });
+        };
+
+        fetchData();
+    }, []); 
+
     return (
         <CatogoryContext.Provider value={{ category, setCategory }}>
             {children}

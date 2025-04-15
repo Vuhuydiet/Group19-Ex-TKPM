@@ -9,7 +9,6 @@ describe("Student Status API Service Tests", () => {
     });
 
     // Test getStudyStatuses()
-    // Test getStudyStatuses()
     it("should fetch all study statuses", async () => {
         const mockResponse = {
             domainCode: "999",
