@@ -51,8 +51,13 @@ export default class StudyStatusService {
     });
   }
 
-  public static async getValidStudyStatusTransitions() {
-    return await prisma.validStudyStatusTransition.findMany();
+  public static async getValidStudyStatusTransitions(from?: string, to?: string) {
+    return await prisma.validStudyStatusTransition.findMany({
+      where: {
+        from: from,
+        to: to
+      }
+    });
   }
 
   public static async addValidStudyStatusTransition(from: string, to: string) {

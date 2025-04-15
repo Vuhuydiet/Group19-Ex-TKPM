@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import StudyStatusService, { StudyStatusData } from "../../../domain/services/StudyStatusService";
+import StudyStatusService, { StudyStatusData } from "../../../domain/services/studyStatus.service";
 import { CreatedResponse, OKResponse } from "../../../../../core/responses/SuccessResponse";
 import { matchedData } from "express-validator";
 

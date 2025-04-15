@@ -3,6 +3,7 @@ import { BadRequestError } from "../../../../../core/responses/ErrorResponse";
 import { DomainCode } from "../../../../../core/responses/DomainCode";
 import StudentManagementService from "../../../domain/services/studentManagement.service";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
+import StudyStatusService from "../../../domain/services/studyStatus.service";
 
 const NAME_PATTERN = /^[A-Za-z\s]+$/;
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -68,14 +69,16 @@ export const checkPhoneNumberPattern = (req: Request, _res: Response, next: Next
 };
 
 
-export const checkStatusTransition = (req: Request, _res: Response, next: NextFunction): void => {
+export const checkStatusTransition = async (req: Request, _res: Response, next: NextFunction) => {
     const { id } = req.params;
     const { status } = req.body;
 
     const currentStatus = StudentManagementService.getStudentById(id)?.status;
 
-    if (!allowedStatus[currentStatus]?.includes(status)) {
-        throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, `Invalid transition from '${currentStatus}' to ${status}`);
+    const nextStatusesIds = await StudyStatusService.getValidStudyStatusTransitions(currentStatus.id);
+
+    if (!nextStatusesIds.includes(status)) {
+        throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Invalid status transition');
     }
 
     next();
