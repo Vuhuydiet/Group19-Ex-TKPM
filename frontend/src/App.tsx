@@ -4,21 +4,11 @@ import SubHeader from './components/SubHeader/SubHeader'
 import Content from './components/Content/Content'
 import './styles/dashboard.css'
 import { useEffect, useState } from 'react'
-import { mockDataFaculties, mockDataPrograms, mockDataStatus } from './services/mockData'
 // import { addStudent, Student } from './services/studentAPIServices'
-import { useCategory } from './contexts/CategoryProvider'
 
 function App() {
   const [isAuthenticated, _setIsAuthenticated] = useState(true);
-  const { setCategory } = useCategory();
 
-  useEffect(() => {
-    setCategory({
-      status: mockDataStatus,
-      programs: mockDataPrograms,
-      faculty: mockDataFaculties
-    });
-  }, []);
 
   useEffect(() => {
     // const studentList = mockStudentsList;

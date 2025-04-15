@@ -1,0 +1,59 @@
+.board--module .board__table .board__table__attribute:first-child {
+    flex: 1;
+}
+
+.board--module .board__table .board__table__attribute:nth-child(2) {
+    flex: 5;
+}
+
+.board--module .board__table .board__table__attribute:nth-child(3) {
+    flex: 1;
+}
+
+.board--module .board__table .board__table__attribute:nth-child(4) {
+    flex: 4;
+}
+
+.board--module .board__table .board__table__attribute:nth-child(5) {
+    flex: 5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.board--module .board__table__data .board__table__attribute:nth-child(5) {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+/* .board--module .board__table .board__table__attribute:nth-child(5):hover {
+    overflow: visible;
+    white-space: normal;
+    background-color: #fff;
+    z-index: 10;
+    position: relative;
+} */
+
+.board--module .board__table .board__table__attribute:nth-child(6) {
+    flex: 1;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ffffff;
+    color: var(--main-color);
+    border-radius: var(--border-radius);
+    margin: 0px 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.custom-file-upload:hover {
+    background-color: #ffffff;
+}
+
+.custom-file-upload input {
+    display: none;
+}
