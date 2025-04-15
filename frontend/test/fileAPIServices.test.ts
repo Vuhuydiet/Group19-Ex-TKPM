@@ -21,7 +21,7 @@ describe("File Import/Export API Services", () => {
 
     const data = await exportStudentsJSON();
 
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/json", { responseType: "blob" });
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/students/json", { responseType: "blob" });
     expect(data).toBe(mockBlob);
   });
 
@@ -32,7 +32,7 @@ describe("File Import/Export API Services", () => {
     // await importStudentsJSON(mockStudents);
     await importStudentsJSON(mockStudentsList);
 
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/json", {
+    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/students/json", {
       students: JSON.stringify(mockStudentsList),
     });
   });
@@ -43,7 +43,7 @@ describe("File Import/Export API Services", () => {
 
     const data = await exportStudentsXML();
 
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/xml", { responseType: "blob" });
+    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/students/xml", { responseType: "blob" });
     expect(data).toBe(mockBlob);
   });
 
@@ -53,7 +53,7 @@ describe("File Import/Export API Services", () => {
 
     await importStudentsXML(xmlData);
 
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/xml", {
+    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/students/xml", {
       students: xmlData,
     });
   });
