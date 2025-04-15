@@ -7,16 +7,25 @@ export interface EnrollmentRecordData {
   grade?: number;
 }
 
+export interface EnrollmentRecordQuery {
+  studentId?: string;
+  classId?: string;
+  grade?: number;
+}
+
 export class EnrollmentRecordService {
   static async create(data: EnrollmentRecordData) {
     // Check prerequisite if exists
     const classObj = await prisma.class.findUnique({ where: { id: data.classId }, include: { course: true } });
-    if (!classObj) throw new Error('Class not found');
+    if (!classObj) 
+      throw new Error('Class not found');
     const course = classObj.course;
+
     if (course.prerequisiteId) {
       const preqClasses = await prisma.class.findMany({ where: { courseId: course.prerequisiteId }, select: { id: true } });
       const preqClassIds = preqClasses.map(c => c.id);
-      if (preqClassIds.length === 0) throw new Error('No class found for prerequisite course');
+      if (preqClassIds.length === 0) 
+        throw new Error('No class found for prerequisite course');
       const passed = await prisma.enrollmentRecord.findFirst({
         where: {
           studentId: data.studentId,
@@ -29,8 +38,14 @@ export class EnrollmentRecordService {
     return prisma.enrollmentRecord.create({ data });
   }
 
-  static async findAll() {
-    return prisma.enrollmentRecord.findMany();
+  static async findAll(query?: EnrollmentRecordQuery) {
+    return prisma.enrollmentRecord.findMany({
+      where: {
+        ...(query?.studentId ? { studentId: query.studentId } : {}),
+        ...(query?.classId ? { classId: query.classId } : {}),
+        ...(query?.grade !== undefined ? { grade: query.grade } : {}),
+      }
+    });
   }
 
   static async findById(studentId: string, classId: string) {
