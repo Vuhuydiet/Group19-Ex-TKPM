@@ -1,0 +1,51 @@
+model Course {
+  id           String   @id
+  courseName   String
+  nCredits     Int
+  facultyId    String
+  description  String
+  prerequisiteId String?
+  createdAt    DateTime @default(now())
+  activated    Boolean  @default(true)
+
+  prerequisite Course? @relation("CoursePrerequisite", fields: [prerequisiteId], references: [id])
+  prerequisites Course[] @relation("CoursePrerequisite")
+  faculty    Faculty @relation(fields: [facultyId], references: [id])
+
+  classes Class[]
+}
+
+model Class {
+  id            String @id
+  courseId      String
+  year          Int
+  semester      Int
+  professorName String
+  capacity      Int
+  schedule      String
+  room          String
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  enrollments EnrollmentRecord[]
+  cancelHistories ClassCancelHistory[]
+}
+
+model EnrollmentRecord {
+  studentId String
+  classId   String
+  grade     Float?
+
+  class Class @relation(fields: [classId], references: [id])
+  @@id([studentId, classId])
+}
+
+model ClassCancelHistory {
+  studentId  String
+  classId    String
+  canceledAt DateTime
+  
+  @@id([studentId, classId, canceledAt])
+  
+  class      Class    @relation(fields: [classId], references: [id])
+}
