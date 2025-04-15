@@ -1,40 +1,41 @@
+import { Module } from "./moduleAPIServices";
 import { Student } from "./studentAPIServices";
 
 export const mockStudent: Student = {
-    id: "SV001",
-    name: "Nguyễn Văn A",
-    dob: "2002-05-15",
-    gender: "Nam",
-    faculty: "Khoa Luật",
-    academicYear: 2020,
-    program: "Chất lượng cao",
-    permanentAddress: {
-      city: "TP.HCM",
-      district: "Quận 1",
-      ward: "Bến Nghé",
-      street: "123 Lê Lợi"
-    },
-    temporaryAddress: {
-      city: "TP.HCM",
-      district: "Quận 1",
-      ward: "Bến Thành",
-      street: "456 Nguyễn Huệ"
-    },
-    nationality: "Việt Nam",
-    email: "nguyenvana@example.com",
-    identityDocument: {
-      type: "NewIdentityCard",
-      data: {
-        id: "079403029299",
-        issuedDate: "2021-12-21",
-        issuedPlace: "Ho Chi Minh",
-        expiredDate: "2029-12-01",
-        hasChip: true
-      }
-    },
-    phone: "0123456789",
-    status: "Đang học"
-  }
+  id: "SV001",
+  name: "Nguyễn Văn A",
+  dob: "2002-05-15",
+  gender: "Nam",
+  faculty: "Khoa Luật",
+  academicYear: 2020,
+  program: "Chất lượng cao",
+  permanentAddress: {
+    city: "TP.HCM",
+    district: "Quận 1",
+    ward: "Bến Nghé",
+    street: "123 Lê Lợi"
+  },
+  temporaryAddress: {
+    city: "TP.HCM",
+    district: "Quận 1",
+    ward: "Bến Thành",
+    street: "456 Nguyễn Huệ"
+  },
+  nationality: "Việt Nam",
+  email: "nguyenvana@example.com",
+  identityDocument: {
+    type: "NewIdentityCard",
+    data: {
+      id: "079403029299",
+      issuedDate: "2021-12-21",
+      issuedPlace: "Ho Chi Minh",
+      expiredDate: "2029-12-01",
+      hasChip: true
+    }
+  },
+  phone: "0123456789",
+  status: "Đang học"
+}
 
 export const mockStudentsList: Student[] = [
   {
@@ -181,21 +182,104 @@ export const mockStudentsList: Student[] = [
 
 
 export const mockDataStatus: string[] = [
-    "Đang học",
-    "Đã tốt nghiệp",
-    "Đã thôi học",
-    "Tạm dừng học"
+  "Đang học",
+  "Đã tốt nghiệp",
+  "Đã thôi học",
+  "Tạm dừng học"
 ];
 
 export const mockDataFaculties: string[] = [
-    "Khoa Luật",
-    "Khoa Tiếng Anh thương mại",
-    "Khoa Tiếng Nhật",
-    "Khoa Tiếng Pháp",
+  "Khoa Luật",
+  "Khoa Tiếng Anh thương mại",
+  "Khoa Tiếng Nhật",
+  "Khoa Tiếng Pháp",
 ];
 
 export const mockDataPrograms: string[] = [
-    "Chất lượng cao",
-    "Đề án",
-    "Chính quy"
+  "Chất lượng cao",
+  "Đề án",
+  "Chính quy"
+];
+
+export const mockDataModules: Module[] = [
+  {
+    id: 'M001',
+    name: 'Data Structures',
+    numOfCredits: 3,
+    faculty: 'Computer Science',
+    description: 'Introduction to data structures and their applications.',
+    prerequisiteModules: []
+  },
+  {
+    id: 'M002',
+    name: 'Algorithms',
+    numOfCredits: 3,
+    faculty: 'Computer Science',
+    description: 'Design and analysis of algorithms.',
+    prerequisiteModules: ['M001']
+  },
+  {
+    id: 'M003',
+    name: 'Operating Systems',
+    numOfCredits: 4,
+    faculty: 'Computer Science',
+    description: 'Study of operating system principles.',
+    prerequisiteModules: ['M001']
+  },
+  {
+    id: 'M004',
+    name: 'Calculus I',
+    numOfCredits: 3,
+    faculty: 'Mathematics',
+    description: 'Differential and integral calculus.',
+    prerequisiteModules: []
+  },
+  {
+    id: 'M005',
+    name: 'Linear Algebra',
+    numOfCredits: 3,
+    faculty: 'Mathematics',
+    description: 'Vectors, matrices, and linear transformations.',
+    prerequisiteModules: []
+  },
+  {
+    id: 'M006',
+    name: 'Computer Networks',
+    numOfCredits: 3,
+    faculty: 'Computer Science',
+    description: 'Network models and protocols.',
+    prerequisiteModules: ['M003']
+  },
+  {
+    id: 'M007',
+    name: 'Database Systems',
+    numOfCredits: 3,
+    faculty: 'Information Technology',
+    description: 'Relational databases and SQL.',
+    prerequisiteModules: ['M001']
+  },
+  {
+    id: 'M008',
+    name: 'Artificial Intelligence',
+    numOfCredits: 3,
+    faculty: 'Computer Science',
+    description: 'Foundations of AI and problem-solving techniques.',
+    prerequisiteModules: ['M002']
+  },
+  {
+    id: 'M009',
+    name: 'Software Engineering',
+    numOfCredits: 3,
+    faculty: 'Information Technology',
+    description: 'Software development lifecycle and practices.',
+    prerequisiteModules: ['M002']
+  },
+  {
+    id: 'M010',
+    name: 'Probability and Statistics',
+    numOfCredits: 3,
+    faculty: 'Mathematics',
+    description: 'Basic probability theory and statistical inference.',
+    prerequisiteModules: ['M004']
+  }
 ];

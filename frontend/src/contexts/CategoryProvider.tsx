@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, PropsWithChildren } from 'react';
+import { mockDataStatus, mockDataPrograms, mockDataFaculties } from '../services/mockData';
 
 interface CategoryType {
     status: string[];
@@ -17,7 +18,13 @@ type CategoryProviderProps = PropsWithChildren;
 const CatogoryContext = createContext<CategoryContextType | undefined>(undefined);
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
-    const [category, setCategory] = useState<CategoryType>({} as CategoryType);
+    const [category, setCategory] = useState<CategoryType>(
+        {
+            status: mockDataStatus,
+            programs: mockDataPrograms,
+            faculty: mockDataFaculties,
+        }
+    );
     return (
         <CatogoryContext.Provider value={{ category, setCategory }}>
             {children}
