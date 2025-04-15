@@ -9,6 +9,7 @@ import { useCategory } from '../../../contexts/CategoryProvider';
 import { Module } from '../../../services/moduleAPIServices';
 import { mockDataModules } from '../../../services/mockData';
 import ModuleAdditionForm from '../Form/ModuleAddition/ModuleAddition';
+import ModuleItem from '../ModuleItem/ModuleItem';
 // import { useLoading } from '../components/LoadingContext';
 
 
@@ -120,6 +121,7 @@ function ModuleList() {
     return (
         <>
             {/* {selectedModule && <StudentItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} modules={modules} setModules={setModules} />} */}
+            {selectedModule && <ModuleItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} />}
             {isAddFormOpen && <ModuleAdditionForm setIsAddFormOpen={setIsAddFormOpen} />}
             <div className="board board--module">
                 <div className="board__feature">

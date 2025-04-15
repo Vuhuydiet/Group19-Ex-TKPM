@@ -1,0 +1,100 @@
+.item {
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.item__header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: var(--main-color);
+}
+
+.item__body {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.item__body .body__left {
+    margin-right: 20px;
+}
+
+.item__body .body__left .body__icon__container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+
+}
+
+.body__left .body__icon__container .icon__item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.item__body .body__right {}
+
+.item__body .body__right .body__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item__body .body__right .body__item .body__item__label {
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+}
+
+.item__body .body__right .body__item .body__item__label span {
+    font-weight: bold;
+    color: var(--text-in-background-color);
+}
+
+.item__body .body__right .body__item input,
+.item__body .body__right .body__item select {
+    flex: 1;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.item__footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.item__footer button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-weight: 700;
+    cursor: pointer;
+}
