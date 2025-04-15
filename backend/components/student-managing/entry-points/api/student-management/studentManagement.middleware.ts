@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { BadRequestError } from "../../../../../core/responses/ErrorResponse";
 import { DomainCode } from "../../../../../core/responses/DomainCode";
 import StudentManagementService from "../../../domain/services/studentManagement.service";
-import allowedStatus from "../../../config/allowedStatus";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 
 const NAME_PATTERN = /^[A-Za-z\s]+$/;
