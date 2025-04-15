@@ -4,6 +4,7 @@ import StudentList from '../../pages/Student/StudentList/StudentList';
 import StudentImportForm from '../../pages/Student/Form/StudentImportForm/StudentImportForm';
 import CategoryManagement from '../../pages/Category/Management/CategoryManagement';
 import ModuleList from '../../pages/Module/ModuleList/ModuleList';
+import PrerequisiteSelector from '../../pages/Module/Form/PrerequisiteSelector/PrerequisiteSelector';
 
 function Content() {
     return (
@@ -14,6 +15,7 @@ function Content() {
                 <Route path='/student/import' element={<StudentImportForm />} />
                 <Route path='/category' element={<CategoryManagement />} />
                 <Route path='/module' element={<ModuleList />} />
+                <Route path='/test' element={<PrerequisiteSelector />} />
             </Routes>
         </>
     )

@@ -8,6 +8,7 @@ import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 import { useCategory } from '../../../contexts/CategoryProvider';
 import { Module } from '../../../services/moduleAPIServices';
 import { mockDataModules } from '../../../services/mockData';
+import ModuleAdditionForm from '../Form/ModuleAddition/ModuleAddition';
 // import { useLoading } from '../components/LoadingContext';
 
 
@@ -15,6 +16,7 @@ function ModuleList() {
 
     const [modules, setModules] = useState<Module[]>([]);
     const [cloneModule, setCloneModules] = useState<Module[]>([]);
+    const [isAddFormOpen, setIsAddFormOpen] = useState(false);
     const { category } = useCategory();
     //get all modules
 
@@ -118,10 +120,11 @@ function ModuleList() {
     return (
         <>
             {/* {selectedModule && <StudentItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} modules={modules} setModules={setModules} />} */}
+            {isAddFormOpen && <ModuleAdditionForm setIsAddFormOpen={setIsAddFormOpen} />}
             <div className="board board--module">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
-                        <button>Add</button>
+                        <button onClick={() => setIsAddFormOpen(true)}>Add</button>
                         <div className="board__feature__item">
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />
