@@ -1,6 +1,5 @@
 import axios from "axios";
-import { getStudyStatuses} from "../src/services/studentStatusAPIServices";
-import { StudyStatus, addStudyStatus, updateStudyStatus } from "../src/services/studentStatusAPIServices"; // Import the StudyStatus interface
+import { StudyStatus, StudyStatusAPIServices } from "../src/services/studentStatusAPIServices"; // Import the StudyStatus interface
 
 jest.mock("axios"); // Mock axios
 describe("Student Status API Service Tests", () => {
@@ -53,7 +52,9 @@ describe("Student Status API Service Tests", () => {
 
         (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockResponse });
 
-        const statuses = await getStudyStatuses();
+        // const statuses = await getStudyStatuses();
+        const statusService = new StudyStatusAPIServices(); // Create an instance of the StudyStatusAPIServices
+        const statuses = await statusService.getStudyStatuses(); // Call the method to test
 
         expect(statuses).toEqual(mockResult);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/study-status");
@@ -83,7 +84,10 @@ describe("Student Status API Service Tests", () => {
 
         (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ data: mockResponse });
 
-        const status = await addStudyStatus(newStatus);
+        // const status = await addStudyStatus(newStatus);
+        const statusService = new StudyStatusAPIServices(); // Create an instance of the StudyStatusAPIServices
+        const status = await statusService.addStudyStatus(newStatus); // Call the method to test
+
 
         expect(status).toEqual(newStatus);
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/study-status", newStatus);
@@ -113,7 +117,10 @@ describe("Student Status API Service Tests", () => {
 
         (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValue({ data: mockResponse });
 
-        const status = await updateStudyStatus("NEWSTATUS", updatedStatus);
+        // const status = await updateStudyStatus("NEWSTATUS", updatedStatus);
+
+        const statusService = new StudyStatusAPIServices(); // Create an instance of the StudyStatusAPIServices
+        const status = await statusService.updateStudyStatus("NEWSTATUS", updatedStatus); // Call the method to test
 
         expect(status).toEqual(mockResponse.metadata.studyStatus);
         expect(axios.patch).toHaveBeenCalledWith("http://localhost:3000/study-status/NEWSTATUS", updatedStatus);

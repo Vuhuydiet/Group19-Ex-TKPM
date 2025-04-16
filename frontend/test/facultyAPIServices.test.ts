@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getFaculties, getFacultyById, addFaculty, updateFaculty } from "../src/services/facultyAPIServices";
+import { FacultyAPIServices } from "../src/services/facultyAPIServices";
 
 import { mockFaculties } from "../src/services/mockData"; // Import mock data
 import { Faculty } from "../src/services/facultyAPIServices"; // Import Faculty interface
@@ -74,8 +74,9 @@ describe("Faculty API Service Tests", () => {
         ];
     
         (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockResponse });
-    
-        const faculties = await getFaculties();
+        const facultyService = new FacultyAPIServices(); // Create an instance of the FacultyAPIServices
+        const faculties = await facultyService.getFaculties();
+        // const faculties = await getFaculties();
         expect(faculties).toEqual(mockFaculties);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/faculties");
     });
@@ -85,8 +86,10 @@ describe("Faculty API Service Tests", () => {
         const mockResponse = { metadata: mockFaculties[0] };
     
         (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockResponse });
-    
-        const faculty = await getFacultyById("1");
+        
+        const facultyService = new FacultyAPIServices(); // Create an instance of the FacultyAPIServices
+        const faculty = await facultyService.getFacultyById("1");
+        // const faculty = await getFacultyById("1");
         expect(faculty).toEqual(mockFaculties[0]);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/faculties/1");
     });
@@ -96,8 +99,11 @@ describe("Faculty API Service Tests", () => {
         const mockResponse = { metadata: mockFaculties[0] };
     
         (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ data: mockResponse });
-    
-        const newFaculty = await addFaculty(mockFaculties[0]);
+        
+        const facultyService = new FacultyAPIServices(); // Create an instance of the FacultyAPIServices
+        const newFaculty = await facultyService.addFaculty(mockFaculties[0]);
+        
+        // const newFaculty = await addFaculty(mockFaculties[0]);
         expect(newFaculty).toEqual(mockFaculties[0]);
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/faculties", mockFaculties[0]);
     });
@@ -124,7 +130,9 @@ describe("Faculty API Service Tests", () => {
             }
         });
     
-        const result = await updateFaculty("1", updatedData);
+        // const result = await updateFaculty("1", updatedData);
+        const facultyService = new FacultyAPIServices(); // Create an instance of the FacultyAPIServices
+        const result = await facultyService.updateFaculty("1", updatedData);
         expect(result).toEqual(updatedFaculty);
         expect(axios.patch).toHaveBeenCalledWith("http://localhost:3000/faculties/1", updatedData);
     });

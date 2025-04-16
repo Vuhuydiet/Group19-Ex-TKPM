@@ -7,12 +7,29 @@ export interface ValidStudyStatusTransition {
     to: string;
 }
 
-export const addValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
-    const response = await axios.post(API_BASE_URL, transition);
-    return response.data.metadata.transition;
-};
+export class ValidStudyStatusTransitionAPIServices {
+    constructor() {
+        // Constructor logic if needed
+    }
 
-export const removeValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
-    const response = await axios.delete(API_BASE_URL, { data: transition });
-    return response.data.metadata.transition;
-};
+
+    addValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
+        const response = await axios.post(API_BASE_URL, transition);
+        return response.data.metadata.transition;
+    }   
+
+    removeValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
+        const response = await axios.delete(API_BASE_URL, { data: transition });
+        return response.data.metadata.transition;
+    }   
+}
+
+// export const addValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
+//     const response = await axios.post(API_BASE_URL, transition);
+//     return response.data.metadata.transition;
+// };
+
+// export const removeValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
+//     const response = await axios.delete(API_BASE_URL, { data: transition });
+//     return response.data.metadata.transition;
+// };

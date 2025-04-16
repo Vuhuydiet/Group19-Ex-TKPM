@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import { ClassData } from "../src/services/classAPIServices"; // Adjust the import path as necessary
-import { getClasses, getClassById, createClass, updateClass, deleteClass } from "../src/services/classAPIServices"; // Adjust the import path as necessary
+import { Class } from "../src/services/classAPIServices"; // Adjust the import path as necessary
+import { classAPIServices } from "../src/services/classAPIServices"; // Adjust the import path as necessary
 jest.mock("axios"); // Mock axios
 
 describe("Class API Service Tests", () => {
@@ -28,7 +28,7 @@ describe("Class API Service Tests", () => {
                 ]
             };
 
-        const mockClasses: ClassData[] = [
+        const mockClasses: Class[] = [
             {
                 id: "1",
                 courseId: "52",
@@ -42,8 +42,8 @@ describe("Class API Service Tests", () => {
         ];
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-
-        const classes = await getClasses();
+        const classService = new classAPIServices(); // Create an instance of the classAPIServices
+        const classes = await classService.getClasses();
         expect(classes).toEqual(mockClasses);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/classes");
     });
@@ -67,15 +67,15 @@ describe("Class API Service Tests", () => {
         };
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-
-        const classData = await getClassById(classId);
+        const classService = new classAPIServices(); // Create an instance of the classAPIServices
+        const classData = await classService.getClassById(classId);
         expect(classData).toEqual(mockResponse.metadata);
         expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/classes/${classId}`);
     });
 
     // Test createClass()
     it("should create a new class", async () => {
-        const newClass: ClassData = {
+        const newClass: Class = {
             id: "2",
             courseId: "52",
             year: 2025,
@@ -94,7 +94,8 @@ describe("Class API Service Tests", () => {
 
         (axios.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-        const createdClass = await createClass(newClass);
+        const classService = new classAPIServices(); // Create an instance of the classAPIServices
+        const createdClass = await classService.createClass(newClass);
         expect(createdClass).toEqual(mockResponse.metadata);
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/classes", newClass);
     });
@@ -102,7 +103,7 @@ describe("Class API Service Tests", () => {
     // Test updateClass()
     it("should update an existing class", async () => {
         const classId = "1";
-        const updatedClass: ClassData = {
+        const updatedClass: Class = {
             id: classId,
             courseId: "52",
             year: 2025,
@@ -121,7 +122,8 @@ describe("Class API Service Tests", () => {
 
         (axios.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-        const result = await updateClass(classId, updatedClass);
+        const classService = new classAPIServices(); // Create an instance of the classAPIServices
+        const result = await classService.updateClass(classId, updatedClass);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.patch).toHaveBeenCalledWith(`http://localhost:3000/classes/${classId}`, updatedClass);
     });
@@ -132,7 +134,8 @@ describe("Class API Service Tests", () => {
 
         (axios.delete as jest.Mock).mockResolvedValueOnce({});
 
-        await deleteClass(classId);
+        const classService = new classAPIServices(); // Create an instance of the classAPIServices
+        await classService.deleteClass(classId);
         expect(axios.delete).toHaveBeenCalledWith(`http://localhost:3000/classes/${classId}`);
     });
 });

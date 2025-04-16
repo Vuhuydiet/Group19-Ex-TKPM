@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCourses, getCourseById, deleteCourse, addCourse } from "../src/services/courseAPIServices";
+import { CourseAPIServices } from "../src/services/courseAPIServices";
 import { Course } from "../src/services/courseAPIServices"; // Import Course interface
 
 jest.mock("axios"); // Mock axios
@@ -39,7 +39,9 @@ describe("Course API Service Tests", () => {
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-        const courses = await getCourses();
+        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
+        const courses = await courseService.getCourses();
+        // const courses = await getCourses();
         expect(courses).toEqual(mockCourses);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/courses");
     });
@@ -61,8 +63,9 @@ describe("Course API Service Tests", () => {
         };
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-
-        const course = await getCourseById(courseId);
+        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
+        const course = await courseService.getCourseById(courseId);
+        // const course = await getCourseById(courseId);
         expect(course).toEqual(mockResponse.metadata);
         expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/courses/${courseId}`);
     });
@@ -86,8 +89,8 @@ describe("Course API Service Tests", () => {
         };
 
         (axios.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-
-        const result = await deleteCourse(courseId);
+        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
+        const result = await courseService.deleteCourse(courseId);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.delete).toHaveBeenCalledWith(`http://localhost:3000/courses/${courseId}`);
     });
@@ -110,8 +113,9 @@ describe("Course API Service Tests", () => {
         };
 
         (axios.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-
-        const result = await addCourse(newCourse);
+        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
+        const result = await courseService.addCourse(newCourse);
+        // const result = await addCourse(newCourse);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/courses", newCourse);
     });

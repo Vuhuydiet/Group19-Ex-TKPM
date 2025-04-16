@@ -1,10 +1,5 @@
 import axios from "axios";
-import { 
-  exportStudentsJSON, 
-  importStudentsJSON, 
-  exportStudentsXML, 
-  importStudentsXML 
-} from "../src/services/fileAPIServices";
+import { FileAPIServices } from "../src/services/fileAPIServices";
 import {mockStudentsList} from "../src/services/mockData";
 
 
@@ -19,7 +14,9 @@ describe("File Import/Export API Services", () => {
     const mockBlob = new Blob(["[{id: '1', name: 'Test'}]"], { type: "application/json" });
     (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockBlob });
 
-    const data = await exportStudentsJSON();
+    const fileService = new FileAPIServices(); // Create an instance of the FileAPIServices
+    const data = await fileService.exportStudentsJSON(); // Call the method to test
+    // const data = await exportStudentsJSON();
 
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/students/json", { responseType: "blob" });
     expect(data).toBe(mockBlob);
@@ -29,8 +26,10 @@ describe("File Import/Export API Services", () => {
     // const mockStudents = [{ id: "1", name: "Test Student", email: "test@example.com" }];
     // (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ status: 200 });
 
-    // await importStudentsJSON(mockStudents);
-    await importStudentsJSON(mockStudentsList);
+    const fileService = new FileAPIServices(); // Create an instance of the FileAPIServices
+    (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ status: 200 });
+
+    await fileService.importStudentsJSON(mockStudentsList); // Call the method to test
 
     expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/students/json", {
       students: JSON.stringify(mockStudentsList),
@@ -41,7 +40,9 @@ describe("File Import/Export API Services", () => {
     const mockBlob = new Blob(["<students><student>...</student></students>"], { type: "application/xml" });
     (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockBlob });
 
-    const data = await exportStudentsXML();
+    // const data = await exportStudentsXML();
+    const fileService = new FileAPIServices(); // Create an instance of the FileAPIServices
+    const data = await fileService.exportStudentsXML(); // Call the method to test
 
     expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/utils/students/xml", { responseType: "blob" });
     expect(data).toBe(mockBlob);
@@ -51,7 +52,9 @@ describe("File Import/Export API Services", () => {
     const xmlData = `<students><student><id>1</id><name>Test Student</name></student></students>`;
     (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue({ status: 200 });
 
-    await importStudentsXML(xmlData);
+    // await importStudentsXML(xmlData);
+    const fileService = new FileAPIServices(); // Create an instance of the FileAPIServices
+    await fileService.importStudentsXML(xmlData); // Call the method to test
 
     expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/utils/students/xml", {
       students: xmlData,
