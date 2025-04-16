@@ -5,7 +5,7 @@ import StudentManagementService from "../../../domain/services/studentManagement
 import StudentQuery from "../../../domain/services/studentManagement.service";
 import { CreatedResponse, OKResponse } from "../../../../../core/responses/SuccessResponse"
 
-export class StudentManagerController {
+class StudentManagerController {
 
     private studentManagementMapper: StudentManagementMapper;
     
@@ -14,6 +14,8 @@ export class StudentManagerController {
     }
     
     async addStudent(req: Request, res: Response): Promise<void> {
+        if (!this.studentManagementMapper)
+            this.studentManagementMapper = new StudentManagementMapper();
         const studentData = this.studentManagementMapper.toStudent(req);
 
         const student = await StudentManagementService.addStudent(studentData);
@@ -72,6 +74,4 @@ export class StudentManagerController {
     }
 }
 
-const g_StudentManagerController = new StudentManagerController();
-
-export default g_StudentManagerController;
+export default new StudentManagerController();
