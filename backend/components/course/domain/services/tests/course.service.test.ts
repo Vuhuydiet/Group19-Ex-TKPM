@@ -1,7 +1,7 @@
 // __tests__/course.service.test.ts
 import { CourseService, CourseData } from '../course.service';
 
-jest.mock('../../../../models', () => ({
+jest.mock('../../../../../models', () => ({
   __esModule: true,
   default: {
     course: {

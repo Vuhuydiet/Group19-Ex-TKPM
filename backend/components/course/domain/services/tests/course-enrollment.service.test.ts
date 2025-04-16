@@ -1,7 +1,7 @@
 // __tests__/course-enrollment.service.test.ts
 import { CourseEnrollmentService, EnrollmentRecordData } from '../course-enrollment.service';
 
-jest.mock('../../../../models', () => ({
+jest.mock('../../../../../models', () => ({
   __esModule: true,
   default: {
     class: {
