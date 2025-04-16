@@ -18,7 +18,7 @@ jest.mock('../../../../../models', () => ({
     },
   },
 }));
-const prisma = require('../../../../models').default;
+const prisma = require('../../../../../models').default;
 
 describe('CourseService', () => {
   const sampleData: CourseData = {
