@@ -1,4 +1,4 @@
-import g_StudentManagerController from "./studentManagement.controller";
+import studentManagerController from "./studentManagement.controller";
 import express from "express";
 import { checkEmailPattern, checkPhoneNumberPattern, checkStatusTransition } from "./studentManagement.middleware";
 import { body } from "express-validator";
@@ -31,27 +31,27 @@ router.post('/',
     handleValidationErrors,
     checkEmailPattern,
     checkPhoneNumberPattern,
-    g_StudentManagerController.addStudent
+    studentManagerController.addStudent
 );
 
 router.delete(
     '/:id', 
-    g_StudentManagerController.removeStudent
+    studentManagerController.removeStudent
 );
 
 router.get(
     '/', 
-    g_StudentManagerController.getStudents
+    studentManagerController.getStudents
 );
 
 router.get(
     '/id/:id', 
-    g_StudentManagerController.getStudentById
+    studentManagerController.getStudentById
 );
 
 router.get(
     '/name', 
-    g_StudentManagerController.getStudentsByName
+    studentManagerController.getStudentsByName
 );
 
 router.patch(
@@ -81,7 +81,7 @@ router.patch(
     checkEmailPattern,
     checkPhoneNumberPattern, 
     checkStatusTransition,
-    g_StudentManagerController.updateStudent
+    studentManagerController.updateStudent
 );
 
 
