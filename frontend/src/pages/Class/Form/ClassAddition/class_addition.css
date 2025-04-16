@@ -1,7 +1,7 @@
-.form--module .form__field {
+.form--class .form__field {
     width: calc(100%/2 - 10px);
 }
 
-.form--module {
+.form--class {
     width: 80%;
 }

@@ -38,22 +38,3 @@
 .board--module .board__table .board__table__attribute:nth-child(6) {
     flex: 1;
 }
-
-.custom-file-upload {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #ffffff;
-    color: var(--main-color);
-    border-radius: var(--border-radius);
-    margin: 0px 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.custom-file-upload:hover {
-    background-color: #ffffff;
-}
-
-.custom-file-upload input {
-    display: none;
-}

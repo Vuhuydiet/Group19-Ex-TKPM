@@ -5,10 +5,7 @@ import './item_list.css'
 
 interface ItemListProps {
     itemList: [
-        {
-            id: string;
-            name: string;
-        }
+        any
     ],
     setIsHide: (isHide: boolean) => void
     setSelectedItems: (selectedItems: any) => void
@@ -91,7 +88,7 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
 
     return (
         <>
-            <div className="virtual-background">
+            <div className="virtual-background virtual-background-frontside">
 
                 <div className="selector">
                     <div className="selector__header">
