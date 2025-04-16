@@ -36,25 +36,23 @@ const PrerequisiteSelector = ({ setPrerequisite, setIsHide }: PrerequisiteSelect
 
             items.forEach((item) => {
                 const el = item as HTMLElement;
-                const itemTop = el.offsetTop; // Tính toán khoảng cách từ phần đầu của container
+                const itemTop = el.offsetTop;
                 const itemBottom = itemTop + el.offsetHeight;
                 const containerBottom = scrollTop + containerHeight;
 
-                const isVisible = itemTop >= scrollTop && itemBottom <= containerBottom; // Kiểm tra nếu item còn trong phạm vi hiển thị
+                const isVisible = itemTop >= scrollTop && itemBottom <= containerBottom;
 
-                // Tính tỷ lệ cho hiệu ứng scale và opacity
                 const distance = Math.abs(scrollTop - itemTop);
-                const ratio = Math.min(distance / (containerHeight / 2), 1); // Tính tỷ lệ cho hiệu ứng
+                const ratio = Math.min(distance / (containerHeight / 2), 1);
 
-                const scale = 1 - ratio * 0.15; // Giảm dần scale khi xa phần đầu
-                const opacity = 1 - ratio * 0.5; // Mờ dần khi xa phần đầu
+                const scale = 1 - ratio * 0.15;
+                const opacity = 1 - ratio * 0.5;
 
-                // Thêm hiệu ứng blur khi item ra khỏi phạm vi hiển thị
-                const blur = isVisible ? 0 : ratio * 5; // Blur khi ra ngoài phạm vi
+                const blur = isVisible ? 0 : ratio * 5;
 
                 el.style.transform = `scale(${scale})`;
                 el.style.opacity = `${opacity}`;
-                el.style.filter = `blur(${blur}px)`; // Áp dụng blur nếu item bị cuộn lên trên
+                el.style.filter = `blur(${blur}px)`;
             });
         };
 
@@ -66,7 +64,6 @@ const PrerequisiteSelector = ({ setPrerequisite, setIsHide }: PrerequisiteSelect
             }
         };
 
-        // Delay để đảm bảo DOM render xong rồi mới scroll
         const timeout = setTimeout(() => {
             scrollToFirstItem();
             handleScroll();
