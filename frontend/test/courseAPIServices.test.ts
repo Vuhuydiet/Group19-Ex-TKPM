@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCourses, getCourseById, deleteCourse } from "../src/services/courseAPIServices";
+import { getCourses, getCourseById, deleteCourse, addCourse } from "../src/services/courseAPIServices";
 import { Course } from "../src/services/courseAPIServices"; // Import Course interface
 
 jest.mock("axios"); // Mock axios
@@ -90,8 +90,32 @@ describe("Course API Service Tests", () => {
         const result = await deleteCourse(courseId);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.delete).toHaveBeenCalledWith(`http://localhost:3000/courses/${courseId}`);
-    }
-);
+    });
+
+    // Test addCourse()
+    it("should add a new course", async () => {
+        const newCourse: Course = {
+            id: "2",
+            courseName: "Machine Learning",
+            nCredits: 4,
+            facultyId: "CS",
+            description: "Introduction to machine learning.",
+            prerequisiteId: "1",
+        };
+
+        const mockResponse = {
+            domainCode: "999",
+            message: "Course created",
+            metadata: newCourse
+        };
+
+        (axios.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+        const result = await addCourse(newCourse);
+        expect(result).toEqual(mockResponse.metadata);
+        expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/courses", newCourse);
+    });
+    
     
 });
 
