@@ -4,23 +4,21 @@ import AcademicTranscript from '../../../domain/transcript/AcademicTranscipt';
 import { Student } from '../../../../student-managing/domain/management/Student';
 // You may need to adjust the import below to your actual student storage/service
 import StudentManagementService from '../../../../student-managing/domain/services/studentManagement.service';
-import prisma from '../../../../../models';
 import { NotFoundError } from '../../../../../core/responses/ErrorResponse';
 import { DomainCode } from '../../../../../core/responses/DomainCode';
+import { CourseEnrollmentService } from '../../../domain/services/course-enrollment.service';
+import { matchedData } from 'express-validator';
 
 class AcademicTranscriptController {
   async getTranscript(req: Request, res: Response) {
-    const { studentId } = req.params;
+    const { studentId } = matchedData(req);
     // Fetch student info (adjust as needed for your actual service)
     const student: Student = StudentManagementService.getStudentById(studentId);
     if (!student) 
       throw new NotFoundError(DomainCode.UNKNOWN_ERROR, 'Student not found');
 
     // Fetch all courses and grades for the student
-    const enrollments = await prisma.enrollmentRecord.findMany({
-      where: { studentId },
-      include: { class: { include: { course: true } } }
-    });
+    const enrollments = await CourseEnrollmentService.findAll({ studentId });
     const courses = enrollments.map(e => ({
       courseId: e.class.course.id,
       courseName: e.class.course.courseName,

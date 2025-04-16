@@ -43,7 +43,7 @@ model EnrollmentRecord {
 model ClassCancelHistory {
   studentId  String
   classId    String
-  canceledAt DateTime
+  canceledAt DateTime @default(now())
   
   @@id([studentId, classId, canceledAt])
   

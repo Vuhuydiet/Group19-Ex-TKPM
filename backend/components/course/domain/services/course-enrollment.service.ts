@@ -13,7 +13,7 @@ export interface EnrollmentRecordQuery {
   grade?: number;
 }
 
-export class EnrollmentRecordService {
+export class CourseEnrollmentService {
   static async create(data: EnrollmentRecordData) {
     // Check prerequisite if exists
     const classObj = await prisma.class.findUnique({ where: { id: data.classId }, include: { course: true } });
@@ -35,28 +35,45 @@ export class EnrollmentRecordService {
       });
       if (!passed) throw new Error('Student has not passed the prerequisite course');
     }
-    return prisma.enrollmentRecord.create({ data });
+    return await prisma.enrollmentRecord.create({ data });
   }
 
   static async findAll(query?: EnrollmentRecordQuery) {
-    return prisma.enrollmentRecord.findMany({
+    return await prisma.enrollmentRecord.findMany({
       where: {
         ...(query?.studentId ? { studentId: query.studentId } : {}),
         ...(query?.classId ? { classId: query.classId } : {}),
         ...(query?.grade !== undefined ? { grade: query.grade } : {}),
+      },
+      include: {
+        class: {
+          include: {
+            course: true,
+          }
+        }
       }
     });
   }
 
   static async findById(studentId: string, classId: string) {
-    return prisma.enrollmentRecord.findUnique({ where: { studentId_classId: { studentId, classId } } });
+    return await prisma.enrollmentRecord.findUnique({ where: { studentId_classId: { studentId, classId } } });
   }
 
   static async update(studentId: string, classId: string, data: Partial<EnrollmentRecordData>) {
-    return prisma.enrollmentRecord.update({ where: { studentId_classId: { studentId, classId } }, data });
+    return await prisma.enrollmentRecord.update({ where: { studentId_classId: { studentId, classId } }, data });
   }
 
   static async delete(studentId: string, classId: string) {
-    return prisma.enrollmentRecord.delete({ where: { studentId_classId: { studentId, classId } } });
+    await prisma.classCancelHistory.create({
+      data: { studentId, classId }
+    });
+    return await prisma.enrollmentRecord.delete({ where: { studentId_classId: { studentId, classId } } });
+
+  }
+
+  static async findAllCancelHistory(query: {studentId?: string, classId?: string}) {
+    return await prisma.classCancelHistory.findMany({
+      where: query
+    });
   }
 }

@@ -1,6 +1,6 @@
 import express from 'express';
-import classCancelHistoryController from './class-cancel-history.controller';
-import { body, param } from 'express-validator';
+import courseEnrollmentController from './course-enrollment.controller';
+import { body, param, query } from 'express-validator';
 import handleValidationErrors from '../../../../../libraries/errorHandler/errorHandler';
 
 const router = express.Router();
@@ -9,38 +9,41 @@ router.post(
   '/',
   body('studentId').isString().notEmpty(),
   body('classId').isString().notEmpty(),
-  body('canceledAt').isISO8601(),
+  body('grade').optional().isNumeric(),
   handleValidationErrors,
-  classCancelHistoryController.create
+  courseEnrollmentController.create
 );
 
-router.get('/', classCancelHistoryController.findAll);
+router.get('/', courseEnrollmentController.findAll);
 
 router.get(
-  '/:studentId/:classId/:canceledAt',
+  '/:studentId/:classId',
   param('studentId').isString().notEmpty(),
   param('classId').isString().notEmpty(),
-  param('canceledAt').isISO8601(),
   handleValidationErrors,
-  classCancelHistoryController.findById
+  courseEnrollmentController.findById
 );
 
 router.patch(
-  '/:studentId/:classId/:canceledAt',
+  '/:studentId/:classId',
   param('studentId').isString().notEmpty(),
   param('classId').isString().notEmpty(),
-  param('canceledAt').isISO8601(),
+  body('grade').optional().isNumeric(),
   handleValidationErrors,
-  classCancelHistoryController.update
+  courseEnrollmentController.update
 );
 
 router.delete(
-  '/:studentId/:classId/:canceledAt',
+  '/:studentId/:classId',
   param('studentId').isString().notEmpty(),
   param('classId').isString().notEmpty(),
-  param('canceledAt').isISO8601(),
   handleValidationErrors,
-  classCancelHistoryController.delete
+  courseEnrollmentController.cancelClass
 );
+
+router.get('/cancel-history',
+  query('studentId').optional().isString().notEmpty(),
+  handleValidationErrors, 
+  courseEnrollmentController.findAllCanceledHistory);
 
 export default router;
