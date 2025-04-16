@@ -35,7 +35,7 @@ export class CourseEnrollmentController {
   async cancelClass(req: Request, res: Response) {
     const { studentId, classId } = matchedData(req);
     const result = await CourseEnrollmentService.delete(studentId, classId);
-    new OKResponse({ message: 'Class cancled', metadata: result }).send(res);
+    new OKResponse({ message: 'Class canceled', metadata: result }).send(res);
   }
 
   async findAllCanceledHistory(req: Request, res: Response) {
