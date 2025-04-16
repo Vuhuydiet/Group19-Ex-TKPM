@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { addStudent, Student } from "../../../../services/studentAPIServices";
+import { Student, StudentAPIServices } from "../../../../services/studentAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
 import StudentAddress from "../StudentAddress/StudentAddress";
@@ -114,7 +114,8 @@ function StudentImportForm() {
 
 
         try {
-            const response = await addStudent(student);
+            const studentAPIServices = new StudentAPIServices();
+            const response = await studentAPIServices.addStudent(student);
             setStudent({
                 id: "",
                 name: "",

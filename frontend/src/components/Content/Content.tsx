@@ -4,7 +4,7 @@ import StudentList from '../../pages/Student/StudentList/StudentList';
 import StudentImportForm from '../../pages/Student/Form/StudentImportForm/StudentImportForm';
 import CategoryManagement from '../../pages/Category/Management/CategoryManagement';
 import ModuleList from '../../pages/Module/ModuleList/ModuleList';
-import PrerequisiteSelector from '../../pages/Module/Form/PrerequisiteSelector/PrerequisiteSelector';
+// import PrerequisiteSelector from '../../pages/Module/Form/PrerequisiteSelector/PrerequisiteSelector';
 import Register from '../../pages/Register/Form/Register';
 
 function Content() {

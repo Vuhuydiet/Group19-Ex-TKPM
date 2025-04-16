@@ -6,8 +6,8 @@ import { faArrowLeft, faArrowRight, faSearch, faFilter, faSort } from '@fortawes
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
-import { Student, getStudents } from '../../../services/studentAPIServices';
-import { exportStudentsJSON, importStudentsJSON, exportStudentsXML, importStudentsXML } from "../../../services/fileAPIServices";
+import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
+import { FileAPIServices } from "../../../services/fileAPIServices";
 import { useCategory } from '../../../contexts/CategoryProvider';
 // import { useLoading } from '../components/LoadingContext';
 
@@ -24,7 +24,8 @@ function student() {
     }, [students]);
 
     useEffect(() => {
-        getStudents().then((students) => {
+        const studentService = new StudentAPIServices();
+        studentService.getStudents().then((students) => {
             setStudents(students);
         });
     }, []);
@@ -116,7 +117,9 @@ function student() {
 
     // Handle Export JSON
     const handleExportJSON = async () => {
-        const jsonBlob = await exportStudentsJSON();
+        const fileService = new FileAPIServices();
+        const jsonBlob = await fileService.exportStudentsJSON();
+        // const jsonBlob = await exportStudentsJSON();
         const url = window.URL.createObjectURL(new Blob([jsonBlob]));
         const link = document.createElement("a");
         link.href = url;
@@ -134,7 +137,8 @@ function student() {
         reader.onload = async (e) => {
             if (e.target?.result) {
                 const jsonData = JSON.parse(e.target.result as string);
-                await importStudentsJSON(jsonData);
+                const fileService = new FileAPIServices();
+                await fileService.importStudentsJSON(jsonData);
                 alert("Import JSON thành công!");
             }
         };
@@ -143,7 +147,8 @@ function student() {
 
     // Handle Export XML
     const handleExportXML = async () => {
-        const xmlBlob = await exportStudentsXML();
+        const fileService = new FileAPIServices();
+        const xmlBlob = await fileService.exportStudentsXML();
         const url = window.URL.createObjectURL(new Blob([xmlBlob]));
         const link = document.createElement("a");
         link.href = url;
@@ -160,7 +165,8 @@ function student() {
         const reader = new FileReader();
         reader.onload = async (e) => {
             if (e.target?.result) {
-                await importStudentsXML(e.target.result as string);
+                const fileService = new FileAPIServices();
+                await fileService.importStudentsXML(e.target.result as string);
                 alert("Import XML thành công!");
             }
         };

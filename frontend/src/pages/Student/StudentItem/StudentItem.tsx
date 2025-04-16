@@ -2,7 +2,7 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { Student, updateStudent, removeStudent } from '../../../services/studentAPIServices';
+import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
 import { useCategory } from '../../../contexts/CategoryProvider';
 import StudentAddress from '../Form/StudentAddress/StudentAddress';
@@ -47,7 +47,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             // Bỏ thuộc tính id trước khi gửi request (do bên BE không có setter cho ID -> không thể update ID) //ducnhat24
             const { id, ...studentData } = studentInfo;
             // const response = await updateStudent(studentInfo.id, studentInfo);
-            const response = await updateStudent(studentInfo.id, studentData);
+            const studentAPIServices = new StudentAPIServices();
+            const response = await studentAPIServices.updateStudent(studentInfo.id, studentData);
+            // const response = await updateStudent(studentInfo.id, studentData);
             notify({ type: "success", msg: "Student updated successfully" });
             setStudents(students.map((student: Student) => student.id === response.id ? response : student));
             setSelectedStudent(undefined);
@@ -61,7 +63,11 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
         if (!window.confirm("Are you sure you want to delete this student?")) return;
 
         try {
-            await removeStudent(studentInfo.id); // Gọi API xóa sinh viên
+            
+            const studentAPIServices = new StudentAPIServices();
+            await studentAPIServices.removeStudent(studentInfo.id);
+            
+            // await removeStudent(studentInfo.id); // Gọi API xóa sinh viên
 
             // Cập nhật danh sách sinh viên sau khi xóa
             setStudents(students.filter((student: Student) => student.id !== studentInfo.id));
