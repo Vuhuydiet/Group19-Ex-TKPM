@@ -12,7 +12,7 @@ router.post(
   body('nCredits').isInt({ min: 2 }),
   body('facultyId').isString().notEmpty(),
   body('description').isString().notEmpty(),
-  body('prerequisite').optional().isString(),
+  body('prerequisiteId').optional().isString(),
   handleValidationErrors,
   courseController.create
 );
