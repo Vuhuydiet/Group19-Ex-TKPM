@@ -1,36 +1,28 @@
-import './register_list.css';
 import '../../../styles/board.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight, faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
+import { Class } from '../../../services/classAPIServices';
+import ClassAdditionForm from '../Form/ClassAddition/ClassAddition';
+import './class_list.css'
 
-import { CourseEnrollment } from '../../../services/courseEnrollmentAPIServices';
-import Register from '../Form/Register';
-// import { useLoading } from '../components/LoadingContext';
+function ClassList() {
 
-// interface CourseEnrollment {
-//     studentId: string;
-//     claseId: string;
-//     grade?: number;
-// }
-
-function RegisterList() {
-
-    const [courseEnrollment, setCourseEnrollment] = useState<CourseEnrollment[]>([]);
-    const [cloneCourseEnrollment, setCloneCourseEnrollment] = useState<CourseEnrollment[]>([]);
-    //get all courseEnrollment
+    const [classes, _setClasses] = useState<Class[]>([]);
+    const [cloneClasses, setCloneClasses] = useState<Class[]>([]);
+    //get all classes
     const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
     useEffect(() => {
-        setCloneCourseEnrollment(courseEnrollment);
-    }, [courseEnrollment]);
+        setCloneClasses(classes);
+    }, [classes]);
 
     // useEffect(() => {
-    //     setCourseEnrollment(mockStudentsList);
+    //     setClasses(mockStudentsList);
     // }, []);
     const [page, setPage] = useState(1);
-    const [selectCourseEnrollment, setSelectCourseEnrollment] = useState<CourseEnrollment | undefined>(undefined);
+    const [_selectedClass, setSelectedClass] = useState<Class | undefined>(undefined);
     const [sortBy, setSortBy] = useState("");
     const [search, setSearch] = useState("");
     function calculateItemsPerPage() {
@@ -47,44 +39,6 @@ function RegisterList() {
         setAmountItem(calculateItemsPerPage());
     }, []);
 
-    // function handleSearch(keySearch: string) {
-    //     if (keySearch.trim() === "") {
-    //         setPage(1);
-    //         setCloneCourseEnrollment(courseEnrollment);
-    //         return;
-    //     }
-
-    //     const regex = new RegExp(keySearch, "i");
-
-    //     const filteredStudents = courseEnrollment.filter(item =>
-    //         regex.test(item.id) || regex.test(item.name)
-    //     );
-
-    //     setCloneCourseEnrollment(filteredStudents);
-    //     setPage(1);
-    // }
-
-    // function handleFilter() {
-    //     const filteredStudents = courseEnrollment.filter(item => {
-    //         item.faculty === faculty
-    //     });
-
-    //     let newStudentList = filteredStudents;
-    //     if (search.trim() !== "") {
-    //         const regex = new RegExp(search, "i");
-    //         newStudentList = filteredStudents.filter(item =>
-    //             regex.test(item.id) || regex.test(item.name)
-    //         );
-    //     }
-
-    //     setCloneCourseEnrollment(newStudentList);
-    //     setPage(1);
-    // }
-
-    // useEffect(() => {
-    //     handleFilter();
-    // }, [faculty]);
-
     useEffect(() => {
         const handleResize = () => {
             setAmountItem(calculateItemsPerPage());
@@ -99,7 +53,7 @@ function RegisterList() {
     }, []);
 
     function increasePage() {
-        if (page < Math.ceil(cloneCourseEnrollment.length / amountItem)) {
+        if (page < Math.ceil(cloneClasses.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -112,8 +66,9 @@ function RegisterList() {
 
     return (
         <>
-            {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} />}
-            <div className="board board--course">
+            {/* {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} />} */}
+            {isAddFormOpen && <ClassAdditionForm setIsAddFormOpen={setIsAddFormOpen} />}
+            <div className="board board--class">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
                         <div className="board__feature__item">
@@ -150,32 +105,42 @@ function RegisterList() {
                 <div className="board__table">
                     <div className="board__table__header">
                         <div className="board__table__attribute">
-                            <span>STT</span>
+                            <span>ID</span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Student</span>
+                            <span>CourseID</span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Class</span>
+                            <span>Capacity</span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Grade</span>
+                            <span>Professor Name</span>
+                        </div>
+
+                        <div className="board__table__attribute">
+                            <span>Schedule</span>
+                        </div>
+
+                        <div className="board__table__attribute">
+                            <span>Room</span>
                         </div>
                     </div>
 
                     <div className="board__table__data">
-                        {cloneCourseEnrollment.length === 0 && <NothingDisplay />}
-                        {cloneCourseEnrollment.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item: CourseEnrollment, index: number) => (
+                        {cloneClasses.length === 0 && <NothingDisplay />}
+                        {cloneClasses.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item: Class) => (
                             <button
                                 onClick={() => {
-                                    setSelectCourseEnrollment(item)
+                                    setSelectedClass(item)
                                 }}
-                                key={item.studentId + item.classId}
+                                key={item.id}
                                 className="board__table__row">
-                                <div className="board__table__attribute">{index + 1}</div>
-                                <div className="board__table__attribute">{item.studentId}</div>
-                                <div className="board__table__attribute">{item.classId}</div>
-                                <div className="board__table__attribute">{item.grade}</div>
+                                <div className="board__table__attribute">{item.id}</div>
+                                <div className="board__table__attribute">{item.courseId}</div>
+                                <div className="board__table__attribute">{item.capacity}</div>
+                                <div className="board__table__attribute">{item.professorName}</div>
+                                <div className="board__table__attribute">{item.schedule}</div>
+                                <div className="board__table__attribute">{item.room}</div>
 
                             </button>
                         ))}
@@ -183,14 +148,14 @@ function RegisterList() {
 
                     <div className="board__table__footer">
                         <div className="board__table__selected">
-                            <span>{courseEnrollment.length} course enrollment</span>
+                            <span>{classes.length} course enrollment</span>
 
                         </div>
 
                         <div className="board__table__paging">
                             <div className="board__table__paging__page">
                                 <span>{page}</span>|
-                                <span>{Math.ceil(courseEnrollment.length / amountItem)}</span>
+                                <span>{Math.ceil(classes.length / amountItem)}</span>
                             </div>
 
                             <div className="board__table__paging__button">
@@ -210,5 +175,5 @@ function RegisterList() {
     );
 }
 
-export default RegisterList;
+export default ClassList;
 

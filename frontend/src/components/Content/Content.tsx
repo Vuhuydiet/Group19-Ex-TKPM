@@ -6,6 +6,7 @@ import CategoryManagement from '../../pages/Category/Management/CategoryManageme
 import ModuleList from '../../pages/Module/ModuleList/ModuleList';
 // import PrerequisiteSelector from '../../pages/Module/Form/PrerequisiteSelector/PrerequisiteSelector';
 import RegisterList from '../../pages/Register/RegisterList/RegisterList';
+import ClassList from '../../pages/Class/ClassList/ClassList';
 
 function Content() {
     return (
@@ -17,6 +18,7 @@ function Content() {
                 <Route path='/category' element={<CategoryManagement />} />
                 <Route path='/module' element={<ModuleList />} />
                 <Route path='/module/register' element={<RegisterList />} />
+                <Route path='/class' element={<ClassList />} />
             </Routes>
         </>
     )
