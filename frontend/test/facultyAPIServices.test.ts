@@ -2,6 +2,7 @@ import axios from "axios";
 import { getFaculties, getFacultyById, addFaculty, updateFaculty } from "../src/services/facultyAPIServices";
 
 import { mockFaculties } from "../src/services/mockData"; // Import mock data
+import { Faculty } from "../src/services/facultyAPIServices"; // Import Faculty interface
 jest.mock("axios"); // Mock axios
 
 
@@ -12,7 +13,65 @@ describe("Faculty API Service Tests", () => {
     
     // Test getFaculties()
     it("should fetch all faculties", async () => {
-        const mockResponse = { metadata: mockFaculties };
+        const mockResponse = {
+            domainCode: "999",
+            message: "Faculties found",
+            metadata: {
+                faculties: [
+                    {
+                        id: "L",
+                        name: "Khoa luật",
+                        description: "",
+                        createdAt: "2025-04-16T07:36:17.667Z"
+                    },
+                    {
+                        id: "TA",
+                        name: "Khoa tiếng Anh thương mại",
+                        description: "",
+                        createdAt: "2025-04-16T07:36:17.667Z"
+                    },
+                    {
+                        id: "TN",
+                        name: "Khoa tiếng Nhật",
+                        description: "",
+                        createdAt: "2025-04-16T07:36:17.667Z"
+                    },
+                    {
+                        id: "TP",
+                        name: "Khoa tiếng Pháp",
+                        description: "",
+                        createdAt: "2025-04-16T07:36:17.667Z"
+                    }
+                ]
+            }
+        };
+
+        const mockFaculties: Faculty[] = [
+            {
+                id: "L",
+                name: "Khoa luật",
+                description: "",
+                createdAt: "2025-04-16T07:36:17.667Z"
+            },
+            {
+                id: "TA",
+                name: "Khoa tiếng Anh thương mại",
+                description: "",
+                createdAt: "2025-04-16T07:36:17.667Z"
+            },
+            {
+                id: "TN",
+                name: "Khoa tiếng Nhật",
+                description: "",
+                createdAt: "2025-04-16T07:36:17.667Z"
+            },
+            {
+                id: "TP",
+                name: "Khoa tiếng Pháp",
+                description: "",
+                createdAt: "2025-04-16T07:36:17.667Z"
+            }
+        ];
     
         (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({ data: mockResponse });
     
