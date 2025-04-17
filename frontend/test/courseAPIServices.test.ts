@@ -1,14 +1,14 @@
 import axios from "axios";
 import { CourseAPIServices } from "../src/services/courseAPIServices";
-import { Course } from "../src/services/courseAPIServices"; // Import Course interface
+import { Module } from "../src/services/moduleAPIServices"; // đúng interface
 
-jest.mock("axios"); // Mock axios
+jest.mock("axios");
 
 describe("Course API Service Tests", () => {
     beforeEach(() => {
-        jest.clearAllMocks(); // Clear mock calls before each test
+        jest.clearAllMocks();
     });
-    
+
     // Test getCourses()
     it("should fetch all courses", async () => {
         const mockResponse = {
@@ -21,28 +21,28 @@ describe("Course API Service Tests", () => {
                     nCredits: 4,
                     facultyId: "TN",
                     description: "Khóa học trí tuệ nhân tạo",
-                    prerequisiteId: "",
+                    prerequisiteId: ""
                 }
             ]
         };
 
-        const mockCourses: Course[] = [
+        const expectedModules: Module[] = [
             {
                 id: "1",
-                courseName: "Trí tuệ nhân tạo",
-                nCredits: 4,
-                facultyId: "TN",
+                name: "Trí tuệ nhân tạo",
+                numOfCredits: 4,
+                faculty: "TN",
                 description: "Khóa học trí tuệ nhân tạo",
-                prerequisiteId: "",
+                prerequisiteModules: []
             }
         ];
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
-        const courses = await courseService.getCourses();
-        // const courses = await getCourses();
-        expect(courses).toEqual(mockCourses);
+        const courseService = new CourseAPIServices();
+        const modules = await courseService.getCourses();
+
+        expect(modules).toEqual(expectedModules);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/courses");
     });
 
@@ -58,15 +58,25 @@ describe("Course API Service Tests", () => {
                 nCredits: 3,
                 facultyId: "CS",
                 description: "Basic concepts of computer science.",
-                prerequisites: "None"
+                prerequisiteId: "None"
             }
         };
 
+        const expectedModule: Module = {
+            id: courseId,
+            name: "Introduction to Computer Science",
+            numOfCredits: 3,
+            faculty: "CS",
+            description: "Basic concepts of computer science.",
+            prerequisiteModules: ["None"]
+        };
+
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
-        const course = await courseService.getCourseById(courseId);
-        // const course = await getCourseById(courseId);
-        expect(course).toEqual(mockResponse.metadata);
+
+        const courseService = new CourseAPIServices();
+        const result = await courseService.getCourseById(courseId);
+
+        expect(result).toEqual(expectedModule);
         expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/courses/${courseId}`);
     });
 
@@ -76,52 +86,64 @@ describe("Course API Service Tests", () => {
         const mockResponse = {
             domainCode: "999",
             message: "Course deleted",
-            metadata: {
-                id: "1",
-                courseName: "Trí tuệ nhân tạo",
-                nCredits: 4,
-                facultyId: "TN",
-                description: "Khóa học trí tuệ nhân tạo",
-                prerequisiteId: null,
-                createdAt: "2025-04-16T08:01:41.926Z",
-                activated: false
-            }
+            metadata: {}
         };
 
         (axios.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
+
+        const courseService = new CourseAPIServices();
         const result = await courseService.deleteCourse(courseId);
-        expect(result).toEqual(mockResponse.metadata);
+
+        expect(result).toEqual({});
         expect(axios.delete).toHaveBeenCalledWith(`http://localhost:3000/courses/${courseId}`);
     });
 
     // Test addCourse()
     it("should add a new course", async () => {
-        const newCourse: Course = {
+        const newModule: Module = {
             id: "2",
-            courseName: "Machine Learning",
-            nCredits: 4,
-            facultyId: "CS",
+            name: "Machine Learning",
+            numOfCredits: 4,
+            faculty: "CS",
             description: "Introduction to machine learning.",
-            prerequisiteId: "1",
+            prerequisiteModules: ["1"]
         };
 
         const mockResponse = {
             domainCode: "999",
             message: "Course created",
-            metadata: newCourse
+            metadata: {
+                id: "2",
+                courseName: "Machine Learning",
+                nCredits: 4,
+                facultyId: "CS",
+                description: "Introduction to machine learning.",
+                prerequisiteId: "1"
+            }
+        };
+
+        const expectedModule: Module = {
+            id: "2",
+            name: "Machine Learning",
+            numOfCredits: 4,
+            faculty: "CS",
+            description: "Introduction to machine learning.",
+            prerequisiteModules: ["1"]
         };
 
         (axios.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const courseService = new CourseAPIServices(); // Create an instance of the CourseAPIServices
-        const result = await courseService.addCourse(newCourse);
-        // const result = await addCourse(newCourse);
-        expect(result).toEqual(mockResponse.metadata);
-        expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/courses", newCourse);
+
+        const courseService = new CourseAPIServices();
+        const result = await courseService.addCourse(newModule);
+
+        expect(result).toEqual(expectedModule);
+        expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/courses", {
+            id: "2",
+            courseName: "Machine Learning",
+            nCredits: 4,
+            facultyId: "CS",
+            description: "Introduction to machine learning.",
+            prerequisiteId: "1"
+        });
     });
-    
-    
 });
-
-
-

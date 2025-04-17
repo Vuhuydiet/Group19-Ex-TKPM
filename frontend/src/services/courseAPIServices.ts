@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Module } from "./moduleAPIServices";
 
 const API_BASE_URL = "http://localhost:3000/courses"; // Thay đổi URL nếu cần
 
@@ -11,30 +12,68 @@ export interface Course {
     prerequisiteId: string;
 }
 
+function mapModuleToCourse(module: Module): Course {
+    return {
+        id: module.id,
+        courseName: module.name,
+        nCredits: module.numOfCredits,
+        facultyId: module.faculty,
+        description: module.description,
+        prerequisiteId: module.prerequisiteModules[0] || "", // chỉ lấy phần tử đầu tiên hoặc chuỗi rỗng nếu không có
+    };
+}
+
+function mapCourseToModule(course: Course): Module {
+    return {
+        id: course.id,
+        name: course.courseName,
+        numOfCredits: course.nCredits,
+        faculty: course.facultyId,
+        description: course.description,
+        prerequisiteModules: course.prerequisiteId ? [course.prerequisiteId] : [], // chuyển thành mảng
+    };
+}
+
 export class CourseAPIServices {
     constructor() {
         // Constructor logic if needed
     }
 
-    getCourses = async (): Promise<Course[]> => {
+    getCourses = async (): Promise<Module[]> => {
         const response = await axios.get(API_BASE_URL);
-        return response.data.metadata;
+        const courses: Course[] = response.data.metadata;
+        const modules: Module[] = courses.map(course => mapCourseToModule(course));
+        return modules;
     }
 
-    getCourseById = async (id: string): Promise<Course | null> => {
+    getCourseById = async (id: string): Promise<Module | null> => {
         const response = await axios.get(`${API_BASE_URL}/${id}`);
-        return response.data.metadata;
+        // return response.data.metadata;
+        const course: Course = response.data.metadata;
+        if (course) {
+            return mapCourseToModule(course);
+        } else {
+            return null; // Hoặc xử lý theo cách bạn muốn nếu không tìm thấy khóa học
+        }
     }
 
-    addCourse = async (course: Course): Promise<Course> => {
-        const response = await axios.post(API_BASE_URL, course);
-        return response.data.metadata;
+    addCourse = async (course: Module): Promise<Module> => {
+        const courseData: Course = mapModuleToCourse(course);
+        const response = await axios.post(API_BASE_URL, courseData);
+
+        const newCourse: Course = response.data.metadata;
+        return mapCourseToModule(newCourse); // Chuyển đổi lại thành Module trước khi trả về
     }
 
-    updateCourse = async (id: string, course: Course): Promise<Course> => {
-        const response = await axios.patch(`${API_BASE_URL}/${id}`, course);
-        return response.data.metadata;
+    updateCourse = async (id: string, course: Module): Promise<Module> => {
+        const courseData: Course = mapModuleToCourse(course);
+        const response = await axios.put(`${API_BASE_URL}/${id}`, courseData);
+        // const response = await axios.patch(`${API_BASE_URL}/${id}`, course);
+
+        const updatedCourse: Course = response.data.metadata;
+        return mapCourseToModule(updatedCourse); // Chuyển đổi lại thành Module trước khi trả về
     }
+
 
     deleteCourse = async (id: string): Promise<void> => {
         const response = await axios.delete(`${API_BASE_URL}/${id}`);
