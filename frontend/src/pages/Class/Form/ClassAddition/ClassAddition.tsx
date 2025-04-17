@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../../../styles/form.css";
 import './class_addition.css'
 import { Class } from "../../../../services/classAPIServices";
-
+import { classAPIServices } from "../../../../services/classAPIServices";
 
 function ClassAdditionForm({ setIsAddFormOpen }: any) {
     const [theChosenClass, setTheChosenClass] = useState<Class>({
@@ -19,6 +19,24 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
     const handleClose = () => {
         setIsAddFormOpen(false);
     }
+
+    const classService = new classAPIServices();
+
+    function handleAdd() {
+        if (theChosenClass.id === "" || theChosenClass.courseId === "" || theChosenClass.professorName === "" || theChosenClass.schedule === "" || theChosenClass.room === "") {
+            alert("Please fill all fields!");
+            return;
+        }
+        classService.createClass(theChosenClass).then((res) => {
+            console.log(res);
+            alert("Add class successfully!");
+            setIsAddFormOpen(false);
+        }).catch((err) => {
+            console.log(err);
+            alert("Add class failed!");
+        });
+    }
+
 
     return (
         <>
@@ -44,13 +62,13 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
 
                         {/* Input Price */}
                         <div className="form__field">
-                            <span>Name</span>
+                            <span>Course ID</span>
                             <input
                                 value={theChosenClass.courseId}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, courseId: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter class course id" />
+                                placeholder="Enter course id" />
                         </div>
 
                         <div className="form__field">
@@ -137,7 +155,7 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
                         <div className="form__button">
                             <button onClick={handleClose}>Close</button>
                             <button>Reset</button>
-                            <button>Add</button>
+                            <button onClick={handleAdd}>Add</button>
                         </div>
                     </div>
                 </div>

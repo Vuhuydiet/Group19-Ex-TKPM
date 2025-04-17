@@ -6,6 +6,7 @@ import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 import { Class } from '../../../services/classAPIServices';
 import ClassAdditionForm from '../Form/ClassAddition/ClassAddition';
 import './class_list.css'
+import { classAPIServices } from '../../../services/classAPIServices';
 
 function ClassList() {
 
@@ -13,10 +14,12 @@ function ClassList() {
     const [cloneClasses, setCloneClasses] = useState<Class[]>([]);
     //get all classes
     const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+    const classService = new classAPIServices();
 
-    useEffect(() => {
-        setCloneClasses(classes);
-    }, [classes]);
+    // useEffect(() => {
+    //     setCloneClasses(classes);
+    // }, [classes]);
+
 
     // useEffect(() => {
     //     setClasses(mockStudentsList);
@@ -37,6 +40,16 @@ function ClassList() {
 
     useEffect(() => {
         setAmountItem(calculateItemsPerPage());
+        const fetchClasses = async () => {
+            try {
+                const data = await classService.getClasses();
+                _setClasses(data);
+                setCloneClasses(data);
+            } catch (error) {
+                console.error("Failed to fetch classes", error);
+            }
+        };
+        fetchClasses();
     }, []);
 
     useEffect(() => {
