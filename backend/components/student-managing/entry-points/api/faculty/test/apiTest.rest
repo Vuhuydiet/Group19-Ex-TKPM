@@ -1,0 +1,32 @@
+### Get all faculties
+GET http://localhost:3000/faculties/
+Content-Type: application/json
+
+###
+
+### Get faculty by ID
+GET http://localhost:3000/faculties/L
+Content-Type: application/json
+
+###
+
+### Create a new faculty
+POST http://localhost:3000/faculties
+Content-Type: application/json
+
+{
+    "id": "E",
+    "name": "Engineering",
+    "description": "Faculty of Engineering"
+}
+
+###
+
+### Update an existing faculty
+PATCH http://localhost:3000/faculties/E
+Content-Type: application/json
+
+{
+    "name": "Updated Engineering",
+    "description": "Updated description"
+}
