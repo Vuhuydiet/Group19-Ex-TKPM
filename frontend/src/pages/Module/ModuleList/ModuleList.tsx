@@ -7,7 +7,8 @@ import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import { useCategory } from '../../../contexts/CategoryProvider';
 import { Module } from '../../../services/moduleAPIServices';
-import { mockDataModules } from '../../../services/mockData';
+// import { mockDataModules } from '../../../services/mockData';
+import { CourseAPIServices } from '../../../services/courseAPIServices';
 import ModuleAdditionForm from '../Form/ModuleAddition/ModuleAddition';
 import ModuleItem from '../ModuleItem/ModuleItem';
 // import { useLoading } from '../components/LoadingContext';
@@ -19,6 +20,8 @@ function ModuleList() {
     const [cloneModule, setCloneModules] = useState<Module[]>([]);
     const [isAddFormOpen, setIsAddFormOpen] = useState(false);
     const { category } = useCategory();
+    const courseService = new CourseAPIServices();
+
     //get all modules
 
     useEffect(() => {
@@ -51,8 +54,14 @@ function ModuleList() {
 
     useEffect(() => {
         setAmountItem(calculateItemsPerPage());
-        setModules(mockDataModules);
+        //call API to get modules
+        courseService.getCourses().then((modules) => {
+            setModules(modules);
+            // setCloneModules(modules);
+        });
+        // setModules(mockDataModules);
     }, []);
+
 
     // function handleSearch(keySearch: string) {
     //     if (keySearch.trim() === "") {

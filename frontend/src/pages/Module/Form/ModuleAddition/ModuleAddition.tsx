@@ -4,7 +4,8 @@ import { useCategory } from "../../../../contexts/CategoryProvider";
 import { Module } from "../../../../services/moduleAPIServices";
 import './module_addition.css'
 import PrerequisiteSelector from "../PrerequisiteSelector/PrerequisiteSelector";
-
+import { CourseAPIServices } from "../../../../services/courseAPIServices";
+import { useNotification } from "../../../../contexts/NotificationProvider";
 
 function ModuleAdditionForm({ setIsAddFormOpen }: any) {
     const { category } = useCategory();
@@ -19,6 +20,45 @@ function ModuleAdditionForm({ setIsAddFormOpen }: any) {
     });
 
     const handleClose = () => {
+        setIsAddFormOpen(false);
+    }
+
+    const { notify } = useNotification();
+
+    const courseService = new CourseAPIServices();
+
+    function handleAdd() {
+        // check if all fields are filled
+        if (module.id === ""
+            || module.name === ""
+            || module.numOfCredits === 0
+            || module.faculty === ""
+            || module.description === ""
+        ) {
+            notify({ type: "error", msg: "Please fill in all fields" });
+            return;
+        }
+
+        // call addModule API
+        courseService.addCourse(module)
+            .then((response) => {
+                console.log(response);
+                notify({ type: "success", msg: "Add module successfully" });
+            })
+            .catch((error: any) => {
+                console.error("Error adding module:", error);
+                notify({ type: "error", msg: "Add module failed" });
+            });
+        
+        // reset module state
+        setModule({
+            id: "",
+            name: "",
+            numOfCredits: 0,
+            faculty: "",
+            description: "",
+            prerequisiteModules: [],
+        });
         setIsAddFormOpen(false);
     }
 
@@ -253,7 +293,7 @@ function ModuleAdditionForm({ setIsAddFormOpen }: any) {
                         <div className="form__button">
                             <button onClick={handleClose}>Close</button>
                             <button>Reset</button>
-                            <button>Add</button>
+                            <button onClick={handleAdd}>Add</button>
                         </div>
                     </div>
                 </div>
