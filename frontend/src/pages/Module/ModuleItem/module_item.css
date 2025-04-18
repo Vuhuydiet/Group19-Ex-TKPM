@@ -71,7 +71,8 @@
 }
 
 .item__body .body__right .body__item input,
-.item__body .body__right .body__item select {
+.item__body .body__right .body__item select,
+.item__body .body__right .body__item button {
     flex: 1;
     padding: 5px 10px;
     background-color: transparent;
@@ -80,6 +81,14 @@
     color: var(--text-color);
     font-weight: 700;
     border-bottom: 2px solid var(--text-color);
+}
+
+.item__body .body__right .body__item button {
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    cursor: pointer;
+    border: none;
 }
 
 .item__body .body__right .body__item input:disabled,

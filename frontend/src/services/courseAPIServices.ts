@@ -66,7 +66,9 @@ export class CourseAPIServices {
     }
 
     updateCourse = async (id: string, course: Module): Promise<Module> => {
+        console.log("course", course);
         const courseData: Course = mapModuleToCourse(course);
+        console.log("courseData", courseData);
         const response = await axios.patch(`${API_BASE_URL}/${id}`, courseData);
         // const response = await axios.patch(`${API_BASE_URL}/${id}`, course);
 

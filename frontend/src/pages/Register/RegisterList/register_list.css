@@ -13,3 +13,7 @@
 .board--course .board__table .board__table__attribute:nth-child(4) {
     flex: 1;
 }
+
+.board--course .board__table .board__table__attribute:nth-child(5) {
+    flex: 1;
+}

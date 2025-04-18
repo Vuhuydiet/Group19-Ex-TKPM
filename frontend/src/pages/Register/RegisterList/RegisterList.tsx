@@ -2,21 +2,15 @@ import './register_list.css';
 import '../../../styles/board.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight, faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faSearch, faSort, faX } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
-import { CourseEnrollment } from '../../../services/courseEnrollmentAPIServices';
+import { CourseEnrollment, CourseEnrollmentAPIServices } from '../../../services/courseEnrollmentAPIServices';
 import Register from '../Form/Register';
-// import { useLoading } from '../components/LoadingContext';
-
-// interface CourseEnrollment {
-//     studentId: string;
-//     claseId: string;
-//     grade?: number;
-// }
+import { useNotification } from '../../../contexts/NotificationProvider';
 
 function RegisterList() {
-
+    const { notify } = useNotification();
     const [courseEnrollment, setCourseEnrollment] = useState<CourseEnrollment[]>([]);
     const [cloneCourseEnrollment, setCloneCourseEnrollment] = useState<CourseEnrollment[]>([]);
     //get all courseEnrollment
@@ -30,7 +24,7 @@ function RegisterList() {
     //     setCourseEnrollment(mockStudentsList);
     // }, []);
     const [page, setPage] = useState(1);
-    const [selectCourseEnrollment, setSelectCourseEnrollment] = useState<CourseEnrollment | undefined>(undefined);
+    const [_selectCourseEnrollment, setSelectCourseEnrollment] = useState<CourseEnrollment | undefined>(undefined);
     const [sortBy, setSortBy] = useState("");
     const [search, setSearch] = useState("");
     function calculateItemsPerPage() {
@@ -45,6 +39,21 @@ function RegisterList() {
 
     useEffect(() => {
         setAmountItem(calculateItemsPerPage());
+    }, []);
+
+    useEffect(() => {
+        const courseEnrollmentServicesn = new CourseEnrollmentAPIServices();
+        const fetchData = async () => {
+            try {
+                const response = await courseEnrollmentServicesn.getEnrollments();
+                setCourseEnrollment(response);
+            } catch (error) {
+                console.error("Error fetching course enrollments:", error);
+            }
+        }
+
+        fetchData();
+
     }, []);
 
     // function handleSearch(keySearch: string) {
@@ -110,9 +119,22 @@ function RegisterList() {
         }
     }
 
+    const handleCancel = async (studentId: string, classId: string) => {
+        const courseEnrollmentServices = new CourseEnrollmentAPIServices();
+        try {
+            await courseEnrollmentServices.cancelClass(studentId, classId);
+            setCourseEnrollment(courseEnrollment.filter((item) => item.studentId !== studentId && item.classId !== classId));
+            notify({ type: "success", msg: "Cancel course enrollment successfully!" });
+
+        } catch (error) {
+            console.error("Error canceling course enrollment:", error);
+            notify({ type: "error", msg: "Cancel course enrollment failed!" });
+        }
+    }
+
     return (
         <>
-            {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} />}
+            {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} courseEnrollment={courseEnrollment} setCourseEnrollment={setCourseEnrollment} />}
             <div className="board board--course">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
@@ -161,6 +183,10 @@ function RegisterList() {
                         <div className="board__table__attribute">
                             <span>Grade</span>
                         </div>
+
+                        <div className="board__table__attribute">
+                            <span>Cancel</span>
+                        </div>
                     </div>
 
                     <div className="board__table__data">
@@ -175,8 +201,16 @@ function RegisterList() {
                                 <div className="board__table__attribute">{index + 1}</div>
                                 <div className="board__table__attribute">{item.studentId}</div>
                                 <div className="board__table__attribute">{item.classId}</div>
-                                <div className="board__table__attribute">{item.grade}</div>
-
+                                <div className="board__table__attribute">{item.grade ? item.grade : "None"}</div>
+                                <div className="board__table__attribute">
+                                    <button onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCancel(item.studentId, item.classId);
+                                    }
+                                    }>
+                                        <FontAwesomeIcon icon={faX} className='icon__check' />
+                                    </button>
+                                </div>
                             </button>
                         ))}
                     </div>

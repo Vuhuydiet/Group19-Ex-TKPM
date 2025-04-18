@@ -6,6 +6,7 @@ import { useCategory } from "../../../contexts/CategoryProvider";
 import './module_item.css'
 import { CourseAPIServices } from "../../../services/courseAPIServices";
 import { useNotification } from "../../../contexts/NotificationProvider";
+import Selector from "../Selector/Selector";
 
 interface ModuleItemProps {
     selectedModule: Module;
@@ -19,6 +20,7 @@ const ModuleItem = ({ selectedModule, setSelectedModule, setModules, modules }: 
     const { category } = useCategory();
     const [isEdit, setIsEdit] = useState(false);
     const { notify } = useNotification();
+    const [isHide, setIsHide] = useState(true);
 
     useEffect(() => {
         setModule(selectedModule);
@@ -75,6 +77,9 @@ const ModuleItem = ({ selectedModule, setSelectedModule, setModules, modules }: 
 
     return (
         <>
+            {!isHide && <Selector prerequisite={module?.prerequisiteModules} setPrerequisite={(prerequisite: string[]) => {
+                setModule({ ...module!, prerequisiteModules: prerequisite });
+            }} setIsHide={setIsHide} />}
             <div className="virtual-background">
                 <div className="item">
                     <div className="item__header">
@@ -140,6 +145,26 @@ const ModuleItem = ({ selectedModule, setSelectedModule, setModules, modules }: 
                                         <option value={fac.id} key={fac.id}>{fac.name}</option>
                                     ))}
                                 </select>
+                            </div>
+
+                            <div className="body__item">
+                                <div className="body__item__label">
+                                    <span>Prerequisite</span>
+                                </div>
+                                <button onClick={
+                                    () => {
+                                        if (!isEdit) {
+                                            return;
+                                        }
+                                        console.log("Prerequisite: ", module?.prerequisiteModules);
+                                        if (!module?.prerequisiteModules) {
+                                            return;
+                                        }
+                                        setIsHide(false);
+                                    }
+                                }>
+                                    {module?.prerequisiteModules && module?.prerequisiteModules.length > 0 ? module?.prerequisiteModules[0] : "None"}
+                                </button>
                             </div>
                         </div>
                     </div>

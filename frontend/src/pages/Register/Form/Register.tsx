@@ -7,12 +7,16 @@ import { Class, classAPIServices } from '../../../services/classAPIServices';
 import StudentItemList from '../Overlay/StudentItemList/StudentItemList';
 import ClassItemList from '../Overlay/ClassItemList/ClassItemList';
 import ModuleItemList from '../Overlay/ModuleItemList/ModuleItemList';
+import { CourseEnrollment, CourseEnrollmentAPIServices } from '../../../services/courseEnrollmentAPIServices';
+import { useNotification } from '../../../contexts/NotificationProvider';
 
 interface RegisterProps {
     setIsHide: (isHide: boolean) => void;
+    courseEnrollment: CourseEnrollment[];
+    setCourseEnrollment: (courseEnrollment: CourseEnrollment[]) => void;
 }
 
-const Register = ({ setIsHide }: RegisterProps) => {
+const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: RegisterProps) => {
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
     const [selectedModule, setSelectedModule] = useState<Module | null>(null);
     const [selectedClass, setSelectedClass] = useState<Class | null>(null);
@@ -29,6 +33,8 @@ const Register = ({ setIsHide }: RegisterProps) => {
     const [modules, setModules] = useState<Module[]>([]);
     const [classes, setClasses] = useState<Class[]>([]);
 
+    const { notify } = useNotification();
+
     const handleCancel = () => {
         setIsHide(false);
     }
@@ -36,7 +42,6 @@ const Register = ({ setIsHide }: RegisterProps) => {
     useEffect(() => {
         const studentService = new StudentAPIServices();
         const courseService = new CourseAPIServices();
-        const classService = new classAPIServices();
 
         const fetchData1 = async () => {
             try {
@@ -54,16 +59,6 @@ const Register = ({ setIsHide }: RegisterProps) => {
                 console.error("Error fetching modules:", error);
             }
         }
-        const fetchData3 = async () => {
-            try {
-                const classes = await classService.getClasses();
-                setClasses(classes);
-            }
-            catch (error) {
-                console.error("Error fetching classes:", error);
-            }
-        }
-
         fetchData1();
         fetchData2();
     }, []);
@@ -72,7 +67,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
         const classService = new classAPIServices();
         const fetchData = async () => {
             try {
-                const classes = await classService.getClasses();
+                const classes = await classService.getClassesByQuery({ courseId: selectedModule?.id });
                 setClasses(classes);
             } catch (error) {
                 console.error("Error fetching classes:", error);
@@ -80,6 +75,35 @@ const Register = ({ setIsHide }: RegisterProps) => {
         }
         fetchData();
     }, [selectedModule]);
+
+    const handleRegisterModule = () => {
+        const studentId = selectedStudent?.id;
+        const classId = selectedClass?.id;
+
+        if (!studentId || !classId) {
+            notify({ type: 'error', msg: 'Please select a student and a class.' });
+            return;
+        }
+        const fetchData = async () => {
+            try {
+                const courseEnrollmentService = new CourseEnrollmentAPIServices();
+                await courseEnrollmentService.createEnrollment({
+                    studentId: studentId,
+                    classId: classId,
+                });
+                notify({ type: 'success', msg: 'Module registered successfully!' });
+                setCourseEnrollment([...courseEnrollment, { studentId, classId }]);
+
+            } catch (error) {
+                console.error("Error registering module:", error);
+                notify({ type: 'error', msg: 'Failed to register module.' });
+            } finally {
+                setIsHide(false);
+            }
+        }
+
+        fetchData();
+    }
 
     return (
         <>
@@ -205,7 +229,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
                     <div className="register__footer">
                         <button onClick={handleCancel}>Cancel</button>
                         <button>Reset</button>
-                        <button>Register</button>
+                        <button onClick={handleRegisterModule}>Register</button>
                     </div>
                 </div>
             </div>
