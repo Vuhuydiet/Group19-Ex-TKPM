@@ -8,6 +8,7 @@ import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 import { CourseEnrollment, CourseEnrollmentAPIServices } from '../../../services/courseEnrollmentAPIServices';
 import Register from '../Form/Register';
 import { useNotification } from '../../../contexts/NotificationProvider';
+import { AcademicTranscriptAPIServices } from '../../../services/academicTranscriptAPIServices';
 
 function RegisterList() {
     const { notify } = useNotification();
@@ -132,6 +133,22 @@ function RegisterList() {
         }
     }
 
+    const handleExport = async (studentId: string) => {
+        const academicTranscriptServices = new AcademicTranscriptAPIServices();
+        try {
+            const response = await academicTranscriptServices.getTranscript(studentId);
+            console.log(response);
+            if (response) {
+                notify({ type: "success", msg: "Export course enrollment successfully!" });
+            } else {
+                notify({ type: "error", msg: "Export course enrollment failed!" });
+            }
+        } catch (error) {
+            console.error("Error exporting course enrollment:", error);
+            notify({ type: "error", msg: "Export course enrollment failed!" });
+        }
+    }
+
     return (
         <>
             {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} courseEnrollment={courseEnrollment} setCourseEnrollment={setCourseEnrollment} />}
@@ -187,6 +204,10 @@ function RegisterList() {
                         <div className="board__table__attribute">
                             <span>Cancel</span>
                         </div>
+
+                        <div className="board__table__attribute">
+                            <span>Export</span>
+                        </div>
                     </div>
 
                     <div className="board__table__data">
@@ -206,6 +227,16 @@ function RegisterList() {
                                     <button onClick={(e) => {
                                         e.stopPropagation();
                                         handleCancel(item.studentId, item.classId);
+                                    }
+                                    }>
+                                        <FontAwesomeIcon icon={faX} className='icon__check' />
+                                    </button>
+                                </div>
+
+                                <div className="board__table__attribute">
+                                    <button onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleExport(item.studentId);
                                     }
                                     }>
                                         <FontAwesomeIcon icon={faX} className='icon__check' />
