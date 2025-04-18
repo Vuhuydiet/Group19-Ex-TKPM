@@ -1,0 +1,7 @@
+.form--module .form__field {
+    width: calc(100%/2 - 10px);
+}
+
+.form--module {
+    width: 80%;
+}

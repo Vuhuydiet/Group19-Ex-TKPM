@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ContextRunner, validationResult } from 'express-validator';
 import { BadRequestError } from '../../core/responses/ErrorResponse';
+import { DomainCode } from '../../core/responses/DomainCode';
 
 // can be reused by many routes
 const validate = (validations: ContextRunner[]) => {
@@ -9,7 +10,7 @@ const validate = (validations: ContextRunner[]) => {
     for (const validation of validations) {
       const result = await validation.run(req);
       if (!result.isEmpty()) {
-        throw new BadRequestError('Validation failed', result.array());
+        throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Validation failed', result.array());
       }
     }
 
@@ -20,7 +21,7 @@ const validate = (validations: ContextRunner[]) => {
 const handleValidationErrors = (req: Request, _res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new BadRequestError('Validation failed', errors.array());
+    throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Validation failed', errors.array());
   }
   next();
 };

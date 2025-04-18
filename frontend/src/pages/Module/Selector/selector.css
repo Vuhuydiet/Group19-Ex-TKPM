@@ -1,0 +1,101 @@
+.selector {
+    padding: 20px;
+    background-color: var(--item-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+}
+
+.selector__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    color: var(--main-color);
+}
+
+.selector__body {
+    height: 300px;
+    padding: 10px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.selector__body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.selector__item {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    scroll-snap-align: start;
+    /* Xóa hiệu ứng scale */
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    margin: 10px 0;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+}
+
+.selector__item--spacer {
+    height: 50px;
+    visibility: hidden;
+    margin: 10px 0;
+}
+
+.selector__item__icon {
+    color: var(--main-color);
+}
+
+.selector__item__content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selector__item__content span {
+    font-weight: 700;
+    text-align: center;
+}
+
+.selector__body input {
+    display: none;
+}
+
+.selector__body input:checked+.selector__item {
+    background-color: var(--main-color);
+    color: var(--text-color);
+}
+
+.selector__body input:checked+.selector__item .selector__item__icon {
+    color: var(--text-in-background-color);
+}
+
+.selector__body input:checked+.selector__item .selector__item__content span {
+    color: var(--text-in-background-color);
+}
+
+.selector__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.selector__footer button {
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin: 0 5px;
+}

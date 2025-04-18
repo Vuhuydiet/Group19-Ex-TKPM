@@ -1,0 +1,105 @@
+.register {
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--item-color);
+    color: var(--text-color);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    animation: zoomIn 0.3s ease-in-out;
+}
+
+.register__header {
+    color: var(--main-color);
+}
+
+.register__header p {
+    font-weight: 700;
+}
+
+.register__body {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
+
+}
+
+.register__body .body__item {
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border-left: 2px solid var(--text-color);
+    border-right: 2px solid var(--text-color);
+}
+
+.register__body .body__item .item__header h1 {
+    color: var(--text-color);
+}
+
+.register__body .body__item .item__body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.register__body .body__item .item__body .body__inputfield {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__body .body__item .item__body .body__inputfield button {
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.register__body .body__item .item__body .body__inputfield input {
+    flex: 1;
+    padding: 5px 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+}
+
+.register__body .body__item .item__body .body__info {
+    border-top: 2px dashed var(--text-color);
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.register__body .body__item .item__body .body__info .info__detail {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register__footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.register__footer button {
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+    color: var(--text-in-background-color);
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 5px;
+}

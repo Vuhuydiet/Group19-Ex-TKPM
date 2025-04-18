@@ -1,0 +1,7 @@
+.form--class .form__field {
+    width: calc(100%/2 - 10px);
+}
+
+.form--class {
+    width: 80%;
+}

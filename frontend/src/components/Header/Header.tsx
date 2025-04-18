@@ -67,6 +67,42 @@ function Header() {
                         </Link>
                     </div>
                 </div>
+
+                <div className="header__nav__items">
+                    <div className="header__nav__items__title">
+                        Module
+                    </div>
+                    <div className="header__nav__items__content">
+                        <Link to='/module'>
+                            <div className="header__nav__item">
+                                <FontAwesomeIcon icon={faList} className='icon__item' />
+                                <span>Management</span>
+                            </div>
+                        </Link>
+                    </div>
+                    <div className="header__nav__items__content">
+                        <Link to='/module/register'>
+                            <div className="header__nav__item">
+                                <FontAwesomeIcon icon={faList} className='icon__item' />
+                                <span>Register</span>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="header__nav__items">
+                    <div className="header__nav__items__title">
+                        Class
+                    </div>
+                    <div className="header__nav__items__content">
+                        <Link to='/class'>
+                            <div className="header__nav__item">
+                                <FontAwesomeIcon icon={faList} className='icon__item' />
+                                <span>Management</span>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
             </div>
 
             <div className="header__footer">

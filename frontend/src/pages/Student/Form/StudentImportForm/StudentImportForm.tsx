@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { addStudent, Student } from "../../../../services/studentAPIServices";
+import { Student, StudentAPIServices } from "../../../../services/studentAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
 import StudentAddress from "../StudentAddress/StudentAddress";
@@ -54,7 +54,7 @@ function StudentImportForm() {
         },
         email: "",
         phone: "",
-        status: "Đang học",
+        status: "DH",
     });
 
     // function isValidEmail(email: string, allowedDomain: string = "student.university.edu.vn"): boolean {
@@ -114,7 +114,8 @@ function StudentImportForm() {
 
 
         try {
-            const response = await addStudent(student);
+            const studentAPIServices = new StudentAPIServices();
+            const response = await studentAPIServices.addStudent(student);
             setStudent({
                 id: "",
                 name: "",
@@ -254,8 +255,8 @@ function StudentImportForm() {
                                 Choose student's faculty
                             </option>
                             {category.faculty.map((faculty, index) => (
-                                <option key={index} value={faculty}>
-                                    {faculty}
+                                <option key={index} value={faculty.id}>
+                                    {faculty.name}
                                 </option>
                             ))}
                         </select>

@@ -2,15 +2,30 @@ import { DomainCode } from "../../../../core/responses/DomainCode";
 import { BadRequestError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
 import g_StudentManger from "../../storage/studentManager";
-import { Student } from "../management/Student";
+import IdentityDocument from "../management/IdentityDocument";
+import { Address, Student } from "../management/Student";
+
+export type StudentData = {
+  id: string,
+  name: string,
+  dob: Date,
+  gender: 'Nam' | 'Nữ',
+  faculty: string,
+  academicYear: number,
+  program: string,
+  permanentAddress: Address,
+  temporaryAddress?: Address,
+  email: string,
+  phone: string,
+  status: string,
+  identityDocument: IdentityDocument,
+  nationality: string,
+}
 
 export type StudentQuery = {
   name?: string,
   faculty?: String,
 }
-
-
-export type StudentData = any;
 
 export default class StudentManagementService {
 

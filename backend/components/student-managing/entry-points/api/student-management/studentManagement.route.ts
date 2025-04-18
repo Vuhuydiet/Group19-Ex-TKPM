@@ -1,4 +1,4 @@
-import g_StudentManagerController from "./studentManagement.controller";
+import studentManagerController from "./studentManagement.controller";
 import express from "express";
 import { checkEmailPattern, checkPhoneNumberPattern, checkStatusTransition } from "./studentManagement.middleware";
 import { body } from "express-validator";
@@ -10,59 +10,78 @@ router.post('/',
     body('name').isString().isLength({ min: 1, max: 255 }),
     body('dob').isISO8601().toDate(),
     body('gender').isIn(['Nam', 'Nữ']),
-    body('faculty').isIn(['Khoa Luật', 'Khoa Tiếng Anh thương mại', 'Khoa Tiếng Nhật', 'Khoa Tiếng Pháp']),
+    body('faculty').isString(),
     body('academicYear').isInt().toInt(),
     body('program').isString().isLength({ min: 1, max: 255 }),
+    body('permanentAddress').isObject(),
+    body('permanentAddress.city').isString(),
+    body('permanentAddress.district').isString(),
+    body('permanentAddress.ward').isString(),
+    body('permanentAddress.street').isString(),
+    body('temporaryAddress').optional().isObject(),
+    body('temporaryAddress.city').optional().isString(),
+    body('temporaryAddress.district').optional().isString(),
+    body('temporaryAddress.ward').optional().isString(),
+    body('temporaryAddress.street').optional().isString(),
     body('email').isEmail(),
     body('phone').isString().isLength({ min: 1, max: 255 }),
-    body('status').isIn(['Đang học', 'Đã tốt nghiệp', 'Đã thôi học', 'Tạm dừng học']),
+    body('status').isString(),
     body('identityDocument').isObject(),
     body('nationality').isString(),
     handleValidationErrors,
     checkEmailPattern,
     checkPhoneNumberPattern,
-    g_StudentManagerController.addStudent
+    studentManagerController.addStudent
 );
 
 router.delete(
     '/:id', 
-    g_StudentManagerController.removeStudent
+    studentManagerController.removeStudent
 );
 
 router.get(
     '/', 
-    g_StudentManagerController.getStudents
+    studentManagerController.getStudents
 );
 
 router.get(
     '/id/:id', 
-    g_StudentManagerController.getStudentById
+    studentManagerController.getStudentById
 );
 
 router.get(
     '/name', 
-    g_StudentManagerController.getStudentsByName
+    studentManagerController.getStudentsByName
 );
 
 router.patch(
-    '/:id', 
-    body('id').optional().isString().isLength({ min: 1, max: 255 }),
+    '/:id',
     body('name').optional().isString().isLength({ min: 1, max: 255 }),
     body('dob').optional().isISO8601().toDate(),
     body('gender').optional().isIn(['Nam', 'Nữ']),
-    body('faculty').optional().isIn(['Khoa Luật', 'Khoa Tiếng Anh thương mại', 'Khoa Tiếng Nhật', 'Khoa Tiếng Pháp']),
-    body('academicYear').isInt().toInt(),
+    body('faculty').optional().isString(),
+    body('academicYear').optional().isInt().toInt(),
     body('program').optional().isString().isLength({ min: 1, max: 255 }),
+    body('permanentAddress').optional().isObject(),
+    body('permanentAddress.city').optional().isString(),
+    body('permanentAddress.district').optional().isString(),
+    body('permanentAddress.ward').optional().isString(),
+    body('permanentAddress.street').optional().isString(),
+    body('temporaryAddress').optional().isObject(),
+    body('temporaryAddress.city').optional().isString(),
+    body('temporaryAddress.district').optional().isString(),
+    body('temporaryAddress.ward').optional().isString(),
+    body('temporaryAddress.street').optional().isString(),
     body('email').optional().isEmail(),
     body('phone').optional().isString().isLength({ min: 1, max: 255 }),
-    body('status').optional().isIn(['Đang học', 'Đã tốt nghiệp', 'Đã thôi học', 'Tạm dừng học']),
+    body('status').optional().isString(),
     body('identityDocument').optional().isObject(),
     body('nationality').optional().isString(),
     handleValidationErrors,
     checkEmailPattern,
     checkPhoneNumberPattern, 
     checkStatusTransition,
-    g_StudentManagerController.updateStudent
+    studentManagerController.updateStudent
 );
 
 

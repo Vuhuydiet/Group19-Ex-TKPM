@@ -4,25 +4,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
+import { StudyStatus } from "../../../services/studentStatusAPIServices";
 
 const Status = () => {
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
-    const [status, setStatus] = useState<string[]>([]);
-    const [newStatus, setNewStatus] = useState<string>("");
-    const [editStatus, setEditStatus] = useState<string>("");
-    const [editNewStatus, setEditNewStatus] = useState<string>("");
+    const [status, setStatus] = useState<StudyStatus[]>([]);
+    const [newStatus, setNewStatus] = useState<StudyStatus>({
+        id: "",
+        name: "",
+        description: null,
+        createdAt: ""
+    });
+    const [editStatus, setEditStatus] = useState<StudyStatus>({
+        id: "",
+        name: "",
+        description: null,
+        createdAt: ""
+    });
+    const [editNewStatus, setEditNewStatus] = useState<StudyStatus>({
+        id: "",
+        name: "",
+        description: null,
+        createdAt: ""
+    });
     const [page, setPage] = useState(1);
 
     const [amountItem, setAmountItem] = useState(0);
 
     function calculateItemsPerPage() {
         const screenHeight = window.innerHeight;
-        if (screenHeight >= 900) return 11;
-        if (screenHeight >= 750) return 9;
-        if (screenHeight >= 600) return 7;
-        return 5;
+        if (screenHeight >= 900) return 7;
+        if (screenHeight >= 750) return 6;
+        if (screenHeight >= 600) return 5;
+        return 4;
     }
 
     useEffect(() => {
@@ -62,12 +78,22 @@ const Status = () => {
     }
 
     function handleCancel() {
-        setEditStatus("");
-        setEditNewStatus("");
+        setEditStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
+        setEditNewStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
     }
 
     function handleAddStatus() {
-        if (newStatus === "") {
+        if (newStatus.name === "") {
             notify({ type: "error", msg: "status name cannot be empty" });
             return;
         }
@@ -79,13 +105,18 @@ const Status = () => {
 
         setStatus([...status, newStatus]);
         setCategory({ ...category, status: [...status, newStatus] });
-        setNewStatus("");
+        setNewStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
 
         notify({ type: "success", msg: "Update status successfully" });
     }
 
     function handleUpdateStatus() {
-        if (editNewStatus === "") {
+        if (editNewStatus.name === "") {
             notify({ type: "error", msg: "status name cannot be empty" });
             return;
         }
@@ -104,8 +135,18 @@ const Status = () => {
         status[index] = editNewStatus;
         setStatus([...status]);
         setCategory({ ...category, status: [...status] });
-        setEditStatus("");
-        setEditNewStatus("");
+        setEditStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
+        setEditNewStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
 
         notify({ type: "success", msg: "Update status successfully" });
     }
@@ -115,8 +156,18 @@ const Status = () => {
         status.splice(index, 1);
         setStatus([...status]);
         setCategory({ ...category, status: [...status] });
-        setEditStatus("");
-        setEditNewStatus("");
+        setEditStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
+        setEditNewStatus({
+            id: "",
+            name: "",
+            description: null,
+            createdAt: ""
+        });
 
         notify({ type: "success", msg: "Delete status successfully" });
 
@@ -126,7 +177,7 @@ const Status = () => {
         <>
             <div className="category">
                 <div className="category__left">
-                    {editStatus !== "" &&
+                    {editStatus.name !== "" &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
                                 <h3>Status Management</h3>
@@ -138,7 +189,15 @@ const Status = () => {
                                     <span>Old Name status</span>
                                     <input
                                         type="text"
-                                        value={editStatus}
+                                        value={editStatus.name}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="dashboard__body__field">
+                                    <span>Old Name ID</span>
+                                    <input
+                                        type="text"
+                                        value={editStatus.id}
                                         disabled
                                     />
                                 </div>
@@ -147,8 +206,8 @@ const Status = () => {
                                     <span>New Name status</span>
                                     <input
                                         type="text"
-                                        value={editNewStatus}
-                                        onChange={(e) => setEditNewStatus(e.target.value)}
+                                        value={editNewStatus.name}
+                                        onChange={(e) => setEditNewStatus({ ...editNewStatus, name: e.target.value })}
                                         placeholder="Enter new status name"
                                     />
                                 </div>
@@ -165,7 +224,7 @@ const Status = () => {
                         </div>
                     }
 
-                    {editStatus === "" && <div className="category__dashboard">
+                    {editStatus.name === "" && <div className="category__dashboard">
                         <div className="category__dashboard__header">
                             <h3>Status Management</h3>
                             <p>Add more status</p>
@@ -173,11 +232,29 @@ const Status = () => {
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
+                                <span>ID status</span>
+                                <input
+                                    type="text"
+                                    value={newStatus.id}
+                                    onChange={(e) => setNewStatus({...newStatus, id: e.target.value })}
+                                    placeholder="Enter status name"
+                                />
+                            </div>
+                            <div className="dashboard__body__field">
                                 <span>Name status</span>
                                 <input
                                     type="text"
-                                    value={newStatus}
-                                    onChange={(e) => setNewStatus(e.target.value)}
+                                    value={newStatus.name}
+                                    onChange={(e) => setNewStatus({...newStatus, name: e.target.value })}
+                                    placeholder="Enter status name"
+                                />
+                            </div>
+                            <div className="dashboard__body__field">
+                                <span>Description status</span>
+                                <input
+                                    type="text"
+                                    value={newStatus.name}
+                                    onChange={(e) => setNewStatus({...newStatus, description: e.target.value })}
                                     placeholder="Enter status name"
                                 />
                             </div>
@@ -208,18 +285,17 @@ const Status = () => {
                             {status && status.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
                                 <button
                                     onClick={() => {
-
                                         setEditStatus(item);
 
                                     }
                                     }
                                     className="table__row" key={index}>
                                     <div className="table__field">
-                                        <span>{index + 1}</span>
+                                        <span>{item.name}</span>
                                     </div>
 
                                     <div className="table__field">
-                                        <span>{item}</span>
+                                        <span>{item.name}</span>
                                     </div>
                                 </button>
                             ))}
