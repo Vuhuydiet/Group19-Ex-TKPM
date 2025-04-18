@@ -24,7 +24,9 @@ describe("Course Enrollment API Service Tests", () => {
         };
 
         (axios.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const result = await CourseEnrollmentAPIServices.createEnrollment(mockEnrollment);
+        const courseService = new CourseEnrollmentAPIServices();
+
+        const result = await courseService.createEnrollment(mockEnrollment);
         expect(result).toEqual(mockEnrollment);
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/course-enrollments", mockEnrollment);
     });
@@ -62,7 +64,9 @@ describe("Course Enrollment API Service Tests", () => {
         ];
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const result = await CourseEnrollmentAPIServices.getEnrollments();
+        const courseService = new CourseEnrollmentAPIServices();
+
+        const result = await courseService.getEnrollments();
         expect(result).toEqual(mockEnrollments);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/course-enrollments");
     });
@@ -82,7 +86,9 @@ describe("Course Enrollment API Service Tests", () => {
         };
 
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const result = await CourseEnrollmentAPIServices.getEnrollmentById(studentId, classId);
+        const courseService = new CourseEnrollmentAPIServices();
+
+        const result = await courseService.getEnrollmentById(studentId, classId);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/course-enrollments/${studentId}/${classId}`);
     });
@@ -106,7 +112,9 @@ describe("Course Enrollment API Service Tests", () => {
         };
 
         (axios.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const result = await CourseEnrollmentAPIServices.updateEnrollment(studentId, classId, updatedEnrollment);
+        const courseService = new CourseEnrollmentAPIServices();
+
+        const result = await courseService.updateEnrollment(studentId, classId, updatedEnrollment);
         expect(result).toEqual(mockResponse.metadata);
         expect(axios.patch).toHaveBeenCalledWith(`http://localhost:3000/course-enrollments/${studentId}/${classId}`, updatedEnrollment);
     });
@@ -117,7 +125,9 @@ describe("Course Enrollment API Service Tests", () => {
         const classId = "456";
 
         (axios.delete as jest.Mock).mockResolvedValueOnce({ data: {} });
-        await CourseEnrollmentAPIServices.cancelClass(studentId, classId);
+        const courseService = new CourseEnrollmentAPIServices();
+
+        await courseService.cancelClass(studentId, classId);
         expect(axios.delete).toHaveBeenCalledWith(`http://localhost:3000/course-enrollments/${studentId}/${classId}`);
     }
     );
@@ -154,7 +164,9 @@ describe("Course Enrollment API Service Tests", () => {
             },
         ];
         (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
-        const result = await CourseEnrollmentAPIServices.getCanceledHistory();
+        const courseService = new CourseEnrollmentAPIServices();
+
+        const result = await courseService.getCanceledHistory();
         expect(result).toEqual(mockCanceledHistory);
         expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/course-enrollments/cancel-history", { params: {} });
     });

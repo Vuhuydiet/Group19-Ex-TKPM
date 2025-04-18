@@ -136,16 +136,16 @@ function RegisterList() {
     const handleExport = async (studentId: string) => {
         const academicTranscriptServices = new AcademicTranscriptAPIServices();
         try {
-            const response = await academicTranscriptServices.getTranscript(studentId);
+            const response = await academicTranscriptServices.exportTranscriptToJson(studentId);
             console.log(response);
             if (response) {
-                notify({ type: "success", msg: "Export course enrollment successfully!" });
+                notify({ type: "success", msg: "Export academic transcript successfully!" });
             } else {
-                notify({ type: "error", msg: "Export course enrollment failed!" });
+                notify({ type: "error", msg: "Export academic transcript failed!" });
             }
         } catch (error) {
-            console.error("Error exporting course enrollment:", error);
-            notify({ type: "error", msg: "Export course enrollment failed!" });
+            console.error("Error exporting academic transcript:", error);
+            notify({ type: "error", msg: "Export academic transcript failed!" });
         }
     }
 
