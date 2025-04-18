@@ -7,7 +7,7 @@ import PrerequisiteSelector from "../PrerequisiteSelector/PrerequisiteSelector";
 import { CourseAPIServices } from "../../../../services/courseAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
 
-function ModuleAdditionForm({ setIsAddFormOpen }: any) {
+function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
     const { category } = useCategory();
     const [isPrerequisiteModuleOpen, setIsPrerequisiteModuleOpen] = useState(false);
     const [module, setModule] = useState<Module>({
@@ -28,7 +28,6 @@ function ModuleAdditionForm({ setIsAddFormOpen }: any) {
     const courseService = new CourseAPIServices();
 
     function handleAdd() {
-        // check if all fields are filled
         if (module.id === ""
             || module.name === ""
             || module.numOfCredits === 0
@@ -39,27 +38,30 @@ function ModuleAdditionForm({ setIsAddFormOpen }: any) {
             return;
         }
 
-        // call addModule API
-        courseService.addCourse(module)
-            .then((response) => {
-                console.log(response);
+        const fetchData = async () => {
+            try {
+                const response = await courseService.addCourse(module);
+                const newModule: Module = response;
+                setModules((prevModules: Module[]) => [...prevModules, newModule]);
                 notify({ type: "success", msg: "Add module successfully" });
-            })
-            .catch((error: any) => {
+            } catch (error) {
                 console.error("Error adding module:", error);
                 notify({ type: "error", msg: "Add module failed" });
-            });
-        
-        // reset module state
-        setModule({
-            id: "",
-            name: "",
-            numOfCredits: 0,
-            faculty: "",
-            description: "",
-            prerequisiteModules: [],
-        });
-        setIsAddFormOpen(false);
+            } finally {
+                setModule({
+                    id: "",
+                    name: "",
+                    numOfCredits: 0,
+                    faculty: "",
+                    description: "",
+                    prerequisiteModules: [],
+                });
+                setIsAddFormOpen(false);
+            }
+
+        }
+
+        fetchData();
     }
 
     // function isValidEmail(email: string, allowedDomain: string = "module.university.edu.vn"): boolean {

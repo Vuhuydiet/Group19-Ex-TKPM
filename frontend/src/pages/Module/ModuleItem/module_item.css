@@ -35,7 +35,6 @@
     border-radius: 50%;
     background-color: var(--main-color);
     color: var(--text-in-background-color);
-
 }
 
 .body__left .body__icon__container .icon__item {
@@ -80,6 +79,12 @@
     outline: none;
     color: var(--text-color);
     font-weight: 700;
+    border-bottom: 2px solid var(--text-color);
+}
+
+.item__body .body__right .body__item input:disabled,
+.item__body .body__right .body__item select:disabled {
+    border: none;
 }
 
 .item__footer {

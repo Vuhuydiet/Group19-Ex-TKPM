@@ -2,11 +2,12 @@ import { faCubes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef } from "react";
 import './item_list.css'
+import { Student } from "../../../services/studentAPIServices";
+import { Module } from "../../../services/moduleAPIServices";
+import NothingDisplay from "../../../components/NothingDisplay/NothingDisplay";
 
 interface ItemListProps {
-    itemList: [
-        any
-    ],
+    itemList: Student[] | Module[],
     setIsHide: (isHide: boolean) => void
     setSelectedItems: (selectedItems: any) => void
 }
@@ -76,7 +77,6 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
             };
         });
 
-        console.log(selectedItems);
         setSelectedItems(selectedItems);
         setIsHide(false);
     }
@@ -98,6 +98,7 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
 
                     <div className="selector__body" ref={containerRef}>
                         <input type="radio" id="item__id" />
+                        {itemList.length === 0 && <NothingDisplay desciption="No items available" />}
                         {itemList.map((item) => (
                             <>
                                 <label htmlFor="item__id" key={item.id} className="selector__item">
@@ -110,9 +111,12 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
                                 </label>
                             </>
                         ))}
-                        <div className="selector__item selector__item--spacer"></div>
-                        <div className="selector__item selector__item--spacer"></div>
-                        <div className="selector__item selector__item--spacer"></div>
+                        {itemList.length !== 0 &&
+                            <>
+                                <div className="selector__item selector__item--spacer"></div>
+                                <div className="selector__item selector__item--spacer"></div>
+                                <div className="selector__item selector__item--spacer"></div>
+                            </>}
 
                     </div>
 

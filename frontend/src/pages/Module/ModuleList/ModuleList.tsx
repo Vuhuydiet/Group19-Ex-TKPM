@@ -22,20 +22,9 @@ function ModuleList() {
     const { category } = useCategory();
     const courseService = new CourseAPIServices();
 
-    //get all modules
-
     useEffect(() => {
         setCloneModules(modules);
     }, [modules]);
-
-    // useEffect(() => {
-    //     getStudents().then((modules) => {
-    //         setModules(modules);
-    //     });
-    // }, []);
-    // useEffect(() => {
-    //     setModules(mockStudentsList);
-    // }, []);
 
     const [page, setPage] = useState(1);
     const [selectedModule, setSelectedModule] = useState<Module | undefined>(undefined);
@@ -54,54 +43,18 @@ function ModuleList() {
 
     useEffect(() => {
         setAmountItem(calculateItemsPerPage());
-        //call API to get modules
-        courseService.getCourses().then((modules) => {
-            setModules(modules);
-            // setCloneModules(modules);
-        });
-        // setModules(mockDataModules);
-    }, []);
 
+        const fetchAPI = async () => {
+            try {
+                const modules = await courseService.getCourses();
+                setModules(modules);
+            } catch (error) {
+                console.error("Error fetching modules:", error);
+            }
+        }
 
-    // function handleSearch(keySearch: string) {
-    //     if (keySearch.trim() === "") {
-    //         setPage(1);
-    //         setCloneModules(modules);
-    //         return;
-    //     }
+        fetchAPI();
 
-    //     const regex = new RegExp(keySearch, "i");
-
-    //     const filteredStudents = modules.filter(module =>
-    //         regex.test(module.id) || regex.test(module.name)
-    //     );
-
-    //     setCloneModules(filteredStudents);
-    //     setPage(1);
-    // }
-
-    // function handleFilter() {
-    //     const filteredStudents = modules.filter(module => {
-    //         module.faculty === faculty
-    //     });
-
-    //     let newStudentList = filteredStudents;
-    //     if (search.trim() !== "") {
-    //         const regex = new RegExp(search, "i");
-    //         newStudentList = filteredStudents.filter(module =>
-    //             regex.test(module.id) || regex.test(module.name)
-    //         );
-    //     }
-
-    //     setCloneModules(newStudentList);
-    //     setPage(1);
-    // }
-
-    // useEffect(() => {
-    //     handleFilter();
-    // }, [faculty]);
-
-    useEffect(() => {
         const handleResize = () => {
             setAmountItem(calculateItemsPerPage());
             setPage(1);
@@ -126,12 +79,11 @@ function ModuleList() {
         }
     }
 
-
     return (
         <>
             {/* {selectedModule && <StudentItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} modules={modules} setModules={setModules} />} */}
-            {selectedModule && <ModuleItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} />}
-            {isAddFormOpen && <ModuleAdditionForm setIsAddFormOpen={setIsAddFormOpen} />}
+            {selectedModule && <ModuleItem selectedModule={selectedModule} setSelectedModule={setSelectedModule} setModules={setModules} modules={modules} />}
+            {isAddFormOpen && <ModuleAdditionForm setIsAddFormOpen={setIsAddFormOpen} setModules={setModules} />}
             <div className="board board--module">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">

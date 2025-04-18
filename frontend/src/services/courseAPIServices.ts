@@ -4,12 +4,12 @@ import { Module } from "./moduleAPIServices";
 const API_BASE_URL = "http://localhost:3000/courses"; // Thay đổi URL nếu cần
 
 export interface Course {
-    id: string; 
+    id: string;
     courseName: string;
     nCredits: number;
     facultyId: string;
     description: string;
-    prerequisiteId: string;
+    prerequisiteId: string | null; // Thay đổi kiểu dữ liệu nếu cần
 }
 
 function mapModuleToCourse(module: Module): Course {
@@ -19,7 +19,7 @@ function mapModuleToCourse(module: Module): Course {
         nCredits: module.numOfCredits,
         facultyId: module.faculty,
         description: module.description,
-        prerequisiteId: module.prerequisiteModules[0] || "", // chỉ lấy phần tử đầu tiên hoặc chuỗi rỗng nếu không có
+        prerequisiteId: module.prerequisiteModules[0] || null,
     };
 }
 

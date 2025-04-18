@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './register.css'
-import { Student } from '../../../services/studentAPIServices';
+import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
 import { Module } from '../../../services/moduleAPIServices';
 import ItemList from '../Overlay/ItemList';
+import { use } from 'passport';
+import { CourseAPIServices } from '../../../services/courseAPIServices';
 
 interface RegisterProps {
     setIsHide: (isHide: boolean) => void;
@@ -18,17 +20,43 @@ const Register = ({ setIsHide }: RegisterProps) => {
     const [isOpenOverlayForStudent, setIsOpenOverlayForStudent] = useState(false);
     const [isOpenOverlayForModule, setIsOpenOverlayForModule] = useState(false);
 
+    const [students, setStudents] = useState<Student[]>([]);
+    const [modules, setModules] = useState<Module[]>([]);
+
     const handleCancel = () => {
         setIsHide(false);
     }
+
+    useEffect(() => {
+        const studentService = new StudentAPIServices();
+        const courseService = new CourseAPIServices();
+
+        const fetchData1 = async () => {
+            try {
+                const students = await studentService.getStudents();
+                setStudents(students);
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+        }
+        const fetchData2 = async () => {
+            try {
+                const modules = await courseService.getCourses();
+                setModules(modules);
+            } catch (error) {
+                console.error("Error fetching modules:", error);
+            }
+        }
+
+        fetchData1();
+        fetchData2();
+    }, []);
 
     return (
         <>
             {isOpenOverlayForStudent && (
                 <ItemList
-                    itemList={[{
-
-                    }]}
+                    itemList={students}
                     setIsHide={setIsOpenOverlayForStudent}
                     setSelectedItems={setSelectedStudent}
                 />
@@ -36,9 +64,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
 
             {isOpenOverlayForModule && (
                 <ItemList
-                    itemList={[{
-
-                    }]}
+                    itemList={modules}
                     setIsHide={setIsOpenOverlayForModule}
                     setSelectedItems={setSelectedModule}
                 />)}
@@ -93,7 +119,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
                                         onChange={(e) => setModuleInput(e.target.value)}
                                     />
                                     <button>Check</button>
-                                    <button>Search</button>
+                                    <button onClick={() => setIsOpenOverlayForModule(true)}>Search</button>
                                 </div>
 
                                 <div className="body__info">
