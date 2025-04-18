@@ -41,7 +41,7 @@ describe('ClassService', () => {
   describe('findAll', () => {
     it('should call prisma.class.findMany', async () => {
       prisma.class.findMany.mockResolvedValue([sampleData]);
-      const result = await ClassService.findAll();
+      const result = await ClassService.findAll({});
       expect(prisma.class.findMany).toHaveBeenCalled();
       expect(result).toEqual([sampleData]);
     });
