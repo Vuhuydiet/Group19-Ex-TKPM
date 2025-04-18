@@ -38,6 +38,13 @@ router.get(
 router.patch(
   '/:id',
   param('id').isString().notEmpty(),
+  body('courseId').optional().isString(),
+  body('year').optional().isInt().toInt(),
+  body('semester').optional().isInt().toInt(),
+  body('professorName').optional().isString(),
+  body('capacity').optional().isInt({ min: 1 }).toInt(),
+  body('schedule').optional().isString(),
+  body('room').optional().isString(),
   handleValidationErrors,
   classController.update
 );

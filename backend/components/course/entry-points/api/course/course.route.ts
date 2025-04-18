@@ -29,6 +29,11 @@ router.get(
 router.patch(
   '/:id',
   param('id').isString().notEmpty(),
+  body('courseName').optional().isString().notEmpty(),
+  body('nCredits').optional().isInt({ min: 2 }),
+  body('facultyId').optional().isString().notEmpty(),
+  body('description').optional().isString().notEmpty(),
+  body('prerequisiteId').optional().isString(),
   handleValidationErrors,
   courseController.update
 );
