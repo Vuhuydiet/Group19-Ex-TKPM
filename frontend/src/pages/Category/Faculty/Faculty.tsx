@@ -4,15 +4,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
+import { Faculty } from "../../../services/facultyAPIServices";
+import * as e from "express";
 
-const Faculty = () => {
+const FacultyComponent = () => {
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
-    const [faculty, setFaculty] = useState<string[]>([]);
-    const [newFaculty, setNewFaculty] = useState<string>("");
-    const [editFaculty, setEditFaculty] = useState<string>("");
-    const [editNewFaculty, setEditNewFaculty] = useState<string>("");
+    const [faculty, setFaculty] = useState<Faculty[]>([]);
+    const [newFaculty, setNewFaculty] = useState<Faculty>({
+        id: "",
+        name: "",
+        description: "",
+        createdAt: "",
+    });
+    const [editFaculty, setEditFaculty] = useState<Faculty>({
+        id: "",
+        name: "",
+        description: "",
+        createdAt: "",
+    });
+    const [editNewFaculty, setEditNewFaculty] = useState<Faculty>({
+        id: "",
+        name: "",
+        description: "",
+        createdAt: "",
+    });
     const [page, setPage] = useState(1);
 
     const [amountItem, setAmountItem] = useState(0);
@@ -62,12 +79,22 @@ const Faculty = () => {
     }
 
     function handleCancel() {
-        setEditFaculty("");
-        setEditNewFaculty("");
+        setEditFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
+        setEditNewFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
     }
 
     function handleAddFaculty() {
-        if (newFaculty === "") {
+        if (newFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
         }
@@ -79,13 +106,18 @@ const Faculty = () => {
 
         setFaculty([...faculty, newFaculty]);
         setCategory({ ...category, faculty: [...faculty, newFaculty] });
-        setNewFaculty("");
+        setNewFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
 
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
     function handleUpdateFaculty() {
-        if (editNewFaculty === "") {
+        if (editNewFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
         }
@@ -95,7 +127,7 @@ const Faculty = () => {
             return;
         }
 
-        if (editNewFaculty === editFaculty) {
+        if (editNewFaculty.name === editFaculty.name) {
             notify({ type: "warning", msg: "Faculty name is the same" });
             return;
         }
@@ -104,8 +136,18 @@ const Faculty = () => {
         faculty[index] = editNewFaculty;
         setFaculty([...faculty]);
         setCategory({ ...category, faculty: [...faculty] });
-        setEditFaculty("");
-        setEditNewFaculty("");
+        setEditFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
+        setEditNewFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
 
         notify({ type: "success", msg: "Update faculty successfully" });
     }
@@ -115,8 +157,18 @@ const Faculty = () => {
         faculty.splice(index, 1);
         setFaculty([...faculty]);
         setCategory({ ...category, faculty: [...faculty] });
-        setEditFaculty("");
-        setEditNewFaculty("");
+        setEditFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
+        setEditNewFaculty({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
 
         notify({ type: "success", msg: "Delete faculty successfully" });
 
@@ -126,7 +178,7 @@ const Faculty = () => {
         <>
             <div className="category">
                 <div className="category__left">
-                    {editFaculty !== "" &&
+                    {editFaculty.name !== "" &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
                                 <h3>Faculty Management</h3>
@@ -138,7 +190,7 @@ const Faculty = () => {
                                     <span>Old Name Faculty</span>
                                     <input
                                         type="text"
-                                        value={editFaculty}
+                                        value={editFaculty.name}
                                         disabled
                                     />
                                 </div>
@@ -147,8 +199,8 @@ const Faculty = () => {
                                     <span>New Name Faculty</span>
                                     <input
                                         type="text"
-                                        value={editNewFaculty}
-                                        onChange={(e) => setEditNewFaculty(e.target.value)}
+                                        value={editNewFaculty.name}
+                                        onChange={(e) => setEditNewFaculty({...editNewFaculty, name: e.target.value})}
                                         placeholder="Enter new faculty name"
                                     />
                                 </div>
@@ -165,7 +217,7 @@ const Faculty = () => {
                         </div>
                     }
 
-                    {editFaculty === "" && <div className="category__dashboard">
+                    {editFaculty.name === "" && <div className="category__dashboard">
                         <div className="category__dashboard__header">
                             <h3>Faculty Management</h3>
                             <p>Add more faculties</p>
@@ -173,12 +225,30 @@ const Faculty = () => {
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
+                                <span>ID Faculty</span>
+                                <input
+                                    type="text"
+                                    value={newFaculty.id}
+                                    onChange={(e) => setNewFaculty({...newFaculty, id: e.target.value})}
+                                    placeholder="Enter faculty id"
+                                />
+                            </div>
+                            <div className="dashboard__body__field">
                                 <span>Name Faculty</span>
                                 <input
                                     type="text"
-                                    value={newFaculty}
-                                    onChange={(e) => setNewFaculty(e.target.value)}
+                                    value={newFaculty.name}
+                                    onChange={(e) => setNewFaculty({...newFaculty, name: e.target.value})}
                                     placeholder="Enter faculty name"
+                                />
+                            </div>
+                            <div className="dashboard__body__field">
+                                <span>Description Faculty</span>
+                                <input
+                                    type="text"
+                                    value={newFaculty.name}
+                                    onChange={(e) => setNewFaculty({...newFaculty, description: e.target.value})}
+                                    placeholder="Enter faculty description"
                                 />
                             </div>
                         </div>
@@ -215,11 +285,11 @@ const Faculty = () => {
                                     }
                                     className="table__row" key={index}>
                                     <div className="table__field">
-                                        <span>{index + 1}</span>
+                                        <span>{item.id}</span>
                                     </div>
 
                                     <div className="table__field">
-                                        <span>{item}</span>
+                                        <span>{item.name}</span>
                                     </div>
                                 </button>
                             ))}
@@ -248,4 +318,4 @@ const Faculty = () => {
     )
 }
 
-export default Faculty
+export default FacultyComponent

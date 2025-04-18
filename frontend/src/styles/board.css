@@ -238,6 +238,18 @@
     align-items: center;
 }
 
+.board__feature__sortfilter button {
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    background-color: var(--main-color);
+    color: var(--item-color);
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    margin-right: 10px;
+}
+
 .board__feature__sortfilter .board__feature__item {
     display: flex;
     align-items: center;
