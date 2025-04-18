@@ -1,0 +1,48 @@
+### Get all study statuses
+GET http://localhost:3000/study-status
+Content-Type: application/json
+
+###
+
+### Add a new study status
+POST http://localhost:3000/study-status
+Content-Type: application/json
+
+{
+    "id": "DL",
+    "name": "Đi làm",
+    "description": "Đã đi làm"
+}
+
+###
+
+### Update an existing study status
+PATCH http://localhost:3000/study-status/DL
+Content-Type: application/json
+
+{
+    "name": "Đi làm việc",
+    "description": "Đi làm việc"
+}
+
+###
+
+### Add a valid study status transition
+POST http://localhost:3000/study-status-transition
+Content-Type: application/json
+
+{
+    "from": "DH",
+    "to": "DL"
+}
+
+###
+
+### Remove a valid study status transition
+DELETE http://localhost:3000/study-status-transition
+Content-Type: application/json
+
+{
+    "from": "DH",
+    "to": "DL"
+}
