@@ -13,15 +13,31 @@ export interface Class {
     room: string;
 }
 
+export interface ClassQueryParams {
+    courseId?: string;
+    year?: number;
+    semester?: number;
+    room?: string;
+}
+
+
+
 export class classAPIServices {
     constructor() {
         // Constructor logic if needed
     }
 
     getClasses = async (): Promise<Class[]> => {
-        const response = await axios.get(API_BASE_URL);
+        const response = await axios.get(API_BASE_URL, );
         return response.data.metadata;
     }
+
+
+    getClassesByQuery = async (queryParams: ClassQueryParams): Promise<Class[]> => {
+        const response = await axios.get(API_BASE_URL, { params: queryParams });
+        return response.data.metadata;
+    }
+
 
     getClassById = async (id: string): Promise<Class | null> => {
         const response = await axios.get(`${API_BASE_URL}/${id}`);
