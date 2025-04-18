@@ -1,6 +1,6 @@
 import { ImportExportService } from '../importExport.service';
 import ImportExportStrategyFactory from '../../import-export/impl/format.strategy.factory';
-import StudentManagementService, { StudentQuery } from '../studentManagement.service';
+import StudentManagementService, { StudentQuery, StudentData } from '../studentManagement.service';
 import { Student } from '../../management/Student';
 import { ParserType } from '../../import-export/impl/xml.strategy';
 
@@ -25,7 +25,7 @@ export class ImportExportServiceImpl implements ImportExportService {
                 studentData.identityDocument,
                 studentData.nationality
             );
-            StudentManagementService.addStudent(student);
+            StudentManagementService.addStudent(student as StudentData);
         }
         return students;
     }

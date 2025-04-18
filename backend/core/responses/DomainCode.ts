@@ -3,6 +3,7 @@ export enum DomainCode {
     UNKNOWN_ERROR = "000",
     FORBIDDEN = "001",
     UNAUTHORIZED = "002",
+    NOT_FOUND = "200",
     INVALID_INPUT_FIELD = "003",
     STUDENT_NOT_FOUND = "004",
     STUDENT_ALREADY_EXISTS = "005",

@@ -12,13 +12,22 @@ export interface ClassData {
   room: string;
 }
 
+export interface ClassQuery {
+  courseId?: string
+  year?: number
+  semester?: number
+  room?: string
+}
+
 export class ClassService {
   static async create(data: ClassData) {
     return prisma.class.create({ data });
   }
 
-  static async findAll() {
-    return prisma.class.findMany();
+  static async findAll(query: ClassQuery) {
+    return prisma.class.findMany({
+      where: query
+    });
   }
 
   static async findById(id: string) {

@@ -1,6 +1,6 @@
 import express from 'express';
 import classController from './class.controller';
-import { body, param } from 'express-validator';
+import { query, body, param } from 'express-validator';
 import handleValidationErrors from '../../../../../libraries/errorHandler/errorHandler';
 
 const router = express.Router();
@@ -19,7 +19,14 @@ router.post(
   classController.create
 );
 
-router.get('/', classController.findAll);
+router.get('/', 
+  query('courseId').optional().isString(),
+  query('year').optional().isInt().toInt(),
+  query('semester').optional().isInt().toInt(),
+  query('room').optional().isString(),
+  handleValidationErrors,
+  classController.findAll
+);
 
 router.get(
   '/:id',
