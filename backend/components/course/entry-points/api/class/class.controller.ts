@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { matchedData } from 'express-validator';
-import { ClassService, ClassData } from '../../../domain/services/class.service';
+import { ClassService, ClassData, ClassQuery } from '../../../domain/services/class.service';
 import { OKResponse } from '../../../../../core/responses/SuccessResponse';
 import { NotFoundError } from '../../../../../core/responses/ErrorResponse';
 import { DomainCode } from '../../../../../core/responses/DomainCode';
@@ -12,8 +12,9 @@ export class ClassController {
     new OKResponse({ message: 'Class created', metadata: result }).send(res);
   }
 
-  async findAll(_req: Request, res: Response) {
-    const result = await ClassService.findAll();
+  async findAll(req: Request, res: Response) {
+    const query = matchedData(req) as ClassQuery;
+    const result = await ClassService.findAll(query);
     new OKResponse({ message: 'Classes found', metadata: result }).send(res);
   }
 
