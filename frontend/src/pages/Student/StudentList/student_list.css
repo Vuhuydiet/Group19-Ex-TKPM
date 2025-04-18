@@ -1,5 +1,5 @@
 .board--student .board__table .board__table__attribute:first-child {
-    flex: 1;
+    flex: 3;
 }
 
 .board--student .board__table .board__table__attribute:nth-child(2) {
@@ -11,7 +11,7 @@
 }
 
 .board--student .board__table .board__table__attribute:nth-child(4) {
-    flex: 4;
+    flex: 2;
 }
 
 .board--student .board__table .board__table__attribute:nth-child(5) {
@@ -32,20 +32,20 @@
 
 
 .custom-file-upload {
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: #ffffff;
-  color: var(--main-color);
-  border-radius: var(--border-radius);
-  margin: 0px 5px;
-  cursor: pointer;
-  text-align: center;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ffffff;
+    color: var(--main-color);
+    border-radius: var(--border-radius);
+    margin: 0px 5px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .custom-file-upload:hover {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .custom-file-upload input {
-  display: none;
+    display: none;
 }

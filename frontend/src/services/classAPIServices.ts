@@ -23,7 +23,7 @@ export class classAPIServices {
         return response.data.metadata;
     }
 
-    getClassById = async (id: string): Promise<Class | null> => {
+    getClassById = async (id: string): Promise<Class> => {
         const response = await axios.get(`${API_BASE_URL}/${id}`);
         return response.data.metadata;
     }
@@ -31,14 +31,14 @@ export class classAPIServices {
     createClass = async (classData: Class): Promise<Class> => {
         const response = await axios.post(API_BASE_URL, classData);
         return response.data.metadata;
-    }   
+    }
 
     updateClass = async (id: string, classData: Class): Promise<Class> => {
         const response = await axios.patch(`${API_BASE_URL}/${id}`, classData);
         return response.data.metadata;
-    }   
+    }
 
     deleteClass = async (id: string): Promise<void> => {
         await axios.delete(`${API_BASE_URL}/${id}`);
-    }  
+    }
 }

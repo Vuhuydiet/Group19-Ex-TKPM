@@ -9,14 +9,17 @@ import StudentItem from '../StudentItem/StudentItem';
 import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
 import { FileAPIServices } from "../../../services/fileAPIServices";
 import { useCategory } from '../../../contexts/CategoryProvider';
+import { useNotification } from '../../../contexts/NotificationProvider';
+import { dateFormatter } from '../../../utils/DateFormater';
 // import { useLoading } from '../components/LoadingContext';
 
 
-function student() {
+function StudentList() {
 
     const [students, setStudents] = useState<Student[]>([]);
     const [cloneStudents, setCloneStudents] = useState<Student[]>([]);
     const { category } = useCategory();
+    const { notify } = useNotification();
     //get all students
 
     useEffect(() => {
@@ -139,7 +142,7 @@ function student() {
                 const jsonData = JSON.parse(e.target.result as string);
                 const fileService = new FileAPIServices();
                 await fileService.importStudentsJSON(jsonData);
-                alert("Import JSON thành công!");
+                notify({ type: "success", msg: "Import JSON file successfully!" });
             }
         };
         reader.readAsText(file);
@@ -282,7 +285,7 @@ function student() {
                                 className="board__table__row">
                                 <div className="board__table__attribute">{student.id}</div>
                                 <div className="board__table__attribute">{student.name}</div>
-                                <div className="board__table__attribute">{student.dob}</div>
+                                <div className="board__table__attribute">{dateFormatter(student.dob)}</div>
                                 <div className="board__table__attribute">{student.gender}</div>
                                 <div className="board__table__attribute">{student.program}</div>
                                 <div className="board__table__attribute">{student.academicYear}</div>
@@ -347,5 +350,5 @@ function student() {
     );
 }
 
-export default student;
+export default StudentList;
 

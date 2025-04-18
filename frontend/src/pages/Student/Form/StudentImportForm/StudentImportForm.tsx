@@ -54,7 +54,7 @@ function StudentImportForm() {
         },
         email: "",
         phone: "",
-        status: "Đang học",
+        status: "DH",
     });
 
     // function isValidEmail(email: string, allowedDomain: string = "student.university.edu.vn"): boolean {

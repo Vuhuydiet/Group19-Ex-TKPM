@@ -46,8 +46,30 @@ const ModuleItem = ({ selectedModule, setSelectedModule, setModules, modules }: 
 
             } catch (error) {
                 console.error("Error updating module:", error);
+            } finally {
+                setSelectedModule(null);
             }
         }
+        fetchData();
+    }
+
+    const handleDelete = () => {
+        if (!module) return;
+
+        const courseService = new CourseAPIServices();
+        const fetchData = async () => {
+            try {
+                await courseService.deleteCourse(module.id);
+                notify({ type: "success", msg: "Delete module successfully!" });
+                const newModules = modules.filter((mod) => mod.id !== module.id);
+                setModules(newModules);
+            } catch (error) {
+                console.error("Error deleting module:", error);
+            } finally {
+                setSelectedModule(null);
+            }
+        }
+
         fetchData();
     }
 
@@ -126,7 +148,7 @@ const ModuleItem = ({ selectedModule, setSelectedModule, setModules, modules }: 
                         <button onClick={() => setIsEdit(!isEdit)}>
                             <FontAwesomeIcon icon={faPen} className='icon__edit' />
                         </button>
-                        <button>Delete</button>
+                        <button onClick={handleDelete}>Delete</button>
                         <button onClick={handleSave}>Save</button>
                         <button onClick={handleClose}>Cancel</button>
                     </div>

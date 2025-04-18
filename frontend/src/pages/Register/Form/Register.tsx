@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import './register.css'
 import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
 import { Module } from '../../../services/moduleAPIServices';
-import ItemList from '../Overlay/ItemList';
-import { use } from 'passport';
 import { CourseAPIServices } from '../../../services/courseAPIServices';
+import { Class, classAPIServices } from '../../../services/classAPIServices';
+import StudentItemList from '../Overlay/StudentItemList/StudentItemList';
+import ClassItemList from '../Overlay/ClassItemList/ClassItemList';
+import ModuleItemList from '../Overlay/ModuleItemList/ModuleItemList';
 
 interface RegisterProps {
     setIsHide: (isHide: boolean) => void;
@@ -13,15 +15,19 @@ interface RegisterProps {
 const Register = ({ setIsHide }: RegisterProps) => {
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
     const [selectedModule, setSelectedModule] = useState<Module | null>(null);
+    const [selectedClass, setSelectedClass] = useState<Class | null>(null);
 
     const [studentInput, setStudentInput] = useState('');
     const [moduleInput, setModuleInput] = useState('');
+    const [classInput, setClassInput] = useState('');
 
     const [isOpenOverlayForStudent, setIsOpenOverlayForStudent] = useState(false);
     const [isOpenOverlayForModule, setIsOpenOverlayForModule] = useState(false);
+    const [isOpenOverlayForClass, setIsOpenOverlayForClass] = useState(false);
 
     const [students, setStudents] = useState<Student[]>([]);
     const [modules, setModules] = useState<Module[]>([]);
+    const [classes, setClasses] = useState<Class[]>([]);
 
     const handleCancel = () => {
         setIsHide(false);
@@ -30,6 +36,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
     useEffect(() => {
         const studentService = new StudentAPIServices();
         const courseService = new CourseAPIServices();
+        const classService = new classAPIServices();
 
         const fetchData1 = async () => {
             try {
@@ -47,27 +54,60 @@ const Register = ({ setIsHide }: RegisterProps) => {
                 console.error("Error fetching modules:", error);
             }
         }
+        const fetchData3 = async () => {
+            try {
+                const classes = await classService.getClasses();
+                setClasses(classes);
+            }
+            catch (error) {
+                console.error("Error fetching classes:", error);
+            }
+        }
 
         fetchData1();
         fetchData2();
     }, []);
 
+    useEffect(() => {
+        const classService = new classAPIServices();
+        const fetchData = async () => {
+            try {
+                const classes = await classService.getClasses();
+                setClasses(classes);
+            } catch (error) {
+                console.error("Error fetching classes:", error);
+            }
+        }
+        fetchData();
+    }, [selectedModule]);
+
     return (
         <>
             {isOpenOverlayForStudent && (
-                <ItemList
+                <StudentItemList
                     itemList={students}
                     setIsHide={setIsOpenOverlayForStudent}
-                    setSelectedItems={setSelectedStudent}
+                    setSelectedItem={setSelectedStudent}
+                    setItemInput={setStudentInput}
                 />
             )}
 
             {isOpenOverlayForModule && (
-                <ItemList
+                <ModuleItemList
                     itemList={modules}
                     setIsHide={setIsOpenOverlayForModule}
-                    setSelectedItems={setSelectedModule}
+                    setSelectedItem={setSelectedModule}
+                    setItemInput={setModuleInput}
                 />)}
+
+            {isOpenOverlayForClass && (
+                <ClassItemList
+                    itemList={classes}
+                    setIsHide={setIsOpenOverlayForClass}
+                    setSelectedItem={setSelectedClass}
+                    setItemInput={setClassInput}
+                />)
+            }
 
             <div className="virtual-background">
                 <div className="register">
@@ -96,7 +136,7 @@ const Register = ({ setIsHide }: RegisterProps) => {
 
                                 <div className="body__info">
                                     {selectedStudent && (
-                                        <div className="info__student">
+                                        <div className="info__detail">
                                             <h2>{selectedStudent.name}</h2>
                                             <p>{selectedStudent.id}</p>
                                         </div>
@@ -124,14 +164,42 @@ const Register = ({ setIsHide }: RegisterProps) => {
 
                                 <div className="body__info">
                                     {selectedModule && (
-                                        <div className="info__module">
-                                            <h2>{selectedModule.name}</h2>
-                                            <p>{selectedModule.id}</p>
+                                        <div className="info__detail">
+                                            <h2>{selectedModule.id}</h2>
+                                            <p>{selectedModule.name}</p>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </div>
+
+                        {selectedModule && <div className="body__item">
+                            <div className="item__header">
+                                <h1>Class Selector</h1>
+                            </div>
+
+                            <div className="item__body">
+                                <div className="body__inputfield">
+                                    <input
+                                        value={classInput}
+                                        type="text"
+                                        placeholder="Please enter class ID"
+                                        onChange={(e) => setModuleInput(e.target.value)}
+                                    />
+                                    <button>Check</button>
+                                    <button onClick={() => setIsOpenOverlayForClass(true)}>Search</button>
+                                </div>
+
+                                <div className="body__info">
+                                    {selectedClass && (
+                                        <div className="info__detail">
+                                            <h2>{selectedClass.id}</h2>
+                                            <p>{selectedClass.professorName}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>}
                     </div>
 
                     <div className="register__footer">

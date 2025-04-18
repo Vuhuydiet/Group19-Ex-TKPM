@@ -1,10 +1,10 @@
 .register {
-    width: 70%;
     padding: 20px;
     border-radius: var(--border-radius);
     background-color: var(--item-color);
     color: var(--text-color);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    animation: zoomIn 0.3s ease-in-out;
 }
 
 .register__header {
@@ -20,13 +20,16 @@
     margin: 20px 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+    gap: 10px;
+
 }
 
 .register__body .body__item {
-    width: calc(100% / 2 - 20px);
     padding: 20px;
     border-radius: var(--border-radius);
+    border-left: 2px solid var(--text-color);
+    border-right: 2px solid var(--text-color);
 }
 
 .register__body .body__item .item__header h1 {
@@ -38,7 +41,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .register__body .body__item .item__body .body__inputfield {
@@ -66,6 +69,21 @@
     outline: none;
     color: var(--text-color);
     border-bottom: 2px solid var(--text-color);
+}
+
+.register__body .body__item .item__body .body__info {
+    border-top: 2px dashed var(--text-color);
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.register__body .body__item .item__body .body__info .info__detail {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .register__footer {

@@ -1,19 +1,20 @@
 import { faCubes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef } from "react";
-import './item_list.css'
-import { Student } from "../../../services/studentAPIServices";
-import { Module } from "../../../services/moduleAPIServices";
-import NothingDisplay from "../../../components/NothingDisplay/NothingDisplay";
+import { useEffect, useRef, useState } from "react";
+import '../item_list.css'
+import { Student } from "../../../../services/studentAPIServices";
+import NothingDisplay from "../../../../components/NothingDisplay/NothingDisplay";
 
 interface ItemListProps {
-    itemList: Student[] | Module[],
+    itemList: Student[],
     setIsHide: (isHide: boolean) => void
-    setSelectedItems: (selectedItems: any) => void
+    setSelectedItem?: (selectedItem: any) => void
+    setItemInput?: (itemInput: string) => void
 }
 
-const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
+const StudentItemList = ({ itemList, setIsHide, setSelectedItem, setItemInput }: ItemListProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [selectedItem, setSelectedItemState] = useState("");
 
     useEffect(() => {
         const container = containerRef.current;
@@ -69,15 +70,13 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
 
 
     const handleSave = () => {
-        const selectedItems = Array.from(containerRef.current?.querySelectorAll("input[type='radio']:checked") || []).map((input) => {
-            const label = input.nextElementSibling as HTMLLabelElement;
-            return {
-                id: input.id,
-                name: label.querySelector(".selector__item__content span")?.textContent,
-            };
-        });
+        if (!selectedItem) return;
 
-        setSelectedItems(selectedItems);
+        const selectedItemValue = itemList.find((item) => item.id === selectedItem);
+
+        setSelectedItem && setSelectedItem(selectedItemValue!);
+        setItemInput && setItemInput(selectedItemValue!.id);
+
         setIsHide(false);
     }
 
@@ -92,16 +91,22 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
 
                 <div className="selector">
                     <div className="selector__header">
-                        <h1>Item Selector</h1>
-                        <p>Choose item in list</p>
+                        <h1>Student Selector</h1>
+                        <p>Choose student in list</p>
                     </div>
 
                     <div className="selector__body" ref={containerRef}>
-                        <input type="radio" id="item__id" />
                         {itemList.length === 0 && <NothingDisplay desciption="No items available" />}
                         {itemList.map((item) => (
                             <>
-                                <label htmlFor="item__id" key={item.id} className="selector__item">
+                                <input
+                                    type="radio"
+                                    id={`item__${item.id}`}
+                                    name="item_selector"
+                                />
+                                <label
+                                    onClick={() => setSelectedItemState(item.id)}
+                                    htmlFor={`item__${item.id}`} key={item.id} className="selector__item">
                                     <div className="selector__item__icon">
                                         <FontAwesomeIcon icon={faCubes} className='icon__item' />
                                     </div>
@@ -132,4 +137,4 @@ const ItemList = ({ itemList, setIsHide, setSelectedItems }: ItemListProps) => {
     )
 }
 
-export default ItemList;
+export default StudentItemList;

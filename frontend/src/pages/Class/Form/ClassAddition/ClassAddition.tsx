@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../../styles/form.css";
 import './class_addition.css'
 import { Class } from "../../../../services/classAPIServices";
 import { classAPIServices } from "../../../../services/classAPIServices";
+import { Module } from "../../../../services/moduleAPIServices";
+import { CourseAPIServices } from "../../../../services/courseAPIServices";
+import { useNotification } from "../../../../contexts/NotificationProvider";
 
-function ClassAdditionForm({ setIsAddFormOpen }: any) {
+function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
+    const { notify } = useNotification();
     const [theChosenClass, setTheChosenClass] = useState<Class>({
         id: "",
         courseId: "",
@@ -16,6 +20,20 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
         room: ""
     });
 
+    const [modules, setModules] = useState<Module[]>([]);
+    useEffect(() => {
+        const courseService = new CourseAPIServices();
+        const fetchData = async () => {
+            try {
+                const modules = await courseService.getCourses();
+                setModules(modules);
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+        }
+        fetchData();
+    }, []);
+
     const handleClose = () => {
         setIsAddFormOpen(false);
     }
@@ -24,17 +42,28 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
 
     function handleAdd() {
         if (theChosenClass.id === "" || theChosenClass.courseId === "" || theChosenClass.professorName === "" || theChosenClass.schedule === "" || theChosenClass.room === "") {
-            alert("Please fill all fields!");
+            notify({ type: "error", msg: "Please fill all the fields!" });
             return;
         }
-        classService.createClass(theChosenClass).then((res) => {
-            console.log(res);
-            alert("Add class successfully!");
-            setIsAddFormOpen(false);
-        }).catch((err) => {
-            console.log(err);
-            alert("Add class failed!");
-        });
+
+        const fetchData = async () => {
+            try {
+                const response = await classService.createClass(theChosenClass);
+                notify({ type: "success", msg: "Add class successfully!" });
+
+                const newClasses = [...classes, response];
+                setClasses(newClasses);
+
+            } catch (error) {
+                console.error("Error adding class:", error);
+                notify({ type: "error", msg: "Add class failed!" });
+            } finally {
+                setIsAddFormOpen(false);
+            }
+        }
+
+        fetchData();
+
     }
 
 
@@ -63,12 +92,16 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
                         {/* Input Price */}
                         <div className="form__field">
                             <span>Course ID</span>
-                            <input
+                            <select
                                 value={theChosenClass.courseId}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, courseId: e.target.value })}
-
-                                type="text"
-                                placeholder="Enter course id" />
+                            >
+                                <option value="" disabled>Select course</option>
+                                {modules.map((item, index) => (
+                                    <option key={index} value={item.id}>{item.name}</option>
+                                ))}
+                                <option value="">None</option>
+                            </select>
                         </div>
 
                         <div className="form__field">
@@ -112,7 +145,7 @@ function ClassAdditionForm({ setIsAddFormOpen }: any) {
                                     if (!isNaN(value)) {
                                         setTheChosenClass({ ...theChosenClass, capacity: value });
                                     } else {
-                                        setTheChosenClass({ ...theChosenClass, capacity: new Date().getFullYear() });
+                                        setTheChosenClass({ ...theChosenClass, capacity: 0 });
                                     }
                                 }}
                                 type="text"

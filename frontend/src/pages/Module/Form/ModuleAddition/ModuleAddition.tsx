@@ -32,7 +32,6 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
             || module.name === ""
             || module.numOfCredits === 0
             || module.faculty === ""
-            || module.description === ""
         ) {
             notify({ type: "error", msg: "Please fill in all fields" });
             return;

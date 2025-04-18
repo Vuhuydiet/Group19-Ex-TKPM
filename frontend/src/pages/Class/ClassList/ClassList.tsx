@@ -10,20 +10,12 @@ import { classAPIServices } from '../../../services/classAPIServices';
 
 function ClassList() {
 
-    const [classes, _setClasses] = useState<Class[]>([]);
+    const [classes, setClasses] = useState<Class[]>([]);
     const [cloneClasses, setCloneClasses] = useState<Class[]>([]);
-    //get all classes
+
     const [isAddFormOpen, setIsAddFormOpen] = useState(false);
     const classService = new classAPIServices();
 
-    // useEffect(() => {
-    //     setCloneClasses(classes);
-    // }, [classes]);
-
-
-    // useEffect(() => {
-    //     setClasses(mockStudentsList);
-    // }, []);
     const [page, setPage] = useState(1);
     const [_selectedClass, setSelectedClass] = useState<Class | undefined>(undefined);
     const [sortBy, setSortBy] = useState("");
@@ -36,6 +28,10 @@ function ClassList() {
         return 7;
     }
 
+    useEffect(() => {
+        setCloneClasses(classes);
+    }, [classes]);
+
     const [amountItem, setAmountItem] = useState(0);
 
     useEffect(() => {
@@ -43,7 +39,7 @@ function ClassList() {
         const fetchClasses = async () => {
             try {
                 const data = await classService.getClasses();
-                _setClasses(data);
+                setClasses(data);
                 setCloneClasses(data);
             } catch (error) {
                 console.error("Failed to fetch classes", error);
@@ -80,7 +76,7 @@ function ClassList() {
     return (
         <>
             {/* {isAddFormOpen && <Register setIsHide={setIsAddFormOpen} />} */}
-            {isAddFormOpen && <ClassAdditionForm setIsAddFormOpen={setIsAddFormOpen} />}
+            {isAddFormOpen && <ClassAdditionForm setIsAddFormOpen={setIsAddFormOpen} setClasses={setClasses} classes={classes} />}
             <div className="board board--class">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
