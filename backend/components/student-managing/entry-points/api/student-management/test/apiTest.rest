@@ -2,7 +2,10 @@
 GET http://localhost:3000/students
 
 ### Get student by ID
-GET http://localhost:3000/students/id/22120413
+GET http://localhost:3000/students/id/S002
+
+### Get student by ID not found
+GET http://localhost:3000/students/id/22120415
 
 ### Get students by name
 GET http://localhost:3000/students/name?name=GROUP API TEST
@@ -16,13 +19,67 @@ Content-Type: application/json
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
   "gender": "Nam",
-  "faculty": "Khoa Luật",
-  "accademicYear": 2023,
+  "faculty": "L",
+  "academicYear": 2023,
   "program": "Dai Tra",
-  "address": "123 Đường ABC, Quận 1, TP.HCM",
-  "email": "group19apitest@example.com",
+  "permanentAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 1",
+    "ward": "Phường A",
+    "street": "123 Đường ABC"
+  },
+  "temporaryAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 3",
+    "ward": "Phường B",
+    "street": "456 Đường DEF"
+  },
+  "email": "group19apitest@student.edu.vn",
   "phone": "0123456789",
-  "status": "Đang học"
+  "status": "DH",
+  "identityDocument": {
+    "type": "NewIdentityCard",
+    "issuedDate": "2015-06-15T00:00:00Z",
+    "issuedPlace": "TP.HCM",
+    "expiredDate": "2026-06-15T00:00:00Z"
+  },
+  "nationality": "VN"
+}
+
+### Add existing student
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "id": "22120413",
+  "name": "GROUP API TEST",
+  "dob": "2025-03-12",
+  "gender": "Nam",
+  "faculty": "L",
+  "academicYear": 2023,
+  "program": "Dai Tra",
+  "permanentAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 1",
+    "ward": "Phường A",
+    "street": "123 Đường ABC"
+  },
+  "temporaryAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 3",
+    "ward": "Phường B",
+    "street": "456 Đường DEF"
+  },
+  "email": "group19apitest@student.edu.vn",
+  "phone": "0123456789",
+  "status": "DH",
+  "identityDocument": {
+    "type": "NewIdentityCard",
+    "issuedDate": "2015-06-15T00:00:00Z",
+    "issuedPlace": "TP.HCM",
+    "expiredDate": "2026-06-15T00:00:00Z"
+  },
+  "nationality": "VN"
 }
 
 ### Add new student with invalid email
@@ -30,17 +87,35 @@ POST http://localhost:3000/students
 Content-Type: application/json
 
 {
-  "id": "22120413",
+  "id": "22120414",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
   "gender": "Nam",
-  "faculty": "Khoa Luật",
-  "accademicYear": 2023,
+  "faculty": "L",
+  "academicYear": 2023,
   "program": "Dai Tra",
-  "address": "123 Đường ABC, Quận 1, TP.HCM",
-  "email": "group19apitestexample.com",
+  "permanentAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 1",
+    "ward": "Phường A",
+    "street": "123 Đường ABC"
+  },
+  "temporaryAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 3",
+    "ward": "Phường B",
+    "street": "456 Đường DEF"
+  },
+  "email": "group19apitest@example.com",
   "phone": "0123456789",
-  "status": "Đang học"
+  "status": "DH",
+  "identityDocument": {
+    "type": "NewIdentityCard",
+    "issuedDate": "2015-06-15T00:00:00Z",
+    "issuedPlace": "TP.HCM",
+    "expiredDate": "2026-06-15T00:00:00Z"
+  },
+  "nationality": "VN"
 }
 
 ### Add new student with invalid phone number
@@ -48,66 +123,35 @@ POST http://localhost:3000/students
 Content-Type: application/json
 
 {
-  "id": "22120413",
+  "id": "22120415",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
   "gender": "Nam",
-  "faculty": "Khoa Luật",
-  "accademicYear": 2023,
+  "faculty": "L",
+  "academicYear": 2023,
   "program": "Dai Tra",
-  "address": "123 Đường ABC, Quận 1, TP.HCM",
-  "email": "group19apitest@example.com",
-  "phone": "012345679",
-  "status": "Đang học"
-}
-
-
-### Update student's phone number
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "phone": "0987654321"
-}
-
-### Update student's phone number with invalid phone number
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "phone": "098765431"
-}
-
-### Update student's name
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "name": "GROUP API TEST UPDATED"
-}
-
-### Update student's name with invalid name
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "name": "GROUP19 API TEST UPDATED"
-}
-
-### Update student's email
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "email": "group19apitestupdated@example.com"
-}
-
-### Update student's email with invalid email
-PATCH http://localhost:3000/students/22120413
-Content-Type: application/json
-
-{
-    "email": "group19apitestupdatedexample.com"
+  "permanentAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 1",
+    "ward": "Phường A",
+    "street": "123 Đường ABC"
+  },
+  "temporaryAddress": {
+    "city": "TP.HCM",
+    "district": "Quận 3",
+    "ward": "Phường B",
+    "street": "456 Đường DEF"
+  },
+  "email": "group19apitest@student.edu.vn",
+  "phone": "012345689",
+  "status": "DH",
+  "identityDocument": {
+    "type": "NewIdentityCard",
+    "issuedDate": "2015-06-15T00:00:00Z",
+    "issuedPlace": "TP.HCM",
+    "expiredDate": "2026-06-15T00:00:00Z"
+  },
+  "nationality": "VN"
 }
 
 ### Delete student

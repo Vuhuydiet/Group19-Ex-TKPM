@@ -85,11 +85,11 @@ async function insertCoursesAndClasses() {
 async function insertAddresses() {
   await prisma.address.createMany({
     data: [
-      { id: '1', city: 'Ho Chi Minh City', district: 'District 1', ward: 'Ward 1', street: '123 Main Street' },
-      { id: '2', city: 'Ho Chi Minh City', district: 'District 3', ward: 'Ward 5', street: '456 Another Street' },
-      { id: '3', city: 'Ho Chi Minh City', district: 'District 5', ward: 'Ward 10', street: '789 Temporary Street' },
-      { id: '4', city: 'Ho Chi Minh City', district: 'District 3', ward: 'Ward 5', street: '456 Another Street' },
-      { id: '5', city: 'Ho Chi Minh City', district: 'District 5', ward: 'Ward 10', street: '789 Temporary Street' },
+      { id: 'ADDR001', city: 'Ho Chi Minh City', district: 'District 1', ward: 'Ward 1', street: '123 Main Street' },
+      { id: 'ADDR002', city: 'Ho Chi Minh City', district: 'District 3', ward: 'Ward 5', street: '456 Another Street' },
+      { id: 'ADDR003', city: 'Ho Chi Minh City', district: 'District 5', ward: 'Ward 10', street: '789 Temporary Street' },
+      { id: 'ADDR004', city: 'Ho Chi Minh City', district: 'District 3', ward: 'Ward 5', street: '456 Another Street' },
+      { id: 'ADDR005', city: 'Ho Chi Minh City', district: 'District 5', ward: 'Ward 10', street: '789 Temporary Street' },
     ],
   });
 }
@@ -108,10 +108,10 @@ async function insertIdentityDocuments() {
 async function insertStudents() {
   await prisma.student.createMany({
     data: [
-      { id: 'S001', name: 'Nguyen Quoc Tuong', dob: new Date('2004-01-01'), gender: 'Male', facultyId: 'L', academicYear: 2023, program: 'Bachelor of Law', permanentAddressId: '1', temporaryAddressId: null, email: 'nguyenquoctuong@student.edu.vn', phone: '0123456789', statusId: 'DH', identityDocumentId: 'ID001', nationality: 'Vietnamese' },
-      { id: 'S002', name: 'Tran Bao Tran', dob: new Date('2004-02-15'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: '2', temporaryAddressId: '3', email: 'tranthib@student.edu.vn', phone: '0987654321', statusId: 'DH', identityDocumentId: 'ID002', nationality: 'Vietnamese' },
-      { id: 'S003', name: 'Nguyen Truong Vu', dob: new Date('2004-03-25'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: '4', temporaryAddressId: '5', email: 'nguyentruongvu@student.edu.vn', phone: '0987654322', statusId: 'DH', identityDocumentId: 'ID003', nationality: 'Vietnamese' },
-      { id: 'S004', name: 'Tran Quang Tuyen', dob: new Date('2004-05-05'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: '2', temporaryAddressId: '3', email: 'tranquangtuyen@student.edu.vn', phone: '0987654323', statusId: 'DH', identityDocumentId: 'ID004', nationality: 'Vietnamese' },
+      { id: 'S001', name: 'Nguyen Quoc Tuong', dob: new Date('2004-01-01'), gender: 'Male', facultyId: 'L', academicYear: 2023, program: 'Bachelor of Law', permanentAddressId: 'ADDR001', temporaryAddressId: null, email: 'nguyenquoctuong@student.edu.vn', phone: '0123456789', statusId: 'DH', identityDocumentId: 'ID001', nationality: 'Vietnamese' },
+      { id: 'S002', name: 'Tran Bao Tran', dob: new Date('2004-02-15'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranthib@student.edu.vn', phone: '0987654321', statusId: 'DH', identityDocumentId: 'ID002', nationality: 'Vietnamese' },
+      { id: 'S003', name: 'Nguyen Truong Vu', dob: new Date('2004-03-25'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR004', temporaryAddressId: 'ADDR005', email: 'nguyentruongvu@student.edu.vn', phone: '0987654322', statusId: 'DH', identityDocumentId: 'ID003', nationality: 'Vietnamese' },
+      { id: 'S004', name: 'Tran Quang Tuyen', dob: new Date('2004-05-05'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranquangtuyen@student.edu.vn', phone: '0987654323', statusId: 'DH', identityDocumentId: 'ID004', nationality: 'Vietnamese' },
     ],
   });
 }

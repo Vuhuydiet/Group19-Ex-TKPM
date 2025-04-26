@@ -5,7 +5,7 @@ import IdentityDocument from "./IdentityDocument";
 export type Gender = 'Nam' | 'Nữ';
 
 export type Address = {
-  id: number;
+  id: string;
   city: string;
   district: string;
   ward: string;
