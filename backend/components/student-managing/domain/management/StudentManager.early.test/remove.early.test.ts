@@ -1,102 +1,113 @@
-import { StudentManager } from "../StudentManager";
+import { StudentManager } from '../StudentManager';
+import prisma from '../../../../../models';
 
-// Import necessary modules
-// MockStudent class to simulate the behavior of the Student class
-class MockStudent {
-  public id: string = "default-id";
-}
+// Mock the prisma client
+jest.mock('../../../../../models', () => ({
+  student: {
+    delete: jest.fn(),
+    findUnique: jest.fn(),
+  },
+}));
 
-// Test suite for the remove method in StudentManager
-describe("StudentManager.remove() remove method", () => {
+describe('StudentManager.remove() method', () => {
   let studentManager: StudentManager;
-  let mockStudent1: MockStudent;
-  let mockStudent2: MockStudent;
+  const mockStudentId = 'student-1';
 
   beforeEach(() => {
     studentManager = new StudentManager();
-    mockStudent1 = new MockStudent();
-    mockStudent2 = new MockStudent();
+    
+    // Reset mocks
+    jest.clearAllMocks();
+
+    // Setup default mock implementation
+    (prisma.student.delete as jest.Mock).mockResolvedValue({});
+    (prisma.student.findUnique as jest.Mock).mockResolvedValue({ id: mockStudentId });
   });
 
-  describe("Happy paths", () => {
-    it("should remove a student by id when the student exists", () => {
-      // Arrange
-      mockStudent1.id = "student-1";
-      mockStudent2.id = "student-2";
-      studentManager.students = [mockStudent1 as any, mockStudent2 as any];
-
+  describe('Happy path', () => {
+    it('should successfully remove a student by ID', async () => {
       // Act
-      studentManager.remove("student-1");
+      await studentManager.remove(mockStudentId);
 
       // Assert
-      expect(studentManager.students).toEqual([mockStudent2 as any]);
+      expect(prisma.student.delete).toHaveBeenCalledTimes(1);
+      expect(prisma.student.delete).toHaveBeenCalledWith({
+        where: { id: mockStudentId }
+      });
     });
 
-    it("should not remove any student if the id does not match", () => {
-      // Arrange
-      mockStudent1.id = "student-1";
-      mockStudent2.id = "student-2";
-      studentManager.students = [mockStudent1 as any, mockStudent2 as any];
-
+    it('should succeed even when called multiple times with the same ID', async () => {
       // Act
-      studentManager.remove("non-existent-id");
+      await studentManager.remove(mockStudentId);
+      await studentManager.remove(mockStudentId);
 
       // Assert
-      expect(studentManager.students).toEqual([
-        mockStudent1 as any,
-        mockStudent2 as any,
-      ]);
+      expect(prisma.student.delete).toHaveBeenCalledTimes(2);
+      expect(prisma.student.delete).toHaveBeenCalledWith({
+        where: { id: mockStudentId }
+      });
     });
   });
 
-  describe("Edge cases", () => {
-    it("should handle removing from an empty list gracefully", () => {
+  describe('Error handling', () => {
+    it('should throw an error when student doesn\'t exist', async () => {
       // Arrange
-      studentManager.students = [];
+      (prisma.student.delete as jest.Mock).mockRejectedValueOnce(
+        new Error('Student not found')
+      );
 
-      // Act
-      studentManager.remove("any-id");
-
-      // Assert
-      expect(studentManager.students).toEqual([]);
+      // Act & Assert
+      await expect(studentManager.remove('non-existent-id')).rejects.toThrow();
     });
 
-    it("should handle removing a student when there is only one student in the list", () => {
+    it('should throw an error when database operation fails', async () => {
       // Arrange
-      mockStudent1.id = "student-1";
-      studentManager.students = [mockStudent1 as any];
+      const errorMessage = 'Database connection error';
+      (prisma.student.delete as jest.Mock).mockRejectedValueOnce(
+        new Error(errorMessage)
+      );
 
-      // Act
-      studentManager.remove("student-1");
+      // Act & Assert
+      await expect(studentManager.remove(mockStudentId)).rejects.toThrow();
+    });
+  });
 
-      // Assert
-      expect(studentManager.students).toEqual([]);
+  describe('Edge cases', () => {
+    it('should throw an error when given an empty ID', async () => {
+      // Arrange
+      (prisma.student.delete as jest.Mock).mockRejectedValueOnce(
+        new Error('Invalid ID provided')
+      );
+
+      // Act & Assert
+      await expect(studentManager.remove('')).rejects.toThrow();
     });
 
-    it("should handle removing a student with an empty string as id", () => {
+    it('should handle special characters in student ID', async () => {
       // Arrange
-      mockStudent1.id = "";
-      mockStudent2.id = "student-2";
-      studentManager.students = [mockStudent1 as any, mockStudent2 as any];
-
+      const specialId = 'student@123#$';
+      
       // Act
-      studentManager.remove("");
-
+      await studentManager.remove(specialId);
+      
       // Assert
-      expect(studentManager.students).toEqual([mockStudent2 as any]);
+      expect(prisma.student.delete).toHaveBeenCalledWith({
+        where: { id: specialId }
+      });
     });
+  });
 
-    it("should handle removing a student with a null id", () => {
+  describe('Transaction integrity', () => {
+    it('should fail completely if deletion fails partially', async () => {
+      
       // Arrange
-      mockStudent1.id = null as any;
-      mockStudent2.id = "student-2";
-      studentManager.students = [mockStudent1 as any, mockStudent2 as any];
-
-      // Act
-      studentManager.remove(null as any);
-
-      // Assert
-      expect(studentManager.students).toEqual([mockStudent2 as any]);
+      (prisma.student.delete as jest.Mock).mockRejectedValueOnce(
+        new Error('Error during deletion')
+      );
+      
+      // Act & Assert
+      await expect(studentManager.remove(mockStudentId)).rejects.toThrow('Error during deletion');
+      
     });
   });
 });
