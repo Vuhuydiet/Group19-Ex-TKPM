@@ -1,0 +1,9 @@
+model Address {
+  id                  String    @id @default(cuid())
+  city                String
+  district            String
+  ward                String
+  street              String
+  permanentResidents  Student[] @relation("PermanentAddress")
+  temporaryResidents  Student[] @relation("TemporaryAddress")
+}

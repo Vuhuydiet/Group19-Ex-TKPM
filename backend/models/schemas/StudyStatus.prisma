@@ -5,6 +5,7 @@ model StudyStatus {
   createdAt                   DateTime                      @default(now())
   ValidStudyStatusTransition1 ValidStudyStatusTransition[] @relation("Relation1")
   ValidStudyStatusTransition2 ValidStudyStatusTransition[] @relation("Relation2")
+  students                    Student[]
 }
 
 model ValidStudyStatusTransition {

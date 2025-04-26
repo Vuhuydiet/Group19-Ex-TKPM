@@ -1,8 +1,8 @@
 model Faculty {
-  id          String      @id
-  name        String
+  id       String    @id
+  name     String
   description String?
-  createdAt   DateTime @default(now())
-
-  courses     Course[]
+  createdAt DateTime @default(now())
+  courses  Course[]
+  students Student[]
 }
