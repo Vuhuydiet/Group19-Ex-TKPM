@@ -1,13 +1,19 @@
 
   export default abstract class IdentityDocument {
+    private _id: string;
     private _type: string;
 
-    constructor(type: string) {
+    constructor(type: string, id: string) {
       this._type = type;
+      this._id = id;
     }
 
     get type(): string {
       return this._type;
+    }
+
+    get id(): string {
+      return this._id;
     }
 
     abstract toJSON(): object;
@@ -16,14 +22,12 @@
 
 
   export class OldIdentityCard extends IdentityDocument {
-    private _id: string;
     private _issuedDate: Date;
     private _issuedPlace: string;
     private _expiredDate: Date;
 
     constructor(id: string, issuedDate: Date, issuedPlace: string, expiredDate: Date) {
-      super("OldIdentityCard");
-      this._id = id;
+      super("OldIdentityCard", id);
       this._issuedDate = issuedDate;
       this._issuedPlace = issuedPlace;
       this._expiredDate = expiredDate;
@@ -33,7 +37,6 @@
       return {
         type: this.type,
         data: {
-          id: this._id,
           issuedDate: this._issuedDate,
           issuedPlace: this._issuedPlace,
           expiredDate: this._expiredDate
@@ -44,15 +47,13 @@
 
 
   export class NewIdentityCard extends IdentityDocument {
-    private _id: string;
     private _issuedDate: Date;
     private _issuedPlace: string;
     private _expiredDate: Date;
     private _hasChip: boolean;
 
     constructor(id: string, issueDate: Date, issuedPlace: string, expiredDate: Date, hasChip: boolean) {
-      super("NewIdentityCard");
-      this._id = id;
+      super("NewIdentityCard", id);
       this._issuedDate = issueDate;
       this._issuedPlace = issuedPlace;
       this._expiredDate = expiredDate;
@@ -63,7 +64,6 @@
       return {
         type: this.type,
         data: {
-          id: this._id,
           issuedDate: this._issuedDate,
           issuedPlace: this._issuedPlace,
           expiredDate: this._expiredDate,
@@ -82,8 +82,8 @@
     private _issuedCountry: string;
     private _note?: string;
 
-    constructor(passportNumber: string, issuedDate: Date, expiredDate: Date, issuedPlace: string, issuedCountry: string, note?: string) {
-      super("Passport");
+    constructor(id: string, passportNumber: string, issuedDate: Date, expiredDate: Date, issuedPlace: string, issuedCountry: string, note?: string) {
+      super("Passport", id);
       this._passportNumber = passportNumber;
       this._issuedDate = issuedDate;
       this._expiredDate = expiredDate;

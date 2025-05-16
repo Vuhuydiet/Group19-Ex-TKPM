@@ -38,15 +38,16 @@ export const checkEmailPattern = async (req: Request, _res: Response, next: Next
     next();
 }   
 
-export const checkPhoneNumberPattern = (req: Request, _res: Response, next: NextFunction): void => {
+export const checkPhoneNumberPattern = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
     if (req.method === 'PATCH' && !req.body.phone) {
         next();
     }
 
-    const [nationality, phone] = (() => {
+    const [nationality, phone] = await (async () => {
         if (req.method === 'PATCH') {
             const id = req.params.id;
-            const nationality = StudentManagementService.getStudentById(id)?.nationality;
+            const student = await StudentManagementService.getStudentById(id);
+            const nationality = student?.nationality;
             return [nationality, req.body.phone];
         }
         if (req.method === 'POST') {
@@ -73,8 +74,12 @@ export const checkStatusTransition = async (req: Request, _res: Response, next: 
     const { id } = req.params;
     const { status } = req.body;
 
-    const currentStatus = StudentManagementService.getStudentById(id)?.status;
+    const student = await StudentManagementService.getStudentById(id);
+    const currentStatus = student?.status;
 
+    if (!currentStatus) {
+        throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Current status is undefined');
+    }
     const nextStatusesIds = await StudyStatusService.getValidStudyStatusTransitions(currentStatus.id);
 
     if (!nextStatusesIds.includes(status)) {
