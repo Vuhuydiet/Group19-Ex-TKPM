@@ -19,6 +19,7 @@ const validate = (validations: ContextRunner[]) => {
 };
 
 const handleValidationErrors = (req: Request, _res: Response, next: NextFunction) => {
+  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     throw new BadRequestError(DomainCode.INVALID_INPUT_FIELD, 'Validation failed', errors.array());

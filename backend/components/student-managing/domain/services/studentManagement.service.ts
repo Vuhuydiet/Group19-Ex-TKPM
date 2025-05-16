@@ -24,7 +24,7 @@ export type StudentData = {
 
 export type StudentQuery = {
   name?: string,
-  faculty?: String,
+  faculty?: string,
 }
 
 export default class StudentManagementService {
@@ -34,7 +34,7 @@ export default class StudentManagementService {
   }
 
   public static async addStudent(studentData: StudentData) {
-    if (g_StudentManger.students.find(std => std.id === studentData.id))
+    if (await g_StudentManger.getStudentById(studentData.id) !== null)
       throw new BadRequestError(DomainCode.STUDENT_ALREADY_EXISTS, 'Student already exists');
 
     const faculty = await prisma.faculty.findUnique({
@@ -68,35 +68,25 @@ export default class StudentManagementService {
       studentData.nationality
     );
 
-    g_StudentManger.add(student);
+    await g_StudentManger.add(student);
 
     return student;
   }
 
-  public static removeStudent(id: string) {
-    g_StudentManger.remove(id);
+  public static async removeStudent(id: string) {
+    await g_StudentManger.remove(id);
   }
 
-  public static getStudentById(id: string) {
-    return g_StudentManger.getStudents((student) => {
-      return student.id == id;
-    })[0];
+  public static async getStudentById(id: string) {
+    return await g_StudentManger.getStudentById(id);
   }
 
-  public static getStudents(query: StudentQuery) {
-    return g_StudentManger.getStudents((student) => {
-      if (query.name && student.name.includes(query.name))
-        return true;
-      if (query.faculty && student.faculty.id === query.faculty)
-        return true;
-      if (!query.name && !query.faculty) 
-        return true;
-      return false;
-
-    });
+  public static async getStudents(query: StudentQuery) {
+    const students = await g_StudentManger.getStudents(query);
+    return students;
   }
 
-  public static updateStudent(id: string, info: Partial<Student>) {
-    g_StudentManger.update(id, info);
+  public static async updateStudent(id: string, info: Partial<Student>) {
+    await g_StudentManger.update(id, info);
   }
 }

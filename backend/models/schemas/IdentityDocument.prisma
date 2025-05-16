@@ -1,0 +1,13 @@
+model IdentityDocument {
+  id            String   @id @default(cuid())
+  type          String
+  issuedDate    DateTime
+  expiredDate   DateTime
+  issuedPlace   String
+  hasChip       Boolean? // For NewIdentityCard
+  passportNumber String? // For Passport
+  issuedCountry String?  // For Passport
+  note          String? 
+  student       Student?  @relation(fields: [studentId], references: [id], map: "IdentityDocument_Student_fkey")
+  studentId     String?   @unique
+}

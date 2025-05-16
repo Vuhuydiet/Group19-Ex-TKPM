@@ -25,25 +25,33 @@ class StudentManagerController {
         }).send(res);
     }
     
-    removeStudent(req: Request, res: Response): void {
+    async removeStudent(req: Request, res: Response): Promise<void> {
         const studentId = req.params.id;
-        StudentManagementService.removeStudent(studentId);
+        await StudentManagementService.removeStudent(studentId);
         new OKResponse({
             message: 'Student removed successfully'
         }).send(res);
     }
     
-    getStudents(req: Request, res: Response): void {
+    async getStudents(req: Request, res: Response): Promise<void> {
         const query: StudentQuery = req.body;
-        const students = StudentManagementService.getStudents(query);
+        const students = await StudentManagementService.getStudents(query);
         new OKResponse({
             metadata: students
         }).send(res);
     }
     
-    getStudentById(req: Request, res: Response): void {
+    async getStudentById(req: Request, res: Response): Promise<void> {
         const studentId = req.params.id;
-        const student = StudentManagementService.getStudentById(studentId);
+        const student = await StudentManagementService.getStudentById(studentId);
+        
+        if (!student) {
+            new OKResponse({
+                message: "Student not found",
+                metadata: null
+            }).send(res);
+            return;
+        }
 
         new OKResponse({
             message: "Student found",
@@ -51,9 +59,9 @@ class StudentManagerController {
         }).send(res);
     }
     
-    getStudentsByName(req: Request, res: Response): void {
+    async getStudentsByName(req: Request, res: Response): Promise<void> {
         const studentName = req.query.name as string;
-        const students = StudentManagementService.getStudents({name: studentName});
+        const students = await StudentManagementService.getStudents({name: studentName});
         
         new OKResponse({
             message: "Students found",
@@ -61,12 +69,12 @@ class StudentManagerController {
         }).send(res);
     }
     
-    updateStudent(req: Request, res: Response): void {
+    async updateStudent(req: Request, res: Response): Promise<void> {
         const studentInfo: Partial<Student> = req.body;
         const studentId = req.params.id;
-        StudentManagementService.updateStudent(studentId, studentInfo);
+        await StudentManagementService.updateStudent(studentId, studentInfo);
         
-        const student = StudentManagementService.getStudentById(studentId);
+        const student = await StudentManagementService.getStudentById(studentId);
         new OKResponse({
             message: 'Student updated successfully',
             metadata: student
