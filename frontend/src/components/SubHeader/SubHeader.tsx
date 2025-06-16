@@ -2,12 +2,23 @@ import './sub_header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faBell, faUser, faGear } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { changeTheme } from './SubHeader.actions';
+import { useTranslation } from 'react-i18next';
 
 // type Theme = Record<string, string>;
 
 function SubHeader() {
+    const { i18n } = useTranslation();
+
+    const changeLanguage = () => {
+        console.log('Current language:', i18n.language);
+        if (i18n.language === 'vi' || i18n.language === 'vi-VN') {
+            i18n.changeLanguage('en');
+        }
+        else if (i18n.language === 'en') {
+            i18n.changeLanguage('vi');
+        }
+    };
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     // const lightTheme: Theme = {
@@ -50,15 +61,11 @@ function SubHeader() {
                 <div className="subheader__feature">
                     <FontAwesomeIcon icon={faBell} className='icon__feature' />
                 </div>
-                <div className="subheader__feature">
-                    <Link to='/'>
-                        <FontAwesomeIcon icon={faGear} className='icon__feature' />
-                    </Link>
+                <div onClick={changeLanguage} className="subheader__feature">
+                    <FontAwesomeIcon icon={faGear} className='icon__feature' />
                 </div>
                 <div className="subheader__feature">
-                    <Link to='/'>
-                        <FontAwesomeIcon icon={faUser} className='icon__feature' />
-                    </Link>
+                    <FontAwesomeIcon icon={faUser} className='icon__feature' />
                 </div>
             </div>
         </div>
