@@ -1,6 +1,6 @@
 import './sub_header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faBell, faUser, faGear } from '@fortawesome/free-solid-svg-icons'
+import { faSun, faBell, faUser, faRepeat } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react';
 import { changeTheme } from './SubHeader.actions';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 // type Theme = Record<string, string>;
 
 function SubHeader() {
-    const { i18n } = useTranslation();
+
+    const { t, i18n } = useTranslation();
 
     const changeLanguage = () => {
         console.log('Current language:', i18n.language);
@@ -52,7 +53,7 @@ function SubHeader() {
     return (
         <div className="subheader">
             <div className="subheader__title">
-                <span>Dashboard</span>
+                <span>{t('mainTitle')}</span>
             </div>
             <div className="subheader__features">
                 <div onClick={toggleTheme} className="subheader__feature">
@@ -62,7 +63,7 @@ function SubHeader() {
                     <FontAwesomeIcon icon={faBell} className='icon__feature' />
                 </div>
                 <div onClick={changeLanguage} className="subheader__feature">
-                    <FontAwesomeIcon icon={faGear} className='icon__feature' />
+                    <FontAwesomeIcon icon={faRepeat} className='icon__feature' />
                 </div>
                 <div className="subheader__feature">
                     <FontAwesomeIcon icon={faUser} className='icon__feature' />

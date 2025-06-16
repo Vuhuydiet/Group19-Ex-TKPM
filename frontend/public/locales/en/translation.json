@@ -1,4 +1,24 @@
 {
-    "welcome": "Welcome to my app",
-    "changeLanguage": "Change language"
+    "welcome": "Welcome!",
+    "subWelcome1": "Remember, every small step brings you closer to success!",
+    "subWelcome2": "Believe in yourself — great things await today!",
+    "mainTitle": "Dashboard",
+    "sidebar": {
+        "home": "Home",
+        "management": "Management",
+        "settings": "Settings",
+        "student": "Student",
+        "category": "Category",
+        "course": "Course",
+        "class": "Class",
+        "classRegistration": "Registration",
+        "logout": "Logout"
+    },
+    "sidebarHeading": {
+        "dashboard": "Dashboard",
+        "tool": "Tool",
+        "managementTool": "Management Tool",
+        "otherTool": "Other Tool",
+        "systemSettings": "System Settings"
+    }
 }

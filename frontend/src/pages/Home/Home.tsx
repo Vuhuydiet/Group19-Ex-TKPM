@@ -20,8 +20,8 @@ function Home() {
                 <div className="home__right">
                     <div className="home__text">
                         <h1>{t('welcome')}</h1>
-                        <h5>Remember, every small step brings you closer to success!</h5>
-                        <p>Believe in yourself—great things await today!</p>
+                        <h5>{t('subWelcome1')}</h5>
+                        <p>{t('subWelcome2')}</p>
                     </div>
                 </div>
             </div>
