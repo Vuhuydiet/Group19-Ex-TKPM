@@ -1,9 +1,10 @@
 import axios from "axios";
+import { removeEmptyFields } from "../utils/RemoveEmptyFieldHelper";
 
 const API_BASE_URL = "http://localhost:3000/faculties"; // Thay đổi URL nếu cần
 
 export interface Faculty {
-    id: string; 
+    id: string;
     name: string;
     description: string;
     createdAt: string;
@@ -18,7 +19,7 @@ export class FacultyAPIServices {
         const response = await axios.get(API_BASE_URL);
         return response.data.metadata.faculties;
     }
-   
+
     getFacultyById = async (id: string): Promise<Faculty | null> => {
         const response = await axios.get(`${API_BASE_URL}/${id}`);
         return response.data.metadata;
@@ -30,7 +31,8 @@ export class FacultyAPIServices {
     }
 
     updateFaculty = async (id: string, faculty: Faculty): Promise<Faculty> => {
-        const response = await axios.patch(`${API_BASE_URL}/${id}`, faculty);
+        const cleanedFaculty = removeEmptyFields(faculty);
+        const response = await axios.patch(`${API_BASE_URL}/${id}`, cleanedFaculty);
         return response.data.metadata;
     }
 

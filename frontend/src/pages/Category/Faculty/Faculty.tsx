@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
-import { Faculty } from "../../../services/facultyAPIServices";
+import { Faculty, FacultyAPIServices } from "../../../services/facultyAPIServices";
 import * as e from "express";
 
 const FacultyComponent = () => {
@@ -64,8 +64,6 @@ const FacultyComponent = () => {
         setFaculty(category.faculty);
     }, []);
 
-
-
     function increasePage() {
         if (page < Math.ceil(faculty.length / amountItem)) {
             setPage(page + 1);
@@ -93,7 +91,7 @@ const FacultyComponent = () => {
         });
     }
 
-    function handleAddFaculty() {
+    async function handleAddFaculty() {
         if (newFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
@@ -101,6 +99,14 @@ const FacultyComponent = () => {
 
         if (faculty.includes(newFaculty)) {
             notify({ type: "warning", msg: "Faculty name already exists" });
+            return;
+        }
+
+        const facultyAPIServices = new FacultyAPIServices();
+        const result = await facultyAPIServices.addFaculty(newFaculty);
+
+        if (result === null) {
+            notify({ type: "error", msg: "Add faculty failed" });
             return;
         }
 
@@ -116,7 +122,7 @@ const FacultyComponent = () => {
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
-    function handleUpdateFaculty() {
+    async function handleUpdateFaculty() {
         if (editNewFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
@@ -132,10 +138,27 @@ const FacultyComponent = () => {
             return;
         }
 
-        const index = faculty.indexOf(editFaculty);
-        faculty[index] = editNewFaculty;
-        setFaculty([...faculty]);
-        setCategory({ ...category, faculty: [...faculty] });
+        const facultyAPIServices = new FacultyAPIServices();
+        console.log(editFaculty.id, editNewFaculty);
+        const result = await facultyAPIServices.updateFaculty(editFaculty.id, editNewFaculty);
+
+        console.log(result);
+
+        if (result === null) {
+            notify({ type: "error", msg: "Update faculty failed" });
+            return;
+        }
+
+
+
+        const result1 = await facultyAPIServices.getFaculties();
+        if (result1 === null) {
+            notify({ type: "error", msg: "Get faculties failed" });
+            return;
+        }
+
+        setFaculty(result1);
+        setCategory({ ...category, faculty: [...result1] });
         setEditFaculty({
             id: "",
             name: "",
@@ -152,11 +175,23 @@ const FacultyComponent = () => {
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
-    function handleDeleteFaculty() {
-        const index = faculty.indexOf(editFaculty);
-        faculty.splice(index, 1);
-        setFaculty([...faculty]);
-        setCategory({ ...category, faculty: [...faculty] });
+    async function handleDeleteFaculty() {
+        const facultyAPIServices = new FacultyAPIServices();
+        const result = await facultyAPIServices.deleteFaculty(editFaculty.id);
+
+        if (result === null) {
+            notify({ type: "error", msg: "Delete faculty failed" });
+            return;
+        }
+
+        const result1 = await facultyAPIServices.getFaculties();
+        if (result1 === null) {
+            notify({ type: "error", msg: "Get faculties failed" });
+            return;
+        }
+
+        setFaculty([...result1]);
+        setCategory({ ...category, faculty: [...result1] });
         setEditFaculty({
             id: "",
             name: "",
@@ -200,7 +235,7 @@ const FacultyComponent = () => {
                                     <input
                                         type="text"
                                         value={editNewFaculty.name}
-                                        onChange={(e) => setEditNewFaculty({...editNewFaculty, name: e.target.value})}
+                                        onChange={(e) => setEditNewFaculty({ ...editNewFaculty, name: e.target.value })}
                                         placeholder="Enter new faculty name"
                                     />
                                 </div>
@@ -229,7 +264,7 @@ const FacultyComponent = () => {
                                 <input
                                     type="text"
                                     value={newFaculty.id}
-                                    onChange={(e) => setNewFaculty({...newFaculty, id: e.target.value})}
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, id: e.target.value })}
                                     placeholder="Enter faculty id"
                                 />
                             </div>
@@ -238,7 +273,7 @@ const FacultyComponent = () => {
                                 <input
                                     type="text"
                                     value={newFaculty.name}
-                                    onChange={(e) => setNewFaculty({...newFaculty, name: e.target.value})}
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
                                     placeholder="Enter faculty name"
                                 />
                             </div>
@@ -247,7 +282,7 @@ const FacultyComponent = () => {
                                 <input
                                     type="text"
                                     value={newFaculty.name}
-                                    onChange={(e) => setNewFaculty({...newFaculty, description: e.target.value})}
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, description: e.target.value })}
                                     placeholder="Enter faculty description"
                                 />
                             </div>
