@@ -1,4 +1,5 @@
 import axios from "axios";
+import { removeEmptyFields } from "../utils/RemoveEmptyFieldHelper";
 
 const API_BASE_URL = "http://localhost:3000/study-status"; // Thay đổi URL nếu cần
 
@@ -26,12 +27,14 @@ export class StudyStatusAPIServices {
     }
 
     addStudyStatus = async (studyStatus: StudyStatus): Promise<StudyStatus> => {
-        const response = await axios.post(API_BASE_URL, studyStatus);
+        const cleanedStatus = removeEmptyFields(studyStatus);
+        const response = await axios.post(API_BASE_URL, cleanedStatus);
         return response.data.metadata.studyStatus;
     }
 
     updateStudyStatus = async (id: string, studyStatus: StudyStatus): Promise<StudyStatus> => {
-        const response = await axios.patch(`${API_BASE_URL}/${id}`, studyStatus);
+        const cleanedStudyStatus = removeEmptyFields(studyStatus);
+        const response = await axios.patch(`${API_BASE_URL}/${id}`, cleanedStudyStatus);
         return response.data.metadata.studyStatus;
     }
 

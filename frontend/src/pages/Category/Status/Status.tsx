@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
-import { StudyStatus } from "../../../services/studentStatusAPIServices";
+import { StudyStatus, StudyStatusAPIServices } from "../../../services/studentStatusAPIServices";
 
 const Status = () => {
     const { notify } = useNotification();
@@ -35,10 +35,10 @@ const Status = () => {
 
     function calculateItemsPerPage() {
         const screenHeight = window.innerHeight;
-        if (screenHeight >= 900) return 7;
-        if (screenHeight >= 750) return 6;
-        if (screenHeight >= 600) return 5;
-        return 4;
+        if (screenHeight >= 900) return 8;
+        if (screenHeight >= 750) return 7;
+        if (screenHeight >= 600) return 6;
+        return 5;
     }
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const Status = () => {
         });
     }
 
-    function handleAddStatus() {
+    async function handleAddStatus() {
         if (newStatus.name === "") {
             notify({ type: "error", msg: "status name cannot be empty" });
             return;
@@ -103,8 +103,22 @@ const Status = () => {
             return;
         }
 
-        setStatus([...status, newStatus]);
-        setCategory({ ...category, status: [...status, newStatus] });
+        const studyStatusAPIServices = new StudyStatusAPIServices();
+        const result = await studyStatusAPIServices.addStudyStatus(newStatus);
+
+        if (!result) {
+            notify({ type: "error", msg: "Failed to add status" });
+            return;
+        }
+
+        const result1 = await studyStatusAPIServices.getStudyStatuses();
+        if (!result1) {
+            notify({ type: "error", msg: "Failed to fetch updated status list" });
+            return;
+        }
+
+        setStatus([...result1]);
+        setCategory({ ...category, status: [...result1] });
         setNewStatus({
             id: "",
             name: "",
@@ -115,7 +129,7 @@ const Status = () => {
         notify({ type: "success", msg: "Update status successfully" });
     }
 
-    function handleUpdateStatus() {
+    async function handleUpdateStatus() {
         if (editNewStatus.name === "") {
             notify({ type: "error", msg: "status name cannot be empty" });
             return;
@@ -131,10 +145,20 @@ const Status = () => {
             return;
         }
 
-        const index = status.indexOf(editStatus);
-        status[index] = editNewStatus;
-        setStatus([...status]);
-        setCategory({ ...category, status: [...status] });
+        const studyStatusAPIServices = new StudyStatusAPIServices();
+        const result = await studyStatusAPIServices.updateStudyStatus(editStatus.id, editNewStatus);
+        if (!result) {
+            notify({ type: "error", msg: "Failed to update status" });
+            return;
+        }
+        const result1 = await studyStatusAPIServices.getStudyStatuses();
+        if (!result1) {
+            notify({ type: "error", msg: "Failed to fetch updated status list" });
+            return;
+        }
+
+        setStatus([...result1]);
+        setCategory({ ...category, status: [...result1] });
         setEditStatus({
             id: "",
             name: "",
@@ -236,7 +260,7 @@ const Status = () => {
                                 <input
                                     type="text"
                                     value={newStatus.id}
-                                    onChange={(e) => setNewStatus({...newStatus, id: e.target.value })}
+                                    onChange={(e) => setNewStatus({ ...newStatus, id: e.target.value })}
                                     placeholder="Enter status name"
                                 />
                             </div>
@@ -245,7 +269,7 @@ const Status = () => {
                                 <input
                                     type="text"
                                     value={newStatus.name}
-                                    onChange={(e) => setNewStatus({...newStatus, name: e.target.value })}
+                                    onChange={(e) => setNewStatus({ ...newStatus, name: e.target.value })}
                                     placeholder="Enter status name"
                                 />
                             </div>
@@ -253,8 +277,8 @@ const Status = () => {
                                 <span>Description status</span>
                                 <input
                                     type="text"
-                                    value={newStatus.name}
-                                    onChange={(e) => setNewStatus({...newStatus, description: e.target.value })}
+                                    value={newStatus.description || ""}
+                                    onChange={(e) => setNewStatus({ ...newStatus, description: e.target.value })}
                                     placeholder="Enter status name"
                                 />
                             </div>
@@ -273,11 +297,11 @@ const Status = () => {
                     <div className="table">
                         <div className="table__header">
                             <div className="table__field">
-                                <span>STT</span>
+                                <span>ID</span>
                             </div>
 
                             <div className="table__field">
-                                <span>status</span>
+                                <span>Status</span>
                             </div>
                         </div>
 
@@ -291,7 +315,7 @@ const Status = () => {
                                     }
                                     className="table__row" key={index}>
                                     <div className="table__field">
-                                        <span>{item.name}</span>
+                                        <span>{item.id}</span>
                                     </div>
 
                                     <div className="table__field">
