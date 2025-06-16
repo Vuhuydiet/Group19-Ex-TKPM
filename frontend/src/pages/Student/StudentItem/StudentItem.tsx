@@ -7,6 +7,7 @@ import { useNotification } from '../../../contexts/NotificationProvider';
 import { useCategory } from '../../../contexts/CategoryProvider';
 import StudentAddress from '../Form/StudentAddress/StudentAddress';
 import StudentIdentity from '../Form/StudentIdentity/StudentIdentity';
+import { dateFormatterInput } from '../../../utils/DateFormater';
 // import { set } from 'lodash';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
@@ -157,7 +158,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 <div className="studentitem__info__item">
                                     <span>DOB</span>
                                     <input
-                                        value={studentInfo.dob}
+                                        value={studentInfo.dob ? dateFormatterInput(studentInfo.dob) : ""}
                                         type="date"
                                         onChange={(e) => setStudentInfo({ ...studentInfo, dob: e.target.value })}
                                         disabled={!isEdit} />
