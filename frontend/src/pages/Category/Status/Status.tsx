@@ -10,7 +10,6 @@ const Status = () => {
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
-    const [status, setStatus] = useState<StudyStatus[]>([]);
     const [newStatus, setNewStatus] = useState<StudyStatus>({
         id: "",
         name: "",
@@ -59,14 +58,9 @@ const Status = () => {
     }, []);
 
 
-    useEffect(() => {
-        setStatus(category.status);
-    }, []);
-
-
 
     function increasePage() {
-        if (page < Math.ceil(status.length / amountItem)) {
+        if (page < Math.ceil(category.status.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -98,7 +92,7 @@ const Status = () => {
             return;
         }
 
-        if (status.includes(newStatus)) {
+        if (category.status.includes(newStatus)) {
             notify({ type: "warning", msg: "status name already exists" });
             return;
         }
@@ -117,7 +111,6 @@ const Status = () => {
             return;
         }
 
-        setStatus([...result1]);
         setCategory({ ...category, status: [...result1] });
         setNewStatus({
             id: "",
@@ -135,7 +128,7 @@ const Status = () => {
             return;
         }
 
-        if (status.includes(editNewStatus)) {
+        if (category.status.includes(editNewStatus)) {
             notify({ type: "warning", msg: "status name already exists" });
             return;
         }
@@ -157,7 +150,6 @@ const Status = () => {
             return;
         }
 
-        setStatus([...result1]);
         setCategory({ ...category, status: [...result1] });
         setEditStatus({
             id: "",
@@ -176,24 +168,24 @@ const Status = () => {
     }
 
     function handleDeleteStatus() {
-        const index = status.indexOf(editStatus);
-        status.splice(index, 1);
-        setStatus([...status]);
-        setCategory({ ...category, status: [...status] });
-        setEditStatus({
-            id: "",
-            name: "",
-            description: null,
-            createdAt: ""
-        });
-        setEditNewStatus({
-            id: "",
-            name: "",
-            description: null,
-            createdAt: ""
-        });
+        // const index = status.indexOf(editStatus);
+        // status.splice(index, 1);
+        // setStatus([...status]);
+        // setCategory({ ...category, status: [...status] });
+        // setEditStatus({
+        //     id: "",
+        //     name: "",
+        //     description: null,
+        //     createdAt: ""
+        // });
+        // setEditNewStatus({
+        //     id: "",
+        //     name: "",
+        //     description: null,
+        //     createdAt: ""
+        // });
 
-        notify({ type: "success", msg: "Delete status successfully" });
+        // notify({ type: "success", msg: "Delete status successfully" });
 
     }
 
@@ -306,7 +298,7 @@ const Status = () => {
                         </div>
 
                         <div className="table__body">
-                            {status && status.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
+                            {category.status && category.status.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
                                 <button
                                     onClick={() => {
                                         setEditStatus(item);

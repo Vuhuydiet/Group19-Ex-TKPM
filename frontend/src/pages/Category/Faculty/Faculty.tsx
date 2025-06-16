@@ -11,7 +11,6 @@ const FacultyComponent = () => {
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
-    const [faculty, setFaculty] = useState<Faculty[]>([]);
     const [newFaculty, setNewFaculty] = useState<Faculty>({
         id: "",
         name: "",
@@ -60,12 +59,9 @@ const FacultyComponent = () => {
     }, []);
 
 
-    useEffect(() => {
-        setFaculty(category.faculty);
-    }, []);
 
     function increasePage() {
-        if (page < Math.ceil(faculty.length / amountItem)) {
+        if (page < Math.ceil(category.faculty.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -97,7 +93,7 @@ const FacultyComponent = () => {
             return;
         }
 
-        if (faculty.includes(newFaculty)) {
+        if (category.faculty.includes(newFaculty)) {
             notify({ type: "warning", msg: "Faculty name already exists" });
             return;
         }
@@ -110,8 +106,7 @@ const FacultyComponent = () => {
             return;
         }
 
-        setFaculty([...faculty, newFaculty]);
-        setCategory({ ...category, faculty: [...faculty, newFaculty] });
+        setCategory({ ...category, faculty: [...category.faculty, newFaculty] });
         setNewFaculty({
             id: "",
             name: "",
@@ -128,7 +123,7 @@ const FacultyComponent = () => {
             return;
         }
 
-        if (faculty.includes(editNewFaculty)) {
+        if (category.faculty.includes(editNewFaculty)) {
             notify({ type: "warning", msg: "Faculty name already exists" });
             return;
         }
@@ -157,7 +152,7 @@ const FacultyComponent = () => {
             return;
         }
 
-        setFaculty(result1);
+
         setCategory({ ...category, faculty: [...result1] });
         setEditFaculty({
             id: "",
@@ -176,36 +171,36 @@ const FacultyComponent = () => {
     }
 
     async function handleDeleteFaculty() {
-        const facultyAPIServices = new FacultyAPIServices();
-        const result = await facultyAPIServices.deleteFaculty(editFaculty.id);
+        // const facultyAPIServices = new FacultyAPIServices();
+        // const result = await facultyAPIServices.deleteFaculty(editFaculty.id);
 
-        if (result === null) {
-            notify({ type: "error", msg: "Delete faculty failed" });
-            return;
-        }
+        // if (result === null) {
+        //     notify({ type: "error", msg: "Delete faculty failed" });
+        //     return;
+        // }
 
-        const result1 = await facultyAPIServices.getFaculties();
-        if (result1 === null) {
-            notify({ type: "error", msg: "Get faculties failed" });
-            return;
-        }
+        // const result1 = await facultyAPIServices.getFaculties();
+        // if (result1 === null) {
+        //     notify({ type: "error", msg: "Get faculties failed" });
+        //     return;
+        // }
 
-        setFaculty([...result1]);
-        setCategory({ ...category, faculty: [...result1] });
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-        setEditNewFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
 
-        notify({ type: "success", msg: "Delete faculty successfully" });
+        // setCategory({ ...category, faculty: [...result1] });
+        // setEditFaculty({
+        //     id: "",
+        //     name: "",
+        //     description: "",
+        //     createdAt: "",
+        // });
+        // setEditNewFaculty({
+        //     id: "",
+        //     name: "",
+        //     description: "",
+        //     createdAt: "",
+        // });
+
+        // notify({ type: "success", msg: "Delete faculty successfully" });
 
     }
 
@@ -310,7 +305,7 @@ const FacultyComponent = () => {
                         </div>
 
                         <div className="table__body">
-                            {faculty && faculty.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
+                            {category.faculty && category.faculty.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
                                 <button
                                     onClick={() => {
 
@@ -332,7 +327,7 @@ const FacultyComponent = () => {
 
                         <div className="table__footer">
                             <div className="table__left">
-                                <span>Total: {faculty && faculty.length}</span>
+                                <span>Total: {category.faculty && category.faculty.length}</span>
                             </div>
 
                             <div className="table__right">
