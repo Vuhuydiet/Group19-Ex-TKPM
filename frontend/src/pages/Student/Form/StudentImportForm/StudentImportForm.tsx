@@ -159,18 +159,23 @@ function StudentImportForm() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("https://restcountries.com/v3.1/all");
-                const data = await response.json();
+                const res = await fetch("/mock/countries.json");
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
 
-                setCountries(
-                    data
-                        .map((country: any) => ({
-                            name: country.name.common,
-                            code: country.cca2
-                        }))
-                        .sort((a: Country, b: Country) => a.name.localeCompare(b.name)) // Sắp xếp theo tên
-                );
+                const data = await res.json();
 
+                if (!Array.isArray(data)) {
+                    throw new Error("Response is not an array");
+                }
+
+                const countryList = data.map((country) => ({
+                    name: country.name,
+                    code: country.code,
+                }));
+
+                setCountries(countryList);
             } catch (error) {
                 console.error("Fetch data error", error);
             }

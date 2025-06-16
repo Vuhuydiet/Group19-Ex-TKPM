@@ -38,23 +38,18 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
     async function handleSave() {
         if (studentInfo.id === "" || studentInfo.name === "" || studentInfo.dob === "" || studentInfo.email === "" || studentInfo.phone === "") {
-            // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
         }
 
         try {
-            // Bỏ thuộc tính id trước khi gửi request (do bên BE không có setter cho ID -> không thể update ID) //ducnhat24
             const { id, ...studentData } = studentInfo;
-            // const response = await updateStudent(studentInfo.id, studentInfo);
             const studentAPIServices = new StudentAPIServices();
             const response = await studentAPIServices.updateStudent(studentInfo.id, studentData);
-            // const response = await updateStudent(studentInfo.id, studentData);
             notify({ type: "success", msg: "Student updated successfully" });
             setStudents(students.map((student: Student) => student.id === response.id ? response : student));
             setSelectedStudent(undefined);
         } catch {
-            // notify("Update student failed", "error");
             notify({ type: "error", msg: "Update student failed" });
         }
     }
@@ -63,10 +58,10 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
         if (!window.confirm("Are you sure you want to delete this student?")) return;
 
         try {
-            
+
             const studentAPIServices = new StudentAPIServices();
             await studentAPIServices.removeStudent(studentInfo.id);
-            
+
             // await removeStudent(studentInfo.id); // Gọi API xóa sinh viên
 
             // Cập nhật danh sách sinh viên sau khi xóa
@@ -120,7 +115,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: Number(e.target.value) })}
                                         disabled={!isEdit} />
                                 </div>
-{/* 
+                                {/* 
                                 <button
                                     onClick={() => {
                                         if (!isEdit) {
@@ -137,15 +132,21 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         setIsHideIdentity(false);
                                     }}
                                 >
-                                    {studentInfo.identityDocument.type === "" 
-                                        ? "Choose student's identity" 
-                                        : `${studentInfo.identityDocument.type} - ${
-                                            studentInfo.identityDocument.data 
-                                            ? ('id' in studentInfo.identityDocument.data 
-                                                ? studentInfo.identityDocument.data.id 
-                                                : studentInfo.identityDocument.data.passportNumber)
-                                            : ""
-                                        }`}
+                                    {
+                                        studentInfo.identityDocument
+                                            ? (
+                                                studentInfo.identityDocument.type === ""
+                                                    ? "Choose student's identity"
+                                                    : `${studentInfo.identityDocument.type} - ${studentInfo.identityDocument.data
+                                                        ? ('id' in studentInfo.identityDocument.data
+                                                            ? studentInfo.identityDocument.data.id
+                                                            : studentInfo.identityDocument.data.passportNumber)
+                                                        : ""
+                                                    }`
+                                            )
+                                            : "Choose student's identity"
+                                    }
+
                                 </button>
 
                             </div>
@@ -205,10 +206,12 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                                 setIsHideTemporaryAddress(false);
                                             }
                                         }
-                                    >{studentInfo.temporaryAddress.city !== "" ? (studentInfo.temporaryAddress.street +
-                                        ', ' + studentInfo.temporaryAddress.ward +
-                                        ',' + studentInfo.temporaryAddress.district +
-                                        ',' + studentInfo.temporaryAddress.city) : "None"}</button>
+                                    >{
+                                            studentInfo.temporaryAddress && studentInfo.temporaryAddress.city !== ""
+                                                ? `${studentInfo.temporaryAddress.street}, ${studentInfo.temporaryAddress.ward}, ${studentInfo.temporaryAddress.district}, ${studentInfo.temporaryAddress.city}`
+                                                : "None"
+                                        }
+                                    </button>
                                 </div>
 
                                 <div className="studentitem__info__item">

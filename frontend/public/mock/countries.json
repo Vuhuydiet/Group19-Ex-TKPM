@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Vietnam",
+        "code": "VN"
+    },
+    {
+        "name": "United States",
+        "code": "US"
+    },
+    {
+        "name": "France",
+        "code": "FR"
+    },
+    {
+        "name": "Japan",
+        "code": "JP"
+    },
+    {
+        "name": "South Korea",
+        "code": "KR"
+    },
+    {
+        "name": "Germany",
+        "code": "DE"
+    },
+    {
+        "name": "United Kingdom",
+        "code": "GB"
+    },
+    {
+        "name": "Canada",
+        "code": "CA"
+    },
+    {
+        "name": "Australia",
+        "code": "AU"
+    },
+    {
+        "name": "Thailand",
+        "code": "TH"
+    }
+]
