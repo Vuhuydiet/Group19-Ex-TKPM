@@ -1,7 +1,7 @@
 {
     "welcome": "Welcome!",
     "subWelcome1": "Remember, every small step brings you closer to success!",
-    "subWelcome2": "Believe in yourself—great things await you today!",
+    "subWelcome2": "Believe in yourself — great things await you today!",
     "mainTitle": "Dashboard",
     "sidebar": {
         "home": "Home",
@@ -91,19 +91,19 @@
         "chooseIdentityDocument": "Choose identity document type",
         "total": "Total",
         "none": "None",
-        "prerequisiteSelector": "Prerequisite course",
-        "prerequisitePDescription": "Select prerequisite course",
+        "prerequisiteSelector": "Prerequisite Courses",
+        "prerequisitePDescription": "Choose prerequisite courses",
         "courseEnrollment": "Course Enrollment",
         "permanentAddress": "Permanent Address",
         "temporaryAddress": "Temporary Address",
-        "permanentAddressDescription": "Enter student’s permanent address",
-        "temporaryAddressDescription": "Enter student’s temporary address"
+        "permanentAddressDescription": "Enter student's permanent address",
+        "temporaryAddressDescription": "Enter student's temporary address"
     },
     "management": {
         "studentManagement": "Student Management",
         "faculty": {
             "facultyManagement": "Faculty Management",
-            "facultyManagementDescription1": "Edit existing faculty",
+            "facultyManagementDescription1": "Edit existing faculties",
             "facultyManagementDescription2": "Add new faculty",
             "facultyName": "Faculty Name",
             "facultyId": "Faculty ID",
@@ -119,7 +119,7 @@
         },
         "studyStatus": {
             "studyStatusManagement": "Study Status Management",
-            "studyStatusManagementDescription1": "Edit existing status",
+            "studyStatusManagementDescription1": "Edit existing statuses",
             "studyStatusManagementDescription2": "Add new status",
             "studyStatusName": "Status Name",
             "studyStatusId": "Status ID",
@@ -135,7 +135,7 @@
         },
         "program": {
             "programManagement": "Program Management",
-            "programManagementDescription1": "Edit existing program",
+            "programManagementDescription1": "Edit existing programs",
             "programManagementDescription2": "Add new program",
             "programName": "Program Name",
             "programId": "Program ID",
@@ -162,12 +162,12 @@
             "courseDescription": "Course Description",
             "courseCredits": "Credits",
             "courseFaculty": "Faculty",
-            "coursePrerequisite": "Prerequisite Course",
+            "coursePrerequisite": "Prerequisite",
             "courseIdPlaceholder": "Enter course ID",
             "courseNamePlaceholder": "Enter course name",
             "courseDescriptionPlaceholder": "Enter course description",
             "courseCreditsPlaceholder": "Enter course credits",
-            "courseFacultyPlaceholder": "Select faculty",
+            "courseFacultyPlaceholder": "Select responsible faculty",
             "coursePrerequisitePlaceholder": "Select prerequisite course"
         },
         "class": {
@@ -234,5 +234,35 @@
             "courseCoursePlaceholder": "Select course",
             "courseClassPlaceholder": "Select class"
         }
+    },
+    "address": {
+        "city": "City",
+        "district": "District",
+        "ward": "Ward",
+        "street": "Street",
+        "cityPlaceholder": "Select city",
+        "districtPlaceholder": "Select district",
+        "wardPlaceholder": "Select ward",
+        "streetPlaceholder": "Enter street name"
+    },
+    "identity": {
+        "identityDocument": "Identity Document",
+        "identityDocumentDescription": "Choose student’s identity document type",
+        "oldIdentityDocument": "ID Card",
+        "newIdentityDocument": "Citizen ID",
+        "passport": "Passport",
+        "id": "ID",
+        "issuedDate": "Issued Date",
+        "issuedPlace": "Issued Place",
+        "expiredDate": "Expiry Date",
+        "hasChip": "Has Chip",
+        "issuedCountry": "Issued Country",
+        "note": "Note",
+        "idPlaceholder": "Enter document ID",
+        "issuedDatePlaceholder": "Select issued date",
+        "issuedPlacePlaceholder": "Enter issued place",
+        "expiredDatePlaceholder": "Select expiry date",
+        "issuedCountryPlaceholder": "Select issued country",
+        "notePlaceholder": "Enter note"
     }
 }

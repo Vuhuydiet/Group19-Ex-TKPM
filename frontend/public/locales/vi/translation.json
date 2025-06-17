@@ -234,5 +234,35 @@
             "courseCoursePlaceholder": "Chọn môn học",
             "courseClassPlaceholder": "Chọn lớp học"
         }
+    },
+    "address": {
+        "city": "Thành phố",
+        "district": "Quận/Huyện",
+        "ward": "Phường/Xã",
+        "street": "Đường",
+        "cityPlaceholder": "Chọn thành phố",
+        "districtPlaceholder": "Chọn quận/huyện",
+        "wardPlaceholder": "Chọn phường/xã",
+        "streetPlaceholder": "Nhập tên đường"
+    },
+    "identity": {
+        "identityDocument": "Giấy tờ tùy thân",
+        "identityDocumentDescription": "Chọn loại giấy tờ tùy thân của học sinh",
+        "oldIdentityDocument": "CMND",
+        "newIdentityDocument": "CCCD",
+        "passport": "Hộ chiếu",
+        "id": "Mã",
+        "issuedDate": "Ngày cấp",
+        "issuedPlace": "Nơi cấp",
+        "expiredDate": "Ngày hết hạn",
+        "hasChip": "Có chip",
+        "issuedCountry": "Nước cấp",
+        "note": "Ghi chú",
+        "idPlaceholder": "Nhập mã giấy tờ",
+        "issuedDatePlaceholder": "Chọn ngày cấp",
+        "issuedPlacePlaceholder": "Nhập nơi cấp",
+        "expiredDatePlaceholder": "Chọn ngày hết hạn",
+        "issuedCountryPlaceholder": "Chọn nước cấp",
+        "notePlaceholder": "Nhập ghi chú"
     }
 }

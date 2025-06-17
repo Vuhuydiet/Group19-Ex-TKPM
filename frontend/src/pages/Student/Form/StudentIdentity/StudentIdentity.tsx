@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faCheck } from '@fortawesome/free-solid-svg-icons'
 import "./student_identity.css";
 import "../../../../styles/form.css";
+import { useTranslation } from "react-i18next";
 
 interface Identity {
     id: string;
@@ -28,6 +29,7 @@ interface IdentityProps {
 }
 
 function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
+    const { t } = useTranslation();
     const [identity, setIdentity] = useState<OldIdentityCard | NewIdentityCard | Passport>({
         id: "",
         issuedDate: "",
@@ -96,8 +98,12 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                 <div className="form form--identity">
                     <div className="form__header">
                         <div className="header__left">
-                            <h1>Student Identity</h1>
-                            <p>Hehehehehehhehe</p>
+                            <h1>
+                                {t("identity.identityDocument")}
+                            </h1>
+                            <p>
+                                {t("identity.identityDocumentDescription")}
+                            </p>
                         </div>
 
                         <div className="header__right">
@@ -105,17 +111,23 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                                 <input type="radio" id="old" name="identity" value="old"
                                     checked={identityType === "old"} onChange={() => handleIdentityChange("old")}
                                 />
-                                <label htmlFor="old">Old Identity</label>
+                                <label htmlFor="old">
+                                    {t("identity.oldIdentityDocument")}
+                                </label>
 
                                 <input type="radio" id="new" name="identity" value="new"
                                     checked={identityType === "new"} onChange={() => handleIdentityChange("new")}
                                 />
-                                <label htmlFor="new">New Identity</label>
+                                <label htmlFor="new">
+                                    {t("identity.newIdentityDocument")}
+                                </label>
 
                                 <input type="radio" id="passport" name="identity" value="passport"
                                     checked={identityType === "passport"} onChange={() => handleIdentityChange("passport")}
                                 />
-                                <label htmlFor="passport">Passport</label>
+                                <label htmlFor="passport">
+                                    {t("identity.passport")}
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -123,47 +135,57 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                     <div className="form__body">
 
                         <div className="form__field">
-                            <span>ID</span>
+                            <span>
+                                {t("identity.id")}
+                            </span>
                             <input
                                 type="text"
                                 value={identity.id}
                                 onChange={(e) => setIdentity({ ...identity, id: e.target.value })}
-                                placeholder="Enter identity ID"
+                                placeholder={t("identity.idPlaceholder")}
                             />
                         </div>
 
                         <div className="form__field">
-                            <span>Issued Date</span>
+                            <span>
+                                {t("identity.issuedDate")}
+                            </span>
                             <input
                                 type="date"
                                 value={identity.issuedDate}
                                 onChange={(e) => setIdentity({ ...identity, issuedDate: e.target.value })}
-                                placeholder="Enter identity issued date"
+                                placeholder={t("identity.issuedDatePlaceholder")}
                             />
                         </div>
 
                         <div className="form__field">
-                            <span>Issued Place</span>
+                            <span>
+                                {t("identity.issuedPlace")}
+                            </span>
                             <input
                                 type="text"
                                 value={identity.issuedPlace}
                                 onChange={(e) => setIdentity({ ...identity, issuedPlace: e.target.value })}
-                                placeholder="Enter identity issued place"
+                                placeholder={t("identity.issuedPlacePlaceholder")}
                             />
                         </div>
 
                         <div className="form__field">
-                            <span>Expired Date</span>
+                            <span>
+                                {t("identity.expiredDate")}
+                            </span>
                             <input
                                 type="date"
                                 value={identity.expiredDate}
                                 onChange={(e) => setIdentity({ ...identity, expiredDate: e.target.value })}
-                                placeholder="Enter identity expired date"
+                                placeholder={t("identity.expiredDatePlaceholder")}
                             />
                         </div>
 
                         {identityType === "new" && "hasChip" in identity && (<div className="form__field">
-                            <span>Chip Intergrated</span>
+                            <span>
+                                {t("identity.hasChip")}
+                            </span>
                             <input
                                 id="hasChip"
                                 type="checkbox"
@@ -179,21 +201,25 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
                         </div>)}
 
                         {identityType === "passport" && "issuedCountry" in identity && (<div className="form__field">
-                            <span>Issued Country</span>
+                            <span>
+                                {t("identity.issuedCountry")}
+                            </span>
                             <input
                                 type="text"
                                 value={(identity as Passport).issuedCountry}
                                 onChange={(e) => setIdentity({ ...identity, issuedCountry: e.target.value })}
-                                placeholder="Enter identity issued country"
+                                placeholder={t("identity.issuedCountryPlaceholder")}
                             />
                         </div>)}
 
                         {identityType === "passport" && "notes" in identity && (<div className="form__field">
-                            <span>Notes</span>
+                            <span>
+                                {t("identity.note")}
+                            </span>
                             <textarea
                                 value={(identity as Passport).notes}
                                 onChange={(e) => setIdentity({ ...identity, notes: e.target.value })}
-                                placeholder="Enter identity notes"
+                                placeholder={t("identity.notePlaceholder")}
                             />
                         </div>)}
 
@@ -201,8 +227,12 @@ function StudentIdentity({ setStudentIdentity, setIsHide }: IdentityProps) {
 
                     <div className="form__footer">
                         <div className="form__button">
-                            <button onClick={handleCancel}>Cancel</button>
-                            <button onClick={handleSave}>Save</button>
+                            <button onClick={handleCancel}>
+                                {t("button.cancel")}
+                            </button>
+                            <button onClick={handleSave}>
+                                {t("button.save")}
+                            </button>
                         </div>
                     </div>
                 </div>
