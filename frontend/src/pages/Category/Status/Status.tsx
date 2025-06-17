@@ -5,8 +5,10 @@ import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-i
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
 import { StudyStatus, StudyStatusAPIServices } from "../../../services/studentStatusAPIServices";
+import { useTranslation } from "react-i18next";
 
-const Status = () => {
+const StatusComponent = () => {
+    const { t } = useTranslation();
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
@@ -16,12 +18,7 @@ const Status = () => {
         description: null,
         createdAt: ""
     });
-    const [editStatus, setEditStatus] = useState<StudyStatus>({
-        id: "",
-        name: "",
-        description: null,
-        createdAt: ""
-    });
+    const [editStatus, setEditStatus] = useState<StudyStatus | null>(null);
     const [editNewStatus, setEditNewStatus] = useState<StudyStatus>({
         id: "",
         name: "",
@@ -72,12 +69,7 @@ const Status = () => {
     }
 
     function handleCancel() {
-        setEditStatus({
-            id: "",
-            name: "",
-            description: null,
-            createdAt: ""
-        });
+        setEditStatus(null);
         setEditNewStatus({
             id: "",
             name: "",
@@ -123,6 +115,11 @@ const Status = () => {
     }
 
     async function handleUpdateStatus() {
+        if (!editStatus) {
+            notify({ type: "error", msg: "No status selected for editing" });
+            return;
+        }
+
         if (editNewStatus.name === "") {
             notify({ type: "error", msg: "status name cannot be empty" });
             return;
@@ -151,18 +148,7 @@ const Status = () => {
         }
 
         setCategory({ ...category, status: [...result1] });
-        setEditStatus({
-            id: "",
-            name: "",
-            description: null,
-            createdAt: ""
-        });
-        setEditNewStatus({
-            id: "",
-            name: "",
-            description: null,
-            createdAt: ""
-        });
+        handleCancel();
 
         notify({ type: "success", msg: "Update status successfully" });
     }
@@ -193,16 +179,18 @@ const Status = () => {
         <>
             <div className="category">
                 <div className="category__left">
-                    {editStatus.name !== "" &&
+                    {editStatus &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
-                                <h3>Status Management</h3>
-                                <p>Edit specific status</p>
+                                <h3>{t('management.studyStatus.studyStatusManagement')}</h3>
+                                <p>{t('management.studyStatus.studyStatusManagementDescription1')}</p>
                             </div>
 
                             <div className="category__dashboard__body">
                                 <div className="dashboard__body__field">
-                                    <span>Old Name status</span>
+                                    <span>
+                                        {t('management.studyStatus.studyStatusOldName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editStatus.name}
@@ -210,7 +198,9 @@ const Status = () => {
                                     />
                                 </div>
                                 <div className="dashboard__body__field">
-                                    <span>Old Name ID</span>
+                                    <span>
+                                        {t('management.studyStatus.studyStatusOldId')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editStatus.id}
@@ -219,66 +209,86 @@ const Status = () => {
                                 </div>
 
                                 <div className="dashboard__body__field">
-                                    <span>New Name status</span>
+                                    <span>
+                                        {t('management.studyStatus.studyStatusNewName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editNewStatus.name}
                                         onChange={(e) => setEditNewStatus({ ...editNewStatus, name: e.target.value })}
-                                        placeholder="Enter new status name"
+                                        placeholder={t('management.studyStatus.studyStatusNewNamePlaceholder')}
                                     />
                                 </div>
                             </div>
 
                             <div className="category__dashboard__footer">
                                 <div className="dashboard__button">
-                                    <button onClick={handleCancel}>Cancel</button>
-                                    <button onClick={handleDeleteStatus}>Delete</button>
-                                    <button onClick={handleUpdateStatus}>Update</button>
+                                    <button onClick={handleCancel}>
+                                        {t('button.cancel')}
+                                    </button>
+                                    <button onClick={handleDeleteStatus}>
+                                        {t('button.delete')}
+                                    </button>
+                                    <button onClick={handleUpdateStatus}>
+                                        {t('button.update')}
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
                     }
 
-                    {editStatus.name === "" && <div className="category__dashboard">
+                    {!editStatus && <div className="category__dashboard">
                         <div className="category__dashboard__header">
-                            <h3>Status Management</h3>
-                            <p>Add more status</p>
+                            <h3>
+                                {t('management.studyStatus.studyStatusManagement')}
+                            </h3>
+                            <p>
+                                {t('management.studyStatus.studyStatusManagementDescription2')}
+                            </p>
                         </div>
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
-                                <span>ID status</span>
+                                <span>
+                                    {t('management.studyStatus.studyStatusId')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newStatus.id}
                                     onChange={(e) => setNewStatus({ ...newStatus, id: e.target.value })}
-                                    placeholder="Enter status name"
+                                    placeholder={t('management.studyStatus.studyStatusIdPlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Name status</span>
+                                <span>
+                                    {t('management.studyStatus.studyStatusName')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newStatus.name}
                                     onChange={(e) => setNewStatus({ ...newStatus, name: e.target.value })}
-                                    placeholder="Enter status name"
+                                    placeholder={t('management.studyStatus.studyStatusNamePlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Description status</span>
+                                <span>
+                                    {t('management.studyStatus.studyStatusDescription')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newStatus.description || ""}
                                     onChange={(e) => setNewStatus({ ...newStatus, description: e.target.value })}
-                                    placeholder="Enter status name"
+                                    placeholder={t('management.studyStatus.studyStatusDescriptionPlaceholder')}
                                 />
                             </div>
                         </div>
 
                         <div className="category__dashboard__footer">
                             <div className="dashboard__button">
-                                <button onClick={handleAddStatus}>Add</button>
+                                <button onClick={handleAddStatus}>
+                                    {t('button.add')}
+                                </button>
                             </div>
                         </div>
 
@@ -289,11 +299,15 @@ const Status = () => {
                     <div className="table">
                         <div className="table__header">
                             <div className="table__field">
-                                <span>ID</span>
+                                <span>
+                                    {t('management.studyStatus.studyStatusId')}
+                                </span>
                             </div>
 
                             <div className="table__field">
-                                <span>Status</span>
+                                <span>
+                                    {t('management.studyStatus.studyStatusName')}
+                                </span>
                             </div>
                         </div>
 
@@ -319,7 +333,7 @@ const Status = () => {
 
                         <div className="table__footer">
                             <div className="table__left">
-                                <span>Total: {status && status.length}</span>
+                                <span>{t('other.total')}: {category.status && category.status.length}</span>
                             </div>
 
                             <div className="table__right">
@@ -340,4 +354,4 @@ const Status = () => {
     )
 }
 
-export default Status;
+export default StatusComponent;

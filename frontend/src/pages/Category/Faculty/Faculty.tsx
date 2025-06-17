@@ -5,9 +5,10 @@ import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-i
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
 import { Faculty, FacultyAPIServices } from "../../../services/facultyAPIServices";
-import * as e from "express";
+import { useTranslation } from "react-i18next";
 
 const FacultyComponent = () => {
+    const { t } = useTranslation();
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
@@ -17,12 +18,7 @@ const FacultyComponent = () => {
         description: "",
         createdAt: "",
     });
-    const [editFaculty, setEditFaculty] = useState<Faculty>({
-        id: "",
-        name: "",
-        description: "",
-        createdAt: "",
-    });
+    const [editFaculty, setEditFaculty] = useState<Faculty | null>(null);
     const [editNewFaculty, setEditNewFaculty] = useState<Faculty>({
         id: "",
         name: "",
@@ -73,12 +69,7 @@ const FacultyComponent = () => {
     }
 
     function handleCancel() {
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
+        setEditFaculty(null);
         setEditNewFaculty({
             id: "",
             name: "",
@@ -118,6 +109,10 @@ const FacultyComponent = () => {
     }
 
     async function handleUpdateFaculty() {
+        if (!editFaculty) {
+            notify({ type: "error", msg: "No faculty selected for update" });
+            return;
+        }
         if (editNewFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
@@ -154,19 +149,7 @@ const FacultyComponent = () => {
 
 
         setCategory({ ...category, faculty: [...result1] });
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-        setEditNewFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-
+        handleCancel();
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
@@ -208,16 +191,22 @@ const FacultyComponent = () => {
         <>
             <div className="category">
                 <div className="category__left">
-                    {editFaculty.name !== "" &&
+                    {editFaculty &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
-                                <h3>Faculty Management</h3>
-                                <p>Edit specific faculty</p>
+                                <h3>
+                                    {t('management.faculty.facultyManagement')}
+                                </h3>
+                                <p>
+                                    {t('management.faculty.facultyManagementDescription1')}
+                                </p>
                             </div>
 
                             <div className="category__dashboard__body">
                                 <div className="dashboard__body__field">
-                                    <span>Old Name Faculty</span>
+                                    <span>
+                                        {t('management.faculty.facultyOldName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editFaculty.name}
@@ -226,66 +215,97 @@ const FacultyComponent = () => {
                                 </div>
 
                                 <div className="dashboard__body__field">
-                                    <span>New Name Faculty</span>
+                                    <span>
+                                        {t('management.faculty.facultyOldId')}
+                                    </span>
+                                    <input
+                                        type="text"
+                                        value={editFaculty.id}
+                                        disabled
+                                    />
+                                </div>
+
+                                <div className="dashboard__body__field">
+                                    <span>
+                                        {t('management.faculty.facultyNewName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editNewFaculty.name}
                                         onChange={(e) => setEditNewFaculty({ ...editNewFaculty, name: e.target.value })}
-                                        placeholder="Enter new faculty name"
+                                        placeholder={t('management.faculty.facultyNewNamePlaceholder')}
                                     />
                                 </div>
                             </div>
 
                             <div className="category__dashboard__footer">
                                 <div className="dashboard__button">
-                                    <button onClick={handleCancel}>Cancel</button>
-                                    <button onClick={handleDeleteFaculty}>Delete</button>
-                                    <button onClick={handleUpdateFaculty}>Update</button>
+                                    <button onClick={handleCancel}>
+                                        {t('button.cancel')}
+                                    </button>
+                                    <button onClick={handleDeleteFaculty}>
+                                        {t('button.delete')}
+                                    </button>
+                                    <button onClick={handleUpdateFaculty}>
+                                        {t('button.update')}
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
                     }
 
-                    {editFaculty.name === "" && <div className="category__dashboard">
+                    {!editFaculty && <div className="category__dashboard">
                         <div className="category__dashboard__header">
-                            <h3>Faculty Management</h3>
-                            <p>Add more faculties</p>
+                            <h3>
+                                {t('management.faculty.facultyManagement')}
+                            </h3>
+                            <p>
+                                {t('management.faculty.facultyManagementDescription2')}
+                            </p>
                         </div>
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
-                                <span>ID Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyId')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newFaculty.id}
                                     onChange={(e) => setNewFaculty({ ...newFaculty, id: e.target.value })}
-                                    placeholder="Enter faculty id"
+                                    placeholder={t('management.faculty.facultyIdPlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Name Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyName')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newFaculty.name}
                                     onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
-                                    placeholder="Enter faculty name"
+                                    placeholder={t('management.faculty.facultyNamePlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Description Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyDescription')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newFaculty.name}
                                     onChange={(e) => setNewFaculty({ ...newFaculty, description: e.target.value })}
-                                    placeholder="Enter faculty description"
+                                    placeholder={t('management.faculty.facultyDescriptionPlaceholder')}
                                 />
                             </div>
                         </div>
 
                         <div className="category__dashboard__footer">
                             <div className="dashboard__button">
-                                <button onClick={handleAddFaculty}>Add</button>
+                                <button onClick={handleAddFaculty}>
+                                    {t('button.add')}
+                                </button>
                             </div>
                         </div>
 
@@ -296,11 +316,15 @@ const FacultyComponent = () => {
                     <div className="table">
                         <div className="table__header">
                             <div className="table__field">
-                                <span>STT</span>
+                                <span>
+                                    {t('management.faculty.facultyId')}
+                                </span>
                             </div>
 
                             <div className="table__field">
-                                <span>Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyName')}
+                                </span>
                             </div>
                         </div>
 
@@ -327,7 +351,7 @@ const FacultyComponent = () => {
 
                         <div className="table__footer">
                             <div className="table__left">
-                                <span>Total: {category.faculty && category.faculty.length}</span>
+                                <span>{t('other.total')}: {category.faculty && category.faculty.length}</span>
                             </div>
 
                             <div className="table__right">

@@ -1,12 +1,12 @@
 import { createContext, useState, useContext, PropsWithChildren } from 'react';
-import { mockDataPrograms} from '../services/mockData';
 import { StudyStatus, StudyStatusAPIServices } from '../services/studentStatusAPIServices';
 import { Faculty, FacultyAPIServices } from '../services/facultyAPIServices';
 import { useEffect } from 'react'; // cần import
+import { mockDataPrograms, Program } from '../services/programAPIServices';
 
 interface CategoryType {
     status: StudyStatus[];
-    programs: string[];
+    programs: Program[];
     faculty: Faculty[];
 }
 
@@ -25,7 +25,7 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
     const [category, setCategory] = useState<CategoryType>(
         {
             status: [] as StudyStatus[],
-            programs: mockDataPrograms,
+            programs: [] as Program[],
             faculty: [] as Faculty[],
         }
     );
@@ -46,7 +46,6 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
 
             const status = await studyStatusService.getStudyStatuses();
             const faculty = await facultyService.getFaculties();
-            console.log(status, faculty);
             setCategory({
                 status,
                 programs: mockDataPrograms,
@@ -55,7 +54,7 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
         };
 
         fetchData();
-    }, []); 
+    }, []);
 
     return (
         <CatogoryContext.Provider value={{ category, setCategory }}>

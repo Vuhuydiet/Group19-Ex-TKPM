@@ -45,12 +45,18 @@
         "program": "Program",
         "faculty": "Faculty",
         "academicYear": "Academic Year",
-        "none": "None"
+        "none": "None",
+        "pernament": "Permanent Address",
+        "temporary": "Temporary Address",
+        "identityDocument": "Identity Document",
+        "phone": "Phone"
     },
     "button": {
         "add": "Add",
         "edit": "Edit",
         "delete": "Delete",
+        "back": "Back",
+        "update": "Update",
         "view": "View",
         "save": "Save",
         "cancel": "Cancel",
@@ -63,6 +69,63 @@
     },
     "other": {
         "student": "Student",
-        "searching": "Searching..."
+        "searching": "Searching...",
+        "studentInfo": "Student Information",
+        "chooseIdentityDocument": "Choose Identity Document Type",
+        "total": "Total"
+    },
+    "management": {
+        "studentManagement": "Student Management",
+        "faculty": {
+            "facultyManagement": "Faculty Management",
+            "facultyManagementDescription1": "Edit existing faculties",
+            "facultyManagementDescription2": "Add new faculty",
+            "facultyName": "Faculty Name",
+            "facultyId": "Faculty ID",
+            "facultyDescription": "Faculty Description",
+            "facultyOldId": "Old Faculty ID",
+            "facultyNewId": "New Faculty ID",
+            "facultyOldName": "Old Faculty Name",
+            "facultyNewName": "New Faculty Name",
+            "facultyIdPlaceholder": "Enter faculty ID",
+            "facultyNamePlaceholder": "Enter faculty name",
+            "facultyDescriptionPlaceholder": "Enter faculty description",
+            "facultyNewNamePlaceholder": "Enter new faculty name"
+        },
+        "studyStatus": {
+            "studyStatusManagement": "Study Status Management",
+            "studyStatusManagementDescription1": "Edit existing statuses",
+            "studyStatusManagementDescription2": "Add new status",
+            "studyStatusName": "Status Name",
+            "studyStatusId": "Status ID",
+            "studyStatusDescription": "Status Description",
+            "studyStatusOldId": "Old Status ID",
+            "studyStatusNewId": "New Status ID",
+            "studyStatusOldName": "Old Status Name",
+            "studyStatusNewName": "New Status Name",
+            "studyStatusIdPlaceholder": "Enter status ID",
+            "studyStatusNamePlaceholder": "Enter status name",
+            "studyStatusDescriptionPlaceholder": "Enter status description",
+            "studyStatusNewNamePlaceholder": "Enter new status name"
+        },
+        "program": {
+            "programManagement": "Program Management",
+            "programManagementDescription1": "Edit existing programs",
+            "programManagementDescription2": "Add new program",
+            "programName": "Program Name",
+            "programId": "Program ID",
+            "programDescription": "Program Description",
+            "programOldId": "Old Program ID",
+            "programNewId": "New Program ID",
+            "programOldName": "Old Program Name",
+            "programNewName": "New Program Name",
+            "programIdPlaceholder": "Enter program ID",
+            "programNamePlaceholder": "Enter program name",
+            "programDescriptionPlaceholder": "Enter program description",
+            "programNewNamePlaceholder": "Enter new program name"
+        },
+        "classManagement": "Class Management",
+        "courseManagement": "Course Management",
+        "programManagement": "Program Management"
     }
 }

@@ -71,6 +71,61 @@
         "student": "Học sinh",
         "searching": "Tìm kiếm...",
         "studentInfo": "Thông tin học sinh",
-        "chooseIdentityDocument": "Chọn loại giấy tờ tùy thân"
+        "chooseIdentityDocument": "Chọn loại giấy tờ tùy thân",
+        "total": "Tổng số"
+    },
+    "management": {
+        "studentManagement": "Quản lý học sinh",
+        "faculty": {
+            "facultyManagement": "Quản lý khoa",
+            "facultyManagementDescription1": "Sửa khoa hiện có",
+            "facultyManagementDescription2": "Thêm khoa mới",
+            "facultyName": "Tên khoa",
+            "facultyId": "Mã khoa",
+            "facultyDescription": "Mô tả khoa",
+            "facultyOldId": "Mã khoa cũ",
+            "facultyNewId": "Mã khoa mới",
+            "facultyOldName": "Tên khoa cũ",
+            "facultyNewName": "Tên khoa mới",
+            "facultyIdPlaceholder": "Nhập mã khoa",
+            "facultyNamePlaceholder": "Nhập tên khoa",
+            "facultyDescriptionPlaceholder": "Nhập mô tả khoa",
+            "facultyNewNamePlaceholder": "Nhập tên khoa mới"
+        },
+        "studyStatus": {
+            "studyStatusManagement": "Quản lý trạng thái học tập",
+            "studyStatusManagementDescription1": "Sửa trạng thái hiện có",
+            "studyStatusManagementDescription2": "Thêm trạng thái mới",
+            "studyStatusName": "Tên trạng thái",
+            "studyStatusId": "Mã trạng thái",
+            "studyStatusDescription": "Mô tả trạng thái",
+            "studyStatusOldId": "Mã trạng thái cũ",
+            "studyStatusNewId": "Mã trạng thái mới",
+            "studyStatusOldName": "Tên trạng thái cũ",
+            "studyStatusNewName": "Tên trạng thái mới",
+            "studyStatusIdPlaceholder": "Nhập mã trạng thái",
+            "studyStatusNamePlaceholder": "Nhập tên trạng thái",
+            "studyStatusDescriptionPlaceholder": "Nhập mô tả trạng thái",
+            "studyStatusNewNamePlaceholder": "Nhập tên trạng thái mới"
+        },
+        "program": {
+            "programManagement": "Quản lý chương trình học",
+            "programManagementDescription1": "Sửa chương trình hiện có",
+            "programManagementDescription2": "Thêm chương trình mới",
+            "programName": "Tên chương trình",
+            "programId": "Mã chương trình",
+            "programDescription": "Mô tả chương trình",
+            "programOldId": "Mã chương trình cũ",
+            "programNewId": "Mã chương trình mới",
+            "programOldName": "Tên chương trình cũ",
+            "programNewName": "Tên chương trình mới",
+            "programIdPlaceholder": "Nhập mã chương trình",
+            "programNamePlaceholder": "Nhập tên chương trình",
+            "programDescriptionPlaceholder": "Nhập mô tả chương trình",
+            "programNewNamePlaceholder": "Nhập tên chương trình mới"
+        },
+        "classManagement": "Quản lý lớp học",
+        "courseManagement": "Quản lý khóa học",
+        "programManagement": "Quản lý chương trình học"
     }
 }

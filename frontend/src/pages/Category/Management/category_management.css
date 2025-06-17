@@ -25,7 +25,7 @@
 
 .management__nav label {
     height: 30px;
-    width: 80px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,7 +42,7 @@
 .management__nav .label-item {
     content: "";
     position: absolute;
-    width: 80px;
+    width: 100px;
     height: 30px;
     background-color: var(--main-color);
     transition: 0.3s;
