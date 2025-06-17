@@ -1,7 +1,7 @@
 {
     "welcome": "Welcome!",
     "subWelcome1": "Remember, every small step brings you closer to success!",
-    "subWelcome2": "Believe in yourself — great things await you today!",
+    "subWelcome2": "Believe in yourself—great things await you today!",
     "mainTitle": "Dashboard",
     "sidebar": {
         "home": "Home",
@@ -16,7 +16,7 @@
     },
     "sidebarHeading": {
         "dashboard": "Dashboard",
-        "tool": "Tools",
+        "tool": "Tool",
         "managementTool": "Management Tools",
         "otherTool": "Other Tools",
         "systemSettings": "System Settings"
@@ -36,6 +36,7 @@
         "none": "None"
     },
     "tableHeading": {
+        "index": "No.",
         "id": "ID",
         "name": "Name",
         "email": "Email",
@@ -46,7 +47,7 @@
         "faculty": "Faculty",
         "academicYear": "Academic Year",
         "none": "None",
-        "pernament": "Permanent",
+        "permanent": "Permanent",
         "temporary": "Temporary",
         "identityDocument": "Identity Document",
         "phone": "Phone",
@@ -57,7 +58,10 @@
         "capacity": "Capacity",
         "professor": "Professor",
         "schedule": "Schedule",
-        "room": "Room"
+        "room": "Room",
+        "studentId": "Student ID",
+        "classId": "Class ID",
+        "grade": "Grade"
     },
     "button": {
         "add": "Add",
@@ -65,11 +69,15 @@
         "delete": "Delete",
         "back": "Back",
         "update": "Update",
+        "select": "Select",
+        "check": "Check",
         "view": "View",
         "save": "Save",
         "cancel": "Cancel",
         "search": "Search",
+        "register": "Register",
         "reset": "Reset",
+        "export": "Export",
         "exportXML": "Export XML",
         "importXML": "Import XML",
         "exportJSON": "Export JSON",
@@ -80,12 +88,16 @@
         "course": "Course",
         "searching": "Searching...",
         "studentInfo": "Student Information",
-        "chooseIdentityDocument": "Select Identity Document",
+        "chooseIdentityDocument": "Choose identity document type",
         "total": "Total",
         "none": "None",
-        "prerequisiteSelector": "Prerequisite Course",
+        "prerequisiteSelector": "Prerequisite course",
         "prerequisitePDescription": "Select prerequisite course",
-        "courseEnrollment": "Course Enrollment"
+        "courseEnrollment": "Course Enrollment",
+        "permanentAddress": "Permanent Address",
+        "temporaryAddress": "Temporary Address",
+        "permanentAddressDescription": "Enter student’s permanent address",
+        "temporaryAddressDescription": "Enter student’s temporary address"
     },
     "management": {
         "studentManagement": "Student Management",
@@ -144,7 +156,7 @@
     "addition": {
         "course": {
             "courseAddition": "Add Course",
-            "courseAdditionDescription": "Add new course",
+            "courseAdditionDescription": "Add a new course",
             "courseName": "Course Name",
             "courseId": "Course ID",
             "courseDescription": "Course Description",
@@ -155,12 +167,12 @@
             "courseNamePlaceholder": "Enter course name",
             "courseDescriptionPlaceholder": "Enter course description",
             "courseCreditsPlaceholder": "Enter course credits",
-            "courseFacultyPlaceholder": "Select responsible faculty",
+            "courseFacultyPlaceholder": "Select faculty",
             "coursePrerequisitePlaceholder": "Select prerequisite course"
         },
         "class": {
             "classAddition": "Add Class",
-            "classAdditionDescription": "Add new class",
+            "classAdditionDescription": "Add a new class",
             "className": "Class Name",
             "classId": "Class ID",
             "classCourseId": "Course ID",
@@ -168,7 +180,7 @@
             "classSemester": "Semester",
             "classDescription": "Class Description",
             "classCapacity": "Student Capacity",
-            "classProfessor": "Instructor",
+            "classProfessor": "Professor",
             "classSchedule": "Schedule",
             "classRoom": "Room",
             "classIdPlaceholder": "Enter class ID",
@@ -178,9 +190,49 @@
             "classNamePlaceholder": "Enter class name",
             "classDescriptionPlaceholder": "Enter class description",
             "classCapacityPlaceholder": "Enter student capacity",
-            "classProfessorPlaceholder": "Select instructor",
+            "classProfessorPlaceholder": "Select professor",
             "classSchedulePlaceholder": "Enter schedule",
             "classRoomPlaceholder": "Select room"
+        },
+        "student": {
+            "studentAddition": "Add Student",
+            "studentAdditionDescription": "Add a new student",
+            "studentName": "Student Name",
+            "studentId": "Student ID",
+            "studentEmail": "Student Email",
+            "studentDob": "Date of Birth",
+            "studentGender": "Gender",
+            "studentStatus": "Study Status",
+            "studentProgram": "Program",
+            "studentFaculty": "Faculty",
+            "studentPermanentAddress": "Permanent Address",
+            "studentTemporaryAddress": "Temporary Address",
+            "studentIdentityDocument": "Identity Document",
+            "studentPhone": "Phone Number",
+            "studentNationality": "Nationality",
+            "studentIdPlaceholder": "Enter student ID",
+            "studentNamePlaceholder": "Enter student name",
+            "studentEmailPlaceholder": "Enter student email",
+            "studentDobPlaceholder": "Select date of birth",
+            "studentGenderPlaceholder": "Select gender",
+            "studentStatusPlaceholder": "Select study status",
+            "studentProgramPlaceholder": "Select program",
+            "studentFacultyPlaceholder": "Select faculty",
+            "studentPermanentAddressPlaceholder": "Enter permanent address",
+            "studentTemporaryAddressPlaceholder": "Enter temporary address",
+            "studentIdentityDocumentPlaceholder": "Select identity document type",
+            "studentPhonePlaceholder": "Enter phone number",
+            "studentNationalityPlaceholder": "Select nationality"
+        },
+        "courseRegistration": {
+            "courseRegistrationAddition": "Register Course",
+            "courseRegistrationDescription": "Register course for student",
+            "courseStudent": "Student",
+            "courseCourse": "Course",
+            "courseClass": "Class",
+            "courseStudentPlaceholder": "Select student",
+            "courseCoursePlaceholder": "Select course",
+            "courseClassPlaceholder": "Select class"
         }
     }
 }
