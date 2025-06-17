@@ -36,7 +36,7 @@
         "none": "Không có"
     },
     "tableHeading": {
-        "id": "MSHS",
+        "id": "Mã",
         "name": "Tên",
         "email": "Email",
         "dob": "Ngày sinh",
@@ -49,7 +49,10 @@
         "pernament": "Thường trú",
         "temporary": "Tạm trú",
         "identityDocument": "Giấy tờ tùy thân",
-        "phone": "SDT"
+        "phone": "SDT",
+        "credits": "Tín chỉ",
+        "description": "Mô tả",
+        "prerequisite": "Tiên quyết"
     },
     "button": {
         "add": "Thêm",
@@ -69,10 +72,14 @@
     },
     "other": {
         "student": "Học sinh",
+        "course": "Khóa học",
         "searching": "Tìm kiếm...",
         "studentInfo": "Thông tin học sinh",
         "chooseIdentityDocument": "Chọn loại giấy tờ tùy thân",
-        "total": "Tổng số"
+        "total": "Tổng số",
+        "none": "Không có",
+        "prerequisiteSelector": "Môn học tiên quyết",
+        "prerequisitePDescription": "Chọn môn học tiên quyết"
     },
     "management": {
         "studentManagement": "Quản lý học sinh",
@@ -127,5 +134,23 @@
         "classManagement": "Quản lý lớp học",
         "courseManagement": "Quản lý khóa học",
         "programManagement": "Quản lý chương trình học"
+    },
+    "addition": {
+        "course": {
+            "courseAddition": "Thêm môn học",
+            "courseAdditionDescription": "Thêm môn học mới",
+            "courseName": "Tên môn học",
+            "courseId": "Mã môn học",
+            "courseDescription": "Mô tả môn học",
+            "courseCredits": "Tín chỉ",
+            "courseFaculty": "Khoa",
+            "coursePrerequisite": "Môn học tiên quyết",
+            "courseIdPlaceholder": "Nhập mã môn học",
+            "courseNamePlaceholder": "Nhập tên môn học",
+            "courseDescriptionPlaceholder": "Nhập mô tả môn học",
+            "courseCreditsPlaceholder": "Nhập tín chỉ môn học",
+            "courseFacultyPlaceholder": "Chọn khoa phụ trách",
+            "coursePrerequisitePlaceholder": "Chọn môn học tiên quyết"
+        }
     }
 }

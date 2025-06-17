@@ -3,6 +3,7 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react';
 import { CourseAPIServices } from '../../../../services/courseAPIServices';
 import "./prerequisite_selector.css"
+import { useTranslation } from 'react-i18next';
 
 // const DUMMY_MODULES = [
 //     { id: 1, name: "Module 1" },
@@ -24,6 +25,7 @@ interface PrerequisiteSelectorProps {
 }
 
 const PrerequisiteSelector = ({ setPrerequisite, setIsHide }: PrerequisiteSelectorProps) => {
+    const { t } = useTranslation();
     const containerRef = useRef<HTMLDivElement>(null);
 
     const courseService = new CourseAPIServices();
@@ -113,12 +115,16 @@ const PrerequisiteSelector = ({ setPrerequisite, setIsHide }: PrerequisiteSelect
 
                 <div className="selector">
                     <div className="selector__header">
-                        <h1>Prerequisite Selector</h1>
-                        <p>Choose prerequisite module</p>
+                        <h1>
+                            {t("other.prerequisiteSelector")}
+                        </h1>
+                        <p>
+                            {t("other.prerequisitePDescription")}
+                        </p>
                     </div>
 
                     <div className="selector__body" ref={containerRef}>
-{/* 
+                        {/* 
                         {modules.map((mod) => (
                             <>
                                 <input type="checkbox" id={String(mod.id)} />
@@ -152,8 +158,12 @@ const PrerequisiteSelector = ({ setPrerequisite, setIsHide }: PrerequisiteSelect
                     </div>
 
                     <div className="selector__footer">
-                        <button onClick={handleCancel}>Cancel</button>
-                        <button onClick={handleSave}>Save</button>
+                        <button onClick={handleCancel}>
+                            {t("button.cancel")}
+                        </button>
+                        <button onClick={handleSave}>
+                            {t("button.save")}
+                        </button>
                     </div>
 
                 </div>

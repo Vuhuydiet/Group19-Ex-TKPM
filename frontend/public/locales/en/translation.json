@@ -36,7 +36,7 @@
         "none": "None"
     },
     "tableHeading": {
-        "id": "Student ID",
+        "id": "ID",
         "name": "Name",
         "email": "Email",
         "dob": "Date of Birth",
@@ -49,7 +49,10 @@
         "pernament": "Permanent Address",
         "temporary": "Temporary Address",
         "identityDocument": "Identity Document",
-        "phone": "Phone"
+        "phone": "Phone",
+        "credits": "Credits",
+        "description": "Description",
+        "prerequisite": "Prerequisite"
     },
     "button": {
         "add": "Add",
@@ -69,10 +72,14 @@
     },
     "other": {
         "student": "Student",
+        "course": "Course",
         "searching": "Searching...",
         "studentInfo": "Student Information",
         "chooseIdentityDocument": "Choose Identity Document Type",
-        "total": "Total"
+        "total": "Total",
+        "none": "None",
+        "prerequisiteSelector": "Prerequisite Course",
+        "prerequisitePDescription": "Select a prerequisite course"
     },
     "management": {
         "studentManagement": "Student Management",
@@ -127,5 +134,23 @@
         "classManagement": "Class Management",
         "courseManagement": "Course Management",
         "programManagement": "Program Management"
+    },
+    "addition": {
+        "course": {
+            "courseAddition": "Add Course",
+            "courseAdditionDescription": "Add a new course",
+            "courseName": "Course Name",
+            "courseId": "Course ID",
+            "courseDescription": "Course Description",
+            "courseCredits": "Credits",
+            "courseFaculty": "Faculty",
+            "coursePrerequisite": "Prerequisite Course",
+            "courseIdPlaceholder": "Enter course ID",
+            "courseNamePlaceholder": "Enter course name",
+            "courseDescriptionPlaceholder": "Enter course description",
+            "courseCreditsPlaceholder": "Enter course credits",
+            "courseFacultyPlaceholder": "Select responsible faculty",
+            "coursePrerequisitePlaceholder": "Select prerequisite course"
+        }
     }
 }
