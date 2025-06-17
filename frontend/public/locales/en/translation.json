@@ -1,7 +1,7 @@
 {
     "welcome": "Welcome!",
     "subWelcome1": "Remember, every small step brings you closer to success!",
-    "subWelcome2": "Believe in yourself — great things await today!",
+    "subWelcome2": "Believe in yourself — great things await you today!",
     "mainTitle": "Dashboard",
     "sidebar": {
         "home": "Home",
@@ -16,9 +16,53 @@
     },
     "sidebarHeading": {
         "dashboard": "Dashboard",
-        "tool": "Tool",
-        "managementTool": "Management Tool",
-        "otherTool": "Other Tool",
+        "tool": "Tools",
+        "managementTool": "Management Tools",
+        "otherTool": "Other Tools",
         "systemSettings": "System Settings"
+    },
+    "filterHeading": {
+        "filter": "Filter",
+        "sort": "Sort",
+        "gender": "Gender",
+        "status": "Status",
+        "faculty": "Faculty",
+        "class": "Class"
+    },
+    "filterValue": {
+        "all": "All",
+        "male": "Male",
+        "female": "Female",
+        "none": "None"
+    },
+    "tableHeading": {
+        "id": "Student ID",
+        "name": "Name",
+        "email": "Email",
+        "dob": "Date of Birth",
+        "gender": "Gender",
+        "status": "Status",
+        "program": "Program",
+        "faculty": "Faculty",
+        "academicYear": "Academic Year",
+        "none": "None"
+    },
+    "button": {
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "view": "View",
+        "save": "Save",
+        "cancel": "Cancel",
+        "search": "Search",
+        "reset": "Reset",
+        "exportXML": "Export XML",
+        "importXML": "Import XML",
+        "exportJSON": "Export JSON",
+        "importJSON": "Import JSON"
+    },
+    "other": {
+        "student": "Student",
+        "searching": "Searching..."
     }
 }

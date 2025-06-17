@@ -20,5 +20,49 @@
         "managementTool": "Công cụ quản lý",
         "otherTool": "Công cụ khác",
         "systemSettings": "Cài đặt hệ thống"
+    },
+    "filterHeading": {
+        "filter": "Bộ lọc",
+        "sort": "Sắp xếp",
+        "gender": "Giới tính",
+        "status": "Trạng thái",
+        "faculty": "Khoa",
+        "class": "Lớp học"
+    },
+    "filterValue": {
+        "all": "Tất cả",
+        "male": "Nam",
+        "female": "Nữ",
+        "none": "Không có"
+    },
+    "tableHeading": {
+        "id": "MSHS",
+        "name": "Tên",
+        "email": "Email",
+        "dob": "Ngày sinh",
+        "gender": "Giới tính",
+        "status": "Trạng thái",
+        "program": "Chương trình",
+        "faculty": "Khoa",
+        "academicYear": "Năm học",
+        "none": "Không có"
+    },
+    "button": {
+        "add": "Thêm",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "view": "Xem",
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "search": "Tìm kiếm",
+        "reset": "Đặt lại",
+        "exportXML": "Xuất XML",
+        "importXML": "Nhập XML",
+        "exportJSON": "Xuất JSON",
+        "importJSON": "Nhập JSON"
+    },
+    "other": {
+        "student": "Học sinh",
+        "searching": "Tìm kiếm..."
     }
 }
