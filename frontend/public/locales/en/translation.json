@@ -46,13 +46,18 @@
         "faculty": "Faculty",
         "academicYear": "Academic Year",
         "none": "None",
-        "pernament": "Permanent Address",
-        "temporary": "Temporary Address",
+        "pernament": "Permanent",
+        "temporary": "Temporary",
         "identityDocument": "Identity Document",
         "phone": "Phone",
         "credits": "Credits",
         "description": "Description",
-        "prerequisite": "Prerequisite"
+        "prerequisite": "Prerequisite",
+        "courseId": "Course ID",
+        "capacity": "Capacity",
+        "professor": "Professor",
+        "schedule": "Schedule",
+        "room": "Room"
     },
     "button": {
         "add": "Add",
@@ -75,17 +80,18 @@
         "course": "Course",
         "searching": "Searching...",
         "studentInfo": "Student Information",
-        "chooseIdentityDocument": "Choose Identity Document Type",
+        "chooseIdentityDocument": "Select Identity Document",
         "total": "Total",
         "none": "None",
         "prerequisiteSelector": "Prerequisite Course",
-        "prerequisitePDescription": "Select a prerequisite course"
+        "prerequisitePDescription": "Select prerequisite course",
+        "courseEnrollment": "Course Enrollment"
     },
     "management": {
         "studentManagement": "Student Management",
         "faculty": {
             "facultyManagement": "Faculty Management",
-            "facultyManagementDescription1": "Edit existing faculties",
+            "facultyManagementDescription1": "Edit existing faculty",
             "facultyManagementDescription2": "Add new faculty",
             "facultyName": "Faculty Name",
             "facultyId": "Faculty ID",
@@ -101,7 +107,7 @@
         },
         "studyStatus": {
             "studyStatusManagement": "Study Status Management",
-            "studyStatusManagementDescription1": "Edit existing statuses",
+            "studyStatusManagementDescription1": "Edit existing status",
             "studyStatusManagementDescription2": "Add new status",
             "studyStatusName": "Status Name",
             "studyStatusId": "Status ID",
@@ -117,7 +123,7 @@
         },
         "program": {
             "programManagement": "Program Management",
-            "programManagementDescription1": "Edit existing programs",
+            "programManagementDescription1": "Edit existing program",
             "programManagementDescription2": "Add new program",
             "programName": "Program Name",
             "programId": "Program ID",
@@ -138,7 +144,7 @@
     "addition": {
         "course": {
             "courseAddition": "Add Course",
-            "courseAdditionDescription": "Add a new course",
+            "courseAdditionDescription": "Add new course",
             "courseName": "Course Name",
             "courseId": "Course ID",
             "courseDescription": "Course Description",
@@ -151,6 +157,30 @@
             "courseCreditsPlaceholder": "Enter course credits",
             "courseFacultyPlaceholder": "Select responsible faculty",
             "coursePrerequisitePlaceholder": "Select prerequisite course"
+        },
+        "class": {
+            "classAddition": "Add Class",
+            "classAdditionDescription": "Add new class",
+            "className": "Class Name",
+            "classId": "Class ID",
+            "classCourseId": "Course ID",
+            "classYear": "Academic Year",
+            "classSemester": "Semester",
+            "classDescription": "Class Description",
+            "classCapacity": "Student Capacity",
+            "classProfessor": "Instructor",
+            "classSchedule": "Schedule",
+            "classRoom": "Room",
+            "classIdPlaceholder": "Enter class ID",
+            "classYearPlaceholder": "Select academic year",
+            "classSemesterPlaceholder": "Select semester",
+            "classCourseIdPlaceholder": "Select course",
+            "classNamePlaceholder": "Enter class name",
+            "classDescriptionPlaceholder": "Enter class description",
+            "classCapacityPlaceholder": "Enter student capacity",
+            "classProfessorPlaceholder": "Select instructor",
+            "classSchedulePlaceholder": "Enter schedule",
+            "classRoomPlaceholder": "Select room"
         }
     }
 }

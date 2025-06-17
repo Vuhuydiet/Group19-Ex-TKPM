@@ -52,7 +52,12 @@
         "phone": "SDT",
         "credits": "Tín chỉ",
         "description": "Mô tả",
-        "prerequisite": "Tiên quyết"
+        "prerequisite": "Tiên quyết",
+        "courseId": "Mã môn",
+        "capacity": "Số lượng",
+        "professor": "Giảng viên",
+        "schedule": "Lịch học",
+        "room": "Phòng"
     },
     "button": {
         "add": "Thêm",
@@ -79,7 +84,8 @@
         "total": "Tổng số",
         "none": "Không có",
         "prerequisiteSelector": "Môn học tiên quyết",
-        "prerequisitePDescription": "Chọn môn học tiên quyết"
+        "prerequisitePDescription": "Chọn môn học tiên quyết",
+        "courseEnrollment": "Đăng ký khóa học"
     },
     "management": {
         "studentManagement": "Quản lý học sinh",
@@ -151,6 +157,30 @@
             "courseCreditsPlaceholder": "Nhập tín chỉ môn học",
             "courseFacultyPlaceholder": "Chọn khoa phụ trách",
             "coursePrerequisitePlaceholder": "Chọn môn học tiên quyết"
+        },
+        "class": {
+            "classAddition": "Thêm lớp học",
+            "classAdditionDescription": "Thêm lớp học mới",
+            "className": "Tên lớp học",
+            "classId": "Mã lớp học",
+            "classCourseId": "Mã môn học",
+            "classYear": "Năm học",
+            "classSemester": "Học kỳ",
+            "classDescription": "Mô tả lớp học",
+            "classCapacity": "Số lượng sinh viên",
+            "classProfessor": "Giảng viên phụ trách",
+            "classSchedule": "Lịch học",
+            "classRoom": "Phòng học",
+            "classIdPlaceholder": "Nhập mã lớp học",
+            "classYearPlaceholder": "Chọn năm học",
+            "classSemesterPlaceholder": "Chọn học kỳ",
+            "classCourseIdPlaceholder": "Chọn môn học",
+            "classNamePlaceholder": "Nhập tên lớp học",
+            "classDescriptionPlaceholder": "Nhập mô tả lớp học",
+            "classCapacityPlaceholder": "Nhập số lượng sinh viên",
+            "classProfessorPlaceholder": "Chọn giảng viên phụ trách",
+            "classSchedulePlaceholder": "Nhập lịch học",
+            "classRoomPlaceholder": "Chọn phòng học"
         }
     }
 }
