@@ -14,7 +14,6 @@ function Content() {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/student' element={<StudentList />} />
-                <Route path='/student/import' element={<StudentImportForm />} />
                 <Route path='/category' element={<CategoryManagement />} />
                 <Route path='/module' element={<ModuleList />} />
                 <Route path='/module/register' element={<RegisterList />} />

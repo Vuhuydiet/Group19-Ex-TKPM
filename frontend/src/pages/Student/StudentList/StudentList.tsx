@@ -11,12 +11,14 @@ import { FileAPIServices } from "../../../services/fileAPIServices";
 import { useCategory } from '../../../contexts/CategoryProvider';
 import { useNotification } from '../../../contexts/NotificationProvider';
 import { dateFormatter } from '../../../utils/DateFormater';
+import StudentImportForm from '../Form/StudentImportForm/StudentImportForm';
 // import { useLoading } from '../components/LoadingContext';
 
 
 function StudentList() {
 
     const [students, setStudents] = useState<Student[]>([]);
+    const [isAddFormOpen, setIsAddFormOpen] = useState(false);
     const [cloneStudents, setCloneStudents] = useState<Student[]>([]);
     const { category } = useCategory();
     const { notify } = useNotification();
@@ -179,9 +181,11 @@ function StudentList() {
     return (
         <>
             {selectedStudent && <StudentItem selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} students={students} setStudents={setStudents} />}
+            {isAddFormOpen && <StudentImportForm setIsAddFormOpen={setIsAddFormOpen} setStudents={setStudents} />}
             <div className="board board--student">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
+                        <button onClick={() => setIsAddFormOpen(true)}>Add</button>
                         <div className="board__feature__item">
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />

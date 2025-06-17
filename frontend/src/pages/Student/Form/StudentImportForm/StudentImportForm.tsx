@@ -18,7 +18,12 @@ type Country = {
     code: string;
 }
 
-function StudentImportForm() {
+interface StudentImportFormProps {
+    setIsAddFormOpen: (isOpen: boolean) => void;
+    setStudents: (students: Student[]) => void;
+}
+
+function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormProps) {
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
@@ -80,7 +85,6 @@ function StudentImportForm() {
 
 
     async function handleAddStudent() {
-        console.log(student);
         if (student.id === ""
             || student.name === ""
             || student.dob === ""
@@ -100,59 +104,98 @@ function StudentImportForm() {
             return;
         }
 
-        // const email = student.email;
-        // if (!isValidEmail(email)) {
-        //     notify({ type: "error", msg: "Invalid email format" });
-        //     return;
-        // }
-
-        // const phone = student.phone;
-        // if (!isValidPhone(phone)) {
-        //     notify({ type: "error", msg: "Invalid phone number format" });
-        //     return;
-        // }
-
-
         try {
             const studentAPIServices = new StudentAPIServices();
             const response = await studentAPIServices.addStudent(student);
-            setStudent({
-                id: "",
-                name: "",
-                dob: "",
-                gender: "",
-                program: "",
-                academicYear: new Date().getFullYear(),
-                faculty: "",
-                permanentAddress: {
-                    city: "",
-                    district: "",
-                    ward: "",
-                    street: ""
-                },
-                temporaryAddress: {
-                    city: "",
-                    district: "",
-                    ward: "",
-                    street: ""
-                },
-                nationality: "",
-                identityDocument: {
-                    type: "",
-                    data: null
-                },
-                email: "",
-                phone: "",
-                status: "Đang học",
-            });
+            if (!response) {
+                notify({ type: "error", msg: "Add student failed" });
+                return;
+            }
+            const response1 = await studentAPIServices.getStudents();
+            if (!response1) {
+                notify({ type: "error", msg: "Get students failed" });
+                return;
+            }
 
-            console.log(response);
+            setStudents(response1);
+            setIsAddFormOpen(false);
+
+            // setStudent({
+            //     id: "",
+            //     name: "",
+            //     dob: "",
+            //     gender: "",
+            //     program: "",
+            //     academicYear: new Date().getFullYear(),
+            //     faculty: "",
+            //     permanentAddress: {
+            //         city: "",
+            //         district: "",
+            //         ward: "",
+            //         street: ""
+            //     },
+            //     temporaryAddress: {
+            //         city: "",
+            //         district: "",
+            //         ward: "",
+            //         street: ""
+            //     },
+            //     nationality: "",
+            //     identityDocument: {
+            //         type: "",
+            //         data: null
+            //     },
+            //     email: "",
+            //     phone: "",
+            //     status: "Đang học",
+            // });
+
+            // console.log(response);
+
             notify({ type: "success", msg: "Add student successfully" });
 
         } catch {
             notify({ type: "error", msg: "Add student failed" });
         }
     }
+
+    function handleCancel() {
+        setIsAddFormOpen(false);
+    }
+
+    function handleReset() {
+        setStudent({
+            id: "",
+            name: "",
+            dob: "",
+            gender: "",
+            program: "",
+            academicYear: new Date().getFullYear(),
+            faculty: "",
+            permanentAddress: {
+                city: "",
+                district: "",
+                ward: "",
+                street: ""
+            },
+            temporaryAddress: {
+                city: "",
+                district: "",
+                ward: "",
+                street: ""
+            },
+            nationality: "",
+            identityDocument: {
+                type: "",
+                data: null
+            },
+            email: "",
+            phone: "",
+            status: "Đang học",
+        });
+
+    }
+
 
     const [countries, setCountries] = useState<Country[]>([]);
 
@@ -189,159 +232,161 @@ function StudentImportForm() {
             {!isHidePermanentAddress && <StudentAddress title="Permanent Address" description="Enter student's permanent address" setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePermanentAddress} />}
             {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
             {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
-            <div className="form">
-                <div className="form__header">
-                    <div className="header__left">
-                        <h1>Student Addition</h1>
-                        <p>Import a new student information</p>
-                    </div>
-                    {/* <div className="productimport__right">
+            <div className="virtual-background">
+
+                <div className="form form--student">
+                    <div className="form__header">
+                        <div className="header__left">
+                            <h1>Student Addition</h1>
+                            <p>Import a new student information</p>
+                        </div>
+                        {/* <div className="productimport__right">
                         <input
                             value={student.academicYear === "" ? new Date().getFullYear().toString() : student.academicYear.slice(0, 4)}
                             onChange={(e) => setStudent({ ...student, academicYear: e.target.value })}
                             type="month" id="yearPicker" />
 
                     </div> */}
-                </div>
-
-                <div className="form__body">
-                    <div className="form__field">
-                        <span>ID</span>
-                        <input
-                            value={student.id}
-                            onChange={(e) => setStudent({ ...student, id: e.target.value })}
-                            type="text"
-                            placeholder="Enter student's ID" />
                     </div>
 
-                    {/* Input Price */}
-                    <div className="form__field">
-                        <span>Name</span>
-                        <input
-                            value={student.name}
-                            onChange={(e) => setStudent({ ...student, name: e.target.value })}
+                    <div className="form__body">
+                        <div className="form__field">
+                            <span>ID</span>
+                            <input
+                                value={student.id}
+                                onChange={(e) => setStudent({ ...student, id: e.target.value })}
+                                type="text"
+                                placeholder="Enter student's ID" />
+                        </div>
 
-                            type="text"
-                            placeholder="Enter student's name   " />
-                    </div>
+                        {/* Input Price */}
+                        <div className="form__field">
+                            <span>Name</span>
+                            <input
+                                value={student.name}
+                                onChange={(e) => setStudent({ ...student, name: e.target.value })}
 
-                    <div className="form__field">
-                        <span>Date of birth</span>
-                        <input
-                            value={student.dob}
-                            onChange={(e) => setStudent({ ...student, dob: e.target.value })}
-                            type="date"
-                            placeholder="Enter student's date of birth" />
-                    </div>
+                                type="text"
+                                placeholder="Enter student's name   " />
+                        </div>
 
-                    <div className="form__field">
-                        <span>Gender</span>
-                        <select
-                            value={student.gender}
-                            onChange={(e) => setStudent({ ...student, gender: e.target.value })}
-                        >
-                            <option value="" disabled>
-                                Choose student's gender
-                            </option>
-                            <option value="Nam">Nam</option>
-                            <option value="Nữ">Nữ</option>
+                        <div className="form__field">
+                            <span>Date of birth</span>
+                            <input
+                                value={student.dob}
+                                onChange={(e) => setStudent({ ...student, dob: e.target.value })}
+                                type="date"
+                                placeholder="Enter student's date of birth" />
+                        </div>
 
-                        </select>
-
-                    </div>
-
-                    <div className="form__field">
-                        <span>Faculty</span>
-                        <select
-                            value={student.faculty}
-                            onChange={(e) => setStudent({ ...student, faculty: e.target.value })}
-                        >
-                            <option value="" disabled>
-                                Choose student's faculty
-                            </option>
-                            {category.faculty.map((faculty, index) => (
-                                <option key={index} value={faculty.id}>
-                                    {faculty.name}
+                        <div className="form__field">
+                            <span>Gender</span>
+                            <select
+                                value={student.gender}
+                                onChange={(e) => setStudent({ ...student, gender: e.target.value })}
+                            >
+                                <option value="" disabled>
+                                    Choose student's gender
                                 </option>
-                            ))}
-                        </select>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
 
-                    </div>
+                            </select>
 
-                    <div className="form__field">
-                        <span>Program</span>
-                        <select
-                            value={student.program}
-                            onChange={(e) => setStudent({ ...student, program: e.target.value })}
-                        >
-                            <option value="" disabled>
-                                Choose student's program
-                            </option>
-                            {category.programs.map((program, index) => (
-                                <option key={index} value={program}>
-                                    {program}
+                        </div>
+
+                        <div className="form__field">
+                            <span>Faculty</span>
+                            <select
+                                value={student.faculty}
+                                onChange={(e) => setStudent({ ...student, faculty: e.target.value })}
+                            >
+                                <option value="" disabled>
+                                    Choose student's faculty
                                 </option>
-                            ))}
-                        </select>
+                                {category.faculty.map((faculty, index) => (
+                                    <option key={index} value={faculty.id}>
+                                        {faculty.name}
+                                    </option>
+                                ))}
+                            </select>
 
-                    </div>
+                        </div>
 
-                    <div className="form__field">
-                        <span>Permanent Address</span>
-                        <button onClick={
-                            () => setIsHidePermanentAddress(false)
-                        }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
-                            student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
-                            }</button>
-                    </div>
-
-                    <div className="form__field">
-                        <span>Email</span>
-                        <input
-                            value={student.email}
-                            type="text"
-                            onChange={(e) => {
-                                setStudent({ ...student, email: e.target.value });
-                            }
-                            }
-                            placeholder="Enter student's email" />
-                    </div>
-
-                    <div className="form__field">
-                        <span>Phone</span>
-                        <input
-                            value={student.phone}
-                            type="text"
-                            onChange={(e) => {
-                                setStudent({ ...student, phone: e.target.value });
-                            }
-                            }
-                            placeholder="Enter student's phone number" />
-                    </div>
-
-                    <div className="form__field">
-                        <span>Temporary Address</span>
-                        <button onClick={
-                            () => setIsHideTemporaryAddress(false)
-                        }>Enter student's temporary address</button>
-                    </div>
-
-                    <div className="form__field">
-                        <span>Nationality</span>
-                        <select
-                            value={student.nationality}
-                            onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
-                        >
-                            <option value="" disabled> Choose student's nationlity </option>
-                            {countries.map((country, index) => (
-                                <option key={index} value={country.code}>
-                                    {country.name}
+                        <div className="form__field">
+                            <span>Program</span>
+                            <select
+                                value={student.program}
+                                onChange={(e) => setStudent({ ...student, program: e.target.value })}
+                            >
+                                <option value="" disabled>
+                                    Choose student's program
                                 </option>
-                            ))}
-                        </select>
-                    </div>
+                                {category.programs.map((program, index) => (
+                                    <option key={index} value={program}>
+                                        {program}
+                                    </option>
+                                ))}
+                            </select>
 
-                    {/* <div className="form__field">
+                        </div>
+
+                        <div className="form__field">
+                            <span>Permanent Address</span>
+                            <button onClick={
+                                () => setIsHidePermanentAddress(false)
+                            }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
+                                student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
+                                }</button>
+                        </div>
+
+                        <div className="form__field">
+                            <span>Email</span>
+                            <input
+                                value={student.email}
+                                type="text"
+                                onChange={(e) => {
+                                    setStudent({ ...student, email: e.target.value });
+                                }
+                                }
+                                placeholder="Enter student's email" />
+                        </div>
+
+                        <div className="form__field">
+                            <span>Phone</span>
+                            <input
+                                value={student.phone}
+                                type="text"
+                                onChange={(e) => {
+                                    setStudent({ ...student, phone: e.target.value });
+                                }
+                                }
+                                placeholder="Enter student's phone number" />
+                        </div>
+
+                        <div className="form__field">
+                            <span>Temporary Address</span>
+                            <button onClick={
+                                () => setIsHideTemporaryAddress(false)
+                            }>Enter student's temporary address</button>
+                        </div>
+
+                        <div className="form__field">
+                            <span>Nationality</span>
+                            <select
+                                value={student.nationality}
+                                onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
+                            >
+                                <option value="" disabled> Choose student's nationlity </option>
+                                {countries.map((country, index) => (
+                                    <option key={index} value={country.code}>
+                                        {country.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* <div className="form__field">
                         <span>Identity</span>
                         <button onClick={
                             () => setIsHideIdentity(false)
@@ -349,29 +394,32 @@ function StudentImportForm() {
                             student.identityDocument.type + " - " + (student.identityDocument.data.ID ? student.identityDocument.data.ID : "")
                             }</button>
                     </div> */}
-                    <div className="form__field">
-                        <span>Identity</span>
-                        <button onClick={() => setIsHideIdentity(false)}>
-                            {student.identityDocument.type === "" ? "Choose student's identity" :
-                                `${student.identityDocument.type} - ${student.identityDocument.data
-                                    ? ('id' in student.identityDocument.data
-                                        ? student.identityDocument.data.id
-                                        : student.identityDocument.data.passportNumber)
-                                    : ""
-                                }`
-                            }
-                        </button>
+                        <div className="form__field">
+                            <span>Identity</span>
+                            <button onClick={() => setIsHideIdentity(false)}>
+                                {student.identityDocument.type === "" ? "Choose student's identity" :
+                                    `${student.identityDocument.type} - ${student.identityDocument.data
+                                        ? ('id' in student.identityDocument.data
+                                            ? student.identityDocument.data.id
+                                            : student.identityDocument.data.passportNumber)
+                                        : ""
+                                    }`
+                                }
+                            </button>
+                        </div>
+
                     </div>
 
-                </div>
-
-                <div className="form__footer">
-                    <div className="form__button">
-                        <button>Reset</button>
-                        <button onClick={handleAddStudent}>Add</button>
+                    <div className="form__footer">
+                        <div className="form__button">
+                            <button onClick={handleCancel}>Cancel</button>
+                            <button onClick={handleReset}>Reset</button>
+                            <button onClick={handleAddStudent}>Add</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </>
     );
 }
