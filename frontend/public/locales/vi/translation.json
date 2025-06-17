@@ -36,6 +36,7 @@
         "none": "Không có"
     },
     "tableHeading": {
+        "index": "STT",
         "id": "Mã",
         "name": "Tên",
         "email": "Email",
@@ -57,7 +58,10 @@
         "capacity": "Số lượng",
         "professor": "Giảng viên",
         "schedule": "Lịch học",
-        "room": "Phòng"
+        "room": "Phòng",
+        "studentId": "Mã học sinh",
+        "classId": "Mã lớp học",
+        "grade": "Điểm"
     },
     "button": {
         "add": "Thêm",
@@ -65,11 +69,15 @@
         "delete": "Xóa",
         "back": "Quay lại",
         "update": "Cập nhật",
+        "select": "Chọn",
+        "check": "Kiểm tra",
         "view": "Xem",
         "save": "Lưu",
         "cancel": "Hủy",
         "search": "Tìm kiếm",
+        "register": "Đăng ký",
         "reset": "Đặt lại",
+        "export": "Xuất",
         "exportXML": "Xuất XML",
         "importXML": "Nhập XML",
         "exportJSON": "Xuất JSON",
@@ -215,6 +223,16 @@
             "studentIdentityDocumentPlaceholder": "Chọn loại giấy tờ tùy thân",
             "studentPhonePlaceholder": "Nhập số điện thoại",
             "studentNationalityPlaceholder": "Chọn quốc tịch"
+        },
+        "courseRegistration": {
+            "courseRegistrationAddition": "Đăng ký môn học",
+            "courseRegistrationDescription": "Đăng ký môn học cho học sinh",
+            "courseStudent": "Học sinh",
+            "courseCourse": "Môn học",
+            "courseClass": "Lớp học",
+            "courseStudentPlaceholder": "Chọn học sinh",
+            "courseCoursePlaceholder": "Chọn môn học",
+            "courseClassPlaceholder": "Chọn lớp học"
         }
     }
 }

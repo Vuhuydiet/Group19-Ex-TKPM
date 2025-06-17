@@ -9,6 +9,7 @@ import ClassItemList from '../Overlay/ClassItemList/ClassItemList';
 import ModuleItemList from '../Overlay/ModuleItemList/ModuleItemList';
 import { CourseEnrollment, CourseEnrollmentAPIServices } from '../../../services/courseEnrollmentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
+import { useTranslation } from 'react-i18next';
 
 interface RegisterProps {
     setIsHide: (isHide: boolean) => void;
@@ -17,6 +18,7 @@ interface RegisterProps {
 }
 
 const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: RegisterProps) => {
+    const { t } = useTranslation();
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
     const [selectedModule, setSelectedModule] = useState<Module | null>(null);
     const [selectedClass, setSelectedClass] = useState<Class | null>(null);
@@ -136,14 +138,20 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
             <div className="virtual-background">
                 <div className="register">
                     <div className="register__header">
-                        <h1 className="register__title">Register</h1>
-                        <p className="register__description">Register modules for students</p>
+                        <h1 className="register__title">
+                            {t('addition.courseRegistration.courseRegistrationAddition')}
+                        </h1>
+                        <p className="register__description">
+                            {t('addition.courseRegistration.courseRegistrationDescription')}
+                        </p>
                     </div>
 
                     <div className="register__body">
                         <div className="body__item">
                             <div className="item__header">
-                                <h1>Student Selector</h1>
+                                <h1>
+                                    {t('addition.courseRegistration.courseStudent')}
+                                </h1>
                             </div>
 
                             <div className="item__body">
@@ -151,11 +159,13 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
                                     <input
                                         value={studentInput}
                                         type="text"
-                                        placeholder="Please enter student ID"
+                                        placeholder={t('addition.courseRegistration.courseStudentPlaceholder')}
                                         onChange={(e) => setStudentInput(e.target.value)}
+                                        disabled
                                     />
-                                    <button>Check</button>
-                                    <button onClick={() => setIsOpenOverlayForStudent(true)}>Search</button>
+                                    <button onClick={() => setIsOpenOverlayForStudent(true)}>
+                                        {t('button.search')}
+                                    </button>
                                 </div>
 
                                 <div className="body__info">
@@ -171,7 +181,9 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
 
                         <div className="body__item">
                             <div className="item__header">
-                                <h1>Module Selector</h1>
+                                <h1>
+                                    {t('addition.courseRegistration.courseCourse')}
+                                </h1>
                             </div>
 
                             <div className="item__body">
@@ -179,11 +191,13 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
                                     <input
                                         value={moduleInput}
                                         type="text"
-                                        placeholder="Please enter module ID"
+                                        placeholder={t('addition.courseRegistration.courseCoursePlaceholder')}
                                         onChange={(e) => setModuleInput(e.target.value)}
+                                        disabled
                                     />
-                                    <button>Check</button>
-                                    <button onClick={() => setIsOpenOverlayForModule(true)}>Search</button>
+                                    <button onClick={() => setIsOpenOverlayForModule(true)}>
+                                        {t('button.search')}
+                                    </button>
                                 </div>
 
                                 <div className="body__info">
@@ -199,7 +213,9 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
 
                         {selectedModule && <div className="body__item">
                             <div className="item__header">
-                                <h1>Class Selector</h1>
+                                <h1>
+                                    {t('addition.courseRegistration.courseClass')}
+                                </h1>
                             </div>
 
                             <div className="item__body">
@@ -207,11 +223,13 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
                                     <input
                                         value={classInput}
                                         type="text"
-                                        placeholder="Please enter class ID"
+                                        placeholder={t('addition.courseRegistration.courseClassPlaceholder')}
                                         onChange={(e) => setModuleInput(e.target.value)}
+                                        disabled
                                     />
-                                    <button>Check</button>
-                                    <button onClick={() => setIsOpenOverlayForClass(true)}>Search</button>
+                                    <button onClick={() => setIsOpenOverlayForClass(true)}>
+                                        {t('button.search')}
+                                    </button>
                                 </div>
 
                                 <div className="body__info">
@@ -227,9 +245,15 @@ const Register = ({ setIsHide, courseEnrollment, setCourseEnrollment }: Register
                     </div>
 
                     <div className="register__footer">
-                        <button onClick={handleCancel}>Cancel</button>
-                        <button>Reset</button>
-                        <button onClick={handleRegisterModule}>Register</button>
+                        <button onClick={handleCancel}>
+                            {t('button.cancel')}
+                        </button>
+                        <button>
+                            {t('button.reset')}
+                        </button>
+                        <button onClick={handleRegisterModule}>
+                            {t('button.register')}
+                        </button>
                     </div>
                 </div>
             </div>

@@ -2,15 +2,17 @@ import './register_list.css';
 import '../../../styles/board.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight, faSearch, faSort, faX } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faFileExport, faSearch, faSort, faX } from '@fortawesome/free-solid-svg-icons'
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import { CourseEnrollment, CourseEnrollmentAPIServices } from '../../../services/courseEnrollmentAPIServices';
 import Register from '../Form/Register';
 import { useNotification } from '../../../contexts/NotificationProvider';
 import { AcademicTranscriptAPIServices } from '../../../services/academicTranscriptAPIServices';
+import { useTranslation } from 'react-i18next';
 
 function RegisterList() {
+    const { t } = useTranslation();
     const { notify } = useNotification();
     const [courseEnrollment, setCourseEnrollment] = useState<CourseEnrollment[]>([]);
     const [cloneCourseEnrollment, setCloneCourseEnrollment] = useState<CourseEnrollment[]>([]);
@@ -156,7 +158,9 @@ function RegisterList() {
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
                         <div className="board__feature__item">
-                            <button onClick={() => setIsAddFormOpen(true)}>Add</button>
+                            <button onClick={() => setIsAddFormOpen(true)}>
+                                {t('button.add')}
+                            </button>
 
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />
@@ -167,7 +171,9 @@ function RegisterList() {
                                     setSortBy(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Sort</option>
+                                <option value="" disabled>
+                                    {t('filterHeading.sort')}
+                                </option>
                                 <option value="ID">ID</option>
                                 <option value="Name">Name</option>
                                 <option value="">None</option>
@@ -179,7 +185,7 @@ function RegisterList() {
                             value={search}
                             onChange={(e) => { setSearch(e.target.value) }}
                             type="text"
-                            placeholder="Search..." />
+                            placeholder={t('other.searching')} />
                         <button>
                             <FontAwesomeIcon icon={faSearch} className='icon__search' />
                         </button>
@@ -189,24 +195,36 @@ function RegisterList() {
                 <div className="board__table">
                     <div className="board__table__header">
                         <div className="board__table__attribute">
-                            <span>STT</span>
+                            <span>
+                                {t('tableHeading.index')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Student</span>
+                            <span>
+                                {t('tableHeading.studentId')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Class</span>
+                            <span>
+                                {t('tableHeading.classId')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Grade</span>
+                            <span>
+                                {t('tableHeading.grade')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Cancel</span>
+                            <span>
+                                {t('button.cancel')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Export</span>
+                            <span>
+                                {t('button.export')}
+                            </span>
                         </div>
                     </div>
 
@@ -229,7 +247,7 @@ function RegisterList() {
                                         handleCancel(item.studentId, item.classId);
                                     }
                                     }>
-                                        <FontAwesomeIcon icon={faX} className='icon__check' />
+                                        <FontAwesomeIcon icon={faFileExport} className='icon__check' />
                                     </button>
                                 </div>
 
@@ -248,7 +266,7 @@ function RegisterList() {
 
                     <div className="board__table__footer">
                         <div className="board__table__selected">
-                            <span>{courseEnrollment.length} course enrollment</span>
+                            <span>{courseEnrollment.length} {t('other.courseEnrollment')}</span>
 
                         </div>
 
