@@ -2,6 +2,8 @@
     "welcome": "Welcome!",
     "subWelcome1": "Remember, every small step brings you closer to success!",
     "subWelcome2": "Believe in yourself — great things await you today!",
+    "hi": "Hi",
+    "nothingDisplayDescription": "There is nothing to display here. Please check again later.",
     "mainTitle": "Dashboard",
     "sidebar": {
         "home": "Home",
