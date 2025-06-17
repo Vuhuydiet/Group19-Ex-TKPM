@@ -42,15 +42,21 @@
         "dob": "Ngày sinh",
         "gender": "Giới tính",
         "status": "Trạng thái",
-        "program": "Chương trình",
+        "program": "CT",
         "faculty": "Khoa",
         "academicYear": "Năm học",
-        "none": "Không có"
+        "none": "Không có",
+        "pernament": "Thường trú",
+        "temporary": "Tạm trú",
+        "identityDocument": "Giấy tờ tùy thân",
+        "phone": "SDT"
     },
     "button": {
         "add": "Thêm",
         "edit": "Chỉnh sửa",
         "delete": "Xóa",
+        "back": "Quay lại",
+        "update": "Cập nhật",
         "view": "Xem",
         "save": "Lưu",
         "cancel": "Hủy",
@@ -63,6 +69,8 @@
     },
     "other": {
         "student": "Học sinh",
-        "searching": "Tìm kiếm..."
+        "searching": "Tìm kiếm...",
+        "studentInfo": "Thông tin học sinh",
+        "chooseIdentityDocument": "Chọn loại giấy tờ tùy thân"
     }
 }

@@ -8,6 +8,7 @@ import { useCategory } from '../../../contexts/CategoryProvider';
 import StudentAddress from '../Form/StudentAddress/StudentAddress';
 import StudentIdentity from '../Form/StudentIdentity/StudentIdentity';
 import { dateFormatterInput } from '../../../utils/DateFormater';
+import { useTranslation } from 'react-i18next';
 // import { set } from 'lodash';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
@@ -26,6 +27,7 @@ interface identityDocument {
 
 
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
+    const { t } = useTranslation();
     const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
     const [isHideIdentity, setIsHideIdentity] = useState(true);
@@ -84,7 +86,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             <div className="virtual-background">
                 <div className="studentitem">
                     <div className="studentitem__header">
-                        <span>Student Information</span>
+                        <span>
+                            {t('other.studentInfo')}
+                        </span>
                     </div>
 
                     <div className="studentitem__body">
@@ -137,7 +141,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         studentInfo.identityDocument
                                             ? (
                                                 studentInfo.identityDocument.type === ""
-                                                    ? "Choose student's identity"
+                                                    ? t('other.chooseIdentityDocument')
                                                     : `${studentInfo.identityDocument.type} - ${studentInfo.identityDocument.data
                                                         ? ('id' in studentInfo.identityDocument.data
                                                             ? studentInfo.identityDocument.data.id
@@ -145,7 +149,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                                         : ""
                                                     }`
                                             )
-                                            : "Choose student's identity"
+                                            : t('other.chooseIdentityDocument')
                                     }
 
                                 </button>
@@ -156,7 +160,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                         <div className="studentitem__right">
                             <div className="studentitem__info">
                                 <div className="studentitem__info__item">
-                                    <span>DOB</span>
+                                    <span>
+                                        {t('tableHeading.dob')}
+                                    </span>
                                     <input
                                         value={studentInfo.dob ? dateFormatterInput(studentInfo.dob) : ""}
                                         type="date"
@@ -165,7 +171,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Email</span>
+                                    <span>
+                                        {t('tableHeading.email')}
+                                    </span>
                                     <input
                                         value={studentInfo.email}
                                         type="text"
@@ -174,7 +182,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Pernament</span>
+                                    <span>
+                                        {t('tableHeading.pernament')}
+                                    </span>
                                     <button
                                         style={{
                                             backgroundColor: isEdit ? "var(--main-color)" : "transparent",
@@ -193,7 +203,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Temporary</span>
+                                    <span>
+                                        {t('tableHeading.temporary')}
+                                    </span>
                                     <button
                                         style={{
                                             backgroundColor: isEdit ? "var(--main-color)" : "transparent",
@@ -216,7 +228,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Phone</span>
+                                    <span>
+                                        {t('tableHeading.phone')}
+                                    </span>
                                     <input
                                         value={studentInfo.phone}
                                         type="text"
@@ -225,7 +239,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Falcuty</span>
+                                    <span>
+                                        {t('tableHeading.faculty')}
+                                    </span>
                                     <select
                                         value={studentInfo.faculty}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, faculty: e.target.value })}
@@ -237,7 +253,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Program</span>
+                                    <span>
+                                        {t('tableHeading.program')}
+                                    </span>
                                     <select
                                         value={studentInfo.program}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, program: e.target.value })}
@@ -250,7 +268,9 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 </div>
 
                                 <div className="studentitem__info__item">
-                                    <span>Status</span>
+                                    <span>
+                                        {t('tableHeading.status')}
+                                    </span>
                                     <select
                                         value={studentInfo.status}
                                         onChange={(e) => setStudentInfo({ ...studentInfo, status: e.target.value })}
@@ -267,14 +287,20 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
                     <div className="studentitem__footer">
                         <div className="studentitem__button">
-                            <button onClick={() => setSelectedStudent(undefined)}>Back</button>
+                            <button onClick={() => setSelectedStudent(undefined)}>
+                                {t('button.cancel')}
+                            </button>
                             {/* <button>Delete</button> */}
-                            <button onClick={handleDelete}>Delete</button>
+                            <button onClick={handleDelete}>
+                                {t('button.delete')}
+                            </button>
                             <button onClick={() => setIsEdit(!isEdit)}>
-                                {isEdit ? "Cancel" : "Edit"}
+                                {isEdit ? t('button.back') : t('button.edit')}
                             </button>
                             <button onClick={handleSave}
-                            >Save</button>
+                            >
+                                {t('button.update')}
+                            </button>
                         </div>
                     </div>
                 </div>
