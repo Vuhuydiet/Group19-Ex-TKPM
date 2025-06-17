@@ -46,7 +46,7 @@
         "faculty": "Khoa",
         "academicYear": "Năm học",
         "none": "Không có",
-        "pernament": "Thường trú",
+        "permanent": "Thường trú",
         "temporary": "Tạm trú",
         "identityDocument": "Giấy tờ tùy thân",
         "phone": "SDT",
@@ -85,7 +85,11 @@
         "none": "Không có",
         "prerequisiteSelector": "Môn học tiên quyết",
         "prerequisitePDescription": "Chọn môn học tiên quyết",
-        "courseEnrollment": "Đăng ký khóa học"
+        "courseEnrollment": "Đăng ký khóa học",
+        "permanentAddress": "Địa chỉ thường trú",
+        "temporaryAddress": "Địa chỉ tạm trú",
+        "permanentAddressDescription": "Nhập địa chỉ thường trú của học sinh",
+        "temporaryAddressDescription": "Nhập địa chỉ tạm trú của học sinh"
     },
     "management": {
         "studentManagement": "Quản lý học sinh",
@@ -181,6 +185,36 @@
             "classProfessorPlaceholder": "Chọn giảng viên phụ trách",
             "classSchedulePlaceholder": "Nhập lịch học",
             "classRoomPlaceholder": "Chọn phòng học"
+        },
+        "student": {
+            "studentAddition": "Thêm học sinh",
+            "studentAdditionDescription": "Thêm học sinh mới",
+            "studentName": "Tên học sinh",
+            "studentId": "Mã học sinh",
+            "studentEmail": "Email học sinh",
+            "studentDob": "Ngày sinh",
+            "studentGender": "Giới tính",
+            "studentStatus": "Trạng thái học tập",
+            "studentProgram": "Chương trình học",
+            "studentFaculty": "Khoa phụ trách",
+            "studentPermanentAddress": "Địa chỉ thường trú",
+            "studentTemporaryAddress": "Địa chỉ tạm trú",
+            "studentIdentityDocument": "Giấy tờ tùy thân",
+            "studentPhone": "Số điện thoại",
+            "studentNationality": "Quốc tịch",
+            "studentIdPlaceholder": "Nhập mã học sinh",
+            "studentNamePlaceholder": "Nhập tên học sinh",
+            "studentEmailPlaceholder": "Nhập email học sinh",
+            "studentDobPlaceholder": "Chọn ngày sinh",
+            "studentGenderPlaceholder": "Chọn giới tính",
+            "studentStatusPlaceholder": "Chọn trạng thái học tập",
+            "studentProgramPlaceholder": "Chọn chương trình học",
+            "studentFacultyPlaceholder": "Chọn khoa phụ trách",
+            "studentPermanentAddressPlaceholder": "Nhập địa chỉ thường trú",
+            "studentTemporaryAddressPlaceholder": "Nhập địa chỉ tạm trú",
+            "studentIdentityDocumentPlaceholder": "Chọn loại giấy tờ tùy thân",
+            "studentPhonePlaceholder": "Nhập số điện thoại",
+            "studentNationalityPlaceholder": "Chọn quốc tịch"
         }
     }
 }

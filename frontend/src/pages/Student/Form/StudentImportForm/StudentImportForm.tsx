@@ -7,6 +7,7 @@ import StudentAddress from "../StudentAddress/StudentAddress";
 import "../../../../styles/form.css";
 import StudentIdentity from "../StudentIdentity/StudentIdentity";
 import { useCategory } from "../../../../contexts/CategoryProvider";
+import { useTranslation } from "react-i18next";
 
 interface identityDocument {
     type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
@@ -24,6 +25,7 @@ interface StudentImportFormProps {
 }
 
 function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormProps) {
+    const { t } = useTranslation();
     // const { setIsLoading } = useLoading();
     // const { setIsConfirmPrompt, setConfirmPromptData } = useConfirmPrompt();
     const { notify } = useNotification();
@@ -205,6 +207,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                 const res = await fetch("/mock/countries.json");
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
+                    return;
                 }
 
                 const data = await res.json();
@@ -237,8 +240,12 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                 <div className="form form--student">
                     <div className="form__header">
                         <div className="header__left">
-                            <h1>Student Addition</h1>
-                            <p>Import a new student information</p>
+                            <h1>
+                                {t("addition.student.studentAddition")}
+                            </h1>
+                            <p>
+                                {t("addition.student.studentAdditionDescription")}
+                            </p>
                         </div>
                         {/* <div className="productimport__right">
                         <input
@@ -251,42 +258,50 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
 
                     <div className="form__body">
                         <div className="form__field">
-                            <span>ID</span>
+                            <span>
+                                {t("addition.student.studentId")}
+                            </span>
                             <input
                                 value={student.id}
                                 onChange={(e) => setStudent({ ...student, id: e.target.value })}
                                 type="text"
-                                placeholder="Enter student's ID" />
+                                placeholder={t("addition.student.studentIdPlaceholder")} />
                         </div>
 
                         {/* Input Price */}
                         <div className="form__field">
-                            <span>Name</span>
+                            <span>
+                                {t("addition.student.studentName")}
+                            </span>
                             <input
                                 value={student.name}
                                 onChange={(e) => setStudent({ ...student, name: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter student's name   " />
+                                placeholder={t("addition.student.studentNamePlaceholder")} />
                         </div>
 
                         <div className="form__field">
-                            <span>Date of birth</span>
+                            <span>
+                                {t("addition.student.studentDob")}
+                            </span>
                             <input
                                 value={student.dob}
                                 onChange={(e) => setStudent({ ...student, dob: e.target.value })}
                                 type="date"
-                                placeholder="Enter student's date of birth" />
+                                placeholder={t("addition.student.studentDobPlaceholder")} />
                         </div>
 
                         <div className="form__field">
-                            <span>Gender</span>
+                            <span>
+                                {t("addition.student.studentGender")}
+                            </span>
                             <select
                                 value={student.gender}
                                 onChange={(e) => setStudent({ ...student, gender: e.target.value })}
                             >
                                 <option value="" disabled>
-                                    Choose student's gender
+                                    {t("addition.student.studentGenderPlaceholder")}
                                 </option>
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
@@ -296,13 +311,15 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                         </div>
 
                         <div className="form__field">
-                            <span>Faculty</span>
+                            <span>
+                                {t("addition.student.studentFaculty")}
+                            </span>
                             <select
                                 value={student.faculty}
                                 onChange={(e) => setStudent({ ...student, faculty: e.target.value })}
                             >
                                 <option value="" disabled>
-                                    Choose student's faculty
+                                    {t("addition.student.studentFacultyPlaceholder")}
                                 </option>
                                 {category.faculty.map((faculty, index) => (
                                     <option key={index} value={faculty.id}>
@@ -314,17 +331,19 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                         </div>
 
                         <div className="form__field">
-                            <span>Program</span>
+                            <span>
+                                {t("addition.student.studentProgram")}
+                            </span>
                             <select
                                 value={student.program}
                                 onChange={(e) => setStudent({ ...student, program: e.target.value })}
                             >
                                 <option value="" disabled>
-                                    Choose student's program
+                                    {t("addition.student.studentProgramPlaceholder")}
                                 </option>
                                 {category.programs.map((program, index) => (
-                                    <option key={index} value={program}>
-                                        {program}
+                                    <option key={index} value={program.id}>
+                                        {program.name}
                                     </option>
                                 ))}
                             </select>
@@ -332,16 +351,20 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                         </div>
 
                         <div className="form__field">
-                            <span>Permanent Address</span>
+                            <span>
+                                {t("addition.student.studentPermanentAddress")}
+                            </span>
                             <button onClick={
                                 () => setIsHidePermanentAddress(false)
-                            }>{student.permanentAddress.city === "" ? "Enter student's permanent address" :
+                            }>{student.permanentAddress.city === "" ? t("addition.student.studentPermanentAddressPlaceholder") :
                                 student.permanentAddress.street + ", " + student.permanentAddress.ward + ", " + student.permanentAddress.district + ", " + student.permanentAddress.city
                                 }</button>
                         </div>
 
                         <div className="form__field">
-                            <span>Email</span>
+                            <span>
+                                {t("addition.student.studentEmail")}
+                            </span>
                             <input
                                 value={student.email}
                                 type="text"
@@ -349,11 +372,13 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                     setStudent({ ...student, email: e.target.value });
                                 }
                                 }
-                                placeholder="Enter student's email" />
+                                placeholder={t("addition.student.studentEmailPlaceholder")} />
                         </div>
 
                         <div className="form__field">
-                            <span>Phone</span>
+                            <span>
+                                {t("addition.student.studentPhone")}
+                            </span>
                             <input
                                 value={student.phone}
                                 type="text"
@@ -361,23 +386,33 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                     setStudent({ ...student, phone: e.target.value });
                                 }
                                 }
-                                placeholder="Enter student's phone number" />
+                                placeholder={t("addition.student.studentPhonePlaceholder")} />
                         </div>
 
                         <div className="form__field">
-                            <span>Temporary Address</span>
+                            <span>
+                                {t("addition.student.studentTemporaryAddress")}
+                            </span>
                             <button onClick={
                                 () => setIsHideTemporaryAddress(false)
-                            }>Enter student's temporary address</button>
+                            }>
+                                {student.temporaryAddress.city === "" ? t("addition.student.studentTemporaryAddressPlaceholder") :
+                                    student.temporaryAddress.street + ", " + student.temporaryAddress.ward + ", " + student.temporaryAddress.district + ", " + student.temporaryAddress.city
+                                }
+                            </button>
                         </div>
 
                         <div className="form__field">
-                            <span>Nationality</span>
+                            <span>
+                                {t("addition.student.studentNationality")}
+                            </span>
                             <select
                                 value={student.nationality}
                                 onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
                             >
-                                <option value="" disabled> Choose student's nationlity </option>
+                                <option value="" disabled>
+                                    {t("addition.student.studentNationalityPlaceholder")}
+                                </option>
                                 {countries.map((country, index) => (
                                     <option key={index} value={country.code}>
                                         {country.name}
@@ -395,9 +430,11 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             }</button>
                     </div> */}
                         <div className="form__field">
-                            <span>Identity</span>
+                            <span>
+                                {t("addition.student.studentIdentityDocument")}
+                            </span>
                             <button onClick={() => setIsHideIdentity(false)}>
-                                {student.identityDocument.type === "" ? "Choose student's identity" :
+                                {student.identityDocument.type === "" ? t("addition.student.studentIdentityDocumentPlaceholder") :
                                     `${student.identityDocument.type} - ${student.identityDocument.data
                                         ? ('id' in student.identityDocument.data
                                             ? student.identityDocument.data.id
@@ -412,9 +449,15 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
 
                     <div className="form__footer">
                         <div className="form__button">
-                            <button onClick={handleCancel}>Cancel</button>
-                            <button onClick={handleReset}>Reset</button>
-                            <button onClick={handleAddStudent}>Add</button>
+                            <button onClick={handleCancel}>
+                                {t("button.cancel")}
+                            </button>
+                            <button onClick={handleReset}>
+                                {t("button.reset")}
+                            </button>
+                            <button onClick={handleAddStudent}>
+                                {t("button.add")}
+                            </button>
                         </div>
                     </div>
                 </div>

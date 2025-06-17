@@ -28,7 +28,7 @@ interface identityDocument {
 
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
     const { t } = useTranslation();
-    const [isHidePernamentAddress, setIsHidePernamentAddress] = useState(true);
+    const [isHidePermanentAddress, setIsHidePermanentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
     const [isHideIdentity, setIsHideIdentity] = useState(true);
     // const { setIsLoading } = useLoading();
@@ -80,8 +80,8 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
     return (
         <>
-            {!isHidePernamentAddress && <StudentAddress title="Pernament Address" description="Enter student's pernament address" setAddress={(address: any) => setStudentInfo({ ...studentInfo, permanentAddress: address })} setIsHide={setIsHidePernamentAddress} />}
-            {!isHideTemporaryAddress && <StudentAddress title="Temporary Address" description="Enter student's temporary address" setAddress={(address: any) => setStudentInfo({ ...studentInfo, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
+            {!isHidePermanentAddress && <StudentAddress title={t('other.permanentAddress')} description={t('other.permanentAddressDescription')} setAddress={(address: any) => setStudentInfo({ ...studentInfo, permanentAddress: address })} setIsHide={setIsHidePermanentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title={t('other.temporaryAddress')} description={t('other.temporaryAddressDescription')} setAddress={(address: any) => setStudentInfo({ ...studentInfo, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
             {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudentInfo({ ...studentInfo, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
             <div className="virtual-background">
                 <div className="studentitem">
@@ -183,7 +183,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
                                 <div className="studentitem__info__item">
                                     <span>
-                                        {t('tableHeading.pernament')}
+                                        {t('tableHeading.permanent')}
                                     </span>
                                     <button
                                         style={{
@@ -196,7 +196,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                                 if (!isEdit) {
                                                     return;
                                                 }
-                                                setIsHidePernamentAddress(false);
+                                                setIsHidePermanentAddress(false);
                                             }
                                         }
                                     >{studentInfo.permanentAddress.street}, {studentInfo.permanentAddress.ward}, {studentInfo.permanentAddress.district}, {studentInfo.permanentAddress.city}</button>
@@ -262,7 +262,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         disabled={!isEdit} >
                                         {category.programs.map((program, index) => (
 
-                                            <option key={index} value={program}>{program}</option>
+                                            <option key={index} value={program.id}>{program.name}</option>
                                         ))}
                                     </select>
                                 </div>
