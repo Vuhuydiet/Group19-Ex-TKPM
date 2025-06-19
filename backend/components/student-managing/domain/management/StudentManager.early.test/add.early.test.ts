@@ -140,7 +140,7 @@ describe('StudentManager.add() method', () => {
           status: { connect: { id: mockStudent.status?.id } },
           identityDocument: { connect: { id: 'identity-id' } },
           nationality: mockStudent.nationality,
-          program: { connect: { id: mockStudent.program?.id } },
+          program: { connect: { id: mockProgram.id } },
         })
       });
     });
