@@ -6,7 +6,8 @@ import { faArrowLeft, faArrowRight, faSearch, faFilter, faSort } from '@fortawes
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
-import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
+import { Student } from '../../../services/classes/Student';
+import { StudentAPIServices } from '../../../services/studentAPIServices';
 import { FileAPIServices } from "../../../services/fileAPIServices";
 import { useCategory } from '../../../contexts/CategoryProvider';
 import { useNotification } from '../../../contexts/NotificationProvider';
@@ -282,7 +283,7 @@ function StudentList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneStudents.length === 0 && <NothingDisplay />}
+                        {cloneStudents.length === 0 && <NothingDisplay desciption={t('other.noStudent') || ''} />}
                         {cloneStudents.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student) => (
                             <button
                                 onClick={() => {

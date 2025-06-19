@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import "./student_import_form.css";
-import { Student, StudentAPIServices } from "../../../../services/studentAPIServices";
+import { Student, Address } from "../../../../services/classes/Student";
+import { OldIdentityCard, NewIdentityCard, Passport } from "../../../../services/classes/IdentityDocument";
+import IdentityDocument from "../../../../services/classes/IdentityDocument";
+// import IdentityDocument from "../../../../services/classes/IdentityDocument";
+import { StudentAPIServices } from "../../../../services/studentAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
+
 // import { useConfirmPrompt } from "../components/ConfirmPromptContext";
 import StudentAddress from "../StudentAddress/StudentAddress";
 import "../../../../styles/form.css";
@@ -9,10 +14,7 @@ import StudentIdentity from "../StudentIdentity/StudentIdentity";
 import { useCategory } from "../../../../contexts/CategoryProvider";
 import { useTranslation } from "react-i18next";
 
-interface identityDocument {
-    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
-    data: any;
-}
+
 
 type Country = {
     name: string;
@@ -34,55 +36,15 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
     const [isHidePermanentAddress, setIsHidePermanentAddress] = useState(true);
     const [isHideTemporaryAddress, setIsHideTemporaryAddress] = useState(true);
     const [isHideIdentity, setIsHideIdentity] = useState(true);
-    const [student, setStudent] = useState<Student>({
-        id: "",
-        name: "",
-        dob: "",
-        gender: "",
-        program: "",
-        academicYear: new Date().getFullYear(),
-        faculty: "",
-        permanentAddress: {
-            city: "",
-            district: "",
-            ward: "",
-            street: ""
-        },
-        temporaryAddress: {
-            city: "",
-            district: "",
-            ward: "",
-            street: ""
-        },
-        nationality: "",
-        identityDocument: {
-            type: "",
-            data: null
-        },
-        email: "",
-        phone: "",
-        status: "DH",
-    });
+    const [student, setStudent] = useState<Student>(
+        new Student(
+            "", "", "", "", "", new Date().getFullYear(), "", // id, name, dob, gender, program, year, faculty
+            new Address("", "", "", ""), // permanentAddress
+            new Address("", "", "", ""), // temporaryAddress
+            "", "", null, "", "DH" // nationality, email, identityDocument, phone, status
+        )
+    );
 
-    // function isValidEmail(email: string, allowedDomain: string = "student.university.edu.vn"): boolean {
-    //     const escapedDomain = allowedDomain.replace(/\./g, '\\.');
-
-    //     const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${escapedDomain}$`);
-
-    //     return emailRegex.test(email);
-    // }
-
-    // function isValidPhone(phone: string, country: string = "VN"): boolean {
-    //     let phoneRegex;
-    //     switch (country) {
-    //         case "VN":
-    //             phoneRegex = /^(\+84|0)(3[2-9]|5[6-9]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$/;
-    //             break;
-    //         default:
-    //             return false;
-    //     }
-    //     return phoneRegex.test(phone);
-    // }
 
 
 
@@ -99,7 +61,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
             || student.permanentAddress.district === ""
             || student.permanentAddress.ward === ""
             || student.permanentAddress.street === ""
-            || student.identityDocument.type === ""
+            || !student.identityDocument 
         ) {
             // notify("Please fill in all fields", "error");
             notify({ type: "error", msg: "Please fill in all fields" });
@@ -122,37 +84,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
             setStudents(response1);
             setIsAddFormOpen(false);
 
-            // setStudent({
-            //     id: "",
-            //     name: "",
-            //     dob: "",
-            //     gender: "",
-            //     program: "",
-            //     academicYear: new Date().getFullYear(),
-            //     faculty: "",
-            //     permanentAddress: {
-            //         city: "",
-            //         district: "",
-            //         ward: "",
-            //         street: ""
-            //     },
-            //     temporaryAddress: {
-            //         city: "",
-            //         district: "",
-            //         ward: "",
-            //         street: ""
-            //     },
-            //     nationality: "",
-            //     identityDocument: {
-            //         type: "",
-            //         data: null
-            //     },
-            //     email: "",
-            //     phone: "",
-            //     status: "Đang học",
-            // });
-
-            // console.log(response);
+            
 
             notify({ type: "success", msg: "Add student successfully" });
 
@@ -166,36 +98,14 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
     }
 
     function handleReset() {
-        setStudent({
-            id: "",
-            name: "",
-            dob: "",
-            gender: "",
-            program: "",
-            academicYear: new Date().getFullYear(),
-            faculty: "",
-            permanentAddress: {
-                city: "",
-                district: "",
-                ward: "",
-                street: ""
-            },
-            temporaryAddress: {
-                city: "",
-                district: "",
-                ward: "",
-                street: ""
-            },
-            nationality: "",
-            identityDocument: {
-                type: "",
-                data: null
-            },
-            email: "",
-            phone: "",
-            status: "Đang học",
-        });
-
+        setStudent(
+          new Student(
+            "", "", "", "", "", new Date().getFullYear(), "",
+            new Address("", "", "", ""),
+            new Address("", "", "", ""),
+            "", "", null, "", "Đang học"
+          )
+        );
     }
 
 
@@ -232,9 +142,18 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
 
     return (
         <>
-            {!isHidePermanentAddress && <StudentAddress title={t('other.permanentAddress')} description={t('other.permanentAddressDescription')} setAddress={(address: any) => setStudent({ ...student, permanentAddress: address })} setIsHide={setIsHidePermanentAddress} />}
-            {!isHideTemporaryAddress && <StudentAddress title={t('other.temporaryAddress')} description={t('other.temporaryAddressDescription')} setAddress={(address: any) => setStudent({ ...student, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
-            {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudent({ ...student, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
+            {!isHidePermanentAddress && <StudentAddress title={t('other.permanentAddress')} description={t('other.permanentAddressDescription')} setAddress={(address: any) => setStudent(student.withUpdated({ permanentAddress: address }))} setIsHide={setIsHidePermanentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title={t('other.temporaryAddress')} description={t('other.temporaryAddressDescription')} setAddress={(address: any) => setStudent(student.withUpdated({  temporaryAddress: address }))} setIsHide={setIsHideTemporaryAddress} />}
+            {!isHideIdentity && <StudentIdentity
+                setStudentIdentity={(identityDoc: IdentityDocument) => {
+                    // Thêm ép kiểu 'as' ở đây
+                    setStudent(student.withUpdated({
+                        identityDocument: identityDoc as OldIdentityCard | NewIdentityCard | Passport
+                    }));
+                }}
+                setIsHide={setIsHideIdentity}
+            />}
+
             <div className="virtual-background">
 
                 <div className="form form--student">
@@ -263,7 +182,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <input
                                 value={student.id}
-                                onChange={(e) => setStudent({ ...student, id: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({  id: e.target.value }))}
                                 type="text"
                                 placeholder={t("addition.student.studentIdPlaceholder")} />
                         </div>
@@ -275,7 +194,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <input
                                 value={student.name}
-                                onChange={(e) => setStudent({ ...student, name: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({ name: e.target.value }))}
 
                                 type="text"
                                 placeholder={t("addition.student.studentNamePlaceholder")} />
@@ -287,7 +206,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <input
                                 value={student.dob}
-                                onChange={(e) => setStudent({ ...student, dob: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({ dob: e.target.value }))}
                                 type="date"
                                 placeholder={t("addition.student.studentDobPlaceholder")} />
                         </div>
@@ -298,7 +217,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <select
                                 value={student.gender}
-                                onChange={(e) => setStudent({ ...student, gender: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({ gender: e.target.value }))}
                             >
                                 <option value="" disabled>
                                     {t("addition.student.studentGenderPlaceholder")}
@@ -316,8 +235,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <select
                                 value={student.faculty}
-                                onChange={(e) => setStudent({ ...student, faculty: e.target.value })}
-                            >
+                                onChange={(e) => setStudent(student.withUpdated({ faculty: e.target.value }))}>
                                 <option value="" disabled>
                                     {t("addition.student.studentFacultyPlaceholder")}
                                 </option>
@@ -336,7 +254,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <select
                                 value={student.program}
-                                onChange={(e) => setStudent({ ...student, program: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({ program: e.target.value }))}
                             >
                                 <option value="" disabled>
                                     {t("addition.student.studentProgramPlaceholder")}
@@ -369,7 +287,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                 value={student.email}
                                 type="text"
                                 onChange={(e) => {
-                                    setStudent({ ...student, email: e.target.value });
+                                    setStudent(student.withUpdated({  email: e.target.value }));
                                 }
                                 }
                                 placeholder={t("addition.student.studentEmailPlaceholder")} />
@@ -383,7 +301,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                 value={student.phone}
                                 type="text"
                                 onChange={(e) => {
-                                    setStudent({ ...student, phone: e.target.value });
+                                    setStudent(student.withUpdated({ phone: e.target.value }));
                                 }
                                 }
                                 placeholder={t("addition.student.studentPhonePlaceholder")} />
@@ -408,7 +326,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             </span>
                             <select
                                 value={student.nationality}
-                                onChange={(e) => setStudent({ ...student, nationality: e.target.value })}
+                                onChange={(e) => setStudent(student.withUpdated({ nationality: e.target.value }))}
                             >
                                 <option value="" disabled>
                                     {t("addition.student.studentNationalityPlaceholder")}
@@ -429,21 +347,42 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                             student.identityDocument.type + " - " + (student.identityDocument.data.ID ? student.identityDocument.data.ID : "")
                             }</button>
                     </div> */}
-                        <div className="form__field">
+                        {/* <div className="form__field">
                             <span>
                                 {t("addition.student.studentIdentityDocument")}
                             </span>
                             <button onClick={() => setIsHideIdentity(false)}>
-                                {student.identityDocument.type === "" ? t("addition.student.studentIdentityDocumentPlaceholder") :
-                                    `${student.identityDocument.type} - ${student.identityDocument.data
-                                        ? ('id' in student.identityDocument.data
-                                            ? student.identityDocument.data.id
-                                            : student.identityDocument.data.passportNumber)
-                                        : ""
-                                    }`
-                                }
-                            </button>
-                        </div>
+                                {student.identityDocument === null
+                                    ? t("addition.student.studentIdentityDocumentPlaceholder")
+                                    : (() => {
+                                        if (student.identityDocument instanceof OldIdentityCard || student.identityDocument instanceof NewIdentityCard) {
+                                        return `${student.identityDocument.type} - ${student.identityDocument.id}`;
+                                        } else if (student.identityDocument instanceof Passport) {
+                                        return `${student.identityDocument.type} - ${student.identityDocument._passportNumber}`;
+                                        } else {
+                                            if (
+                                                student.identityDocument &&
+                                                typeof student.identityDocument === "object" &&
+                                                "type" in student.identityDocument
+                                            ) {
+                                                // @ts-expect-error: type narrowing for dynamic object
+                                                return student.identityDocument.type;
+                                            }
+                                            return "";
+                                        }
+                                    })()}
+                                </button>
+                        </div> */}
+                    <div className="form__field">
+                        <span>
+                            {t("addition.student.studentIdentityDocument")}
+                        </span>
+                        <button onClick={() => setIsHideIdentity(false)}>
+                            {student.identityDocument
+                                ? student.identityDocument.getDisplayInfo() // Sử dụng getDisplayInfo
+                                : t("addition.student.studentIdentityDocumentPlaceholder")}
+                        </button>
+                    </div>
 
                     </div>
 

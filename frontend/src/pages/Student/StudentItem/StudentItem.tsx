@@ -2,13 +2,16 @@ import './student_item.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarsStroke, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
+import { Student } from '../../../services/classes/Student';
+import { StudentAPIServices } from '../../../services/studentAPIServices';
 import { useNotification } from '../../../contexts/NotificationProvider';
 import { useCategory } from '../../../contexts/CategoryProvider';
 import StudentAddress from '../Form/StudentAddress/StudentAddress';
 import StudentIdentity from '../Form/StudentIdentity/StudentIdentity';
 import { dateFormatterInput } from '../../../utils/DateFormater';
 import { useTranslation } from 'react-i18next';
+import IdentityDocument, { OldIdentityCard, NewIdentityCard, Passport } from "../../../services/classes/IdentityDocument";
+
 // import { set } from 'lodash';
 // import { useLoading } from "./LoadingContext";
 // import { useConfirmPrompt } from './ConfirmPromptContext'
@@ -20,10 +23,6 @@ type StudentItemProps = {
     setStudents: any;
 }
 
-interface identityDocument {
-    type: "OldIdentityCard" | "NewIdentityCard" | "Passport" | "";
-    data: any;
-}
 
 
 function StudentItem({ selectedStudent, setSelectedStudent, students, setStudents }: StudentItemProps) {
@@ -80,9 +79,18 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
 
     return (
         <>
-            {!isHidePermanentAddress && <StudentAddress title={t('other.permanentAddress')} description={t('other.permanentAddressDescription')} setAddress={(address: any) => setStudentInfo({ ...studentInfo, permanentAddress: address })} setIsHide={setIsHidePermanentAddress} />}
-            {!isHideTemporaryAddress && <StudentAddress title={t('other.temporaryAddress')} description={t('other.temporaryAddressDescription')} setAddress={(address: any) => setStudentInfo({ ...studentInfo, temporaryAddress: address })} setIsHide={setIsHideTemporaryAddress} />}
-            {!isHideIdentity && <StudentIdentity setStudentIdentity={(identityDocument: identityDocument) => setStudentInfo({ ...studentInfo, identityDocument: identityDocument })} setIsHide={setIsHideIdentity} />}
+            {!isHidePermanentAddress && <StudentAddress title={t('other.permanentAddress')} description={t('other.permanentAddressDescription')} setAddress={(address: any) => setStudentInfo(studentInfo.withUpdated({permanentAddress: address }))} setIsHide={setIsHidePermanentAddress} />}
+            {!isHideTemporaryAddress && <StudentAddress title={t('other.temporaryAddress')} description={t('other.temporaryAddressDescription')} setAddress={(address: any) => setStudentInfo(studentInfo.withUpdated({ ...studentInfo, temporaryAddress: address }))} setIsHide={setIsHideTemporaryAddress} />}
+            {!isHideIdentity && <StudentIdentity
+                setStudentIdentity={(identityDoc: IdentityDocument) => {
+                    // Thêm ép kiểu 'as' ở đây
+                    setStudentInfo(studentInfo.withUpdated({
+                        identityDocument: identityDoc as OldIdentityCard | NewIdentityCard | Passport
+                    }));
+                }}
+                setIsHide={setIsHideIdentity}
+            />}
+            
             <div className="virtual-background">
                 <div className="studentitem">
                     <div className="studentitem__header">
@@ -102,7 +110,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     <input
                                         value={studentInfo.name}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({name: e.target.value }))}
                                         disabled={!isEdit} />
 
                                 </div>
@@ -111,13 +119,13 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     <input
                                         value={studentInfo.id}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, id: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ id: e.target.value }))}
                                         disabled={!isEdit} />
 
                                     <input
                                         value={studentInfo.academicYear}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, academicYear: Number(e.target.value) })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ academicYear: Number(e.target.value) }))}
                                         disabled={!isEdit} />
                                 </div>
                                 {/* 
@@ -131,27 +139,14 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                 >{studentInfo.identityDocument.type + " - " + studentInfo.identityDocument.data?.ID}</button> */}
                                 <button
                                     onClick={() => {
-                                        if (!isEdit) {
-                                            return;
-                                        }
+                                        if (!isEdit) return;
                                         setIsHideIdentity(false);
                                     }}
                                 >
-                                    {
-                                        studentInfo.identityDocument
-                                            ? (
-                                                studentInfo.identityDocument.type === ""
-                                                    ? t('other.chooseIdentityDocument')
-                                                    : `${studentInfo.identityDocument.type} - ${studentInfo.identityDocument.data
-                                                        ? ('id' in studentInfo.identityDocument.data
-                                                            ? studentInfo.identityDocument.data.id
-                                                            : studentInfo.identityDocument.data.passportNumber)
-                                                        : ""
-                                                    }`
-                                            )
-                                            : t('other.chooseIdentityDocument')
+                                    {studentInfo.identityDocument
+                                        ? studentInfo.identityDocument.getDisplayInfo() // Sử dụng getDisplayInfo
+                                        : t('other.chooseIdentityDocument')
                                     }
-
                                 </button>
 
                             </div>
@@ -166,7 +161,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     <input
                                         value={studentInfo.dob ? dateFormatterInput(studentInfo.dob) : ""}
                                         type="date"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, dob: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ ...studentInfo, dob: e.target.value }))}
                                         disabled={!isEdit} />
                                 </div>
 
@@ -177,7 +172,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     <input
                                         value={studentInfo.email}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, email: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ ...studentInfo, email: e.target.value }))}
                                         disabled={!isEdit} />
                                 </div>
 
@@ -234,7 +229,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     <input
                                         value={studentInfo.phone}
                                         type="text"
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({  phone: e.target.value }))}
                                         disabled={!isEdit} />
                                 </div>
 
@@ -244,7 +239,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     </span>
                                     <select
                                         value={studentInfo.faculty}
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, faculty: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ faculty: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.faculty.map((faculty, index) => (
                                             <option key={index} value={faculty.id}>{faculty.name}</option>
@@ -258,7 +253,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     </span>
                                     <select
                                         value={studentInfo.program}
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, program: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({  program: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.programs.map((program, index) => (
 
@@ -273,7 +268,7 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                     </span>
                                     <select
                                         value={studentInfo.status}
-                                        onChange={(e) => setStudentInfo({ ...studentInfo, status: e.target.value })}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ ...studentInfo, status: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.status.map((status, index) => (
                                             <option key={index} value={status.id}>{status.name}</option>
