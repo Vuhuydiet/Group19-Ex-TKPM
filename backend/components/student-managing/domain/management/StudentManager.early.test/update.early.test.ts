@@ -80,7 +80,7 @@ describe('StudentManager.update() method', () => {
       gender: 'Nam' as Gender,
       faculty: mockFaculty,
       academicYear: 2020,
-      program: 'High-Quality',
+      program: { id: 'HQ', name: 'High-Quality', description: 'High-Quality Program' },
       permanentAddress: mockPermanentAddress,
       temporaryAddress: mockTemporaryAddress,
       email: 'nguyenvana@example.com',
@@ -111,7 +111,7 @@ describe('StudentManager.update() method', () => {
         dob: new Date('2001-02-02'),
         gender: 'Nữ' as Gender,
         academicYear: 2021,
-        program: 'Regular',
+        program: { id: 'REG', name: 'Regular', description: 'Regular Program' },
         email: 'nguyenvanb@example.com',
         phone: '9876543210',
         nationality: 'USA'
