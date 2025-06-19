@@ -18,7 +18,7 @@ Content-Type: application/json
   "id": "22120413",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
-  "gender": "Nam",
+  "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
   "program": "Dai Tra",
@@ -54,7 +54,7 @@ Content-Type: application/json
   "id": "22120413",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
-  "gender": "Nam",
+  "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
   "program": "Dai Tra",
@@ -79,7 +79,7 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "VN"
+  "nationality": "Vietnamese"
 }
 
 ### Add new student with invalid email
@@ -90,7 +90,7 @@ Content-Type: application/json
   "id": "22120414",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
-  "gender": "Nam",
+  "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
   "program": "Dai Tra",
@@ -115,7 +115,7 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "VN"
+  "nationality": "Vietnamese"
 }
 
 ### Add new student with invalid phone number
@@ -126,7 +126,7 @@ Content-Type: application/json
   "id": "22120415",
   "name": "GROUP API TEST",
   "dob": "2025-03-12",
-  "gender": "Nam",
+  "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
   "program": "Dai Tra",
@@ -151,8 +151,8 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "VN"
+  "nationality": "Vietnamese"
 }
 
 ### Delete student
-DELETE http://localhost:3000/students/22120413
+DELETE http://localhost:3000/students/22120414
