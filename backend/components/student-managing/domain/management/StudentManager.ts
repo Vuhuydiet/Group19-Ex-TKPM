@@ -47,7 +47,7 @@ export class StudentManager {
         ? { connect: { id: identityDocument.id } }
         : undefined,
         nationality: student.nationality,
-        program: student.program,
+        program: { connect: { id: student.program.id } },
       },
     });
   }
@@ -67,6 +67,7 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true,
       },
     });
 
@@ -92,6 +93,7 @@ export class StudentManager {
       status: result.status,
       identityDocument: result.identityDocument || null,
       nationality: result.nationality,
+      program: result.program,
     } as unknown as Student;
   }
 
@@ -111,6 +113,7 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true,
       },
     });
 
@@ -132,6 +135,7 @@ export class StudentManager {
       status: result.status,
       identityDocument: result.identityDocument || null,
       nationality: result.nationality,
+      program: result.program,
     } as unknown as Student)));
   }
 

@@ -11,6 +11,7 @@ async function seedDatabase() {
   await prisma.faculty.deleteMany();
   await prisma.identityDocument.deleteMany();
   await prisma.address.deleteMany(); 
+  await prisma.program.deleteMany();
 
   // Insert data sequentially
   await insertAllowedEmailDomains();
@@ -18,6 +19,7 @@ async function seedDatabase() {
   await insertFaculties();
   await insertCoursesAndClasses();
   await insertAddresses();
+  await insertPrograms();
   await insertIdentityDocuments();
   await insertStudents();
 }
@@ -94,13 +96,23 @@ async function insertAddresses() {
   });
 }
 
+async function insertPrograms() {
+  await prisma.program.createMany({
+    data: [
+      { id: 'DT', name: 'Chương Trình Đại Trà', description: 'Chương trình đào tạo cử nhân hệ Đại trà' },
+      { id: 'CLC', name: 'Chương Trình Chất Lượng Cao', description: 'Chương trình đào tạo cử nhân chất lượng cao' },
+      { id: 'CNTN', name: 'Chương Trình Cử Nhân Tài Năng', description: 'Chương trình đào tạo cử nhân tài năng' },
+    ],
+  });
+}
+
 async function insertStudents() {
   await prisma.student.createMany({
     data: [
-      { id: 'S001', name: 'Nguyen Quoc Tuong', dob: new Date('2004-01-01'), gender: 'Male', facultyId: 'L', academicYear: 2023, program: 'Bachelor of Law', permanentAddressId: 'ADDR001', temporaryAddressId: null, email: 'nguyenquoctuong@student.edu.vn', phone: '0123456789', statusId: 'DH', identityDocumentId: null, nationality: 'VN' },
-      { id: 'S002', name: 'Tran Bao Tran', dob: new Date('2004-02-15'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranthib@student.edu.vn', phone: '0987654321', statusId: 'DH', identityDocumentId: null, nationality: 'VN' },
-      { id: 'S003', name: 'Nguyen Truong Vu', dob: new Date('2004-03-25'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR004', temporaryAddressId: 'ADDR005', email: 'nguyentruongvu@student.edu.vn', phone: '0987654322', statusId: 'DH', identityDocumentId: null, nationality: 'VN' },
-      { id: 'S004', name: 'Tran Quang Tuyen', dob: new Date('2004-05-05'), gender: 'Female', facultyId: 'TA', academicYear: 2023, program: 'Bachelor of English', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranquangtuyen@student.edu.vn', phone: '0987654323', statusId: 'DH', identityDocumentId: null, nationality: 'VN' },
+      { id: 'S001', name: 'Nguyen Quoc Tuong', dob: new Date('2004-01-01'), gender: 'Male', facultyId: 'L', academicYear: 2023, programId: 'CLC', permanentAddressId: 'ADDR001', temporaryAddressId: null, email: 'nguyenquoctuong@student.edu.vn', phone: '0123456789', statusId: 'DH', identityDocumentId: null, nationality: 'VN', createdAt: new Date(), updatedAt: new Date() },
+      { id: 'S002', name: 'Tran Bao Tran', dob: new Date('2004-02-15'), gender: 'Female', facultyId: 'TA', academicYear: 2023, programId: 'CNTN', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranthib@student.edu.vn', phone: '0987654321', statusId: 'DH', identityDocumentId: null, nationality: 'VN', createdAt: new Date(), updatedAt: new Date() },
+      { id: 'S003', name: 'Nguyen Truong Vu', dob: new Date('2004-03-25'), gender: 'Female', facultyId: 'TA', academicYear: 2023, programId: 'CLC', permanentAddressId: 'ADDR004', temporaryAddressId: 'ADDR005', email: 'nguyentruongvu@student.edu.vn', phone: '0987654322', statusId: 'DH', identityDocumentId: null, nationality: 'VN', createdAt: new Date(), updatedAt: new Date() },
+      { id: 'S004', name: 'Tran Quang Tuyen', dob: new Date('2004-05-05'), gender: 'Female', facultyId: 'TA', academicYear: 2023, programId: 'DT', permanentAddressId: 'ADDR002', temporaryAddressId: 'ADDR003', email: 'tranquangtuyen@student.edu.vn', phone: '0987654323', statusId: 'DH', identityDocumentId: null, nationality: 'VN', createdAt: new Date(), updatedAt: new Date() },
     ],
   });
 

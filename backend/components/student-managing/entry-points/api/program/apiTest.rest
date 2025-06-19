@@ -1,0 +1,27 @@
+### Get all programs
+GET http://localhost:3000/programs
+
+### Get program by id
+GET http://localhost:3000/programs/APCS
+
+### Create a new program
+POST http://localhost:3000/programs
+Content-Type: application/json
+
+{
+  "id": "APCS",
+  "name": "Bachelor of Computer Science",
+  "description": "Chương trình cử nhân Khoa học Máy tính"
+}
+
+### Update a program
+PUT http://localhost:3000/programs/APCS
+Content-Type: application/json
+
+{
+  "name": "Bachelor of Computer Science - Updated",
+  "description": "Chương trình cử nhân Khoa học Máy tính - Cập nhật"
+}
+
+### Delete a program
+DELETE http://localhost:3000/programs/APCS
