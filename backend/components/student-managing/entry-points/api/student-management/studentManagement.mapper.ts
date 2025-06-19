@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { Program } from "../../../domain/management/Program";
 
 export class StudentManagementMapper {
   public toStudent(request: Request) {
@@ -19,6 +20,13 @@ export class StudentManagementMapper {
       nationality,
     } = request.body;
 
+    // Ensure program is a Program object
+    const programObj: Program = {
+      id: program.id,
+      name: program.name,
+      description: program.description,
+    };
+
     const student = {
       id,
       name,
@@ -26,7 +34,7 @@ export class StudentManagementMapper {
       gender,
       faculty,
       academicYear,
-      program,
+      program: programObj,
       permanentAddress: {
         id: permanentAddress.id,
         city: permanentAddress.city,
@@ -36,13 +44,13 @@ export class StudentManagementMapper {
       },
       temporaryAddress: temporaryAddress
         ? {
-            id: temporaryAddress.id, 
+            id: temporaryAddress.id,
             city: temporaryAddress.city,
             district: temporaryAddress.district,
             ward: temporaryAddress.ward,
             street: temporaryAddress.street,
           }
-        : undefined, 
+        : undefined,
       email,
       phone,
       status,
