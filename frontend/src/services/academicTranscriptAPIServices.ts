@@ -26,25 +26,6 @@ export class AcademicTranscriptAPIServices {
     return response.data.metadata;
   };
 
-  // exportTranscriptToJson = async (studentId: string): Promise<string | undefined> => {
-  //   try {
-  //     const transcript = await this.getTranscript(studentId);
-
-  //     // Đặt tên file dựa vào student ID
-  //     const fileName = `transcript_${studentId}.json`;
-  //     const filePath = path.join(__dirname, fileName);
-
-  //     // Ghi dữ liệu ra file
-  //     fs.writeFileSync(filePath, JSON.stringify(transcript, null, 2), "utf-8");
-
-  //     console.log(`Export thành công: ${filePath}`);
-  //     return filePath; // Trả về đường dẫn file đã xuất
-  //   } catch (error) {
-  //     console.error("Lỗi khi export transcript:", error);
-  //   }
-    
-  // };
-
 
   exportTranscriptToJson = async (studentId: string): Promise<string | void> => {
     try {
@@ -67,11 +48,6 @@ export class AcademicTranscriptAPIServices {
       link.click(); // Tự động click để tải
       document.body.removeChild(link); // Dọn dẹp
       URL.revokeObjectURL(url); // Giải phóng URL blob
-
-      console.log("Export thành công!");
-
-
-
 
       return "success"; // Trả về đường dẫn file đã xuất
     } catch (error) {
