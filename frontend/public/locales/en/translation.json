@@ -266,5 +266,9 @@
         "expiredDatePlaceholder": "Select expiry date",
         "issuedCountryPlaceholder": "Select issued country",
         "notePlaceholder": "Enter note"
+    },
+    "gender": {
+        "male": "Male",
+        "female": "Female"
     }
 }

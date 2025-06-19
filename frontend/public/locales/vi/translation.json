@@ -266,5 +266,9 @@
         "expiredDatePlaceholder": "Chọn ngày hết hạn",
         "issuedCountryPlaceholder": "Chọn nước cấp",
         "notePlaceholder": "Nhập ghi chú"
+    },
+    "gender": {
+        "male": "Nam",
+        "female": "Nữ"
     }
 }

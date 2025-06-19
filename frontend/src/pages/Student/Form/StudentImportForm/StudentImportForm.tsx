@@ -222,8 +222,8 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                 <option value="" disabled>
                                     {t("addition.student.studentGenderPlaceholder")}
                                 </option>
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
+                                <option value="Male">{t('gender.male')}</option>
+                                <option value="Female">{t('gender.female')}</option>
 
                             </select>
 

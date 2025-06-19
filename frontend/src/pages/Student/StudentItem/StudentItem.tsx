@@ -48,9 +48,13 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             const { id, ...studentData } = studentInfo;
             const studentAPIServices = new StudentAPIServices();
             const response = await studentAPIServices.updateStudent(studentInfo.id, studentData);
-            notify({ type: "success", msg: "Student updated successfully" });
-            setStudents(students.map((student: Student) => student.id === response.id ? response : student));
-            setSelectedStudent(undefined);
+            if (response) {
+                notify({ type: "success", msg: "Student updated successfully" });
+                setStudents(students.map((student: Student) => student.id === response.id ? response : student));
+                setSelectedStudent(undefined);
+            } else {
+                notify({ type: "error", msg: "Update student failed" });
+            }
         } catch {
             notify({ type: "error", msg: "Update student failed" });
         }

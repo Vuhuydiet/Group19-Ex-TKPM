@@ -294,7 +294,7 @@ function StudentList() {
                                 <div className="board__table__attribute">{student.id}</div>
                                 <div className="board__table__attribute">{student.name}</div>
                                 <div className="board__table__attribute">{dateFormatter(student.dob)}</div>
-                                <div className="board__table__attribute">{student.gender}</div>
+                                <div className="board__table__attribute">{student.gender ? t(`gender.${student.gender.toLowerCase()}`) : ''}</div>
                                 <div className="board__table__attribute">{student.program}</div>
                                 <div className="board__table__attribute">{student.academicYear}</div>
                                 <div className="board__table__attribute">
