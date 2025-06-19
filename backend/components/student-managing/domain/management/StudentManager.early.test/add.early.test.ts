@@ -77,7 +77,7 @@ describe('StudentManager.add() method', () => {
       gender: 'Nam' as Gender,
       faculty: mockFaculty,
       academicYear: 2020,
-      program: 'High-Quality',
+      program: { id: 'HQ', name: 'High-Quality', description: 'High-Quality Program' },
       permanentAddress: mockPermanentAddress,
       temporaryAddress: mockTemporaryAddress,
       email: 'nguyenvana@example.com',
