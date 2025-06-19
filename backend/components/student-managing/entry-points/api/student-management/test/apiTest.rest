@@ -21,11 +21,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": {
-    "id": "APCS",
-    "name": "Chương Trình Tiên Tiến",
-    "description": "Chương Trình Tiên Tiến - Cử nhân Khoa học Máy tính"
-  },
+  "programId": "CLC",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -61,11 +57,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": {
-    "id": "APCS",
-    "name": "Chương Trình Tiên Tiến",
-    "description": "Chương Trình Tiên Tiến - Cử nhân Khoa học Máy tính"
-  },
+  "programId": "APCS",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -101,11 +93,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": {
-    "id": "APCS",
-    "name": "Chương Trình Tiên Tiến",
-    "description": "Chương Trình Tiên Tiến - Cử nhân Khoa học Máy tính"
-  },
+  "programId": "APCS",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -141,11 +129,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": {
-    "id": "APCS",
-    "name": "Chương Trình Tiên Tiến",
-    "description": "Chương Trình Tiên Tiến - Cử nhân Khoa học Máy tính"
-  },
+  "programId": "CLC",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",

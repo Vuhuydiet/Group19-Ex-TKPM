@@ -10,7 +10,7 @@ export class StudentManagementMapper {
       gender,
       faculty,
       academicYear,
-      program,
+      programId,
       permanentAddress,
       temporaryAddress,
       email,
@@ -20,13 +20,6 @@ export class StudentManagementMapper {
       nationality,
     } = request.body;
 
-    // Ensure program is a Program object
-    const programObj: Program = {
-      id: program.id,
-      name: program.name,
-      description: program.description,
-    };
-
     const student = {
       id,
       name,
@@ -34,7 +27,7 @@ export class StudentManagementMapper {
       gender,
       faculty,
       academicYear,
-      program: programObj,
+      program: programId, // just the id
       permanentAddress: {
         id: permanentAddress.id,
         city: permanentAddress.city,
