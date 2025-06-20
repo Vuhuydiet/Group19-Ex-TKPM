@@ -153,26 +153,46 @@ const StatusComponent = () => {
         notify({ type: "success", msg: "Update status successfully" });
     }
 
-    function handleDeleteStatus() {
-        // const index = status.indexOf(editStatus);
-        // status.splice(index, 1);
-        // setStatus([...status]);
-        // setCategory({ ...category, status: [...status] });
-        // setEditStatus({
-        //     id: "",
-        //     name: "",
-        //     description: null,
-        //     createdAt: ""
-        // });
-        // setEditNewStatus({
-        //     id: "",
-        //     name: "",
-        //     description: null,
-        //     createdAt: ""
-        // });
-
-        // notify({ type: "success", msg: "Delete status successfully" });
-
+    async function handleDeleteStatus() {
+        // 1. Kiểm tra xem đã có trạng thái nào được chọn để xóa chưa
+        if (!editStatus) {
+            notify({ type: "error", msg: "Please select a status to delete." });
+            return;
+        }
+    
+        // 2. Hỏi người dùng để xác nhận hành động xóa (Rất quan trọng!)
+        const confirmDelete = window.confirm(
+            `Are you sure you want to delete the status "${editStatus.name}"? This action cannot be undone.`
+        );
+    
+        if (!confirmDelete) {
+            return; // Nếu người dùng không đồng ý, dừng hàm tại đây
+        }
+    
+        // 3. Khởi tạo service và gọi API trong khối try...catch để xử lý lỗi
+        const studyStatusAPIServices = new StudyStatusAPIServices();
+        try {
+            // Gọi API để xóa trạng thái
+            await studyStatusAPIServices.deleteStudyStatus(editStatus.id);
+    
+            // Nếu xóa thành công, thông báo cho người dùng
+            notify({ type: "success", msg: "Status deleted successfully." });
+    
+            // Lấy lại danh sách trạng thái mới nhất từ server để cập nhật UI
+            const updatedStatuses = await studyStatusAPIServices.getStudyStatuses();
+            setCategory({ ...category, status: updatedStatuses });
+    
+            // Reset lại form chỉnh sửa về trạng thái ban đầu
+            handleCancel();
+    
+        } catch (error) {
+            // Nếu có lỗi xảy ra (ví dụ: không thể xóa trạng thái đang được sử dụng), thông báo lỗi
+            console.error("Failed to delete status:", error);
+            notify({ 
+                type: "error", 
+                msg: "Failed to delete status. It may be in use by one or more students." 
+            });
+        }
     }
 
     return (
