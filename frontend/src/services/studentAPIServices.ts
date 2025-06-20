@@ -7,9 +7,7 @@ import { OldIdentityCard, NewIdentityCard, Passport } from "./classes/IdentityDo
 const API_BASE_URL = "http://localhost:3000/students";
 
 export class StudentAPIServices {
-  // --- HÀM PARSESTUDENT ĐÃ ĐƯỢC SỬA LẠI HOÀN TOÀN ---
   private parseStudent(data: any): Student | null {
-    // Nếu bản ghi dữ liệu không hợp lệ, trả về null để lọc bỏ sau
     if (!data || !data.id) {
       console.error("Invalid student data received from API:", data);
       return null;
@@ -18,9 +16,8 @@ export class StudentAPIServices {
     let doc: OldIdentityCard | NewIdentityCard | Passport | null = null;
     const identityDocData = data.identityDocument;
 
-    // Chỉ parse nếu identityDocument tồn tại
     if (identityDocData) {
-      // Sửa lại logic: đọc trực tiếp từ identityDocData, không qua ".data" nữa
+      // ... (logic parse identityDocument giữ nguyên)
       if (identityDocData.type === "OldIdentityCard") {
         doc = new OldIdentityCard(
           identityDocData.id,
@@ -49,16 +46,18 @@ export class StudentAPIServices {
       }
     }
 
-    // Sử dụng optional chaining (?.) và nullish coalescing (??) để parse an toàn
+    const facultyId = typeof data.faculty === 'object' && data.faculty !== null 
+      ? data.faculty.id 
+      : data.faculty;
+
     return new Student(
       data.id,
       data.name ?? 'N/A',
       data.dob,
       data.gender ?? 'N/A',
-      data.faculty ?? 'N/A',
+      facultyId ?? 'N/A', // Sử dụng facultyId đã được xử lý
       data.academicYear ?? 0,
       data.program ?? 'N/A',
-      // Parse Address an toàn
       new Address(
         data.permanentAddress?.city ?? '',
         data.permanentAddress?.district ?? '',
@@ -78,6 +77,7 @@ export class StudentAPIServices {
       data.status ?? 'N/A'
     );
   }
+
 
   getStudents = async (): Promise<Student[]> => {
     const response = await axios.get(API_BASE_URL);
