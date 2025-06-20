@@ -34,7 +34,7 @@ class StudentManagerController {
     }
     
     async getStudents(req: Request, res: Response): Promise<void> {
-        const query: StudentQuery = req.body;
+        const query: StudentQuery = req.query as StudentQuery;
         const students = await StudentManagementService.getStudents(query);
         new OKResponse({
             metadata: students

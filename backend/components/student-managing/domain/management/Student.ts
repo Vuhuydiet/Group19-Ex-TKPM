@@ -3,7 +3,7 @@ import IdentityDocument from "./IdentityDocument";
 import { Program } from "./Program";
 
 
-export type Gender = 'Nam' | 'Nữ';
+export type Gender = 'Male' | 'Female';
 
 export type Address = {
   id: string;

@@ -1,7 +1,6 @@
 import { ImportExportService } from '../importExport.service';
 import ImportExportStrategyFactory from '../../import-export/impl/format.strategy.factory';
-import StudentManagementService, { StudentQuery, StudentData } from '../studentManagement.service';
-import { Student } from '../../management/Student';
+import StudentManagementService, { StudentQuery } from '../studentManagement.service';
 import { ParserType } from '../../import-export/impl/xml.strategy';
 import prisma from '../../../../../models';
 
@@ -19,22 +18,7 @@ export class ImportExportServiceImpl implements ImportExportService {
             // Fetch faculty and status if needed (optional, for strictness)
             // const faculty = await prisma.faculty.findUnique({ where: { id: studentData.faculty } });
             // const status = await prisma.studyStatus.findUnique({ where: { id: studentData.status } });
-            const student = new Student(
-                studentData.id,
-                studentData.name,
-                new Date(studentData.dob),
-                studentData.gender,
-                studentData.faculty,
-                studentData.academicYear,
-                program,
-                studentData.permanentAddress,
-                studentData.temporaryAddress,
-                studentData.email,
-                studentData.phone,
-                studentData.status,
-                studentData.identityDocument,
-                studentData.nationality
-            );
+
             await StudentManagementService.addStudent({
                 ...studentData,
                 program: studentData.programId // pass programId to service
