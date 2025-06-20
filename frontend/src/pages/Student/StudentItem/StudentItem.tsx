@@ -43,19 +43,73 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
             notify({ type: "error", msg: "Please fill in all fields" });
             return;
         }
-
+    
+        // 1. Tạo một object rỗng để chứa các thay đổi
+        const changes: Partial<Student> = {};
+    
+        // 2. So sánh từng trường giữa state hiện tại (studentInfo) và state gốc (selectedStudent)
+        // --- So sánh các trường đơn giản ---
+        if (studentInfo.name !== selectedStudent.name) changes.name = studentInfo.name;
+        if (studentInfo.dob !== selectedStudent.dob) changes.dob = studentInfo.dob;
+        if (studentInfo.gender !== selectedStudent.gender) changes.gender = studentInfo.gender;
+        if (studentInfo.academicYear !== selectedStudent.academicYear) changes.academicYear = studentInfo.academicYear;
+        if (studentInfo.email !== selectedStudent.email) changes.email = studentInfo.email;
+        if (studentInfo.phone !== selectedStudent.phone) changes.phone = studentInfo.phone;
+        if (studentInfo.nationality !== selectedStudent.nationality) changes.nationality = studentInfo.nationality;
+        
+        // --- So sánh các trường quan hệ (quan trọng!) ---
+        // Lấy ID của status hiện tại (có thể là string hoặc object)
+        const currentStatusId = (typeof studentInfo.status === 'object' && studentInfo.status?.id) ? studentInfo.status.id : studentInfo.status;
+        const originalStatusId = (typeof selectedStudent.status === 'object' && selectedStudent.status?.id) ? selectedStudent.status.id : selectedStudent.status;
+        
+        if (currentStatusId !== originalStatusId) {
+            changes.status = currentStatusId; // Chỉ thêm vào payload nếu status thay đổi
+        }
+    
+        // Tương tự cho faculty
+        const currentFacultyId = (typeof studentInfo.faculty === 'object' && studentInfo.faculty?.id) ? studentInfo.faculty.id : studentInfo.faculty;
+        const originalFacultyId = (typeof selectedStudent.faculty === 'object' && selectedStudent.faculty?.id) ? selectedStudent.faculty.id : selectedStudent.faculty;
+    
+        if (currentFacultyId !== originalFacultyId) {
+            changes.faculty = currentFacultyId;
+        }
+        
+        // So sánh programId
+        if (studentInfo.programId !== selectedStudent.programId) {
+            changes.programId = studentInfo.programId;
+        }
+        
+        // So sánh các object phức tạp như địa chỉ và giấy tờ tùy thân
+        // Cách đơn giản nhất là so sánh chuỗi JSON của chúng
+        if (JSON.stringify(studentInfo.permanentAddress) !== JSON.stringify(selectedStudent.permanentAddress)) {
+            changes.permanentAddress = studentInfo.permanentAddress;
+        }
+        if (JSON.stringify(studentInfo.temporaryAddress) !== JSON.stringify(selectedStudent.temporaryAddress)) {
+            changes.temporaryAddress = studentInfo.temporaryAddress;
+        }
+        if (JSON.stringify(studentInfo.identityDocument) !== JSON.stringify(selectedStudent.identityDocument)) {
+            changes.identityDocument = studentInfo.identityDocument;
+        }
+        
+        // 3. Kiểm tra xem có thay đổi nào không. Nếu không, không cần gọi API
+        if (Object.keys(changes).length === 0) {
+            notify({ type: "info", msg: "No changes to update." });
+            setSelectedStudent(undefined); // Đóng form
+            return;
+        }
+    
+        // 4. Gọi API chỉ với những dữ liệu đã thay đổi
         try {
-            const { id, ...studentData } = studentInfo;
             const studentAPIServices = new StudentAPIServices();
-            const response = await studentAPIServices.updateStudent(studentInfo.id, studentData);
+            const response = await studentAPIServices.updateStudent(studentInfo.id, changes);
+    
+            notify({ type: "success", msg: "Student updated successfully" });
             if (response) {
-                notify({ type: "success", msg: "Student updated successfully" });
-                setStudents(students.map((student: Student) => student.id === response.id ? response : student));
-                setSelectedStudent(undefined);
-            } else {
-                notify({ type: "error", msg: "Update student failed" });
+                setStudents(students.map((student: Student) => (student.id === response.id ? response : student)));
             }
-        } catch {
+            setSelectedStudent(undefined);
+        } catch (error) {
+            console.error("Update student failed:", error);
             notify({ type: "error", msg: "Update student failed" });
         }
     }
@@ -242,12 +296,13 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         {t('tableHeading.faculty')}
                                     </span>
                                     <select
-                                        value={studentInfo.faculty}
+                                        value={typeof studentInfo.faculty === 'object' ? studentInfo.faculty.id : studentInfo.faculty}
                                         onChange={(e) => setStudentInfo(studentInfo.withUpdated({ faculty: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.faculty.map((faculty, index) => (
                                             <option key={index} value={faculty.id}>{faculty.name}</option>
                                         ))}
+
                                     </select>
                                 </div>
 
@@ -271,8 +326,8 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         {t('tableHeading.status')}
                                     </span>
                                     <select
-                                        value={studentInfo.status}
-                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ ...studentInfo, status: e.target.value }))}
+                                        value={typeof studentInfo.status === 'object' ? studentInfo.status.id : studentInfo.status}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({ status: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.status.map((status, index) => (
                                             <option key={index} value={status.id}>{status.name}</option>
