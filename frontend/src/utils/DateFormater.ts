@@ -9,3 +9,8 @@ export const dateFormatter = (date: string | Date): string => {
     };
     return dateObj.toLocaleString('en-US', options);
 }
+
+export const dateFormatterInput = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0];
+};

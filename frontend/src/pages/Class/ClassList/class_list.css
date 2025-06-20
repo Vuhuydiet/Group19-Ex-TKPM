@@ -15,7 +15,7 @@
 }
 
 .board--class .board__table .board__table__attribute:nth-child(5) {
-    flex: 2;
+    flex: 4;
 }
 
 .board--class .board__table .board__table__attribute:nth-child(6) {

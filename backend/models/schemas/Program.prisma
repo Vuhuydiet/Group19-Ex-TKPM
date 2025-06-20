@@ -1,0 +1,6 @@
+model Program {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  students    Student[]
+}

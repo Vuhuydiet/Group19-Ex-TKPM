@@ -1,5 +1,7 @@
+import { DomainCode } from "../../../../core/responses/DomainCode";
+import { NotFoundError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
-import { Student } from "./Student";
+import { Gender, Student } from "./Student";
 
 export class StudentManager {
   async add(student: Student): Promise<void> {
@@ -47,18 +49,14 @@ export class StudentManager {
         ? { connect: { id: identityDocument.id } }
         : undefined,
         nationality: student.nationality,
-        program: student.program,
+        program: typeof student.program === 'string'
+          ? { connect: { id: student.program } }
+          : { connect: { id: student.program.id } },
       },
     });
   }
 
-  async remove(id: string): Promise<void> {
-    await prisma.student.delete({
-      where: { id },
-    });
-  }
-
-  async getStudentById(id: string): Promise<Student | null> {
+  async getStudentById(id: string) {
     const result = await prisma.student.findUnique({
       where: { id },
       include: {
@@ -67,32 +65,29 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true, 
       },
     });
 
-    if (!result) return null;
+    if (!result)
+      throw new NotFoundError(DomainCode.NOT_FOUND, 'Student not found');
 
-    return {
-      id: result.id,
-      name: result.name,
-      dob: result.dob,
-      gender: result.gender,
-      academicYear: result.academicYear,
-      email: result.email,
-      phone: result.phone,
-      permanentAddress: result.permanentAddressId
-        ? await prisma.address.findUnique({ where: { id: result.permanentAddressId } })
-        : null,
-      temporaryAddress: result.temporaryAddressId
-      ? await prisma.address.findUnique({ where: { id: result.temporaryAddressId } })
-      : null,
-      faculty: result.facultyId
-        ? await prisma.faculty.findUnique({ where: { id: result.facultyId } })
-        : null,
-      status: result.status,
-      identityDocument: result.identityDocument || null,
-      nationality: result.nationality,
-    } as unknown as Student;
+    return new Student(
+      result.id,
+      result.name,
+      result.dob,
+      result.gender as Gender,
+      result.faculty,
+      result.academicYear,
+      result.program,
+      result.permanentAddress,
+      result.temporaryAddress || undefined,
+      result.email,
+      result.phone,
+      result.status,
+      result.identityDocument as any,
+      result.nationality
+    );
   }
 
   async getStudents(query: { name?: string; faculty?: string }): Promise<Student[]> {
@@ -111,6 +106,7 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true, 
       },
     });
 
@@ -128,49 +124,120 @@ export class StudentManager {
       temporaryAddress: result.temporaryAddressId
         ? await prisma.address.findUnique({ where: { id: result.temporaryAddressId } })
         : null,
-      faculty: result.faculty,
-      status: result.status,
-      identityDocument: result.identityDocument || null,
+      faculty: result.faculty ?? (result.facultyId ? await prisma.faculty.findUnique({ where: { id: result.facultyId } }) : null),
+      status: result.status ?? (result.statusId ? await prisma.studyStatus.findUnique({ where: { id: result.statusId } }) : null),
+      identityDocument: result.identityDocument ?? (result.identityDocumentId ? await prisma.identityDocument.findUnique({ where: { id: result.identityDocumentId } }) : null),
       nationality: result.nationality,
+      program: result.program ?? null,
     } as unknown as Student)));
   }
 
-  async update(id: string, studentInfo: Partial<Student>): Promise<void> {
-    const updateData: any = { ...studentInfo };
+  // async update(id: string, studentInfo: Partial<Student>): Promise<void> {
+  //   const updateData: any = { ...studentInfo };
 
-    if (studentInfo.permanentAddress) {
-      updateData.permanentAddress = {
-        connect: { id: studentInfo.permanentAddress.id },
-      };
+  //   if (studentInfo.permanentAddress) {
+  //     updateData.permanentAddress = {
+  //       connect: { id: studentInfo.permanentAddress.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.temporaryAddress) {
+  //     updateData.temporaryAddress = {
+  //       connect: { id: studentInfo.temporaryAddress.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.faculty) {
+  //     updateData.faculty = {
+  //       connect: { id: studentInfo.faculty.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.status) {
+  //     updateData.status = {
+  //       connect: { id: studentInfo.status.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.identityDocument) {
+  //     updateData.identityDocument = {
+  //       connect: { id: studentInfo.identityDocument.id },
+  //     };
+  //   }
+
+  //   await prisma.student.update({
+  //     where: { id },
+  //     data: updateData,
+  //   });
+  // }
+
+
+
+  async update(id: string, studentInfo: Partial<Student> & { programId?: string }): Promise<void> {
+    // Tách các trường ra khỏi payload 'studentInfo'
+    const {
+        faculty,
+        status,
+        programId, // <-- Bây giờ TypeScript sẽ không báo lỗi nữa
+        permanentAddress,
+        temporaryAddress,
+        identityDocument,
+        ...scalarData // Gồm các trường còn lại như name, dob, gender...
+    } = studentInfo;
+
+    // Bắt đầu xây dựng object data cho Prisma với các trường đơn giản
+    const dataForPrisma: any = {
+        ...scalarData
+    };
+
+    // --- XỬ LÝ CÁC TRƯỜNG QUAN HỆ ---
+
+    // Chuyển đổi ID string từ payload sang object connect
+    if (faculty) {
+        dataForPrisma.faculty = { connect: { id: String(faculty) } };
+    }
+    if (status) {
+        dataForPrisma.status = { connect: { id: String(status) } };
+    }
+    if (programId) {
+        // Quan hệ trong Prisma tên là 'program'
+        dataForPrisma.program = { connect: { id: programId } };
+    }
+    
+    // Xử lý các object phức tạp
+    if (identityDocument) {
+        dataForPrisma.identityDocument = {
+            // Upsert: update nếu đã tồn tại, create nếu chưa
+            upsert: {
+                where: { id: String(identityDocument.id) },
+                update: { ...identityDocument, id: String(identityDocument.id) },
+                create: { ...identityDocument, id: String(identityDocument.id) }
+            }
+        };
+    }
+    if (permanentAddress) {
+        const { id: _addressId, ...addressData } = permanentAddress;
+        dataForPrisma.permanentAddress = { update: addressData };
+    }
+    if (temporaryAddress) {
+        const { id: _addressId, ...addressData } = temporaryAddress;
+        dataForPrisma.temporaryAddress = { update: addressData };
     }
 
-    if (studentInfo.temporaryAddress) {
-      updateData.temporaryAddress = {
-        connect: { id: studentInfo.temporaryAddress.id },
-      };
+    // Chỉ gọi update nếu có ít nhất một trường cần thay đổi
+    if (Object.keys(dataForPrisma).length > 0) {
+        await prisma.student.update({
+            where: { id },
+            data: dataForPrisma,
+        });
     }
-
-    if (studentInfo.faculty) {
-      updateData.faculty = {
-        connect: { id: studentInfo.faculty.id },
-      };
-    }
-
-    if (studentInfo.status) {
-      updateData.status = {
-        connect: { id: studentInfo.status.id },
-      };
-    }
-
-    if (studentInfo.identityDocument) {
-      updateData.identityDocument = {
-        connect: { id: studentInfo.identityDocument.id },
-      };
-    }
-
-    await prisma.student.update({
+  }
+  
+  
+ 
+  async remove(id: string): Promise<void> {
+    await prisma.student.delete({
       where: { id },
-      data: updateData,
     });
   }
 }

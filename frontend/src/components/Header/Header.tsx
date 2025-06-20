@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faList, faRightFromBracket, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faList, faRightFromBracket, faClock, faGraduationCap, faBook, faSchool, faCloud } from '@fortawesome/free-solid-svg-icons'
 import './header.css'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 // import { useNotification } from './components/NotificationContext'
 // import { useLoading } from './components/LoadingContext'
 
@@ -9,6 +10,7 @@ function Header() {
     // const { setIsLoading } = useLoading();
     // const { notify } = useNotification();
     // const { authorization } = useAuthorizations();
+    const { t } = useTranslation();
 
     return (
         <div className="header">
@@ -20,13 +22,13 @@ function Header() {
             <div className="header__nav">
                 <div className="header__nav__items">
                     <div className="header__nav__items__title">
-                        Dashboard
+                        {t('sidebarHeading.dashboard')}
                     </div>
                     <Link to='/'>
                         <div className="header__nav__items__content">
                             <div className="header__nav__item">
                                 <FontAwesomeIcon icon={faHome} className='icon__item' />
-                                <span>Home</span>
+                                <span>{t('sidebar.home')}</span>
                             </div>
                         </div>
                     </Link>
@@ -34,57 +36,39 @@ function Header() {
 
                 <div className="header__nav__items">
                     <div className="header__nav__items__title">
-                        Student
+                        {t('sidebarHeading.managementTool')}
                     </div>
                     <div className="header__nav__items__content">
                         <Link to='/student'>
                             <div className="header__nav__item">
-                                <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Management</span>
+                                <FontAwesomeIcon icon={faGraduationCap} className='icon__item' />
+                                <span>{t('sidebar.student')}</span>
                             </div>
                         </Link>
-                    </div>
-                    <div className="header__nav__items__content">
-                        <Link to='/student/import'>
-                            <div className="header__nav__item">
-                                <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Addition</span>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="header__nav__items">
-                    <div className="header__nav__items__title">
-                        Category
                     </div>
                     <div className="header__nav__items__content">
                         <Link to='/category'>
                             <div className="header__nav__item">
                                 <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Management</span>
+                                <span>{t('sidebar.category')}</span>
                             </div>
                         </Link>
                     </div>
-                </div>
 
-                <div className="header__nav__items">
-                    <div className="header__nav__items__title">
-                        Module
-                    </div>
                     <div className="header__nav__items__content">
                         <Link to='/module'>
                             <div className="header__nav__item">
-                                <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Management</span>
+                                <FontAwesomeIcon icon={faBook} className='icon__item' />
+                                <span>{t('sidebar.course')}</span>
                             </div>
                         </Link>
                     </div>
+
                     <div className="header__nav__items__content">
-                        <Link to='/module/register'>
+                        <Link to='/class'>
                             <div className="header__nav__item">
-                                <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Register</span>
+                                <FontAwesomeIcon icon={faSchool} className='icon__item' />
+                                <span>{t('sidebar.class')}</span>
                             </div>
                         </Link>
                     </div>
@@ -92,23 +76,25 @@ function Header() {
 
                 <div className="header__nav__items">
                     <div className="header__nav__items__title">
-                        Class
+                        {t('sidebarHeading.otherTool')}
                     </div>
+
                     <div className="header__nav__items__content">
-                        <Link to='/class'>
+                        <Link to='/module/register'>
                             <div className="header__nav__item">
-                                <FontAwesomeIcon icon={faList} className='icon__item' />
-                                <span>Management</span>
+                                <FontAwesomeIcon icon={faCloud} className='icon__item' />
+                                <span>{t('sidebar.classRegistration')}</span>
                             </div>
                         </Link>
                     </div>
                 </div>
+
             </div>
 
             <div className="header__footer">
                 <div className="header__footer__item">
                     <FontAwesomeIcon icon={faRightFromBracket} className='icon__logout' />
-                    <span>Logout</span>
+                    <span>{t('sidebar.logout')}</span>
                 </div>
             </div>
 

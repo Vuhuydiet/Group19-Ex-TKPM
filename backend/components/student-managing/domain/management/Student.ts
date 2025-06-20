@@ -1,8 +1,9 @@
 import { Faculty, StudyStatus } from "@prisma/client";
 import IdentityDocument from "./IdentityDocument";
+import { Program } from "./Program";
 
 
-export type Gender = 'Nam' | 'Nữ';
+export type Gender = 'Male' | 'Female';
 
 export type Address = {
   id: string;
@@ -19,13 +20,13 @@ export class Student {
   private _gender: Gender;
   private _faculty: Faculty;
   private _academicYear: number;
-  private _program: string;
+  private _program: Program;
   private _permanentAddress: Address;
   private _temporaryAddress?: Address;
   private _email: string;
   private _phone: string;
   private _status: StudyStatus;
-  private _identityDocument?: IdentityDocument;
+  private _identityDocument: IdentityDocument | null;
   private _nationality: string;
 
   constructor(
@@ -35,13 +36,13 @@ export class Student {
     gender: Gender,
     faculty: Faculty,
     academicYear: number,
-    program: string,
+    program: Program,
     permanentAddress: Address,
     temporaryAddress: Address | undefined,
     email: string,
     phone: string,
     status: StudyStatus,
-    identityDocument: IdentityDocument,
+    identityDocument: IdentityDocument | null,
     nationality: string
   ) {
     this._id = id;
@@ -84,7 +85,7 @@ export class Student {
     return this._academicYear;
   }
 
-  get program(): string {
+  get program(): Program {
     return this._program;
   }
 
@@ -108,7 +109,7 @@ export class Student {
     return this._status;
   }
 
-  get identityDocument(): IdentityDocument | undefined {
+  get identityDocument(): IdentityDocument | null {
     return this._identityDocument;
   }
 
@@ -136,7 +137,7 @@ export class Student {
     this._academicYear = accademicYear;
   }
 
-  set program(program: string) {
+  set program(program: Program) {
     this._program = program;
   }
 

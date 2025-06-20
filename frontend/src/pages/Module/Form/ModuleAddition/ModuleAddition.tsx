@@ -6,8 +6,10 @@ import './module_addition.css'
 import PrerequisiteSelector from "../PrerequisiteSelector/PrerequisiteSelector";
 import { CourseAPIServices } from "../../../../services/courseAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
+import { useTranslation } from "react-i18next";
 
 function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
+    const { t } = useTranslation();
     const { category } = useCategory();
     const [isPrerequisiteModuleOpen, setIsPrerequisiteModuleOpen] = useState(false);
     const [module, setModule] = useState<Module>({
@@ -190,8 +192,12 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
                 <div className="form form--module">
                     <div className="form__header">
                         <div className="header__left">
-                            <h1>Module Addition</h1>
-                            <p>Import a new module information</p>
+                            <h1>
+                                {t("addition.course.courseAddition")}
+                            </h1>
+                            <p>
+                                {t("addition.course.courseAdditionDescription")}
+                            </p>
                         </div>
                         {/* <div className="productimport__right">
                         <input
@@ -204,27 +210,33 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
 
                     <div className="form__body">
                         <div className="form__field">
-                            <span>ID</span>
+                            <span>
+                                {t('addition.course.courseId')}
+                            </span>
                             <input
                                 value={module.id}
                                 onChange={(e) => setModule({ ...module, id: e.target.value })}
                                 type="text"
-                                placeholder="Enter module's ID" />
+                                placeholder={t('addition.course.courseIdPlaceholder')} />
                         </div>
 
                         {/* Input Price */}
                         <div className="form__field">
-                            <span>Name</span>
+                            <span>
+                                {t('addition.course.courseName')}
+                            </span>
                             <input
                                 value={module.name}
                                 onChange={(e) => setModule({ ...module, name: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter module's name   " />
+                                placeholder={t('addition.course.courseNamePlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Credits</span>
+                            <span>
+                                {t('addition.course.courseCredits')}
+                            </span>
                             <input
                                 value={module.numOfCredits}
                                 onChange={(e) => {
@@ -237,17 +249,19 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
                                 }}
 
                                 type="text"
-                                placeholder="Enter module's name   " />
+                                placeholder="0" />
                         </div>
 
                         <div className="form__field">
-                            <span>Faculty</span>
+                            <span>
+                                {t('addition.course.courseFaculty')}
+                            </span>
                             <select
                                 value={module.faculty}
                                 onChange={(e) => setModule({ ...module, faculty: e.target.value })}
                             >
                                 <option value="" disabled>
-                                    Choose module's faculty
+                                    {t('addition.course.courseFacultyPlaceholder')}
                                 </option>
                                 {category.faculty.map((faculty, index) => (
                                     <option key={index} value={faculty.id}>
@@ -259,7 +273,9 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
                         </div>
 
                         <div className="form__field">
-                            <span>Description</span>
+                            <span>
+                                {t('addition.course.courseDescription')}
+                            </span>
                             <input
                                 value={module.description}
                                 onChange={(e) => {
@@ -267,17 +283,19 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
                                 }}
 
                                 type="text"
-                                placeholder="Enter module's name   " />
+                                placeholder={t('addition.course.courseDescriptionPlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Prerequisite Modules</span>
+                            <span>
+                                {t('addition.course.coursePrerequisite')}
+                            </span>
                             <button
                                 onClick={() => {
                                     setIsPrerequisiteModuleOpen(true);
                                 }}
 
-                            >{module.prerequisiteModules.length === 0 ? "Choose prerequisite modules" : module.prerequisiteModules.length + " Prerequisite Modules"}</button>
+                            >{module.prerequisiteModules.length === 0 ? t('addition.course.coursePrerequisitePlaceholder') : module.prerequisiteModules.length + " " + t('addition.course.coursePrerequisite')}</button>
                         </div>
                         {/* <div className="form__field">
                         <span>Identity</span>
@@ -292,9 +310,15 @@ function ModuleAdditionForm({ setIsAddFormOpen, setModules }: any) {
 
                     <div className="form__footer">
                         <div className="form__button">
-                            <button onClick={handleClose}>Close</button>
-                            <button>Reset</button>
-                            <button onClick={handleAdd}>Add</button>
+                            <button onClick={handleClose}>
+                                {t("button.cancel")}
+                            </button>
+                            <button>
+                                {t("button.reset")}
+                            </button>
+                            <button onClick={handleAdd}>
+                                {t("button.add")}
+                            </button>
                         </div>
                     </div>
                 </div>

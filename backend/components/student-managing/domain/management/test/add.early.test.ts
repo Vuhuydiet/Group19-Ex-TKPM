@@ -23,6 +23,7 @@ describe('StudentManager.add() method', () => {
   let mockFaculty: any;
   let mockStatus: any;
   let mockIdentityDocument: any;
+  let mockProgram: any;
 
   beforeEach(() => {
     studentManager = new StudentManager();
@@ -68,23 +69,29 @@ describe('StudentManager.add() method', () => {
         hasChip: true
       }
     };
-    
+
+    mockProgram = {
+      id: 'program-id',
+      name: 'Computer Science',
+      description: 'Computer Science Program'
+    };
+
     // Setup mock student
     mockStudent = {
       id: 'student-1',
       name: 'Nguyen Van A',
       dob: new Date('2000-01-01'),
-      gender: 'Nam' as Gender,
+      gender: 'Male' as Gender,
       faculty: mockFaculty,
       academicYear: 2020,
-      program: 'High-Quality',
+      program: mockProgram,
       permanentAddress: mockPermanentAddress,
       temporaryAddress: mockTemporaryAddress,
       email: 'nguyenvana@example.com',
       phone: '0123456789',
       status: mockStatus,
       identityDocument: mockIdentityDocument,
-      nationality: 'Việt Nam',
+      nationality: 'Vietnam',
       toJSON: jest.fn().mockReturnValue({})
     };
 
@@ -133,7 +140,7 @@ describe('StudentManager.add() method', () => {
           status: { connect: { id: mockStudent.status?.id } },
           identityDocument: { connect: { id: 'identity-id' } },
           nationality: mockStudent.nationality,
-          program: mockStudent.program,
+          program: { connect: { id: mockProgram.id } },
         })
       });
     });

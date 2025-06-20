@@ -1,12 +1,17 @@
 import './nothing_display.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCubes } from '@fortawesome/free-solid-svg-icons'
+import { useTranslation } from 'react-i18next';
 
-function NothingDisplay({ desciption = "It seems like there's nothing to display right now." }) {
+function NothingDisplay({ desciption }: { desciption: string | null }) {
+    const { t } = useTranslation();
+
     return (
         <div className="nothing__display">
             <div className="nothing__display__header">
-                <h2>Hi!</h2>
+                <h2>
+                    {t('hi')}
+                </h2>
                 <div className="nothing__display__icon">
 
                     <FontAwesomeIcon icon={faCubes} className="icon__nodisplay" />
@@ -14,7 +19,7 @@ function NothingDisplay({ desciption = "It seems like there's nothing to display
             </div>
 
             <div className="nothing__display__body">
-                <p>{desciption}</p>
+                <p>{desciption ? desciption : t('nothingDisplayDescription')}</p>
             </div>
 
         </div>

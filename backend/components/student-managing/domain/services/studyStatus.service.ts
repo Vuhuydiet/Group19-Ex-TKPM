@@ -9,17 +9,17 @@ export type StudyStatusData = {
 };
 
 export default class StudyStatusService {
-  public static async getStudyStatuses() {
+  public async getStudyStatuses() {
     return await prisma.studyStatus.findMany();
   }
 
-  public static async getStudyStatusById(id: string) {
+  public async getStudyStatusById(id: string) {
     return await prisma.studyStatus.findUnique({
       where: { id }
     });
   }
 
-  public static async addStudyStatus(studyStatusData: StudyStatusData) {
+  public async addStudyStatus(studyStatusData: StudyStatusData) {
     const studyStatus = await prisma.studyStatus.findUnique({
       where: { id: studyStatusData.id }
     });
@@ -31,13 +31,13 @@ export default class StudyStatusService {
     });
   }
 
-  public static async removeStudyStatus(id: string) {
+  public async removeStudyStatus(id: string) {
     return await prisma.studyStatus.delete({
       where: { id }
     });
   }
 
-  public static async updateStudyStatus(id: string, studyStatusData: Partial<StudyStatusData>) {
+  public async updateStudyStatus(id: string, studyStatusData: Partial<StudyStatusData>) {
     const studyStatus = await prisma.studyStatus.findUnique({
       where: { id }
     });
@@ -51,7 +51,7 @@ export default class StudyStatusService {
     });
   }
 
-  public static async getValidStudyStatusTransitions(from?: string, to?: string) {
+  public async getValidStudyStatusTransitions(from?: string, to?: string) {
     return await prisma.validStudyStatusTransition.findMany({
       where: {
         from: from,
@@ -60,7 +60,7 @@ export default class StudyStatusService {
     });
   }
 
-  public static async addValidStudyStatusTransition(from: string, to: string) {
+  public async addValidStudyStatusTransition(from: string, to: string) {
     const transition = await prisma.validStudyStatusTransition.findUnique({
       where: { from_to: { from, to } }
     });
@@ -72,7 +72,7 @@ export default class StudyStatusService {
     });
   }
 
-  public static async removeValidStudyStatusTransition(from: string, to: string) {
+  public async removeValidStudyStatusTransition(from: string, to: string) {
     return await prisma.validStudyStatusTransition.delete({
       where: { from_to: { from, to } }
     });

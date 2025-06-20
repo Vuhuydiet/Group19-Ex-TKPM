@@ -31,5 +31,12 @@ router.patch(
   facultyController.updateFaculty
 );
 
+router.delete(
+  '/:id',
+  param('id').isString().isLength({ min: 1, max: 255 }),
+  handleValidationErrors,
+  facultyController.deleteFaculty
+);
+
 
 export default router;

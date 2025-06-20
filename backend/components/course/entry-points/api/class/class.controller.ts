@@ -6,21 +6,23 @@ import { NotFoundError } from '../../../../../core/responses/ErrorResponse';
 import { DomainCode } from '../../../../../core/responses/DomainCode';
 
 export class ClassController {
+  constructor(private readonly classService = new ClassService()) {}
+  
   async create(req: Request, res: Response) {
     const data: ClassData = matchedData(req);
-    const result = await ClassService.create(data);
+    const result = await this.classService.create(data);
     new OKResponse({ message: 'Class created', metadata: result }).send(res);
   }
 
   async findAll(req: Request, res: Response) {
     const query = matchedData(req) as ClassQuery;
-    const result = await ClassService.findAll(query);
+    const result = await this.classService.findAll(query);
     new OKResponse({ message: 'Classes found', metadata: result }).send(res);
   }
 
   async findById(req: Request, res: Response) {
     const { id } = matchedData(req);
-    const result = await ClassService.findById(id);
+    const result = await this.classService.findById(id);
     if (!result) {
       throw new NotFoundError(DomainCode.UNKNOWN_ERROR, 'Class not found');
     }
@@ -29,13 +31,13 @@ export class ClassController {
 
   async update(req: Request, res: Response) {
     const { id, ...body } = matchedData(req);
-    const result = await ClassService.update(id, body);
+    const result = await this.classService.update(id, body);
     new OKResponse({ message: 'Class updated', metadata: result }).send(res);
   }
 
   async delete(req: Request, res: Response) {
     const { id } = matchedData(req);
-    const result = await ClassService.delete(id);
+    const result = await this.classService.delete(id);
     new OKResponse({ message: 'Class deleted', metadata: result }).send(res);
   }
 }

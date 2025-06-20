@@ -24,12 +24,3 @@ export class ValidStudyStatusTransitionAPIServices {
     }   
 }
 
-// export const addValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
-//     const response = await axios.post(API_BASE_URL, transition);
-//     return response.data.metadata.transition;
-// };
-
-// export const removeValidStudyStatusTransition = async (transition: ValidStudyStatusTransition): Promise<ValidStudyStatusTransition> => {
-//     const response = await axios.delete(API_BASE_URL, { data: transition });
-//     return response.data.metadata.transition;
-// };

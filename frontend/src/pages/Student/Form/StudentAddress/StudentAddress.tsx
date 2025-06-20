@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 import "./student_address.css"
 import "../../../../styles/form.css";
+import { useTranslation } from "react-i18next";
 
 interface AddressField {
     code: string;
@@ -10,6 +11,7 @@ interface AddressField {
 }
 
 function StudentAddress({ title, description, setAddress, setIsHide }: { title: string, description: string, setAddress: any, setIsHide: any }) {
+    const { t } = useTranslation();
     const [cities, setCities] = useState<any[]>([]);
     const [districts, setDistricts] = useState<any[]>([]);
     const [villages, setVillages] = useState<any[]>([]);
@@ -127,7 +129,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                     <div className="form__body">
 
                         <div className="form__field">
-                            <span>City</span>
+                            <span>
+                                {t("address.city")}
+                            </span>
 
                             <select
                                 value={selectedCity.code}
@@ -135,7 +139,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                                     code: e.target.value,
                                     name: e.target.options[e.target.selectedIndex].text
                                 })}>
-                                <option key={0} value="" disabled>Select provinces</option>
+                                <option key={0} value="" disabled>
+                                    {t("address.cityPlaceholder")}
+                                </option>
                                 {cities.map((city, index) => (
                                     <option key={index} value={city.code}>{city.name}</option>
                                 ))}
@@ -147,7 +153,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
 
 
                         <div className="form__field">
-                            <span>District</span>
+                            <span>
+                                {t("address.district")}
+                            </span>
 
                             <select
                                 value={selectedDistrict.code}
@@ -155,7 +163,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                                     code: e.target.value,
                                     name: e.target.options[e.target.selectedIndex].text
                                 })}>
-                                <option value="" disabled>Select districts</option>
+                                <option value="" disabled>
+                                    {t("address.districtPlaceholder")}
+                                </option>
                                 {districts && districts.length !== 0 &&
                                     districts.map((district, index) => (
                                         <option key={index} value={district.code}>{district.name}</option>
@@ -167,7 +177,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                         </div>
 
                         <div className="form__field">
-                            <span>Ward</span>
+                            <span>
+                                {t("address.ward")}
+                            </span>
 
                             <select
                                 value={selectedVillage.code}
@@ -176,7 +188,9 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                                     name: e.target.options[e.target.selectedIndex].text
                                 })}
                             >
-                                <option value="" disabled>Select villages</option>
+                                <option value="" disabled>
+                                    {t("address.wardPlaceholder")}
+                                </option>
                                 {villages && villages.length !== 0 && villages.map((village, index) => (
                                     <option key={index} value={village.code}>{village.name}</option>
                                 ))}
@@ -186,10 +200,12 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
                         </div>
 
                         <div className="form__field">
-                            <span>Street</span>
+                            <span>
+                                {t("address.street")}
+                            </span>
                             <input
                                 type="text"
-                                placeholder="House number, Street, ..."
+                                placeholder={t("address.streetPlaceholder")}
                                 value={selectedDetail}
                                 onChange={(e) => setSelectedDetail(e.target.value)}
                             />
@@ -199,8 +215,12 @@ function StudentAddress({ title, description, setAddress, setIsHide }: { title: 
 
                     <div className="form__footer">
                         <div className="form__button">
-                            <button onClick={handleReset}>Reset</button>
-                            <button onClick={handleSave}>Save</button>
+                            <button onClick={handleReset}>
+                                {t("button.reset")}
+                            </button>
+                            <button onClick={handleSave}>
+                                {t("button.save")}
+                            </button>
                         </div>
                     </div>
 
