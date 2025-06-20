@@ -49,6 +49,7 @@
     font-size: 12px;
     color: var(--text-in-background-color);
     font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .header__nav__items__content {

@@ -6,17 +6,21 @@ import { faArrowLeft, faArrowRight, faSearch, faFilter, faSort } from '@fortawes
 import NothingDisplay from '../../../components/NothingDisplay/NothingDisplay';
 
 import StudentItem from '../StudentItem/StudentItem';
-import { Student, StudentAPIServices } from '../../../services/studentAPIServices';
+import { Student } from '../../../services/classes/Student';
+import { StudentAPIServices } from '../../../services/studentAPIServices';
 import { FileAPIServices } from "../../../services/fileAPIServices";
 import { useCategory } from '../../../contexts/CategoryProvider';
 import { useNotification } from '../../../contexts/NotificationProvider';
 import { dateFormatter } from '../../../utils/DateFormater';
+import StudentImportForm from '../Form/StudentImportForm/StudentImportForm';
+import { useTranslation } from 'react-i18next';
 // import { useLoading } from '../components/LoadingContext';
 
 
 function StudentList() {
-
+    const { t } = useTranslation();
     const [students, setStudents] = useState<Student[]>([]);
+    const [isAddFormOpen, setIsAddFormOpen] = useState(false);
     const [cloneStudents, setCloneStudents] = useState<Student[]>([]);
     const { category } = useCategory();
     const { notify } = useNotification();
@@ -176,12 +180,21 @@ function StudentList() {
         reader.readAsText(file);
     };
 
+    const getProgramNameById = (programId: string): string => {
+        const program = category.programs.find(p => p.id === programId);
+        return program ? program.name : programId; // Nếu không tìm thấy, hiển thị ID
+    }
+
     return (
         <>
             {selectedStudent && <StudentItem selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} students={students} setStudents={setStudents} />}
+            {isAddFormOpen && <StudentImportForm setIsAddFormOpen={setIsAddFormOpen} setStudents={setStudents} />}
             <div className="board board--student">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
+                        <button onClick={() => setIsAddFormOpen(true)}>
+                            {t('button.add')}
+                        </button>
                         <div className="board__feature__item">
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />
@@ -192,10 +205,10 @@ function StudentList() {
                                     setSortBy(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Sort</option>
-                                <option value="ID">ID</option>
-                                <option value="Name">Name</option>
-                                <option value="">None</option>
+                                <option value="" disabled>{t('filterHeading.sort')}</option>
+                                <option value="ID">{t('tableHeading.id')}</option>
+                                <option value="Name">{t('tableHeading.name')}</option>
+                                <option value="">{t('filterValue.none')}</option>
                             </select>
                         </div>
                         <div className="board__feature__item">
@@ -208,10 +221,10 @@ function StudentList() {
                                     setGender(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="">None</option>
+                                <option value="" disabled>{t('filterHeading.gender')}</option>
+                                <option value="Male">Nam</option>
+                                <option value="Female">Nữ</option>
+                                <option value="">{t('filterValue.none')}</option>
                             </select>
                         </div>
 
@@ -225,11 +238,11 @@ function StudentList() {
                                     setFaculty(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Faculty</option>
+                                <option value="" disabled>{t('filterHeading.faculty')}</option>
                                 {category.faculty.map((item, index) => (
                                     <option key={index} value={item.id}>{item.name}</option>
                                 ))}
-                                <option value="">None</option>
+                                <option value="">{t('filterValue.none')}</option>
                             </select>
                         </div>
                     </div>
@@ -238,7 +251,7 @@ function StudentList() {
                             value={search}
                             onChange={(e) => { setSearch(e.target.value) }}
                             type="text"
-                            placeholder="Search..." />
+                            placeholder={t('other.searching')} />
                         <button onClick={() => handleSearch(search)}>
                             <FontAwesomeIcon icon={faSearch} className='icon__search' />
                         </button>
@@ -248,25 +261,25 @@ function StudentList() {
                 <div className="board__table">
                     <div className="board__table__header">
                         <div className="board__table__attribute">
-                            <span>ID</span>
+                            <span>{t('tableHeading.id')}</span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Name</span>
+                            <span>{t('tableHeading.name')}</span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>DOB</span>
-                        </div>
-
-                        <div className="board__table__attribute">
-                            <span>Gender</span>
+                            <span>{t('tableHeading.dob')}</span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Program</span>
+                            <span>{t('tableHeading.gender')}</span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>AcademicYear</span>
+                            <span>{t('tableHeading.program')}</span>
+                        </div>
+
+                        <div className="board__table__attribute">
+                            <span>{t('tableHeading.academicYear')}</span>
                         </div>
 
                         <div className="board__table__attribute">
@@ -275,7 +288,7 @@ function StudentList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneStudents.length === 0 && <NothingDisplay />}
+                        {cloneStudents.length === 0 && <NothingDisplay desciption={t('other.noStudent') || ''} />}
                         {cloneStudents.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((student: Student) => (
                             <button
                                 onClick={() => {
@@ -286,8 +299,8 @@ function StudentList() {
                                 <div className="board__table__attribute">{student.id}</div>
                                 <div className="board__table__attribute">{student.name}</div>
                                 <div className="board__table__attribute">{dateFormatter(student.dob)}</div>
-                                <div className="board__table__attribute">{student.gender}</div>
-                                <div className="board__table__attribute">{student.program}</div>
+                                <div className="board__table__attribute">{student.gender ? t(`gender.${student.gender.toLowerCase()}`) : ''}</div>
+                                <div className="board__table__attribute">{getProgramNameById(student.programId)}</div>
                                 <div className="board__table__attribute">{student.academicYear}</div>
                                 <div className="board__table__attribute">
                                     <div
@@ -300,12 +313,12 @@ function StudentList() {
 
                     <div className="board__table__footer">
                         <div className="board__table__selected">
-                            <span>{students.length} students</span>
+                            <span>{students.length} {t('other.student')}</span>
                             <button onClick={handleExportXML}>
-                                Export XML
+                                {t('button.exportXML')}
                             </button>
                             <button onClick={handleExportJSON}>
-                                Export JSON
+                                {t('button.exportJSON')}
                             </button>
 
                             {/* <button>
@@ -317,12 +330,12 @@ function StudentList() {
                             </button> */}
 
                             <label className="custom-file-upload">
-                                Import XML
+                                {t('button.importXML')}
                                 <input type="file" accept=".xml" onChange={handleImportXML} />
                             </label>
 
                             <label className="custom-file-upload">
-                                Import JSON
+                                {t('button.importJSON')}
                                 <input type="file" accept=".json" onChange={handleImportJSON} />
                             </label>
                         </div>

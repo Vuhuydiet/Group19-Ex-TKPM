@@ -1,4 +1,4 @@
-import { Faculty, Gender, Student, StudyStatus } from "../../../management/Student";
+// import { Faculty, Gender, Student, StudyStatus } from "../../../management/Student";
 
 export class StudentXMLParser {
     parse(jsonObj: any) {
@@ -10,6 +10,18 @@ export class StudentXMLParser {
                 : [jsonObj.students.student];
     
             for (const studentObj of studentList) {
+
+                const identityDocument = studentObj.identityDocument ? {
+                    // 1. Chuyển ID thành String
+                    id: studentObj.identityDocument.id !== undefined ? String(studentObj.identityDocument.id) : "",
+                    type: studentObj.identityDocument.type || "",
+                    // 2. Chuyển đổi Date thành ISO String
+                    issuedDate: studentObj.identityDocument.issuedDate ? new Date(studentObj.identityDocument.issuedDate).toISOString() : "",
+                    expiredDate: studentObj.identityDocument.expiredDate ? new Date(studentObj.identityDocument.expiredDate).toISOString() : "",
+                    issuedPlace: studentObj.identityDocument.issuedPlace || ""
+                } : null; // Nếu không có identityDocument thì trả về null
+
+
                 students.push({
                     id: studentObj.id !== undefined ? String(studentObj.id) : "",
                     name: studentObj.name || "",
@@ -33,7 +45,7 @@ export class StudentXMLParser {
                     email: studentObj.email || "",
                     phone: studentObj.phone !== undefined ? String(studentObj.phone) : "",
                     status: studentObj.status || "",
-                    identityDocument: studentObj.identityDocument || {},
+                    identityDocument:identityDocument || {},
                     nationality: studentObj.nationality || ""
                 });
             }

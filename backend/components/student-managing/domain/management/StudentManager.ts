@@ -133,45 +133,109 @@ export class StudentManager {
     } as unknown as Student)));
   }
 
-  async update(id: string, studentInfo: Partial<Student>): Promise<void> {
-    const updateData: any = { ...studentInfo };
+  // async update(id: string, studentInfo: Partial<Student>): Promise<void> {
+  //   const updateData: any = { ...studentInfo };
 
-    if (studentInfo.permanentAddress) {
-      updateData.permanentAddress = {
-        connect: { id: studentInfo.permanentAddress.id },
-      };
+  //   if (studentInfo.permanentAddress) {
+  //     updateData.permanentAddress = {
+  //       connect: { id: studentInfo.permanentAddress.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.temporaryAddress) {
+  //     updateData.temporaryAddress = {
+  //       connect: { id: studentInfo.temporaryAddress.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.faculty) {
+  //     updateData.faculty = {
+  //       connect: { id: studentInfo.faculty.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.status) {
+  //     updateData.status = {
+  //       connect: { id: studentInfo.status.id },
+  //     };
+  //   }
+
+  //   if (studentInfo.identityDocument) {
+  //     updateData.identityDocument = {
+  //       connect: { id: studentInfo.identityDocument.id },
+  //     };
+  //   }
+
+  //   await prisma.student.update({
+  //     where: { id },
+  //     data: updateData,
+  //   });
+  // }
+
+
+
+  async update(id: string, studentInfo: Partial<Student> & { programId?: string }): Promise<void> {
+    // Tách các trường ra khỏi payload 'studentInfo'
+    const {
+        faculty,
+        status,
+        programId, // <-- Bây giờ TypeScript sẽ không báo lỗi nữa
+        permanentAddress,
+        temporaryAddress,
+        identityDocument,
+        ...scalarData // Gồm các trường còn lại như name, dob, gender...
+    } = studentInfo;
+
+    // Bắt đầu xây dựng object data cho Prisma với các trường đơn giản
+    const dataForPrisma: any = {
+        ...scalarData
+    };
+
+    // --- XỬ LÝ CÁC TRƯỜNG QUAN HỆ ---
+
+    // Chuyển đổi ID string từ payload sang object connect
+    if (faculty) {
+        dataForPrisma.faculty = { connect: { id: String(faculty) } };
+    }
+    if (status) {
+        dataForPrisma.status = { connect: { id: String(status) } };
+    }
+    if (programId) {
+        // Quan hệ trong Prisma tên là 'program'
+        dataForPrisma.program = { connect: { id: programId } };
+    }
+    
+    // Xử lý các object phức tạp
+    if (identityDocument) {
+        dataForPrisma.identityDocument = {
+            // Upsert: update nếu đã tồn tại, create nếu chưa
+            upsert: {
+                where: { id: String(identityDocument.id) },
+                update: { ...identityDocument, id: String(identityDocument.id) },
+                create: { ...identityDocument, id: String(identityDocument.id) }
+            }
+        };
+    }
+    if (permanentAddress) {
+        const { id: _addressId, ...addressData } = permanentAddress;
+        dataForPrisma.permanentAddress = { update: addressData };
+    }
+    if (temporaryAddress) {
+        const { id: _addressId, ...addressData } = temporaryAddress;
+        dataForPrisma.temporaryAddress = { update: addressData };
     }
 
-    if (studentInfo.temporaryAddress) {
-      updateData.temporaryAddress = {
-        connect: { id: studentInfo.temporaryAddress.id },
-      };
+    // Chỉ gọi update nếu có ít nhất một trường cần thay đổi
+    if (Object.keys(dataForPrisma).length > 0) {
+        await prisma.student.update({
+            where: { id },
+            data: dataForPrisma,
+        });
     }
-
-    if (studentInfo.faculty) {
-      updateData.faculty = {
-        connect: { id: studentInfo.faculty.id },
-      };
-    }
-
-    if (studentInfo.status) {
-      updateData.status = {
-        connect: { id: studentInfo.status.id },
-      };
-    }
-
-    if (studentInfo.identityDocument) {
-      updateData.identityDocument = {
-        connect: { id: studentInfo.identityDocument.id },
-      };
-    }
-
-    await prisma.student.update({
-      where: { id },
-      data: updateData,
-    });
   }
-
+  
+  
+ 
   async remove(id: string): Promise<void> {
     await prisma.student.delete({
       where: { id },

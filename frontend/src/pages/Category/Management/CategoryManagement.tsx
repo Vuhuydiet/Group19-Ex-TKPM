@@ -3,8 +3,10 @@ import Faculty from "../Faculty/Faculty";
 import './category_management.css';
 import Program from "../Programs/Program";
 import Status from "../Status/Status";
+import { useTranslation } from "react-i18next";
 
 const CategoryManagement = () => {
+    const { t } = useTranslation();
     const [typeCategory, setTypeCategory] = useState<"Faculty" | "Program" | "Status">('Faculty');
 
     return (
@@ -13,7 +15,7 @@ const CategoryManagement = () => {
                 <div className="management__header">
                     <div className="management__nav">
                         <div className="label-item"
-                            style={{ left: typeCategory === 'Faculty' ? '0' : typeCategory === 'Program' ? '80px' : '160px' }}
+                            style={{ left: typeCategory === 'Faculty' ? '0' : typeCategory === 'Program' ? '100px' : '200px' }}
                         ></div>
 
                         <input
@@ -25,7 +27,9 @@ const CategoryManagement = () => {
                         />
                         <label htmlFor="faculty"
                             style={{ color: typeCategory === 'Faculty' ? 'var(--text-in-background-color)' : 'var(--main-color)' }}
-                        >Faculty</label>
+                        >
+                            {t('tableHeading.faculty')}
+                        </label>
 
                         <input
                             type="radio"
@@ -36,7 +40,9 @@ const CategoryManagement = () => {
                         />
                         <label htmlFor="program"
                             style={{ color: typeCategory === 'Program' ? '#fff' : 'var(--main-color)' }}
-                        >Program</label>
+                        >
+                            {t('tableHeading.program')}
+                        </label>
 
                         <input
                             type="radio"
@@ -47,7 +53,9 @@ const CategoryManagement = () => {
                         />
                         <label htmlFor="status"
                             style={{ color: typeCategory === 'Status' ? '#fff' : 'var(--main-color)' }}
-                        >Status</label>
+                        >
+                            {t('tableHeading.status')}
+                        </label>
                     </div>
                 </div>
 

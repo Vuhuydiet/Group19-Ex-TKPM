@@ -4,15 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
+import { useTranslation } from "react-i18next";
+import { Program } from "../../../services/programAPIServices";
 
-const Program = () => {
+const ProgramComponent = () => {
     const { notify } = useNotification();
+    const { t } = useTranslation();
+    // const { category, setCategory } = useCategory();
+    const { category } = useCategory();
 
-    const { category, setCategory } = useCategory();
-    const [program, setProgram] = useState<string[]>([]);
-    const [newProgram, setNewProgram] = useState<string>("");
-    const [editProgram, setEditProgram] = useState<string>("");
-    const [editNewProgram, setEditNewProgram] = useState<string>("");
+    const [newProgram, setNewProgram] = useState<Program>({
+        id: "",
+        name: "",
+        description: "",
+        createdAt: "",
+    });
+    const [editProgram, setEditProgram] = useState<Program | null>(null);
+    const [editNewProgram, setEditNewProgram] = useState<Program>({
+        id: "",
+        name: "",
+        description: "",
+        createdAt: "",
+    });
     const [page, setPage] = useState(1);
 
     const [amountItem, setAmountItem] = useState(0);
@@ -43,14 +56,9 @@ const Program = () => {
     }, []);
 
 
-    useEffect(() => {
-        setProgram(category.programs);
-    }, []);
-
-
 
     function increasePage() {
-        if (page < Math.ceil(program.length / amountItem)) {
+        if (page < Math.ceil(category.programs.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -62,61 +70,66 @@ const Program = () => {
     }
 
     function handleCancel() {
-        setEditProgram("");
-        setEditNewProgram("");
+        setEditProgram(null);
+        setEditNewProgram({
+            id: "",
+            name: "",
+            description: "",
+            createdAt: "",
+        });
     }
 
     function handleAddProgram() {
-        if (newProgram === "") {
-            notify({ type: "error", msg: "program name cannot be empty" });
-            return;
-        }
+        // if (newProgram === "") {
+        //     notify({ type: "error", msg: "program name cannot be empty" });
+        //     return;
+        // }
 
-        if (program.includes(newProgram)) {
-            notify({ type: "warning", msg: "program name already exists" });
-            return;
-        }
+        // if (category.programs.includes(newProgram)) {
+        //     notify({ type: "warning", msg: "program name already exists" });
+        //     return;
+        // }
 
-        setProgram([...program, newProgram]);
-        setCategory({ ...category, programs: [...program, newProgram] });
-        setNewProgram("");
 
-        notify({ type: "success", msg: "Update program successfully" });
+        // setCategory({ ...category, programs: [...category.programs] });
+        // setNewProgram("");
+
+        // notify({ type: "success", msg: "Update program successfully" });
     }
 
     function handleUpdateProgram() {
-        if (editNewProgram === "") {
-            notify({ type: "error", msg: "program name cannot be empty" });
+        if (editNewProgram.name === "") {
+            notify({ type: "error", msg: "Program name cannot be empty" });
             return;
         }
 
-        if (program.includes(editNewProgram)) {
-            notify({ type: "warning", msg: "program name already exists" });
+        if (category.programs.includes(editNewProgram)) {
+            notify({ type: "warning", msg: "Program already exists" });
             return;
         }
 
-        if (editNewProgram === editProgram) {
-            notify({ type: "warning", msg: "program name is the same" });
+        if (editProgram && editNewProgram.name === editProgram.name) {
+            notify({ type: "warning", msg: "Program name is the same" });
             return;
         }
 
-        const index = program.indexOf(editProgram);
-        program[index] = editNewProgram;
-        setProgram([...program]);
-        setCategory({ ...category, programs: [...program] });
-        setEditProgram("");
-        setEditNewProgram("");
+        // const index = program.indexOf(editProgram);
+        // program[index] = editNewProgram;
+        // setProgram([...program]);
+        // setCategory({ ...category, programs: [...program] });
+        // setEditProgram("");
+        // setEditNewProgram("");
 
         notify({ type: "success", msg: "Update program successfully" });
     }
 
     function handleDeleteProgram() {
-        const index = program.indexOf(editProgram);
-        program.splice(index, 1);
-        setProgram([...program]);
-        setCategory({ ...category, programs: [...program] });
-        setEditProgram("");
-        setEditNewProgram("");
+        // const index = program.indexOf(editProgram);
+        // program.splice(index, 1);
+        // setProgram([...program]);
+        // setCategory({ ...category, programs: [...program] });
+        // setEditProgram("");
+        // setEditNewProgram("");
 
         notify({ type: "success", msg: "Delete program successfully" });
 
@@ -126,66 +139,125 @@ const Program = () => {
         <>
             <div className="category">
                 <div className="category__left">
-                    {editProgram !== "" &&
+                    {editProgram &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
-                                <h3>Program Management</h3>
-                                <p>Edit specific program</p>
+                                <h3>
+                                    {t("management.program.programManagement")}
+                                </h3>
+                                <p>
+                                    {t("management.program.programManagementDescription1")}
+                                </p>
                             </div>
 
                             <div className="category__dashboard__body">
+
+
                                 <div className="dashboard__body__field">
-                                    <span>Old Name program</span>
+                                    <span>
+                                        {t("management.program.programOldName")}
+                                    </span>
                                     <input
                                         type="text"
-                                        value={editProgram}
+                                        value={editProgram.name}
                                         disabled
                                     />
                                 </div>
 
                                 <div className="dashboard__body__field">
-                                    <span>New Name program</span>
+                                    <span>
+                                        {t("management.program.programOldId")}
+                                    </span>
                                     <input
                                         type="text"
-                                        value={editNewProgram}
-                                        onChange={(e) => setEditNewProgram(e.target.value)}
-                                        placeholder="Enter new program name"
+                                        value={editProgram.id}
+                                        disabled
+                                    />
+                                </div>
+
+                                <div className="dashboard__body__field">
+                                    <span>
+                                        {t("management.program.programNewName")}
+                                    </span>
+                                    <input
+                                        type="text"
+                                        value={editNewProgram.name}
+                                        onChange={(e) => setEditNewProgram({ ...editNewProgram, name: e.target.value })}
+                                        placeholder={t("management.program.programNewNamePlaceholder")}
                                     />
                                 </div>
                             </div>
 
                             <div className="category__dashboard__footer">
                                 <div className="dashboard__button">
-                                    <button onClick={handleCancel}>Cancel</button>
-                                    <button onClick={handleDeleteProgram}>Delete</button>
-                                    <button onClick={handleUpdateProgram}>Update</button>
+                                    <button onClick={handleCancel}>
+                                        {t("button.cancel")}
+                                    </button>
+                                    <button onClick={handleDeleteProgram}>
+                                        {t("button.delete")}
+                                    </button>
+                                    <button onClick={handleUpdateProgram}>
+                                        {t("button.update")}
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
                     }
 
-                    {editProgram === "" && <div className="category__dashboard">
+                    {!editProgram && <div className="category__dashboard">
                         <div className="category__dashboard__header">
-                            <h3>Program Management</h3>
-                            <p>Add more programs</p>
+                            <h3>
+                                {t("management.program.programManagement")}
+                            </h3>
+                            <p>
+                                {t("management.program.programManagementDescription2")}
+                            </p>
                         </div>
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
-                                <span>Name program</span>
+                                <span>
+                                    {t("management.program.programId")}
+                                </span>
                                 <input
                                     type="text"
-                                    value={newProgram}
-                                    onChange={(e) => setNewProgram(e.target.value)}
-                                    placeholder="Enter program name"
+                                    value={newProgram.id}
+                                    onChange={(e) => setNewProgram({ ...newProgram, id: e.target.value })}
+                                    placeholder={t("management.program.programIdPlaceholder")}
+                                />
+                            </div>
+
+                            <div className="dashboard__body__field">
+                                <span>
+                                    {t("management.program.programName")}
+                                </span>
+                                <input
+                                    type="text"
+                                    value={newProgram.name}
+                                    onChange={(e) => setNewProgram({ ...newProgram, name: e.target.value })}
+                                    placeholder={t("management.program.programNamePlaceholder")}
+                                />
+                            </div>
+
+                            <div className="dashboard__body__field">
+                                <span>
+                                    {t("management.program.programDescription")}
+                                </span>
+                                <input
+                                    type="text"
+                                    value={newProgram.description}
+                                    onChange={(e) => setNewProgram({ ...newProgram, description: e.target.value })}
+                                    placeholder={t("management.program.programDescriptionPlaceholder")}
                                 />
                             </div>
                         </div>
 
                         <div className="category__dashboard__footer">
                             <div className="dashboard__button">
-                                <button onClick={handleAddProgram}>Add</button>
+                                <button onClick={handleAddProgram}>
+                                    {t("button.add")}
+                                </button>
                             </div>
                         </div>
 
@@ -196,30 +268,32 @@ const Program = () => {
                     <div className="table">
                         <div className="table__header">
                             <div className="table__field">
-                                <span>STT</span>
+                                <span>
+                                    {t("management.program.programId")}
+                                </span>
                             </div>
 
                             <div className="table__field">
-                                <span>program</span>
+                                <span>
+                                    {t("management.program.programName")}
+                                </span>
                             </div>
                         </div>
 
                         <div className="table__body">
-                            {program && program.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
+                            {category.programs && category.programs.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
                                 <button
                                     onClick={() => {
-
                                         setEditProgram(item);
-
                                     }
                                     }
                                     className="table__row" key={index}>
                                     <div className="table__field">
-                                        <span>{index + 1}</span>
+                                        <span>{item.id}</span>
                                     </div>
 
                                     <div className="table__field">
-                                        <span>{item}</span>
+                                        <span>{item.name}</span>
                                     </div>
                                 </button>
                             ))}
@@ -227,7 +301,7 @@ const Program = () => {
 
                         <div className="table__footer">
                             <div className="table__left">
-                                <span>Total: {program && program.length}</span>
+                                <span>{t('other.total')}: {category.programs && category.programs.length}</span>
                             </div>
 
                             <div className="table__right">
@@ -248,4 +322,4 @@ const Program = () => {
     )
 }
 
-export default Program;
+export default ProgramComponent;

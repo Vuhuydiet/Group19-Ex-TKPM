@@ -4,26 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowLeft, faLongArrowRight } from '@fortawesome/free-solid-svg-icons'
 import "../styles/category.css"
 import { useNotification } from "../../../contexts/NotificationProvider";
-import { Faculty } from "../../../services/facultyAPIServices";
-import * as e from "express";
+import { Faculty, FacultyAPIServices } from "../../../services/facultyAPIServices";
+import { useTranslation } from "react-i18next";
 
 const FacultyComponent = () => {
+    const { t } = useTranslation();
     const { notify } = useNotification();
 
     const { category, setCategory } = useCategory();
-    const [faculty, setFaculty] = useState<Faculty[]>([]);
     const [newFaculty, setNewFaculty] = useState<Faculty>({
         id: "",
         name: "",
         description: "",
         createdAt: "",
     });
-    const [editFaculty, setEditFaculty] = useState<Faculty>({
-        id: "",
-        name: "",
-        description: "",
-        createdAt: "",
-    });
+    const [editFaculty, setEditFaculty] = useState<Faculty | null>(null);
     const [editNewFaculty, setEditNewFaculty] = useState<Faculty>({
         id: "",
         name: "",
@@ -60,14 +55,9 @@ const FacultyComponent = () => {
     }, []);
 
 
-    useEffect(() => {
-        setFaculty(category.faculty);
-    }, []);
-
-
 
     function increasePage() {
-        if (page < Math.ceil(faculty.length / amountItem)) {
+        if (page < Math.ceil(category.faculty.length / amountItem)) {
             setPage(page + 1);
         }
     }
@@ -79,12 +69,7 @@ const FacultyComponent = () => {
     }
 
     function handleCancel() {
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
+        setEditFaculty(null);
         setEditNewFaculty({
             id: "",
             name: "",
@@ -93,19 +78,26 @@ const FacultyComponent = () => {
         });
     }
 
-    function handleAddFaculty() {
+    async function handleAddFaculty() {
         if (newFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
         }
 
-        if (faculty.includes(newFaculty)) {
+        if (category.faculty.includes(newFaculty)) {
             notify({ type: "warning", msg: "Faculty name already exists" });
             return;
         }
 
-        setFaculty([...faculty, newFaculty]);
-        setCategory({ ...category, faculty: [...faculty, newFaculty] });
+        const facultyAPIServices = new FacultyAPIServices();
+        const result = await facultyAPIServices.addFaculty(newFaculty);
+
+        if (result === null) {
+            notify({ type: "error", msg: "Add faculty failed" });
+            return;
+        }
+
+        setCategory({ ...category, faculty: [...category.faculty, newFaculty] });
         setNewFaculty({
             id: "",
             name: "",
@@ -116,13 +108,17 @@ const FacultyComponent = () => {
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
-    function handleUpdateFaculty() {
+    async function handleUpdateFaculty() {
+        if (!editFaculty) {
+            notify({ type: "error", msg: "No faculty selected for update" });
+            return;
+        }
         if (editNewFaculty.name === "") {
             notify({ type: "error", msg: "Faculty name cannot be empty" });
             return;
         }
 
-        if (faculty.includes(editNewFaculty)) {
+        if (category.faculty.includes(editNewFaculty)) {
             notify({ type: "warning", msg: "Faculty name already exists" });
             return;
         }
@@ -132,62 +128,79 @@ const FacultyComponent = () => {
             return;
         }
 
-        const index = faculty.indexOf(editFaculty);
-        faculty[index] = editNewFaculty;
-        setFaculty([...faculty]);
-        setCategory({ ...category, faculty: [...faculty] });
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-        setEditNewFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
+        const facultyAPIServices = new FacultyAPIServices();
+        console.log(editFaculty.id, editNewFaculty);
+        const result = await facultyAPIServices.updateFaculty(editFaculty.id, editNewFaculty);
 
+        console.log(result);
+
+        if (result === null) {
+            notify({ type: "error", msg: "Update faculty failed" });
+            return;
+        }
+
+
+
+        const result1 = await facultyAPIServices.getFaculties();
+        if (result1 === null) {
+            notify({ type: "error", msg: "Get faculties failed" });
+            return;
+        }
+
+
+        setCategory({ ...category, faculty: [...result1] });
+        handleCancel();
         notify({ type: "success", msg: "Update faculty successfully" });
     }
 
-    function handleDeleteFaculty() {
-        const index = faculty.indexOf(editFaculty);
-        faculty.splice(index, 1);
-        setFaculty([...faculty]);
-        setCategory({ ...category, faculty: [...faculty] });
-        setEditFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-        setEditNewFaculty({
-            id: "",
-            name: "",
-            description: "",
-            createdAt: "",
-        });
-
-        notify({ type: "success", msg: "Delete faculty successfully" });
-
+    async function handleDeleteFaculty() {
+        if (!editFaculty) {
+            notify({ type: "error", msg: "Please select a faculty to delete" });
+            return;
+        }
+    
+        if (!window.confirm(`Are you sure you want to delete the faculty "${editFaculty.name}"? This action cannot be undone.`)) {
+            return;
+        }
+    
+        const facultyAPIServices = new FacultyAPIServices();
+    
+        try {
+            await facultyAPIServices.deleteFaculty(editFaculty.id);
+    
+            notify({ type: "success", msg: "Delete faculty successfully" });
+    
+            const updatedFaculties = await facultyAPIServices.getFaculties();
+            setCategory({ ...category, faculty: updatedFaculties });
+    
+            handleCancel();
+    
+        } catch (error) {
+            console.error("Delete faculty failed:", error);
+            notify({ type: "error", msg: "Delete faculty failed. It might be in use." });
+        }
     }
 
     return (
         <>
             <div className="category">
                 <div className="category__left">
-                    {editFaculty.name !== "" &&
+                    {editFaculty &&
                         <div className="category__dashboard">
                             <div className="category__dashboard__header">
-                                <h3>Faculty Management</h3>
-                                <p>Edit specific faculty</p>
+                                <h3>
+                                    {t('management.faculty.facultyManagement')}
+                                </h3>
+                                <p>
+                                    {t('management.faculty.facultyManagementDescription1')}
+                                </p>
                             </div>
 
                             <div className="category__dashboard__body">
                                 <div className="dashboard__body__field">
-                                    <span>Old Name Faculty</span>
+                                    <span>
+                                        {t('management.faculty.facultyOldName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editFaculty.name}
@@ -196,66 +209,97 @@ const FacultyComponent = () => {
                                 </div>
 
                                 <div className="dashboard__body__field">
-                                    <span>New Name Faculty</span>
+                                    <span>
+                                        {t('management.faculty.facultyOldId')}
+                                    </span>
+                                    <input
+                                        type="text"
+                                        value={editFaculty.id}
+                                        disabled
+                                    />
+                                </div>
+
+                                <div className="dashboard__body__field">
+                                    <span>
+                                        {t('management.faculty.facultyNewName')}
+                                    </span>
                                     <input
                                         type="text"
                                         value={editNewFaculty.name}
-                                        onChange={(e) => setEditNewFaculty({...editNewFaculty, name: e.target.value})}
-                                        placeholder="Enter new faculty name"
+                                        onChange={(e) => setEditNewFaculty({ ...editNewFaculty, name: e.target.value })}
+                                        placeholder={t('management.faculty.facultyNewNamePlaceholder')}
                                     />
                                 </div>
                             </div>
 
                             <div className="category__dashboard__footer">
                                 <div className="dashboard__button">
-                                    <button onClick={handleCancel}>Cancel</button>
-                                    <button onClick={handleDeleteFaculty}>Delete</button>
-                                    <button onClick={handleUpdateFaculty}>Update</button>
+                                    <button onClick={handleCancel}>
+                                        {t('button.cancel')}
+                                    </button>
+                                    <button onClick={handleDeleteFaculty}>
+                                        {t('button.delete')}
+                                    </button>
+                                    <button onClick={handleUpdateFaculty}>
+                                        {t('button.update')}
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
                     }
 
-                    {editFaculty.name === "" && <div className="category__dashboard">
+                    {!editFaculty && <div className="category__dashboard">
                         <div className="category__dashboard__header">
-                            <h3>Faculty Management</h3>
-                            <p>Add more faculties</p>
+                            <h3>
+                                {t('management.faculty.facultyManagement')}
+                            </h3>
+                            <p>
+                                {t('management.faculty.facultyManagementDescription2')}
+                            </p>
                         </div>
 
                         <div className="category__dashboard__body">
                             <div className="dashboard__body__field">
-                                <span>ID Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyId')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newFaculty.id}
-                                    onChange={(e) => setNewFaculty({...newFaculty, id: e.target.value})}
-                                    placeholder="Enter faculty id"
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, id: e.target.value })}
+                                    placeholder={t('management.faculty.facultyIdPlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Name Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyName')}
+                                </span>
                                 <input
                                     type="text"
                                     value={newFaculty.name}
-                                    onChange={(e) => setNewFaculty({...newFaculty, name: e.target.value})}
-                                    placeholder="Enter faculty name"
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
+                                    placeholder={t('management.faculty.facultyNamePlaceholder')}
                                 />
                             </div>
                             <div className="dashboard__body__field">
-                                <span>Description Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyDescription')}
+                                </span>
                                 <input
                                     type="text"
-                                    value={newFaculty.name}
-                                    onChange={(e) => setNewFaculty({...newFaculty, description: e.target.value})}
-                                    placeholder="Enter faculty description"
+                                    value={newFaculty.description}
+                                    onChange={(e) => setNewFaculty({ ...newFaculty, description: e.target.value })}
+                                    placeholder={t('management.faculty.facultyDescriptionPlaceholder')}
                                 />
                             </div>
                         </div>
 
                         <div className="category__dashboard__footer">
                             <div className="dashboard__button">
-                                <button onClick={handleAddFaculty}>Add</button>
+                                <button onClick={handleAddFaculty}>
+                                    {t('button.add')}
+                                </button>
                             </div>
                         </div>
 
@@ -266,16 +310,20 @@ const FacultyComponent = () => {
                     <div className="table">
                         <div className="table__header">
                             <div className="table__field">
-                                <span>STT</span>
+                                <span>
+                                    {t('management.faculty.facultyId')}
+                                </span>
                             </div>
 
                             <div className="table__field">
-                                <span>Faculty</span>
+                                <span>
+                                    {t('management.faculty.facultyName')}
+                                </span>
                             </div>
                         </div>
 
                         <div className="table__body">
-                            {faculty && faculty.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
+                            {category.faculty && category.faculty.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item, index) => (
                                 <button
                                     onClick={() => {
 
@@ -297,7 +345,7 @@ const FacultyComponent = () => {
 
                         <div className="table__footer">
                             <div className="table__left">
-                                <span>Total: {faculty && faculty.length}</span>
+                                <span>{t('other.total')}: {category.faculty && category.faculty.length}</span>
                             </div>
 
                             <div className="table__right">

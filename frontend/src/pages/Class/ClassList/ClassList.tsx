@@ -7,9 +7,10 @@ import { Class } from '../../../services/classAPIServices';
 import ClassAdditionForm from '../Form/ClassAddition/ClassAddition';
 import './class_list.css'
 import { classAPIServices } from '../../../services/classAPIServices';
+import { useTranslation } from 'react-i18next';
 
 function ClassList() {
-
+    const [t] = useTranslation();
     const [classes, setClasses] = useState<Class[]>([]);
     const [cloneClasses, setCloneClasses] = useState<Class[]>([]);
 
@@ -81,7 +82,9 @@ function ClassList() {
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
                         <div className="board__feature__item">
-                            <button onClick={() => setIsAddFormOpen(true)}>Add</button>
+                            <button onClick={() => setIsAddFormOpen(true)}>
+                                {t('button.add')}
+                            </button>
 
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />
@@ -92,7 +95,9 @@ function ClassList() {
                                     setSortBy(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Sort</option>
+                                <option value="" disabled>
+                                    {t('filterHeading.sort')}
+                                </option>
                                 <option value="ID">ID</option>
                                 <option value="Name">Name</option>
                                 <option value="">None</option>
@@ -104,7 +109,7 @@ function ClassList() {
                             value={search}
                             onChange={(e) => { setSearch(e.target.value) }}
                             type="text"
-                            placeholder="Search..." />
+                            placeholder={t('other.searching')} />
                         <button>
                             <FontAwesomeIcon icon={faSearch} className='icon__search' />
                         </button>
@@ -114,29 +119,41 @@ function ClassList() {
                 <div className="board__table">
                     <div className="board__table__header">
                         <div className="board__table__attribute">
-                            <span>ID</span>
+                            <span>
+                                {t('tableHeading.id')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>CourseID</span>
+                            <span>
+                                {t('tableHeading.courseId')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Capacity</span>
+                            <span>
+                                {t('tableHeading.capacity')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Professor Name</span>
+                            <span>
+                                {t('tableHeading.professor')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Schedule</span>
+                            <span>
+                                {t('tableHeading.schedule')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Room</span>
+                            <span>
+                                {t('tableHeading.room')}
+                            </span>
                         </div>
                     </div>
 
                     <div className="board__table__data">
-                        {cloneClasses.length === 0 && <NothingDisplay />}
+                        {cloneClasses.length === 0 && <NothingDisplay desciption={t('other.noClasses') || ''} />}
                         {cloneClasses.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item: Class) => (
                             <button
                                 onClick={() => {
@@ -157,7 +174,7 @@ function ClassList() {
 
                     <div className="board__table__footer">
                         <div className="board__table__selected">
-                            <span>{classes.length} course enrollment</span>
+                            <span>{classes.length} {t('other.courseEnrollment')}</span>
 
                         </div>
 

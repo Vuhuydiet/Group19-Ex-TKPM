@@ -11,11 +11,12 @@ import { Module } from '../../../services/moduleAPIServices';
 import { CourseAPIServices } from '../../../services/courseAPIServices';
 import ModuleAdditionForm from '../Form/ModuleAddition/ModuleAddition';
 import ModuleItem from '../ModuleItem/ModuleItem';
+import { useTranslation } from 'react-i18next';
 // import { useLoading } from '../components/LoadingContext';
 
 
 function ModuleList() {
-
+    const { t } = useTranslation();
     const [modules, setModules] = useState<Module[]>([]);
     const [cloneModule, setCloneModules] = useState<Module[]>([]);
     const [isAddFormOpen, setIsAddFormOpen] = useState(false);
@@ -87,7 +88,9 @@ function ModuleList() {
             <div className="board board--module">
                 <div className="board__feature">
                     <div className="board__feature__sortfilter">
-                        <button onClick={() => setIsAddFormOpen(true)}>Add</button>
+                        <button onClick={() => setIsAddFormOpen(true)}>
+                            {t('button.add')}
+                        </button>
                         <div className="board__feature__item">
                             <div className="board__feature__item__icon">
                                 <FontAwesomeIcon icon={faSort} className='icon__check' />
@@ -98,8 +101,12 @@ function ModuleList() {
                                     setSortBy(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Sort</option>
-                                <option value="ID">ID</option>
+                                <option value="" disabled>
+                                    {t('filterHeading.sort')}
+                                </option>
+                                <option value="ID">
+                                    ID
+                                </option>
                                 <option value="Name">Name</option>
                                 <option value="">None</option>
                             </select>
@@ -115,7 +122,9 @@ function ModuleList() {
                                     setFaculty(e.target.value);
                                 }}
                             >
-                                <option value="" disabled>Faculty</option>
+                                <option value="" disabled>
+                                    {t('filterHeading.faculty')}
+                                </option>
                                 {category.faculty.map((item, index) => (
                                     <option key={index} value={item.id}>{item.name}</option>
                                 ))}
@@ -128,7 +137,7 @@ function ModuleList() {
                             value={search}
                             onChange={(e) => { setSearch(e.target.value) }}
                             type="text"
-                            placeholder="Search..." />
+                            placeholder={t('other.searching')} />
                         <button>
                             <FontAwesomeIcon icon={faSearch} className='icon__search' />
                         </button>
@@ -138,21 +147,31 @@ function ModuleList() {
                 <div className="board__table">
                     <div className="board__table__header">
                         <div className="board__table__attribute">
-                            <span>ID</span>
+                            <span>
+                                {t('tableHeading.id')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Name</span>
+                            <span>
+                                {t('tableHeading.name')}
+                            </span>
                         </div>
                         <div className="board__table__attribute">
-                            <span>Credits</span>
+                            <span>
+                                {t('tableHeading.credits')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Faculty</span>
+                            <span>
+                                {t('tableHeading.faculty')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
-                            <span>Description</span>
+                            <span>
+                                {t('tableHeading.description')}
+                            </span>
                         </div>
 
                         <div className="board__table__attribute">
@@ -162,7 +181,7 @@ function ModuleList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneModule.length === 0 && <NothingDisplay />}
+                        {cloneModule.length === 0 && <NothingDisplay desciption={null} />}
                         {cloneModule.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((theChosen: Module) => (
                             <button
                                 onClick={() => {
@@ -186,7 +205,7 @@ function ModuleList() {
 
                     <div className="board__table__footer">
                         <div className="board__table__selected">
-                            <span>{modules.length} modules</span>
+                            <span>{modules.length} {t('other.course')}</span>
 
                         </div>
 

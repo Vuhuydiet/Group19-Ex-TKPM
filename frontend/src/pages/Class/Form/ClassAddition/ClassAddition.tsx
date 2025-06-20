@@ -6,8 +6,10 @@ import { classAPIServices } from "../../../../services/classAPIServices";
 import { Module } from "../../../../services/moduleAPIServices";
 import { CourseAPIServices } from "../../../../services/courseAPIServices";
 import { useNotification } from "../../../../contexts/NotificationProvider";
+import { useTranslation } from "react-i18next";
 
 function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
+    const { t } = useTranslation();
     const { notify } = useNotification();
     const [theChosenClass, setTheChosenClass] = useState<Class>({
         id: "",
@@ -74,29 +76,39 @@ function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
                 <div className="form form--class">
                     <div className="form__header">
                         <div className="header__left">
-                            <h1>Class Addition</h1>
-                            <p>Import a new class information</p>
+                            <h1>
+                                {t('addition.class.classAddition')}
+                            </h1>
+                            <p>
+                                {t('addition.class.classAdditionDescription')}
+                            </p>
                         </div>
                     </div>
 
                     <div className="form__body">
                         <div className="form__field">
-                            <span>ID</span>
+                            <span>
+                                {t('addition.class.classId')}
+                            </span>
                             <input
                                 value={theChosenClass.id}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, id: e.target.value })}
                                 type="text"
-                                placeholder="Enter class ID" />
+                                placeholder={t('addition.class.classIdPlaceholder')} />
                         </div>
 
                         {/* Input Price */}
                         <div className="form__field">
-                            <span>Course ID</span>
+                            <span>
+                                {t('addition.class.classCourseId')}
+                            </span>
                             <select
                                 value={theChosenClass.courseId}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, courseId: e.target.value })}
                             >
-                                <option value="" disabled>Select course</option>
+                                <option value="" disabled>
+                                    {t('addition.class.classCourseIdPlaceholder')}
+                                </option>
                                 {modules.map((item, index) => (
                                     <option key={index} value={item.id}>{item.name}</option>
                                 ))}
@@ -105,7 +117,9 @@ function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
                         </div>
 
                         <div className="form__field">
-                            <span>Year</span>
+                            <span>
+                                {t('addition.class.classYear')}
+                            </span>
                             <input
                                 value={theChosenClass.year}
                                 onChange={(e) => {
@@ -117,11 +131,13 @@ function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
                                     }
                                 }}
                                 type="text"
-                                placeholder="Enter class's year" />
+                                placeholder={t('addition.class.classYearPlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Semester</span>
+                            <span>
+                                {t('addition.class.classSemester')}
+                            </span>
                             <input
                                 value={theChosenClass.semester}
                                 onChange={(e) => {
@@ -133,11 +149,13 @@ function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
                                     }
                                 }}
                                 type="text"
-                                placeholder="Enter class semester" />
+                                placeholder={t('addition.class.classSemesterPlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Capacity</span>
+                            <span>
+                                {t('addition.class.classCapacity')}
+                            </span>
                             <input
                                 value={theChosenClass.capacity}
                                 onChange={(e) => {
@@ -149,46 +167,58 @@ function ClassAdditionForm({ setIsAddFormOpen, setClasses, classes }: any) {
                                     }
                                 }}
                                 type="text"
-                                placeholder="Enter class capacity" />
+                                placeholder={t('addition.class.classCapacityPlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Professor Name</span>
+                            <span>
+                                {t('addition.class.classProfessor')}
+                            </span>
                             <input
                                 value={theChosenClass.professorName}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, professorName: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter class professor name" />
+                                placeholder={t('addition.class.classProfessorPlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Schedule</span>
+                            <span>
+                                {t('addition.class.classSchedule')}
+                            </span>
                             <input
                                 value={theChosenClass.schedule}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, schedule: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter class schedule" />
+                                placeholder={t('addition.class.classSchedulePlaceholder')} />
                         </div>
 
                         <div className="form__field">
-                            <span>Room</span>
+                            <span>
+                                {t('addition.class.classRoom')}
+                            </span>
                             <input
                                 value={theChosenClass.room}
                                 onChange={(e) => setTheChosenClass({ ...theChosenClass, room: e.target.value })}
 
                                 type="text"
-                                placeholder="Enter class room" />
+                                placeholder={t('addition.class.classRoomPlaceholder')} />
                         </div>
 
                     </div>
 
                     <div className="form__footer">
                         <div className="form__button">
-                            <button onClick={handleClose}>Close</button>
-                            <button>Reset</button>
-                            <button onClick={handleAdd}>Add</button>
+                            <button onClick={handleClose}>
+                                {t('button.cancel')}
+                            </button>
+                            <button>
+                                {t('button.reset')}
+                            </button>
+                            <button onClick={handleAdd}>
+                                {t('button.add')}
+                            </button>
                         </div>
                     </div>
                 </div>

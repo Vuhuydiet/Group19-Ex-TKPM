@@ -14,7 +14,7 @@ export class ImportExportController {
             }).send(res);
         } catch (error: any) {
             res.status(error.statusCode || 500).json({
-                message: error.message || 'Internal server error',
+                message: error.message || 'Internalll server error',
                 domainCode: error.domainCode,
             });
         }
