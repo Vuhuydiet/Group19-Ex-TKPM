@@ -4,23 +4,40 @@ Dự án này là một web app được phát triển bằng React nhằm quả
 ## Cấu trúc source code
 ```
 .
+.
 ├── backend
 │   ├── components
+│   │   ├── course
+│   │   │   ├── domain
+│   │   │   │   ├── services
+│   │   │   │   │   └── test
+│   │   │   │   └── transcript
+│   │   │   └── entry-points
+│   │   │       └── api
+│   │   │           ├── academic-transcript
+│   │   │           ├── class
+│   │   │           ├── course
+│   │   │           └── course-enrollment
 │   │   └── student-managing
 │   │       ├── domain
 │   │       │   ├── import-export
 │   │       │   │   └── impl
+│   │       │   │       └── parser
 │   │       │   ├── management
-│   │       │   │   └── StudentManager.early.test
+│   │       │   │   └── test
 │   │       │   └── services
-│   │       │       └── impl
-│   │       ├── entry-points
-│   │       │   └── api
-│   │       │       ├── import-export
-│   │       │       │   └── test
-│   │       │       └── student-management
-│   │       │           └── test
-│   │       └── storage
+│   │       └── entry-points
+│   │           └── api
+│   │               ├── faculty
+│   │               │   └── test
+│   │               ├── import-export
+│   │               │   └── test
+│   │               ├── program
+│   │               │   └── test
+│   │               ├── student-management
+│   │               │   └── test
+│   │               └── studyStatus
+│   │                   └── test
 │   ├── core
 │   │   ├── logger
 │   │   ├── responses
@@ -30,35 +47,72 @@ Dự án này là một web app được phát triển bằng React nhằm quả
 │   │   ├── errorHandler
 │   │   ├── utils
 │   │   └── validator
+│   ├── models
+│   │   ├── migrations
+│   │   └── schemas
+│   │       └── migrations
+│   ├── routes
+│   ├── scripts
 │   └── static-content
-└── frontend
-    ├── src
-    │   ├── components
-    │   │   ├── Content
-    │   │   ├── Header
-    │   │   ├── Loading
-    │   │   ├── NothingDisplay
-    │   │   ├── Notification
-    │   │   └── SubHeader
-    │   ├── contexts
-    │   ├── pages
-    │   │   ├── Category
-    │   │   │   ├── Faculty
-    │   │   │   ├── Management
-    │   │   │   ├── Programs
-    │   │   │   ├── Status
-    │   │   │   └── styles
-    │   │   ├── Home
-    │   │   └── Student
-    │   │       ├── Form
-    │   │       │   ├── StudentAddress
-    │   │       │   ├── StudentIdentity
-    │   │       │   └── StudentImportForm
-    │   │       ├── StudentItem
-    │   │       └── StudentList
-    │   ├── services
-    │   └── styles
-    └── test
+├── docs
+├── frontend
+│   ├── public
+│   │   ├── locales
+│   │   │   ├── en
+│   │   │   └── vi
+│   │   └── mock
+│   ├── src
+│   │   ├── components
+│   │   │   ├── Content
+│   │   │   ├── Header
+│   │   │   ├── Loading
+│   │   │   ├── NothingDisplay
+│   │   │   ├── Notification
+│   │   │   └── SubHeader
+│   │   ├── contexts
+│   │   ├── i18n
+│   │   ├── pages
+│   │   │   ├── Category
+│   │   │   │   ├── Faculty
+│   │   │   │   ├── Management
+│   │   │   │   ├── Programs
+│   │   │   │   ├── Status
+│   │   │   │   └── styles
+│   │   │   ├── Class
+│   │   │   │   ├── ClassList
+│   │   │   │   └── Form
+│   │   │   │       └── ClassAddition
+│   │   │   ├── Home
+│   │   │   ├── Module
+│   │   │   │   ├── Form
+│   │   │   │   │   ├── ModuleAddition
+│   │   │   │   │   └── PrerequisiteSelector
+│   │   │   │   ├── ModuleItem
+│   │   │   │   ├── ModuleList
+│   │   │   │   └── Selector
+│   │   │   ├── Register
+│   │   │   │   ├── Form
+│   │   │   │   ├── Overlay
+│   │   │   │   │   ├── ClassItemList
+│   │   │   │   │   ├── ModuleItemList
+│   │   │   │   │   └── StudentItemList
+│   │   │   │   └── RegisterList
+│   │   │   └── Student
+│   │   │       ├── Form
+│   │   │       │   ├── StudentAddress
+│   │   │       │   ├── StudentIdentity
+│   │   │       │   └── StudentImportForm
+│   │   │       ├── StudentItem
+│   │   │       └── StudentList
+│   │   ├── services
+│   │   │   └── classes
+│   │   ├── styles
+│   │   └── utils
+│   └── test
+└── instruction-image
+    ├── instruction
+    ├── overlay
+    └── page
 ```
 
 ## Hướng dẫn cài đặt & chạy chương trình
@@ -87,7 +141,7 @@ Chạy lệnh:```npm run dev``` để vào dev mode, mở browser địa chỉ: 
 Chạy lệnh:```npm start``` để vào deployment mode, mở browser địa chỉ: 'http://localhost:3000'
 
 
-## Hướng dẫn sử dụng **Version 2.0**
+## Hướng dẫn sử dụng **Version FINAL**
 ### Các thành phần của ứng dụng
 #### Các trang
    1. **Trang chủ**
