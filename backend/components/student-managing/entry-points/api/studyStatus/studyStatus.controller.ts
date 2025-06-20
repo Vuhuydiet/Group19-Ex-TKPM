@@ -37,6 +37,14 @@ class StudyStatusController {
     }).send(res);
   }
 
+  async removeStudyStatus(req: Request, res: Response) {
+    const { id } = req.params;
+    await StudyStatusService.removeStudyStatus(id);
+    new OKResponse({
+      message: 'Study status removed successfully'
+    }).send(res);
+  }
+
   async addValidStudyStatusTransition(req: Request, res: Response) {
     const { from, to } = matchedData(req);
     const transition = await StudyStatusService.addValidStudyStatusTransition(from, to);

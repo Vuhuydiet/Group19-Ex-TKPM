@@ -7,7 +7,7 @@ export const mockStudent: Student = {
   id: "SV001",
   name: "Nguyễn Văn A",
   dob: "2002-05-15",
-  gender: "Nam",
+  gender: "Namz",
   faculty: "Khoa Luật",
   academicYear: 2020,
   program: "Chất lượng cao",
@@ -23,7 +23,7 @@ export const mockStudent: Student = {
     ward: "Bến Thành",
     street: "456 Nguyễn Huệ"
   },
-  nationality: "Việt Nam",
+  nationality: "Vietnam",
   email: "nguyenvana@example.com",
   identityDocument: {
     type: "NewIdentityCard",
@@ -44,7 +44,7 @@ export const mockStudentsList: Student[] = [
     id: "SV001",
     name: "Nguyễn Văn A",
     dob: "2002-05-15",
-    gender: "Nam",
+    gender: "Male",
     faculty: "Khoa Luật",
     academicYear: 2020,
     program: "Chất lượng cao",
@@ -60,7 +60,7 @@ export const mockStudentsList: Student[] = [
       ward: "Bến Thành",
       street: "456 Nguyễn Huệ"
     },
-    nationality: "Việt Nam",
+    nationality: "Vietnam",
     email: "nguyenvana@example.com",
     identityDocument: {
       type: "NewIdentityCard",
@@ -79,7 +79,7 @@ export const mockStudentsList: Student[] = [
     id: "SV002",
     name: "Trần Thị B",
     dob: "2001-09-22",
-    gender: "Nữ",
+    gender: "Female",
     faculty: "Khoa Tiếng Anh thương mại",
     academicYear: 2019,
     program: "Đề án",
@@ -95,7 +95,7 @@ export const mockStudentsList: Student[] = [
       ward: "Phường 7",
       street: "789 Trần Hưng Đạo"
     },
-    nationality: "Việt Nam",
+    nationality: "Vietnam",
     email: "tranthib@example.com",
     identityDocument: {
       type: "NewIdentityCard",
@@ -114,7 +114,7 @@ export const mockStudentsList: Student[] = [
     id: "SV003",
     name: "Lê Văn C",
     dob: "2003-03-10",
-    gender: "Nam",
+    gender: "Male",
     faculty: "Khoa Tiếng Nhật",
     academicYear: 2021,
     program: "Chính quy",
@@ -130,7 +130,7 @@ export const mockStudentsList: Student[] = [
       ward: "Phường 2",
       street: "159 Nguyễn Xí"
     },
-    nationality: "Việt Nam",
+    nationality: "Vietnam",
     email: "levanc@example.com",
     identityDocument: {
       type: "OldIdentityCard",
@@ -148,7 +148,7 @@ export const mockStudentsList: Student[] = [
     id: "SV004",
     name: "Phạm Minh D",
     dob: "2000-12-05",
-    gender: "Nam",
+    gender: "Male",
     faculty: "Khoa Tiếng Pháp",
     academicYear: 2018,
     program: "Chất lượng cao",
@@ -164,7 +164,7 @@ export const mockStudentsList: Student[] = [
       ward: "Linh Chiểu",
       street: "200 Kha Vạn Cân"
     },
-    nationality: "Việt Nam",
+    nationality: "Vietnam",
     email: "phamminhd@example.com",
     identityDocument: {
       type: "Passport",

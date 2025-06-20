@@ -3,13 +3,13 @@ import { BadRequestError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
 import g_StudentManger from "../../storage/studentManager";
 import IdentityDocument from "../management/IdentityDocument";
-import { Address, Student } from "../management/Student";
+import { Address, Gender, Student } from "../management/Student";
 
 export type StudentData = {
   id: string,
   name: string,
   dob: Date,
-  gender: 'Nam' | 'Nữ',
+  gender: Gender,
   faculty: string,
   academicYear: number,
   program: string, // now just the id
