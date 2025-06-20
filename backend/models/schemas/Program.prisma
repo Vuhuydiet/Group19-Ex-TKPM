@@ -1,1 +1,6 @@
-// File intentionally left blank after merging model into schema.prisma
+model Program {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  students    Student[]
+}

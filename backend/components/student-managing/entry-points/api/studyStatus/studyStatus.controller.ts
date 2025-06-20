@@ -5,9 +5,10 @@ import { matchedData } from "express-validator";
 
 
 class StudyStatusController {
+  constructor(private readonly studyStatusService: StudyStatusService = new StudyStatusService()) {}
 
   async getStudyStatuses(_req: Request, res: Response) {
-    const statuses = await StudyStatusService.getStudyStatuses();
+    const statuses = await this.studyStatusService.getStudyStatuses();
 
     new OKResponse({
       message: 'Study statuses found',
@@ -17,7 +18,7 @@ class StudyStatusController {
 
   async addStudyStatus(req: Request, res: Response) {
     const studyStatusData = matchedData(req) as StudyStatusData;
-    const studyStatus = await StudyStatusService.addStudyStatus(studyStatusData);
+    const studyStatus = await this.studyStatusService.addStudyStatus(studyStatusData);
 
     new CreatedResponse({
       message: 'Study status added successfully',
@@ -29,7 +30,7 @@ class StudyStatusController {
     const { id } = req.params;
     const studyStatusData = matchedData(req) as Partial<StudyStatusData>;
     
-    const studyStatus = await StudyStatusService.updateStudyStatus(id, studyStatusData);
+    const studyStatus = await this.studyStatusService.updateStudyStatus(id, studyStatusData);
     
     new OKResponse({
       message: 'Study status updated successfully',
@@ -39,7 +40,7 @@ class StudyStatusController {
 
   async removeStudyStatus(req: Request, res: Response) {
     const { id } = req.params;
-    await StudyStatusService.removeStudyStatus(id);
+    await this.studyStatusService.removeStudyStatus(id);
     new OKResponse({
       message: 'Study status removed successfully'
     }).send(res);
@@ -47,7 +48,7 @@ class StudyStatusController {
 
   async addValidStudyStatusTransition(req: Request, res: Response) {
     const { from, to } = matchedData(req);
-    const transition = await StudyStatusService.addValidStudyStatusTransition(from, to);
+    const transition = await this.studyStatusService.addValidStudyStatusTransition(from, to);
     new CreatedResponse({
       message: 'Valid study status transition added successfully',
       metadata: { transition }
@@ -56,7 +57,7 @@ class StudyStatusController {
 
   async removeValidStudyStatusTransition(req: Request, res: Response) {
     const { from, to } = matchedData(req);
-    const transition = await StudyStatusService.removeValidStudyStatusTransition(from, to);
+    const transition = await this.studyStatusService.removeValidStudyStatusTransition(from, to);
     new OKResponse({
       message: 'Valid study status transition removed successfully',
       metadata: { transition }

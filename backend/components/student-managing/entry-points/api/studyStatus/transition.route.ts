@@ -1,11 +1,9 @@
 import express from 'express';
 const router = express.Router();
 
-
 import studyStatusController from './studyStatus.controller';
 import { body } from 'express-validator';
 import { handleValidationErrors } from '../../../../../libraries/validator/validator';
-
 
 router.post(
   '/',
@@ -22,6 +20,5 @@ router.delete(
   handleValidationErrors,
   studyStatusController.removeValidStudyStatusTransition
 )
-
 
 export default router;

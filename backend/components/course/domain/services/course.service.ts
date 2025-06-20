@@ -13,23 +13,23 @@ export interface CourseData {
 }
 
 export class CourseService {
-  static async create(data: CourseData) {
+  async create(data: CourseData) {
     if (typeof data.nCredits !== 'number' || data.nCredits < 2) {
       throw new Error('nCredits must be >= 2');
     }
     return prisma.course.create({ data });
   }
 
-  static async findAll({ activated }: { activated?: boolean } = {}) {
+  async findAll({ activated }: { activated?: boolean } = {}) {
     const where = typeof activated === 'boolean' ? { activated } : { activated: true };
     return prisma.course.findMany({ where });
   }
 
-  static async findById(id: string) {
+  async findById(id: string) {
     return prisma.course.findUnique({ where: { id } });
   }
 
-  static async update(id: string, data: Partial<CourseData>) {
+  async update(id: string, data: Partial<CourseData>) {
     if (data.nCredits !== undefined) {
       if (data.nCredits < 2) {
         throw new Error('nCredits must be >= 2');
@@ -43,7 +43,7 @@ export class CourseService {
     return prisma.course.update({ where: { id }, data: data });
   }
 
-  static async delete(id: string) {
+  async delete(id: string) {
     const course = await prisma.course.findUnique({ where: { id } });
     if (!course) throw new Error('Course not found');
     const now = new Date();

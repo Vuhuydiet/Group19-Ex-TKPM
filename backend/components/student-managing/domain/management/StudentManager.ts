@@ -1,5 +1,7 @@
+import { DomainCode } from "../../../../core/responses/DomainCode";
+import { NotFoundError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
-import { Student } from "./Student";
+import { Gender, Student } from "./Student";
 
 export class StudentManager {
   async add(student: Student): Promise<void> {
@@ -54,7 +56,7 @@ export class StudentManager {
     });
   }
 
-  async getStudentById(id: string): Promise<Student | null> {
+  async getStudentById(id: string) {
     const result = await prisma.student.findUnique({
       where: { id },
       include: {
@@ -67,28 +69,25 @@ export class StudentManager {
       },
     });
 
-    if (!result) return null;
+    if (!result)
+      throw new NotFoundError(DomainCode.NOT_FOUND, 'Student not found');
 
-    return {
-      id: result.id,
-      name: result.name,
-      dob: result.dob,
-      gender: result.gender,
-      academicYear: result.academicYear,
-      email: result.email,
-      phone: result.phone,
-      permanentAddress: result.permanentAddressId
-        ? await prisma.address.findUnique({ where: { id: result.permanentAddressId } })
-        : null,
-      temporaryAddress: result.temporaryAddressId
-      ? await prisma.address.findUnique({ where: { id: result.temporaryAddressId } })
-      : null,
-      faculty: result.faculty ?? (result.facultyId ? await prisma.faculty.findUnique({ where: { id: result.facultyId } }) : null),
-      status: result.status ?? (result.statusId ? await prisma.studyStatus.findUnique({ where: { id: result.statusId } }) : null),
-      identityDocument: result.identityDocument ?? (result.identityDocumentId ? await prisma.identityDocument.findUnique({ where: { id: result.identityDocumentId } }) : null),
-      nationality: result.nationality,
-      program: result.program ?? null,
-    } as unknown as Student;
+    return new Student(
+      result.id,
+      result.name,
+      result.dob,
+      result.gender as Gender,
+      result.faculty,
+      result.academicYear,
+      result.program,
+      result.permanentAddress,
+      result.temporaryAddress || undefined,
+      result.email,
+      result.phone,
+      result.status,
+      result.identityDocument as any,
+      result.nationality
+    );
   }
 
   async getStudents(query: { name?: string; faculty?: string }): Promise<Student[]> {

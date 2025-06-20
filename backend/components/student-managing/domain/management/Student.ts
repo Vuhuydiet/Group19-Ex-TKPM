@@ -26,7 +26,7 @@ export class Student {
   private _email: string;
   private _phone: string;
   private _status: StudyStatus;
-  private _identityDocument?: IdentityDocument;
+  private _identityDocument: IdentityDocument | null;
   private _nationality: string;
 
   constructor(
@@ -42,7 +42,7 @@ export class Student {
     email: string,
     phone: string,
     status: StudyStatus,
-    identityDocument: IdentityDocument,
+    identityDocument: IdentityDocument | null,
     nationality: string
   ) {
     this._id = id;
@@ -109,7 +109,7 @@ export class Student {
     return this._status;
   }
 
-  get identityDocument(): IdentityDocument | undefined {
+  get identityDocument(): IdentityDocument | null {
     return this._identityDocument;
   }
 

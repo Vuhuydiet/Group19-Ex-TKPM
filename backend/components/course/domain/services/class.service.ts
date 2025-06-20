@@ -20,25 +20,25 @@ export interface ClassQuery {
 }
 
 export class ClassService {
-  static async create(data: ClassData) {
+  async create(data: ClassData) {
     return prisma.class.create({ data });
   }
 
-  static async findAll(query: ClassQuery) {
+  async findAll(query: ClassQuery) {
     return prisma.class.findMany({
       where: query
     });
   }
 
-  static async findById(id: string) {
+  async findById(id: string) {
     return prisma.class.findUnique({ where: { id } });
   }
 
-  static async update(id: string, data: Partial<ClassData>) {
+  async update(id: string, data: Partial<ClassData>) {
     return prisma.class.update({ where: { id }, data });
   }
 
-  static async delete(id: string) {
+  async delete(id: string) {
     return prisma.class.delete({ where: { id } });
   }
 }

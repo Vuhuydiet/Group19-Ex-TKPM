@@ -1,7 +1,7 @@
 import studentManagerController from "./studentManagement.controller";
 import express from "express";
 import { checkEmailPattern, checkPhoneNumberPattern, checkStatusTransition } from "./studentManagement.middleware";
-import { body } from "express-validator";
+import { body, param, query } from "express-validator";
 import { handleValidationErrors } from "../../../../../libraries/validator/validator";
 const router = express.Router();
 
@@ -36,21 +36,30 @@ router.post('/',
 
 router.delete(
     '/:id', 
+    param('id').isString(),
+    handleValidationErrors,
     studentManagerController.removeStudent
 );
 
 router.get(
     '/', 
+    query('name').optional().isString(),
+    query('faculty').optional().isString(),
+    handleValidationErrors,
     studentManagerController.getStudents
 );
 
 router.get(
     '/id/:id', 
+    param('id').isString(),
+    handleValidationErrors,
     studentManagerController.getStudentById
 );
 
 router.get(
     '/name', 
+    query('name').isString(),
+    handleValidationErrors,
     studentManagerController.getStudentsByName
 );
 

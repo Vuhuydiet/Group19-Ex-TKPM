@@ -14,7 +14,7 @@ export interface EnrollmentRecordQuery {
 }
 
 export class CourseEnrollmentService {
-  static async create(data: EnrollmentRecordData) {
+  async create(data: EnrollmentRecordData) {
     // Check prerequisite if exists
     const classObj = await prisma.class.findUnique({ where: { id: data.classId }, include: { course: true } });
     if (!classObj) 
@@ -38,7 +38,7 @@ export class CourseEnrollmentService {
     return await prisma.enrollmentRecord.create({ data });
   }
 
-  static async findAll(query?: EnrollmentRecordQuery) {
+  async findAll(query?: EnrollmentRecordQuery) {
     return await prisma.enrollmentRecord.findMany({
       where: {
         ...(query?.studentId ? { studentId: query.studentId } : {}),
@@ -55,15 +55,15 @@ export class CourseEnrollmentService {
     });
   }
 
-  static async findById(studentId: string, classId: string) {
+  async findById(studentId: string, classId: string) {
     return await prisma.enrollmentRecord.findUnique({ where: { studentId_classId: { studentId, classId } } });
   }
 
-  static async update(studentId: string, classId: string, data: Partial<EnrollmentRecordData>) {
+  async update(studentId: string, classId: string, data: Partial<EnrollmentRecordData>) {
     return await prisma.enrollmentRecord.update({ where: { studentId_classId: { studentId, classId } }, data });
   }
 
-  static async delete(studentId: string, classId: string) {
+  async delete(studentId: string, classId: string) {
     await prisma.classCancelHistory.create({
       data: { studentId, classId }
     });
@@ -71,7 +71,7 @@ export class CourseEnrollmentService {
 
   }
 
-  static async findAllCancelHistory(query: {studentId?: string, classId?: string}) {
+  async findAllCancelHistory(query: {studentId?: string, classId?: string}) {
     return await prisma.classCancelHistory.findMany({
       where: query
     });
