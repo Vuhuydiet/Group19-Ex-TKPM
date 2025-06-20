@@ -154,37 +154,31 @@ const FacultyComponent = () => {
     }
 
     async function handleDeleteFaculty() {
-        // const facultyAPIServices = new FacultyAPIServices();
-        // const result = await facultyAPIServices.deleteFaculty(editFaculty.id);
-
-        // if (result === null) {
-        //     notify({ type: "error", msg: "Delete faculty failed" });
-        //     return;
-        // }
-
-        // const result1 = await facultyAPIServices.getFaculties();
-        // if (result1 === null) {
-        //     notify({ type: "error", msg: "Get faculties failed" });
-        //     return;
-        // }
-
-
-        // setCategory({ ...category, faculty: [...result1] });
-        // setEditFaculty({
-        //     id: "",
-        //     name: "",
-        //     description: "",
-        //     createdAt: "",
-        // });
-        // setEditNewFaculty({
-        //     id: "",
-        //     name: "",
-        //     description: "",
-        //     createdAt: "",
-        // });
-
-        // notify({ type: "success", msg: "Delete faculty successfully" });
-
+        if (!editFaculty) {
+            notify({ type: "error", msg: "Please select a faculty to delete" });
+            return;
+        }
+    
+        if (!window.confirm(`Are you sure you want to delete the faculty "${editFaculty.name}"? This action cannot be undone.`)) {
+            return;
+        }
+    
+        const facultyAPIServices = new FacultyAPIServices();
+    
+        try {
+            await facultyAPIServices.deleteFaculty(editFaculty.id);
+    
+            notify({ type: "success", msg: "Delete faculty successfully" });
+    
+            const updatedFaculties = await facultyAPIServices.getFaculties();
+            setCategory({ ...category, faculty: updatedFaculties });
+    
+            handleCancel();
+    
+        } catch (error) {
+            console.error("Delete faculty failed:", error);
+            notify({ type: "error", msg: "Delete faculty failed. It might be in use." });
+        }
     }
 
     return (
@@ -294,7 +288,7 @@ const FacultyComponent = () => {
                                 </span>
                                 <input
                                     type="text"
-                                    value={newFaculty.name}
+                                    value={newFaculty.description}
                                     onChange={(e) => setNewFaculty({ ...newFaculty, description: e.target.value })}
                                     placeholder={t('management.faculty.facultyDescriptionPlaceholder')}
                                 />
