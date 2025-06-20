@@ -153,7 +153,7 @@ function ClassList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneClasses.length === 0 && <NothingDisplay />}
+                        {cloneClasses.length === 0 && <NothingDisplay desciption={t('other.noClasses') || ''} />}
                         {cloneClasses.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item: Class) => (
                             <button
                                 onClick={() => {

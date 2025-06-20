@@ -131,3 +131,5 @@ export class StudentAPIServices {
     await axios.delete(`${API_BASE_URL}/${id}`);
   };
 }
+
+export { Student };

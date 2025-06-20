@@ -234,7 +234,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                 {t("addition.student.studentFaculty")}
                             </span>
                             <select
-                                value={student.faculty}
+                                value={typeof student.faculty === 'object' && student.faculty !== null ? student.faculty.id : student.faculty}
                                 onChange={(e) => setStudent(student.withUpdated({ faculty: e.target.value }))}>
                                 <option value="" disabled>
                                     {t("addition.student.studentFacultyPlaceholder")}
@@ -244,6 +244,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                         {faculty.name}
                                     </option>
                                 ))}
+                        
                             </select>
 
                         </div>

@@ -229,7 +229,7 @@ function RegisterList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneCourseEnrollment.length === 0 && <NothingDisplay />}
+                        {cloneCourseEnrollment.length === 0 && <NothingDisplay desciption={t('other.nothingDisplay') || ''} />}
                         {cloneCourseEnrollment.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((item: CourseEnrollment, index: number) => (
                             <button
                                 onClick={() => {

@@ -181,7 +181,7 @@ function ModuleList() {
                     </div>
 
                     <div className="board__table__data">
-                        {cloneModule.length === 0 && <NothingDisplay />}
+                        {cloneModule.length === 0 && <NothingDisplay desciption={null} />}
                         {cloneModule.slice((page - 1) * amountItem, (page - 1) * amountItem + amountItem).map((theChosen: Module) => (
                             <button
                                 onClick={() => {

@@ -10,7 +10,9 @@ import { Program } from "../../../services/programAPIServices";
 const ProgramComponent = () => {
     const { notify } = useNotification();
     const { t } = useTranslation();
-    const { category, setCategory } = useCategory();
+    // const { category, setCategory } = useCategory();
+    const { category } = useCategory();
+
     const [newProgram, setNewProgram] = useState<Program>({
         id: "",
         name: "",
