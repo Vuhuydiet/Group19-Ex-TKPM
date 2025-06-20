@@ -180,6 +180,11 @@ function StudentList() {
         reader.readAsText(file);
     };
 
+    const getProgramNameById = (programId: string): string => {
+        const program = category.programs.find(p => p.id === programId);
+        return program ? program.name : programId; // Nếu không tìm thấy, hiển thị ID
+    }
+
     return (
         <>
             {selectedStudent && <StudentItem selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} students={students} setStudents={setStudents} />}
@@ -295,7 +300,7 @@ function StudentList() {
                                 <div className="board__table__attribute">{student.name}</div>
                                 <div className="board__table__attribute">{dateFormatter(student.dob)}</div>
                                 <div className="board__table__attribute">{student.gender ? t(`gender.${student.gender.toLowerCase()}`) : ''}</div>
-                                <div className="board__table__attribute">{student.program}</div>
+                                <div className="board__table__attribute">{getProgramNameById(student.programId)}</div>
                                 <div className="board__table__attribute">{student.academicYear}</div>
                                 <div className="board__table__attribute">
                                     <div

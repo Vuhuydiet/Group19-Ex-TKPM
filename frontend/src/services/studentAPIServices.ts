@@ -57,7 +57,7 @@ export class StudentAPIServices {
       data.gender ?? 'N/A',
       facultyId ?? 'N/A', // Sử dụng facultyId đã được xử lý
       data.academicYear ?? 0,
-      data.program ?? 'N/A',
+      data.programId ?? 'N/A', 
       new Address(
         data.permanentAddress?.city ?? '',
         data.permanentAddress?.district ?? '',

@@ -256,8 +256,8 @@ function StudentItem({ selectedStudent, setSelectedStudent, students, setStudent
                                         {t('tableHeading.program')}
                                     </span>
                                     <select
-                                        value={studentInfo.program}
-                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({  program: e.target.value }))}
+                                        value={studentInfo.programId}
+                                        onChange={(e) => setStudentInfo(studentInfo.withUpdated({  programId: e.target.value }))}
                                         disabled={!isEdit} >
                                         {category.programs.map((program, index) => (
 

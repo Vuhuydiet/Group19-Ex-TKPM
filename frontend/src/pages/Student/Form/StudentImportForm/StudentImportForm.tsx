@@ -56,7 +56,7 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
             || student.phone === ""
             || student.gender === ""
             || student.faculty === ""
-            || student.program === ""
+            || student.programId === ""
             || student.permanentAddress.city === ""
             || student.permanentAddress.district === ""
             || student.permanentAddress.ward === ""
@@ -253,8 +253,8 @@ function StudentImportForm({ setIsAddFormOpen, setStudents }: StudentImportFormP
                                 {t("addition.student.studentProgram")}
                             </span>
                             <select
-                                value={student.program}
-                                onChange={(e) => setStudent(student.withUpdated({ program: e.target.value }))}
+                                value={student.programId}
+                                onChange={(e) => setStudent(student.withUpdated({ programId: e.target.value }))}
                             >
                                 <option value="" disabled>
                                     {t("addition.student.studentProgramPlaceholder")}
