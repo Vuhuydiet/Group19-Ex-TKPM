@@ -58,7 +58,7 @@ router.patch(
     '/:id',
     body('name').optional().isString().isLength({ min: 1, max: 255 }),
     body('dob').optional().isISO8601().toDate(),
-    body('gender').optional().isIn(['Nam', 'Nữ']),
+    body('gender').optional().isIn(['Male', 'Female']),
     body('faculty').optional().isString(),
     body('academicYear').optional().isInt().toInt(),
     body('program').optional().isObject(),

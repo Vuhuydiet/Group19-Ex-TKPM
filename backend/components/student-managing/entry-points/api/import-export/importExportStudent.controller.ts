@@ -4,19 +4,26 @@ import importExportService from "../../../domain/services/impl/importExportStude
 
 export class ImportExportController {
 
-    importStudents(req: Request, res: Response): void {
+    async importStudents(req: Request, res: Response): Promise<void> {
         const type = req.params.type;
         const importedData = req.body.students;
-        importExportService.importStudentsData(importedData, type);
-        new OKResponse({
-            message: 'Students imported successfully'
-        }).send(res);
+        try {
+            await importExportService.importStudentsData(importedData, type);
+            new OKResponse({
+                message: 'Students imported successfully'
+            }).send(res);
+        } catch (error: any) {
+            res.status(error.statusCode || 500).json({
+                message: error.message || 'Internal server error',
+                domainCode: error.domainCode,
+            });
+        }
     }
 
-    exportStudents(req: Request, res: Response): void {
+    async exportStudents(req: Request, res: Response): Promise<void> {
         const type = req.params.type;
         const query = req.query;
-        const exportedData = importExportService.exportStudentsData(type, query);
+        const exportedData = await importExportService.exportStudentsData(type, query);
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Content-Disposition', 'attachment; filename=students.json');
         res.send(exportedData);
