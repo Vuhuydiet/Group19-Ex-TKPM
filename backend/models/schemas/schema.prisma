@@ -15,12 +15,6 @@ datasource db {
   extensions = [pgcrypto]
 }
 
-model Program {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  students    Student[]
-}
 
 model Student {
   id               String           @id @default(cuid())

@@ -1,5 +1,4 @@
 import { Request } from "express";
-import { Program } from "../../../domain/management/Program";
 
 export class StudentManagementMapper {
   public toStudent(request: Request) {

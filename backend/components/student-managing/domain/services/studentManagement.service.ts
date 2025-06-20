@@ -1,9 +1,9 @@
 import { DomainCode } from "../../../../core/responses/DomainCode";
 import { BadRequestError } from "../../../../core/responses/ErrorResponse";
 import prisma from "../../../../models";
-import g_StudentManger from "../../storage/studentManager";
 import IdentityDocument from "../management/IdentityDocument";
 import { Address, Gender, Student } from "../management/Student";
+import { StudentManager } from "../management/StudentManager";
 
 export type StudentData = {
   id: string,
@@ -26,15 +26,15 @@ export type StudentQuery = {
   name?: string,
   faculty?: string,
 }
-
 export default class StudentManagementService {
+  constructor(private readonly studentManager: StudentManager = new StudentManager()) {}
 
-  public static async getAllowedEmailDomains() {
+  public async getAllowedEmailDomains() {
     return await prisma.allowedEmailDomain.findMany();
   }
 
-  public static async addStudent(studentData: StudentData) {
-    if (await g_StudentManger.getStudentById(studentData.id) !== null)
+  public async addStudent(studentData: StudentData) {
+    if (await this.studentManager.getStudentById(studentData.id) !== null)
       throw new BadRequestError(DomainCode.STUDENT_ALREADY_EXISTS, 'Student already exists');
 
     const faculty = await prisma.faculty.findUnique({
@@ -75,25 +75,25 @@ export default class StudentManagementService {
       studentData.nationality
     );
 
-    await g_StudentManger.add(student);
+    await this.studentManager.add(student);
 
     return student;
   }
 
-  public static async removeStudent(id: string) {
-    await g_StudentManger.remove(id);
+  public async removeStudent(id: string) {
+    await this.studentManager.remove(id);
   }
 
-  public static async getStudentById(id: string) {
-    return await g_StudentManger.getStudentById(id);
+  public async getStudentById(id: string) {
+    return await this.studentManager.getStudentById(id);
   }
 
-  public static async getStudents(query: StudentQuery) {
-    const students = await g_StudentManger.getStudents(query);
+  public async getStudents(query: StudentQuery) {
+    const students = await this.studentManager.getStudents(query);
     return students;
   }
 
-  public static async updateStudent(id: string, info: Partial<Student>) {
-    await g_StudentManger.update(id, info);
+  public async updateStudent(id: string, info: Partial<Student>) {
+    await this.studentManager.update(id, info);
   }
 }

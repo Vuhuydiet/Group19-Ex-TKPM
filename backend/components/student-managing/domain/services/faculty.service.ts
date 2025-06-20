@@ -9,17 +9,17 @@ export type FacultyData = {
 };
 
 export default class FacultyService {
-  public static async getFaculties() {
+  public async getFaculties() {
     return await prisma.faculty.findMany();
   }
 
-  public static async getFacultyById(id: string) {
+  public async getFacultyById(id: string) {
     return await prisma.faculty.findUnique({
       where: { id }
     });
   }
 
-  public static async addFaculty(facultyData: FacultyData) {
+  public async addFaculty(facultyData: FacultyData) {
     const faculty = await prisma.faculty.findUnique({
       where: { id: facultyData.id }
     });
@@ -31,13 +31,13 @@ export default class FacultyService {
     });
   }
 
-  public static async removeFaculty(id: string) {
+  public async removeFaculty(id: string) {
     return await prisma.faculty.delete({
       where: { id }
     });
   }
 
-  public static async updateFaculty(id: string, facultyData: Partial<FacultyData>) {
+  public async updateFaculty(id: string, facultyData: Partial<FacultyData>) {
     const faculty = await prisma.faculty.findUnique({
       where: { id }
     });

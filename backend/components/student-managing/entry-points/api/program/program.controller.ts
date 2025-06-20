@@ -1,34 +1,65 @@
 import { Request, Response } from 'express';
-import { ProgramService } from '../../../domain/services/program.service';
+import ProgramService, { ProgramData } from '../../../domain/services/program.service';
+import { matchedData } from 'express-validator';
+import { OKResponse } from '../../../../../core/responses/SuccessResponse';
+import { NotFoundError } from '../../../../../core/responses/ErrorResponse';
+import { DomainCode } from '../../../../../core/responses/DomainCode';
 
-const programService = new ProgramService();
+class ProgramController {
+  constructor(private readonly programService: ProgramService = new ProgramService()) {}
+  
+  public async getAllPrograms(_req: Request, res: Response): Promise<void> {
+    const programs = await this.programService.getAllPrograms();
+    new OKResponse({
+      message: 'Programs retrieved successfully',
+      metadata: { programs }
+    }).send(res);
+  }
 
-export const getAllPrograms = async (req: Request, res: Response) => {
-  const programs = await programService.getAllPrograms();
-  res.json(programs);
-};
+  public async getProgramById(req: Request, res: Response): Promise<void> {
+    const { id } = matchedData(req);
+    const program = await this.programService.getProgramById(id);
+    if (!program) {
+      throw new NotFoundError(DomainCode.NOT_FOUND, 'Program not found');
+    }
+    new OKResponse({
+      message: 'Program retrieved successfully',
+      metadata: { program }
+    }).send(res);
+  }
 
-export const getProgramById = async (req: Request, res: Response) => {
-  const program = await programService.getProgramById(req.params.id);
-  if (!program) return res.status(404).json({ message: 'Program not found' });
-  res.json(program);
-};
+  public async createProgram(req: Request, res: Response): Promise<void> {
+    const programData = matchedData(req) as ProgramData;
+    const program = await this.programService.createProgram(programData);
+    new OKResponse({
+      message: 'Program created successfully',
+      metadata: { program }
+    }).send(res);
+  }
 
-export const createProgram = async (req: Request, res: Response) => {
-  const { id, name, description } = req.body;
-  const program = await programService.createProgram({ id, name, description });
-  res.status(201).json(program);
-};
+  public async updateProgram(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const programData = matchedData(req);
+    const program = await this.programService.updateProgram(id, programData);
+    if (!program) {
+      throw new NotFoundError(DomainCode.NOT_FOUND, 'Program not found');
+    }
+    new OKResponse({
+      message: 'Program updated successfully',
+      metadata: { program }
+    }).send(res);
+  }
 
-export const updateProgram = async (req: Request, res: Response) => {
-  const { name, description } = req.body;
-  const program = await programService.updateProgram(req.params.id, { name, description });
-  if (!program) return res.status(404).json({ message: 'Program not found' });
-  res.json(program);
-};
+  public async deleteProgram(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const program = await this.programService.deleteProgram(id);
+    if (!program) {
+      throw new NotFoundError(DomainCode.NOT_FOUND, 'Program not found');
+    }
+    new OKResponse({
+      message: 'Program deleted successfully'
+    }).send(res);
+  }
+}
 
-export const deleteProgram = async (req: Request, res: Response) => {
-  const program = await programService.deleteProgram(req.params.id);
-  if (!program) return res.status(404).json({ message: 'Program not found' });
-  res.json({ message: 'Program deleted' });
-};
+export default new ProgramController();
