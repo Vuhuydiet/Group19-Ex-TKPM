@@ -25,4 +25,11 @@ router.patch(
   studyStatusController.updateStudyStatus
 );
 
+router.delete(
+  '/:id',
+  param('id').isString().isLength({ min: 1, max: 255 }),
+  handleValidationErrors,
+  studyStatusController.removeStudyStatus
+);
+
 export default router;

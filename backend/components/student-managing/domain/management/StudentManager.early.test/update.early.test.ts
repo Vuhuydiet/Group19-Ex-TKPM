@@ -77,7 +77,7 @@ describe('StudentManager.update() method', () => {
       id: mockStudentId,
       name: 'Nguyen Van A',
       dob: new Date('2000-01-01'),
-      gender: 'Nam' as Gender,
+      gender: 'Male' as Gender,
       faculty: mockFaculty,
       academicYear: 2020,
       program: { id: 'HQ', name: 'High-Quality', description: 'High-Quality Program' },
@@ -87,7 +87,7 @@ describe('StudentManager.update() method', () => {
       phone: '0123456789',
       status: mockStatus,
       identityDocument: mockIdentityDocument,
-      nationality: 'Việt Nam',
+      nationality: 'Vietnam',
       toJSON: jest.fn().mockReturnValue({})
     };
 
@@ -109,7 +109,7 @@ describe('StudentManager.update() method', () => {
       const updateInfo = {
         name: 'Nguyen Van B',
         dob: new Date('2001-02-02'),
-        gender: 'Nữ' as Gender,
+        gender: 'Female' as Gender,
         academicYear: 2021,
         program: { id: 'REG', name: 'Regular', description: 'Regular Program' },
         email: 'nguyenvanb@example.com',

@@ -3,7 +3,7 @@ POST http://localhost:3000/utils/students/json
 Content-Type: application/json
 
 {
-    "students": "[{\"id\": \"22120444\", \"name\": \"Tuong Nguyen\", \"dob\": \"2000-01-01T00:00:00.000Z\", \"gender\": \"Nam\", \"faculty\": \"TA\", \"academicYear\": 2023, \"programId\": \"CLC\", \"permanentAddress\": {\"city\": \"HCM\", \"district\": \"1\", \"ward\": \"A\", \"street\": \"123 Main St\"}, \"email\": \"tuong.nguyen@example.com\", \"phone\": \"0123456789\", \"status\": \"DH\", \"identityDocument\": {\"type\": \"NewIdentityCard\", \"issuedDate\": \"2015-06-15T00:00:00.000Z\", \"issuedPlace\": \"TP.HCM\", \"expiredDate\": \"2026-06-15T00:00:00.000Z\"}, \"nationality\": \"VN\"}]"
+    "students": "[{\"id\": \"22120444\", \"name\": \"Tuong Nguyen\", \"dob\": \"2000-01-01T00:00:00.000Z\", \"gender\": \"Male\", \"faculty\": \"TA\", \"academicYear\": 2023, \"programId\": \"CLC\", \"permanentAddress\": {\"city\": \"HCM\", \"district\": \"1\", \"ward\": \"A\", \"street\": \"123 Main St\"}, \"email\": \"tuong.nguyen@example.com\", \"phone\": \"0123456789\", \"status\": \"DH\", \"identityDocument\": {\"type\": \"NewIdentityCard\", \"issuedDate\": \"2015-06-15T00:00:00.000Z\", \"issuedPlace\": \"TP.HCM\", \"expiredDate\": \"2026-06-15T00:00:00.000Z\"}, \"nationality\": \"VN\"}]"
 }
 
 
@@ -15,7 +15,7 @@ POST http://localhost:3000/utils/students/xml
 Content-Type: application/json
 
 {
-    "students": "<students><student><id>22120445</id><name>Vu Nguyen</name><dob>2001-02-02T00:00:00.000Z</dob><gender>Nam</gender><faculty>TA</faculty><academicYear>2023</academicYear><programId>CLC</programId><permanentAddress><city>HCM</city><district>1</district><ward>A</ward><street>123 Main St</street></permanentAddress><email>vu.nguyen@example.com</email><phone>0123456789</phone><status>DH</status><identityDocument><type>NewIdentityCard</type><issuedDate>2015-06-15T00:00:00.000Z</issuedDate><issuedPlace>TP.HCM</issuedPlace><expiredDate>2026-06-15T00:00:00.000Z</expiredDate></identityDocument><nationality>VN</nationality></student></students>"
+    "students": "<students><student><id>22120445</id><name>Vu Nguyen</name><dob>2001-02-02T00:00:00.000Z</dob><gender>Male</gender><faculty>TA</faculty><academicYear>2023</academicYear><programId>CLC</programId><permanentAddress><city>HCM</city><district>1</district><ward>A</ward><street>123 Main St</street></permanentAddress><email>vu.nguyen@example.com</email><phone>0123456789</phone><status>DH</status><identityDocument><type>NewIdentityCard</type><issuedDate>2015-06-15T00:00:00.000Z</issuedDate><issuedPlace>TP.HCM</issuedPlace><expiredDate>2026-06-15T00:00:00.000Z</expiredDate></identityDocument><nationality>VN</nationality></student></students>"
 }
 
 ### Export Students in XML Test

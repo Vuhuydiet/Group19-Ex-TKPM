@@ -81,7 +81,7 @@ describe('StudentManager.add() method', () => {
       id: 'student-1',
       name: 'Nguyen Van A',
       dob: new Date('2000-01-01'),
-      gender: 'Nam' as Gender,
+      gender: 'Male' as Gender,
       faculty: mockFaculty,
       academicYear: 2020,
       program: mockProgram,
@@ -91,7 +91,7 @@ describe('StudentManager.add() method', () => {
       phone: '0123456789',
       status: mockStatus,
       identityDocument: mockIdentityDocument,
-      nationality: 'Việt Nam',
+      nationality: 'Vietnam',
       toJSON: jest.fn().mockReturnValue({})
     };
 

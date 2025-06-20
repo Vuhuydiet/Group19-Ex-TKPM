@@ -44,6 +44,14 @@ class FacultyController {
     }).send(res);
   }
 
+  public async deleteFaculty(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    await FacultyService.removeFaculty(id);
+    new OKResponse({
+      message: 'Faculty removed successfully'
+    }).send(res);
+  }
+
 }
 
 export default new FacultyController();
