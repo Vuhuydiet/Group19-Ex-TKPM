@@ -3,20 +3,30 @@ import ImportExportStrategyFactory from '../../import-export/impl/format.strateg
 import StudentManagementService, { StudentQuery, StudentData } from '../studentManagement.service';
 import { Student } from '../../management/Student';
 import { ParserType } from '../../import-export/impl/xml.strategy';
+import prisma from '../../../../../models';
 
 export class ImportExportServiceImpl implements ImportExportService {
 
-    importStudentsData(data: string, format: string): any {
+    async importStudentsData(data: string, format: string): Promise<any> {
         const students = ImportExportStrategyFactory.getStrategy(format).parseData(data);
         for (const studentData of students) {
+            if (!studentData.programId) {
+                throw new Error(`Missing programId for student with id: ${studentData.id}`);
+            }
+            // Fetch program by programId
+            const program = await prisma.program.findUnique({ where: { id: studentData.programId } });
+            if (!program) throw new Error(`Program not found for id: ${studentData.programId}`);
+            // Fetch faculty and status if needed (optional, for strictness)
+            // const faculty = await prisma.faculty.findUnique({ where: { id: studentData.faculty } });
+            // const status = await prisma.studyStatus.findUnique({ where: { id: studentData.status } });
             const student = new Student(
                 studentData.id,
                 studentData.name,
-                studentData.dob,
+                new Date(studentData.dob),
                 studentData.gender,
                 studentData.faculty,
                 studentData.academicYear,
-                studentData.program,
+                program,
                 studentData.permanentAddress,
                 studentData.temporaryAddress,
                 studentData.email,
@@ -25,20 +35,28 @@ export class ImportExportServiceImpl implements ImportExportService {
                 studentData.identityDocument,
                 studentData.nationality
             );
-            StudentManagementService.addStudent(student as StudentData);
+            await StudentManagementService.addStudent({
+                ...studentData,
+                program: studentData.programId // pass programId to service
+            });
         }
         return students;
     }
 
-    exportStudentsData(format: string, studentQuery: StudentQuery): string {
-        const students = StudentManagementService.getStudents(studentQuery);
-        return ImportExportStrategyFactory.getStrategy(format).stringifyData(students, ParserType.STUDENT);
+    async exportStudentsData(format: string, studentQuery: StudentQuery): Promise<string> {
+        const students = await StudentManagementService.getStudents(studentQuery);
+        // Map students to export format (programId only)
+        const exportData = students.map((student: any) => ({
+            ...student,
+            programId: typeof student.program === 'string' ? student.program : student.program?.id
+        }));
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(exportData, ParserType.STUDENT);
     }
 
-    exportStudentDataById(id: string, format: string): string {
-        const student = StudentManagementService.getStudentById(id)?.toJSON() || {};
-
-        return ImportExportStrategyFactory.getStrategy(format).stringifyData(student, ParserType.STUDENT);
+    async exportStudentDataById(id: string, format: string): Promise<string> {
+        const student = await StudentManagementService.getStudentById(id);
+        const exportData = student ? { ...student, programId: typeof student.program === 'string' ? student.program : student.program?.id } : {};
+        return ImportExportStrategyFactory.getStrategy(format).stringifyData(exportData, ParserType.STUDENT);
     }
 }
 
