@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { Program } from "../../../domain/management/Program";
 
 export class StudentManagementMapper {
   public toStudent(request: Request) {
@@ -9,7 +10,7 @@ export class StudentManagementMapper {
       gender,
       faculty,
       academicYear,
-      program,
+      programId,
       permanentAddress,
       temporaryAddress,
       email,
@@ -26,7 +27,7 @@ export class StudentManagementMapper {
       gender,
       faculty,
       academicYear,
-      program,
+      program: programId, // just the id
       permanentAddress: {
         id: permanentAddress.id,
         city: permanentAddress.city,
@@ -36,13 +37,13 @@ export class StudentManagementMapper {
       },
       temporaryAddress: temporaryAddress
         ? {
-            id: temporaryAddress.id, 
+            id: temporaryAddress.id,
             city: temporaryAddress.city,
             district: temporaryAddress.district,
             ward: temporaryAddress.ward,
             street: temporaryAddress.street,
           }
-        : undefined, 
+        : undefined,
       email,
       phone,
       status,

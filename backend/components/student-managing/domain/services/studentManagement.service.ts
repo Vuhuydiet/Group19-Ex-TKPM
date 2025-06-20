@@ -12,7 +12,7 @@ export type StudentData = {
   gender: 'Nam' | 'Nữ',
   faculty: string,
   academicYear: number,
-  program: string,
+  program: string, // now just the id
   permanentAddress: Address,
   temporaryAddress?: Address,
   email: string,
@@ -51,6 +51,13 @@ export default class StudentManagementService {
     if (!status)
       throw new BadRequestError(DomainCode.STUDY_STATUS_NOT_FOUND, 'Study status not found');
 
+    // fetch program by id
+    const program = await prisma.program.findUnique({
+      where: { id: studentData.program }
+    });
+    if (!program)
+      throw new BadRequestError(DomainCode.PROGRAM_NOT_FOUND, 'Program not found');
+
     const student = new Student(
       studentData.id,
       studentData.name,
@@ -58,7 +65,7 @@ export default class StudentManagementService {
       studentData.gender,
       faculty,
       studentData.academicYear,
-      studentData.program,
+      program,
       studentData.permanentAddress,
       studentData.temporaryAddress,
       studentData.email,

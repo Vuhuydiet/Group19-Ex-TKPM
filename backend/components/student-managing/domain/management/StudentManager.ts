@@ -47,14 +47,10 @@ export class StudentManager {
         ? { connect: { id: identityDocument.id } }
         : undefined,
         nationality: student.nationality,
-        program: student.program,
+        program: typeof student.program === 'string'
+          ? { connect: { id: student.program } }
+          : { connect: { id: student.program.id } },
       },
-    });
-  }
-
-  async remove(id: string): Promise<void> {
-    await prisma.student.delete({
-      where: { id },
     });
   }
 
@@ -67,6 +63,7 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true, 
       },
     });
 
@@ -86,12 +83,11 @@ export class StudentManager {
       temporaryAddress: result.temporaryAddressId
       ? await prisma.address.findUnique({ where: { id: result.temporaryAddressId } })
       : null,
-      faculty: result.facultyId
-        ? await prisma.faculty.findUnique({ where: { id: result.facultyId } })
-        : null,
-      status: result.status,
-      identityDocument: result.identityDocument || null,
+      faculty: result.faculty ?? (result.facultyId ? await prisma.faculty.findUnique({ where: { id: result.facultyId } }) : null),
+      status: result.status ?? (result.statusId ? await prisma.studyStatus.findUnique({ where: { id: result.statusId } }) : null),
+      identityDocument: result.identityDocument ?? (result.identityDocumentId ? await prisma.identityDocument.findUnique({ where: { id: result.identityDocumentId } }) : null),
       nationality: result.nationality,
+      program: result.program ?? null,
     } as unknown as Student;
   }
 
@@ -111,6 +107,7 @@ export class StudentManager {
         faculty: true,
         status: true,
         identityDocument: true,
+        program: true, 
       },
     });
 
@@ -128,10 +125,11 @@ export class StudentManager {
       temporaryAddress: result.temporaryAddressId
         ? await prisma.address.findUnique({ where: { id: result.temporaryAddressId } })
         : null,
-      faculty: result.faculty,
-      status: result.status,
-      identityDocument: result.identityDocument || null,
+      faculty: result.faculty ?? (result.facultyId ? await prisma.faculty.findUnique({ where: { id: result.facultyId } }) : null),
+      status: result.status ?? (result.statusId ? await prisma.studyStatus.findUnique({ where: { id: result.statusId } }) : null),
+      identityDocument: result.identityDocument ?? (result.identityDocumentId ? await prisma.identityDocument.findUnique({ where: { id: result.identityDocumentId } }) : null),
       nationality: result.nationality,
+      program: result.program ?? null,
     } as unknown as Student)));
   }
 
@@ -171,6 +169,12 @@ export class StudentManager {
     await prisma.student.update({
       where: { id },
       data: updateData,
+    });
+  }
+
+  async remove(id: string): Promise<void> {
+    await prisma.student.delete({
+      where: { id },
     });
   }
 }

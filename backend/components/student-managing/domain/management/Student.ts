@@ -1,5 +1,6 @@
 import { Faculty, StudyStatus } from "@prisma/client";
 import IdentityDocument from "./IdentityDocument";
+import { Program } from "./Program";
 
 
 export type Gender = 'Nam' | 'Nữ';
@@ -19,7 +20,7 @@ export class Student {
   private _gender: Gender;
   private _faculty: Faculty;
   private _academicYear: number;
-  private _program: string;
+  private _program: Program;
   private _permanentAddress: Address;
   private _temporaryAddress?: Address;
   private _email: string;
@@ -35,7 +36,7 @@ export class Student {
     gender: Gender,
     faculty: Faculty,
     academicYear: number,
-    program: string,
+    program: Program,
     permanentAddress: Address,
     temporaryAddress: Address | undefined,
     email: string,
@@ -84,7 +85,7 @@ export class Student {
     return this._academicYear;
   }
 
-  get program(): string {
+  get program(): Program {
     return this._program;
   }
 
@@ -136,7 +137,7 @@ export class Student {
     this._academicYear = accademicYear;
   }
 
-  set program(program: string) {
+  set program(program: Program) {
     this._program = program;
   }
 

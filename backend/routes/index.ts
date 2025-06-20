@@ -11,6 +11,7 @@ import courseRouter from '../components/course/entry-points/api/course/course.ro
 import courseEnrollmentRouter from '../components/course/entry-points/api/course-enrollment/course-enrollment.route';
 import academicTranscriptRouter from '../components/course/entry-points/api/academic-transcript/academic-transcript.route';
 import classRouter from '../components/course/entry-points/api/class/class.route';
+import programRouter from '../components/student-managing/entry-points/api/program/program.route';
 
 router.use('/students', studentRouter);
 router.use('/utils/students', importExportRouter);
@@ -22,5 +23,6 @@ router.use('/courses', courseRouter);
 router.use('/classes', classRouter);
 router.use('/course-enrollments', courseEnrollmentRouter);
 router.use('/academic-transcript', academicTranscriptRouter); 
+router.use('/programs', programRouter);
 
 export default router;

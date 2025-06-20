@@ -21,7 +21,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": "Dai Tra",
+  "programId": "CLC",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -57,7 +57,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": "Dai Tra",
+  "programId": "APCS",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -79,7 +79,7 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "Vietnamese"
+  "nationality": "VN"
 }
 
 ### Add new student with invalid email
@@ -93,7 +93,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": "Dai Tra",
+  "programId": "APCS",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -115,7 +115,7 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "Vietnamese"
+  "nationality": "VN"
 }
 
 ### Add new student with invalid phone number
@@ -129,7 +129,7 @@ Content-Type: application/json
   "gender": "Male",
   "faculty": "L",
   "academicYear": 2023,
-  "program": "Dai Tra",
+  "programId": "CLC",
   "permanentAddress": {
     "city": "TP.HCM",
     "district": "Quận 1",
@@ -151,8 +151,8 @@ Content-Type: application/json
     "issuedPlace": "TP.HCM",
     "expiredDate": "2026-06-15T00:00:00Z"
   },
-  "nationality": "Vietnamese"
+  "nationality": "VN"
 }
 
 ### Delete student
-DELETE http://localhost:3000/students/22120414
+DELETE http://localhost:3000/students/22120413
