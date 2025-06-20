@@ -1,188 +1,33 @@
+// Sửa lại import
 import { Module } from "./moduleAPIServices";
-import { Student } from "./studentAPIServices";
+import { Student, Address } from "./classes/Student"; // Import class Student và Address
 import { Faculty } from "./facultyAPIServices";
+import { NewIdentityCard } from './classes/IdentityDocument';
 
+// SỬA LẠI HOÀN TOÀN MOCK DATA
+const permanentAddressMock = new Address("TP.HCM", "Quận 1", "Bến Nghé", "123 Lê Lợi");
+const temporaryAddressMock = new Address("TP.HCM", "Quận 1", "Bến Thành", "456 Nguyễn Huệ");
+const identityDocumentMock = new NewIdentityCard("079403029299", new Date("2021-12-21"), "Ho Chi Minh", new Date("2029-12-01"), true);
 
-export const mockStudent: Student = {
-  id: "SV001",
-  name: "Nguyễn Văn A",
-  dob: "2002-05-15",
-  gender: "Namz",
-  faculty: "Khoa Luật",
-  academicYear: 2020,
-  program: "Chất lượng cao",
-  permanentAddress: {
-    city: "TP.HCM",
-    district: "Quận 1",
-    ward: "Bến Nghé",
-    street: "123 Lê Lợi"
-  },
-  temporaryAddress: {
-    city: "TP.HCM",
-    district: "Quận 1",
-    ward: "Bến Thành",
-    street: "456 Nguyễn Huệ"
-  },
-  nationality: "Vietnam",
-  email: "nguyenvana@example.com",
-  identityDocument: {
-    type: "NewIdentityCard",
-    data: {
-      id: "079403029299",
-      issuedDate: "2021-12-21",
-      issuedPlace: "Ho Chi Minh",
-      expiredDate: "2029-12-01",
-      hasChip: true
-    }
-  },
-  phone: "0123456789",
-  status: "Đang học"
-}
+export const mockStudent: Student = new Student(
+  "SV001",              // id
+  "Nguyễn Văn A",       // name
+  "2002-05-15",         // dob
+  "Male",               // gender
+  "L",                  // faculty (chỉ là ID)
+  2020,                 // academicYear
+  "CLC",                // programId
+  permanentAddressMock, // permanentAddress
+  temporaryAddressMock, // temporaryAddress
+  "VN",                 // nationality
+  "nguyenvana@example.com", // email
+  identityDocumentMock, // identityDocument
+  "0123456789",         // phone
+  "DH"                  // status (chỉ là ID)
+);
 
-export const mockStudentsList: Student[] = [
-  {
-    id: "SV001",
-    name: "Nguyễn Văn A",
-    dob: "2002-05-15",
-    gender: "Male",
-    faculty: "Khoa Luật",
-    academicYear: 2020,
-    program: "Chất lượng cao",
-    permanentAddress: {
-      city: "TP.HCM",
-      district: "Quận 1",
-      ward: "Bến Nghé",
-      street: "123 Lê Lợi"
-    },
-    temporaryAddress: {
-      city: "TP.HCM",
-      district: "Quận 1",
-      ward: "Bến Thành",
-      street: "456 Nguyễn Huệ"
-    },
-    nationality: "Vietnam",
-    email: "nguyenvana@example.com",
-    identityDocument: {
-      type: "NewIdentityCard",
-      data: {
-        id: "079403029299",
-        issuedDate: "2021-12-21",
-        issuedPlace: "Ho Chi Minh",
-        expiredDate: "2029-12-01",
-        hasChip: true
-      }
-    },
-    phone: "0123456789",
-    status: "Đang học"
-  },
-  {
-    id: "SV002",
-    name: "Trần Thị B",
-    dob: "2001-09-22",
-    gender: "Female",
-    faculty: "Khoa Tiếng Anh thương mại",
-    academicYear: 2019,
-    program: "Đề án",
-    permanentAddress: {
-      city: "TP.HCM",
-      district: "Quận 5",
-      ward: "Phường 5",
-      street: "456 Nguyễn Trãi"
-    },
-    temporaryAddress: {
-      city: "TP.HCM",
-      district: "Quận 5",
-      ward: "Phường 7",
-      street: "789 Trần Hưng Đạo"
-    },
-    nationality: "Vietnam",
-    email: "tranthib@example.com",
-    identityDocument: {
-      type: "NewIdentityCard",
-      data: {
-        id: "079403029300",
-        issuedDate: "2021-11-15",
-        issuedPlace: "Ho Chi Minh",
-        expiredDate: "2029-11-15",
-        hasChip: true
-      }
-    },
-    phone: "0987654321",
-    status: "Đang học"
-  },
-  {
-    id: "SV003",
-    name: "Lê Văn C",
-    dob: "2003-03-10",
-    gender: "Male",
-    faculty: "Khoa Tiếng Nhật",
-    academicYear: 2021,
-    program: "Chính quy",
-    permanentAddress: {
-      city: "TP.HCM",
-      district: "Bình Thạnh",
-      ward: "Phường 1",
-      street: "789 Điện Biên Phủ"
-    },
-    temporaryAddress: {
-      city: "TP.HCM",
-      district: "Bình Thạnh",
-      ward: "Phường 2",
-      street: "159 Nguyễn Xí"
-    },
-    nationality: "Vietnam",
-    email: "levanc@example.com",
-    identityDocument: {
-      type: "OldIdentityCard",
-      data: {
-        id: "079403029301",
-        issuedDate: "2015-07-20",
-        issuedPlace: "Ho Chi Minh",
-        expiredDate: "2025-07-20"
-      }
-    },
-    phone: "0369852147",
-    status: "Đang học"
-  },
-  {
-    id: "SV004",
-    name: "Phạm Minh D",
-    dob: "2000-12-05",
-    gender: "Male",
-    faculty: "Khoa Tiếng Pháp",
-    academicYear: 2018,
-    program: "Chất lượng cao",
-    permanentAddress: {
-      city: "TP.HCM",
-      district: "Thủ Đức",
-      ward: "Linh Trung",
-      street: "159 Võ Văn Ngân"
-    },
-    temporaryAddress: {
-      city: "TP.HCM",
-      district: "Thủ Đức",
-      ward: "Linh Chiểu",
-      street: "200 Kha Vạn Cân"
-    },
-    nationality: "Vietnam",
-    email: "phamminhd@example.com",
-    identityDocument: {
-      type: "Passport",
-      data: {
-        passportNumber: "C1234567",
-        issuedDate: "2018-04-10",
-        issuedPlace: "Ho Chi Minh",
-        expiredDate: "2028-04-10",
-        issuedCountry: "Vietnam",
-        note: "Hộ chiếu phổ thông"
-      }
-    },
-    phone: "0945123789",
-    status: "Đã tốt nghiệp"
-  }
-];
-
-
+// mockStudentsList cũng có thể được tạo tương tự nếu cần
+export const mockStudentsList: Student[] = [mockStudent];
 export const mockDataStatus: string[] = [
   "Đang học",
   "Đã tốt nghiệp",
@@ -229,13 +74,6 @@ export const mockFaculties: Faculty[] = [
     createdAt: "2023-01-01T00:00:00Z",
   }
 ];
-
-export const mockValidStudyStatusTransition: { from: string; to: string }[] = [
-  { from: "DH", to: "TD" },
-  { from: "DH", to: "TH" },
-  { from: "DH", to: "TN" },
-  { from: "TD", to: "DH" }
-]
 
 
 export const mockDataModules: Module[] = [
